@@ -1,33 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Container, CssBaseline, Stack } from '@mui/material'
 import './App.css'
+import VacancyCard from './components/VacancyCard'
+import VacancyData from './interfaces/VacancyData'
+import { css, Global } from '@emotion/react'
+
+const vacancies: Array<VacancyData> = [
+  {
+    profession: 'Frontend Developer',
+    firmName: 'Tech Solutions Ltd',
+    town: 'Москва',
+    description: 'Разработка интерфейсов на React и TypeScript, участие в проектировании UI/UX, поддержка и развитие существующего функционала.',
+    source: 0,
+    paymentFrom: 120000,
+    paymentTo: 150000,
+    currency: 'rub',
+    link: 'https://example.com/',
+    datePublished: 1731385211 // День назад
+  },
+  {
+    profession: 'Data Scientist',
+    firmName: 'Инновации и Аналитика',
+    town: 'Санкт-Петербург',
+    description: 'Анализ и обработка данных, построение моделей машинного обучения, оптимизация бизнес-процессов на основе данных.',
+    source: 0,
+    paymentFrom: 150000,
+    paymentTo: 200000,
+    currency: 'rub',
+    link: 'https://example.com/',
+    datePublished: 1730901006 // 6 дней назад
+  },
+  {
+    profession: 'Project Manager',
+    firmName: 'Digital Future',
+    town: 'Новосибирск',
+    description: 'Управление проектами, взаимодействие с клиентами и командой разработки, контроль выполнения сроков и бюджета проекта.',
+    source: 0,
+    paymentFrom: 100000,
+    paymentTo: 130000,
+    currency: 'rub',
+    link: 'https://example.com/',
+    datePublished: 1720385204 // 4 месяца назад
+  }
+]
+
+// fetch('https://api.superjob.ru/2.0/vacancies/?t=4&count=10', {
+//   method: 'GET', // или 'POST', 'PUT' и т.д.
+//   headers: {
+//     'X-Api-App-Id': 'v3.r.127820309.b68cc20ac962d5436d1f0f980e84fc6c604d5ded.c1c4d1a9f2ba2dc80ce328f4808fbe72d97346dd',
+//   }
+// })
+// .then(response => response.json())
+// .then(data => console.log(data))
+// .catch(error => console.error('Ошибка:', error));
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CssBaseline>
+          <Global
+            styles={css`
+              body {
+                background-color:#36364d;
+                padding-top: 0.5em;
+              }
+            `}
+          />
+          <Container maxWidth='lg'>
+            <Stack
+              direction='column'
+              spacing={1}
+            >
+              {
+                vacancies.map((vdata, i) => <VacancyCard key={i} data={vdata} />)
+              }
+            </Stack>
+          </Container>
+      </CssBaseline>
     </>
   )
 }
