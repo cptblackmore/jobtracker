@@ -1,6 +1,5 @@
-import { useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { Transition } from "react-transition-group";
-import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import { css, IconButton } from "@mui/material";
 
 const duration = 200;
@@ -20,6 +19,11 @@ const iconStyle = css`
   left: 0;
   height: ${size}em;
   width: ${size}em;
+
+  & svg {
+    height: ${size}em;
+    width: ${size}em;
+  }
 `
 const transitionStyles = {
   entering: css`
@@ -40,52 +44,62 @@ const transitionStyles = {
 }
 
 interface Props {
-  isFavorite: boolean;
-  setIsFavorite: (value: boolean) => void;
+  isActive: boolean;
+  setIsActive: (value: boolean) => void;
+  firstIcon: ReactNode;
+  secondIcon: ReactNode;
 }
 
-const FavoriteButton: React.FC<Props> = ({ isFavorite, setIsFavorite }) => {
-  const favoriteRef = useRef(null);
-  const favoriteBorderRef = useRef(null);
+const IconsTransition: React.FC<Props> = ({ 
+  isActive, 
+  setIsActive, 
+  firstIcon, 
+  secondIcon
+}) => {
+  const firstIconRef = useRef(null);
+  const secondIconRef = useRef(null);
 
   return (
     <IconButton
       css={wrapperStyle}
-      onClick={() => setIsFavorite(!isFavorite)}
+      onClick={() => setIsActive(!isActive)}
     >
       <Transition 
-        nodeRef={favoriteRef} 
-        in={isFavorite} 
+        nodeRef={firstIconRef} 
+        in={!isActive} 
         timeout={duration}
       >
         {state => (
-          <Favorite 
-            ref={favoriteRef} 
+          <div
+            ref={firstIconRef} 
             css={[
               iconStyle,
               transitionStyles[state]
             ]}
-            color='primary'
-          />
+          >
+            {firstIcon}
+          </div>
         )}
       </Transition>
       <Transition 
-        nodeRef={favoriteBorderRef} 
-        in={!isFavorite} 
+        nodeRef={secondIconRef} 
+        in={isActive} 
         timeout={duration}
       >
         {state => (
-          <FavoriteBorder 
-            ref={favoriteBorderRef} 
+          <div
+            ref={secondIconRef} 
             css={[
               iconStyle,
               transitionStyles[state]
             ]}
-          />
+          >
+            {secondIcon}
+          </div>
         )}
       </Transition>
     </IconButton>
   )
 }
 
-export default FavoriteButton;
+export default IconsTransition;

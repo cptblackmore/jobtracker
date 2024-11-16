@@ -2,8 +2,10 @@ import { Box, Button, Card, CardActions, CardContent, CardHeader, css, Divider, 
 import VacancyData from '../interfaces/VacancyData'
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import FavoriteButton from './FavoriteButton';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
+import ExpandableText from './ExpandableText';
+import IconsTransition from './IconsTransition';
 
 interface Props {
   data: VacancyData;
@@ -31,10 +33,12 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
           padding-top: 1em;
         `}
       >
-        <FavoriteButton 
-          isFavorite={isFavoriteState} 
-          setIsFavorite={() => setIsFavoriteState(!isFavoriteState)} /* TODO Make normal set state */
-        /> 
+        <IconsTransition
+          isActive={isFavoriteState}
+          setIsActive={setIsFavoriteState}
+          firstIcon={<FavoriteBorder />}
+          secondIcon={<Favorite color='primary' />}
+        />
       </CardActions>
       <Divider
         orientation='vertical'
@@ -56,22 +60,26 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
             </Typography>
           }
           subheader={
-            <Typography 
+            <Box
               paddingLeft={1} 
               textAlign='start'
               display='flex'
             >
-              {data.firmName}
+              <Typography>
+                {data.firmName}
+              </Typography>
               <Divider 
                 css={css`
                   margin-left: 1em;
                   margin-right: 1em;
-                `}
+                  `}
                 orientation='vertical' 
                 flexItem 
               />
-              {data.town}
-            </Typography>
+              <Typography>
+                {data.town}
+              </Typography>
+            </Box>
           }
         />
         <CardContent
@@ -79,18 +87,16 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
             padding-bottom: 0.5em;
           `}
         >
-          <Typography
-            textAlign='start'
-            paddingLeft={1}
-          >
-            {data.description}
-          </Typography>
+          <ExpandableText
+            text={data.description}
+            maxLength={140}
+          />
         </CardContent>
         <CardActions>
           <Typography 
             paddingLeft={2}
           >
-            {distance} на {data.source === 0 ? <Typography component='span' color='blue' >Superjob.ru</Typography> : ''}
+            {distance} на {data.source === 0 ? <span css={css`color: #2eab7f;`}>Superjob.ru</span> : ''}
           </Typography>
         </CardActions>
       </Box>
@@ -104,15 +110,11 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
         flexDirection='column'
         justifyContent='space-between'
       >
-        <CardHeader
-          title={
-            <Typography>
-              {!data.paymentFrom && !data.paymentTo && 'Зарплата не указана'}
-              {data.paymentFrom ? <Typography whiteSpace='nowrap'>от <Typography component='span' fontWeight={700} >{data.paymentFrom} {currencyChar}</Typography></Typography> : ''}
-              {data.paymentTo ? <Typography whiteSpace='nowrap'>до <Typography component='span' fontWeight={700} >{data.paymentTo} {currencyChar}</Typography></Typography> : ''}
-            </Typography>
-          }
-        />
+        <CardContent>
+          {!data.paymentFrom && !data.paymentTo && 'Зарплата не указана'}
+          {data.paymentFrom ? <Typography whiteSpace='nowrap'>от <b>{data.paymentFrom} {currencyChar}</b></Typography> : ''}
+          {data.paymentTo ? <Typography whiteSpace='nowrap'>до <b>{data.paymentTo} {currencyChar}</b></Typography> : ''}
+        </CardContent>
         <CardActions 
           css={css`
             justify-content: center;  

@@ -9,7 +9,7 @@ const vacancies: Array<VacancyData> = [
     profession: 'Frontend Developer',
     firmName: 'Tech Solutions Ltd',
     town: 'Москва',
-    description: 'Разработка интерфейсов на React и TypeScript, участие в проектировании UI/UX, поддержка и развитие существующего функционала.',
+    description: 'Разработка интерфейсов на React и TypeScript, участие в проектировании UI/UX, поддержка и развитие существующего функционала. Требуется опыт работы в команде разработки, а также знание: HTML, CSS, JavaScript, React, TypeScript, Redux, React Native. Навыки владения английским языком приветствуются.',
     source: 0,
     paymentFrom: 120000,
     paymentTo: 150000,
