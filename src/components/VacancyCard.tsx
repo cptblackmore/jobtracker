@@ -5,7 +5,7 @@ import { ru } from 'date-fns/locale';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
 import ExpandableText from './ExpandableText';
-import IconsTransition from './IconsTransition';
+import ToggleIconButton from './ToggleIconButton';
 
 interface Props {
   data: VacancyData;
@@ -13,9 +13,11 @@ interface Props {
 }
 
 const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
-  const currencyChar = data.currency === 'rub' ? 'руб.' : 'руб.';
   const datePublished = new Date(data.datePublished * 1000);
   const distance = formatDistanceToNow(datePublished, { addSuffix: true, locale: ru });
+  const currencyFormatter = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: data.currency, maximumFractionDigits: 0 });
+  const paymentFrom = currencyFormatter.format(data.paymentFrom || 0);
+  const paymentTo = currencyFormatter.format(data.paymentTo || 0);
 
   const [isFavoriteState, setIsFavoriteState] = useState<boolean>(isFavorite); // TODO Delete this
 
@@ -29,15 +31,17 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
     >
       <CardActions
         css={css`
-          align-items: start;
+        align-items: start;
           padding-top: 1em;
         `}
       >
-        <IconsTransition
-          isActive={isFavoriteState}
-          setIsActive={setIsFavoriteState}
-          firstIcon={<FavoriteBorder />}
-          secondIcon={<Favorite color='primary' />}
+        <ToggleIconButton
+          isToggled={isFavoriteState}
+          onToggle={() => setIsFavoriteState(!isFavoriteState)}
+          defaultIcon={<FavoriteBorder />}
+          toggledIcon={<Favorite color='primary' />}
+          defaultTooltip='Добавить в избранное'
+          toggledTooltip='Удалить из избранного'
         />
       </CardActions>
       <Divider
@@ -112,8 +116,8 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
       >
         <CardContent>
           {!data.paymentFrom && !data.paymentTo && 'Зарплата не указана'}
-          {data.paymentFrom ? <Typography whiteSpace='nowrap'>от <b>{data.paymentFrom} {currencyChar}</b></Typography> : ''}
-          {data.paymentTo ? <Typography whiteSpace='nowrap'>до <b>{data.paymentTo} {currencyChar}</b></Typography> : ''}
+          {data.paymentFrom ? <Typography whiteSpace='nowrap' textAlign='end'>от <b>{paymentFrom}</b></Typography> : ''}
+          {data.paymentTo ? <Typography whiteSpace='nowrap' textAlign='end'>до <b>{paymentTo}</b></Typography> : ''}
         </CardContent>
         <CardActions 
           css={css`

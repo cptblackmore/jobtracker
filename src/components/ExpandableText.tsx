@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Collapse, Box, css } from '@mui/material';
-import IconsTransition from './IconsTransition';
+import ToggleIconButton from './ToggleIconButton';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 interface Props {
@@ -30,11 +30,11 @@ const ExpandableText: React.FC<Props> = ({ text, maxLength }) => {
     >
       <Collapse
         in={isExpanded}
-        timeout="auto"
+        timeout='auto'
         collapsedSize={75}
         onExited={() => setIsSliced(true)}
       >
-        <Typography variant="body1" component="div">
+        <Typography variant='body1' component='div'>
           {isOverflowing && isSliced
             ? `${text.slice(0, maxLength)}...`
             : text}
@@ -42,11 +42,13 @@ const ExpandableText: React.FC<Props> = ({ text, maxLength }) => {
       </Collapse>
       {isOverflowing 
       &&
-      <IconsTransition
-        isActive={isExpanded}
-        setIsActive={toggleCollapse}
-        firstIcon={<ExpandMore />}
-        secondIcon={<ExpandLess />}
+      <ToggleIconButton
+        isToggled={isExpanded}
+        onToggle={toggleCollapse}
+        defaultIcon={<ExpandMore />}
+        toggledIcon={<ExpandLess />}
+        defaultTooltip='Развернуть'
+        toggledTooltip='Свернуть'
       />}
     </Box>
   );

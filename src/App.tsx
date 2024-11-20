@@ -1,5 +1,4 @@
 import { Container, CssBaseline, Stack } from '@mui/material'
-import './App.css'
 import VacancyCard from './components/VacancyCard'
 import VacancyData from './interfaces/VacancyData'
 import { css, Global } from '@emotion/react'
@@ -35,9 +34,9 @@ const vacancies: Array<VacancyData> = [
     town: 'Новосибирск',
     description: 'Управление проектами, взаимодействие с клиентами и командой разработки, контроль выполнения сроков и бюджета проекта.',
     source: 0,
-    paymentFrom: 100000,
-    paymentTo: 130000,
-    currency: 'rub',
+    paymentFrom: 5000,
+    paymentTo: 6300,
+    currency: 'usd',
     link: 'https://example.com/',
     datePublished: 1720385204 // 4 месяца назад
   }
