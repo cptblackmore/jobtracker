@@ -1,11 +1,11 @@
 import { Box, Button, Card, CardActions, CardContent, CardHeader, css, Divider, Link, Typography } from '@mui/material'
-import VacancyData from '../interfaces/VacancyData'
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
-import ExpandableText from './ExpandableText';
-import ToggleIconButton from './ToggleIconButton';
+import { VacancyData } from '@entities/VacancyCard/types';
+import { ExpandableText } from '@shared/ExpandableText'
+import { ToggleIconButton } from '@shared/ToggleIconButton';
 
 interface Props {
   data: VacancyData;

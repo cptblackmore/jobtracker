@@ -6,6 +6,15 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@pages/*": ["pages/*"],
+      "@widgets/*": ["widgets/*"],
+      "@entities/*": ["entities/*"],
+      "@features/*": ["features/*"],
+      "@shared/*": ["shared/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "Bundler",
@@ -14,7 +23,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-	"jsxImportSource": "@emotion/react",
+    "jsxImportSource": "@emotion/react",
 
     /* Linting */
     "strict": true,

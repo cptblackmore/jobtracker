@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Collapse, Box, css } from '@mui/material';
-import ToggleIconButton from './ToggleIconButton';
+import { ToggleIconButton } from '@shared/ToggleIconButton'
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 interface Props {

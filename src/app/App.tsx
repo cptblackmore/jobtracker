@@ -1,6 +1,5 @@
 import { Container, CssBaseline, Stack } from '@mui/material'
-import VacancyCard from './components/VacancyCard'
-import VacancyData from './interfaces/VacancyData'
+import { VacancyCard, VacancyData } from '@entities/VacancyCard'
 import { css, Global } from '@emotion/react'
 
 const vacancies: Array<VacancyData> = [
