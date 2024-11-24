@@ -54,7 +54,7 @@ interface Props {
   toggledTooltip?: string;
 }
 
-const ToggleIconButton: React.FC<Props> = ({ 
+export const ToggleIconButton: React.FC<Props> = ({ 
   isToggled, 
   onToggle, 
   defaultIcon, 
@@ -115,5 +115,3 @@ const ToggleIconButton: React.FC<Props> = ({
     </Tooltip>
   )
 }
-
-export default ToggleIconButton;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Collapse, Box, css } from '@mui/material';
-import { ToggleIconButton } from '@shared/ToggleIconButton'
+import { ToggleIconButton } from '@shared/ui'
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   maxLength: number;
 }
 
-const ExpandableText: React.FC<Props> = ({ text, maxLength }) => {
+export const ExpandableText: React.FC<Props> = ({ text, maxLength }) => {
   const isOverflowing = text.length > maxLength;
   const [isExpanded, setIsExpanded] = useState(!isOverflowing);
   const [isSliced, setIsSliced] = useState(isOverflowing);
@@ -53,5 +53,3 @@ const ExpandableText: React.FC<Props> = ({ text, maxLength }) => {
     </Box>
   );
 };
-
-export default ExpandableText;

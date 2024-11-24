@@ -1,5 +1,2 @@
-export * from './api'
-export * from './config'
-export * from './model'
-export * from './ui'
-export * from './types'
+export { VacancyCard } from './ui/VacancyCard';
+export type { Vacancy } from '../../shared/api/types/Vacancy';

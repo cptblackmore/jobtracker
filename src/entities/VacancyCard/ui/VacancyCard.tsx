@@ -1,18 +1,18 @@
-import { Box, Button, Card, CardActions, CardContent, CardHeader, css, Divider, Link, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, CardHeader, css, Divider, Link, Typography } from '@mui/material';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
-import { VacancyData } from '@entities/VacancyCard/types';
-import { ExpandableText } from '@shared/ExpandableText'
-import { ToggleIconButton } from '@shared/ToggleIconButton';
+import { Vacancy } from '@entities/VacancyCard';
+import { ExpandableText, ToggleIconButton } from '@shared/ui';
+import { VacancySource } from './VacancySource';
 
 interface Props {
-  data: VacancyData;
+  data: Vacancy;
   isFavorite?: boolean;
 }
 
-const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
+export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
   const datePublished = new Date(data.datePublished * 1000);
   const distance = formatDistanceToNow(datePublished, { addSuffix: true, locale: ru });
   const currencyFormatter = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: data.currency, maximumFractionDigits: 0 });
@@ -24,7 +24,6 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
   return (
     <Card
       css={css`
-        width: 60%;
         align-self: center;
         display: flex;
       `}
@@ -37,6 +36,7 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
       >
         <ToggleIconButton
           isToggled={isFavoriteState}
+
           onToggle={() => setIsFavoriteState(!isFavoriteState)}
           defaultIcon={<FavoriteBorder />}
           toggledIcon={<Favorite color='primary' />}
@@ -99,8 +99,10 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
         <CardActions>
           <Typography 
             paddingLeft={2}
+            display='flex'
+            gap='0.3em'
           >
-            {distance} на {data.source === 0 ? <span css={css`color: #2eab7f;`}>Superjob.ru</span> : ''}
+            {distance} на <VacancySource source={data.source} />
           </Typography>
         </CardActions>
       </Box>
@@ -140,5 +142,3 @@ const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
     </Card>
   )
 }
-
-export default VacancyCard

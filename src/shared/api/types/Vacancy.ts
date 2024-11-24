@@ -1,9 +1,9 @@
-export default interface VacancyData {
+export type Vacancy = {
   profession: string;
   firmName: string;
   town: string
   description: string;
-  source: number;
+  source: string;
   paymentFrom?: number;
   paymentTo?: number;
   currency: string;
