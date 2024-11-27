@@ -7,21 +7,21 @@ type UseFetching = [
 ]
 
 export const useFetching = (callback: () => Promise<void>): UseFetching => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-    const fetching = async () => {
-        try {
-            setIsLoading(true);
-            await callback();
-        } catch (e) {
-            if (typeof e === 'string') {
-                setError(e);
-            }
-        } finally {
-            setIsLoading(false);
-        }
+  const fetching = async () => {
+  try {
+    setIsLoading(true);
+    await callback();
+  } catch (e) {
+    if (typeof e === 'string') {
+    setError(e);
     }
+  } finally {
+    setIsLoading(false);
+  }
+  }
 
-    return [fetching, isLoading, error];
+  return [fetching, isLoading, error];
 }

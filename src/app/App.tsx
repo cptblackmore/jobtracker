@@ -11,7 +11,6 @@ function App() {
             styles={css`
               body {
                 background-color:#36364d;
-                padding-top: 0.5em;
               }
             `}
           />

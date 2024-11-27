@@ -26,6 +26,7 @@ export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
       css={css`
         align-self: center;
         display: flex;
+        width: 100%;
       `}
     >
       <CardActions

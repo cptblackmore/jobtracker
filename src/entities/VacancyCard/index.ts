@@ -1,2 +1,2 @@
 export { VacancyCard } from './ui/VacancyCard';
-export type { Vacancy } from '../../shared/api/types/Vacancy';
+export type { Vacancy } from '@shared/api/types/Vacancy';
