@@ -7,12 +7,18 @@ export default defineConfig({
   plugins: [react({ jsxImportSource: '@emotion/react' }), tsconfigPaths()],
   server: {
     proxy: {
-      '/api': { // Локальный префикс для запросов
+      '/superjob': { // Локальный префикс для запросов
         target: 'https://api.superjob.ru', // Базовый адрес API
         changeOrigin: true, // Меняет Origin запроса на целевой адрес
-        rewrite: (path) => path.replace(/^\/api/, ''), // Убирает префикс /api
+        rewrite: (path) => path.replace(/^\/superjob/, ''), // Убирает префикс /api
         secure: true, // Используем HTTPS
       },
+      '/hh': {
+        target: 'https://api.hh.ru',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/hh/, ''),
+        secure: true
+      }
     },
   }
 })

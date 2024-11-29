@@ -1,4 +1,4 @@
-export type VacancySuperjob = {
+export interface VacancySuperjob {
   canEdit:                       boolean;
   is_closed:                     boolean;
   id:                            number;

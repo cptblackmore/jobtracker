@@ -1,7 +1,7 @@
 import { Vacancy } from '@entities/VacancyCard';
-import type { SuperjobVacancy } from '@shared/api';
+import type { VacancySuperjob } from '@shared/api/';
 
-export const adapterSuperjob = (data: Array<SuperjobVacancy>): Array<Vacancy> => {
+export const adapterSuperjob = (data: Array<VacancySuperjob>): Array<Vacancy> => {
   return data.map(vacancy => {
     return {
       profession: vacancy.profession,
@@ -13,7 +13,7 @@ export const adapterSuperjob = (data: Array<SuperjobVacancy>): Array<Vacancy> =>
       paymentTo: vacancy.payment_to,
       currency: vacancy.currency,
       link: vacancy.link,
-      datePublished: vacancy.date_published
+      datePublished: vacancy.date_published * 1000
     }
   })
 }

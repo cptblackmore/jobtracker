@@ -12,14 +12,14 @@ interface Props {
   isFavorite?: boolean;
 }
 
-export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => {
-  const datePublished = new Date(data.datePublished * 1000);
+export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => { // TODO Decompose this component
+  const datePublished = new Date(data.datePublished);
   const distance = formatDistanceToNow(datePublished, { addSuffix: true, locale: ru });
-  const currencyFormatter = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: data.currency, maximumFractionDigits: 0 });
+  const currencyFormatter = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: data.currency === 'RUR' ? 'RUB' : data.currency, minimumFractionDigits: 0, maximumFractionDigits: 0 }); // TODO Make formatter function for different currencies
   const paymentFrom = currencyFormatter.format(data.paymentFrom || 0);
   const paymentTo = currencyFormatter.format(data.paymentTo || 0);
 
-  const [isFavoriteState, setIsFavoriteState] = useState<boolean>(isFavorite); // TODO Delete this
+  const [isFavoriteState, setIsFavoriteState] = useState<boolean>(isFavorite); // TODO Delete this and create common state outside
 
   return (
     <Card
