@@ -1,13 +1,14 @@
 import { Vacancy } from '@entities/VacancyCard';
-import type { VacancyHH } from '@shared/api';
+import { combineDutyAndReqToDesc, type VacancyHH } from '@shared/api';
 
 export const adapterHH = (data: Array<VacancyHH>): Array<Vacancy> => {
   return data.map(vacancy => {
     return {
+      id: 'hh-' + vacancy.id,
       profession: vacancy.name,
       firmName: vacancy.employer.name,
       town: vacancy.area.name,
-      description: vacancy.snippet.responsibility || vacancy.snippet.requirement ? `Обязанности: ${vacancy.snippet.responsibility ?? '-'} Требования: ${vacancy.snippet.requirement ?? '-'}` : 'Описание не найдено.',
+      description: combineDutyAndReqToDesc(vacancy.snippet.responsibility, vacancy.snippet.requirement),
       source: 'hh',
       paymentFrom: vacancy.salary?.from ?? 0,
       paymentTo: vacancy.salary?.to ?? 0,

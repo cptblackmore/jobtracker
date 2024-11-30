@@ -7,3 +7,4 @@ export { adapterHH } from './adapters/adapterHH';
 export { adapterTrudvsem } from './adapters/adapterTrudvsem';
 export { useFetching } from './useFetching';
 export { VacancyService } from './VacancyService';
+export { combineDutyAndReqToDesc } from './adapters/combineDutyAndReqToDesc';

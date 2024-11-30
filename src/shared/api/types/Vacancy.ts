@@ -1,4 +1,5 @@
 export type Vacancy = {
+  id: string;
   profession: string;
   firmName: string;
   town: string

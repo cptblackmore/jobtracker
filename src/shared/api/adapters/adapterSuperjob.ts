@@ -4,6 +4,7 @@ import type { VacancySuperjob } from '@shared/api/';
 export const adapterSuperjob = (data: Array<VacancySuperjob>): Array<Vacancy> => {
   return data.map(vacancy => {
     return {
+      id: 'sj-' + vacancy.id.toString(),
       profession: vacancy.profession,
       firmName: vacancy.firm_name,
       town: vacancy.town.title,

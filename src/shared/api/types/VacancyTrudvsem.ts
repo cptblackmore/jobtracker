@@ -65,9 +65,9 @@ export interface Region {
 }
 
 export interface Requirement {
-  education:     string;
-  qualification: string;
-  experience:    number;
+  education?:     string;
+  qualification?: string;
+  experience?:    number;
 }
 
 export interface Term {

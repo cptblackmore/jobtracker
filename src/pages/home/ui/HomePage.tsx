@@ -2,17 +2,27 @@ import { Vacancy } from '@entities/VacancyCard';
 import { Box, Container, css } from '@mui/material';
 import { adapterHH, adapterSuperjob, adapterTrudvsem, useFetching, VacancyService } from '@shared/api';
 import { VacancyList } from '@widgets/VacancyList';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Header } from '@widgets/Header';
 
 export const HomePage: React.FC = () => { 
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
   const [page, setPage] = useState<number>(0);
+  const vacancyIDs = useRef<Set<string>>(new Set);
   const [fetchVacancies, isVacanciesLoading] = useFetching(async () => {
-    const [responseSuperjob, responseHH, responseTrudvsem] = await Promise.all([VacancyService.getSuperjob(page), VacancyService.getHH(page), VacancyService.getTrudvsem(page)]);
-    setVacancies(prevVacancies => [...prevVacancies, ...adapterSuperjob(responseSuperjob), ...adapterHH(responseHH), ...adapterTrudvsem(responseTrudvsem)]);
+    const [responseSuperjob, responseHH, responseTrudvsem] = await Promise.all(
+      [VacancyService.getSuperjob(page), VacancyService.getHH(page), VacancyService.getTrudvsem(page)]
+    );
+    const newVacancies = [...adapterSuperjob(responseSuperjob), ...adapterHH(responseHH), ...adapterTrudvsem(responseTrudvsem)];
+    const uniqueVacancies = newVacancies.filter(vacancy => {
+      if (!vacancyIDs.current.has(vacancy.id)) {
+        vacancyIDs.current.add(vacancy.id);
+        return true;
+      } else return false;
+    });
+    setVacancies(prevVacancies => [...prevVacancies, ...uniqueVacancies]);
   });
-
+  
   useEffect(() => {
     fetchVacancies()
   }, [page])
