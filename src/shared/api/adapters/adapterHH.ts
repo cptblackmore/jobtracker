@@ -1,5 +1,6 @@
-import { Vacancy } from '@entities/VacancyCard';
+import { Vacancy } from "@shared/api";
 import { combineDutyAndReqToDesc, type VacancyHH } from '@shared/api';
+import { toRightCurrencyCode } from '@shared/lib/toRightCurrencyCode';
 
 export const adapterHH = (data: Array<VacancyHH>): Array<Vacancy> => {
   return data.map(vacancy => {
@@ -10,9 +11,9 @@ export const adapterHH = (data: Array<VacancyHH>): Array<Vacancy> => {
       town: vacancy.area.name,
       description: combineDutyAndReqToDesc(vacancy.snippet.responsibility, vacancy.snippet.requirement),
       source: 'hh',
-      paymentFrom: vacancy.salary?.from ?? 0,
-      paymentTo: vacancy.salary?.to ?? 0,
-      currency: vacancy.salary?.currency ?? 'rub', // TODO Return just vacancy.salary.currency after making formatter function
+      paymentFrom: vacancy.salary?.from,
+      paymentTo: vacancy.salary?.to,
+      currency: toRightCurrencyCode(vacancy.salary?.currency ?? 'RUB'),
       link: vacancy.alternate_url,
       datePublished: Date.parse(vacancy.published_at)
     }

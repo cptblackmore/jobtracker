@@ -5,8 +5,8 @@ export type Vacancy = {
   town: string
   description: string;
   source: string;
-  paymentFrom?: number;
-  paymentTo?: number;
+  paymentFrom?: number | null | undefined;
+  paymentTo?: number | null | undefined;
   currency: string;
   link: string;
   datePublished: number;

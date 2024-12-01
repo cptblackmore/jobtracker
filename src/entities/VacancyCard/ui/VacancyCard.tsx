@@ -3,9 +3,10 @@ import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
-import { Vacancy } from '@entities/VacancyCard';
+import { VacancySource, VacancyPayment } from '@entities/VacancyCard';
+import { Vacancy } from '@shared/api';
 import { ExpandableText, ToggleIconButton } from '@shared/ui';
-import { VacancySource } from './VacancySource';
+import { formatNumberByCurrency } from '@shared/lib/formatNumberByCurrency';
 
 interface Props {
   data: Vacancy;
@@ -15,9 +16,8 @@ interface Props {
 export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => { // TODO Decompose this component
   const datePublished = new Date(data.datePublished);
   const distance = formatDistanceToNow(datePublished, { addSuffix: true, locale: ru });
-  const currencyFormatter = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: data.currency === 'RUR' ? 'RUB' : data.currency, minimumFractionDigits: 0, maximumFractionDigits: 0 }); // TODO Make formatter function for different currencies
-  const paymentFrom = currencyFormatter.format(data.paymentFrom || 0);
-  const paymentTo = currencyFormatter.format(data.paymentTo || 0);
+  const paymentFrom = data.paymentFrom ? formatNumberByCurrency(data.paymentFrom, data.currency) : null;
+  const paymentTo = data.paymentTo ? formatNumberByCurrency(data.paymentTo, data.currency) : null;
 
   const [isFavoriteState, setIsFavoriteState] = useState<boolean>(isFavorite); // TODO Delete this and create common state outside
 
@@ -37,7 +37,6 @@ export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => { //
       >
         <ToggleIconButton
           isToggled={isFavoriteState}
-
           onToggle={() => setIsFavoriteState(!isFavoriteState)}
           defaultIcon={<FavoriteBorder />}
           toggledIcon={<Favorite color='primary' />}
@@ -118,9 +117,7 @@ export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => { //
         justifyContent='space-between'
       >
         <CardContent>
-          {!data.paymentFrom && !data.paymentTo && 'Зарплата не указана'}
-          {data.paymentFrom ? <Typography whiteSpace='nowrap' textAlign='end'>от <b>{paymentFrom}</b></Typography> : ''}
-          {data.paymentTo ? <Typography whiteSpace='nowrap' textAlign='end'>до <b>{paymentTo}</b></Typography> : ''}
+          <VacancyPayment paymentFrom={paymentFrom} paymentTo={paymentTo} />
         </CardContent>
         <CardActions 
           css={css`

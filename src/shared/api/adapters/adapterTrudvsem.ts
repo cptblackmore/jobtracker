@@ -1,6 +1,7 @@
-import { Vacancy } from '@entities/VacancyCard';
+import { Vacancy } from '@shared/api';
 import { combineDutyAndReqToDesc, type VacancyTrudvsem } from '@shared/api/';
 import { toUpperCaseFirstLetter } from '@shared/lib';
+import { toRightCurrencyCode } from '@shared/lib/toRightCurrencyCode';
 import { convert } from 'html-to-text';
 
 export const adapterTrudvsem = (data: Array<VacancyTrudvsem>): Array<Vacancy> => {
@@ -19,7 +20,7 @@ export const adapterTrudvsem = (data: Array<VacancyTrudvsem>): Array<Vacancy> =>
       source: 'trudvsem',
       paymentFrom: vacancy.salary_min,
       paymentTo: vacancy.salary_max,
-      currency: 'RUB', // TODO Return vacancy.vacancy.currency after making formatting function
+      currency: toRightCurrencyCode(vacancy.currency),
       link: vacancy.vac_url,
       datePublished: new Date(vacancy['creation-date']).getTime()
     }

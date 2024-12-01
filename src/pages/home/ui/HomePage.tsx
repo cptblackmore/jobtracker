@@ -1,4 +1,4 @@
-import { Vacancy } from '@entities/VacancyCard';
+import { Vacancy } from '@shared/api';
 import { Box, Container, css } from '@mui/material';
 import { adapterHH, adapterSuperjob, adapterTrudvsem, useFetching, VacancyService } from '@shared/api';
 import { VacancyList } from '@widgets/VacancyList';

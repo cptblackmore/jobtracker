@@ -1,4 +1,5 @@
-import { Vacancy, VacancyCard } from "@entities/VacancyCard";
+import { VacancyCard } from "@entities/VacancyCard";
+import { Vacancy } from "@shared/api";
 import { Button, CircularProgress, css, Stack } from "@mui/material";
 
 interface Props {

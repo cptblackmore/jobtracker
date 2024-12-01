@@ -1,4 +1,4 @@
-import { Vacancy } from '@entities/VacancyCard';
+import { Vacancy } from "@shared/api";
 import type { VacancySuperjob } from '@shared/api/';
 
 export const adapterSuperjob = (data: Array<VacancySuperjob>): Array<Vacancy> => {
