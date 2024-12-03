@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { VacancySource, VacancyPayment } from '@entities/VacancyCard';
 import { Vacancy } from '@shared/api';
 import { ExpandableText, ToggleIconButton } from '@shared/ui';
-import { formatNumberByCurrency } from '@shared/lib/formatNumberByCurrency';
+import { formatNumberByCurrency } from '@shared/lib';
 
 interface Props {
   data: Vacancy;
@@ -26,117 +26,129 @@ export const VacancyCard: React.FC<Props> = ({ data, isFavorite=false }) => { //
       css={css`
         align-self: center;
         display: flex;
+        justify-content: space-between;
         width: 100%;
       `}
     >
-      <CardActions
-        css={css`
-        align-items: start;
-          padding-top: 1em;
-        `}
-      >
-        <ToggleIconButton
-          isToggled={isFavoriteState}
-          onToggle={() => setIsFavoriteState(!isFavoriteState)}
-          defaultIcon={<FavoriteBorder />}
-          toggledIcon={<Favorite color='primary' />}
-          defaultTooltip='Добавить в избранное'
-          toggledTooltip='Удалить из избранного'
-        />
-      </CardActions>
-      <Divider
-        orientation='vertical'
-        flexItem
-        variant='middle'
-      />
-      <Box>        
-        <CardHeader
+      <Box css={css`display: flex;`} >
+        <CardActions
           css={css`
-            padding-bottom: 0px;
-          `}
-          title={
-            <Typography 
-              variant='h5'
-              textAlign='start'
-              paddingLeft={1}
-            >
-              {data.profession}
-            </Typography>
-          }
-          subheader={
-            <Box
-              paddingLeft={1} 
-              textAlign='start'
-              display='flex'
-            >
-              <Typography>
-                {data.firmName}
-              </Typography>
-              <Divider 
-                css={css`
-                  margin-left: 1em;
-                  margin-right: 1em;
-                  `}
-                orientation='vertical' 
-                flexItem 
-              />
-              <Typography>
-                {data.town}
-              </Typography>
-            </Box>
-          }
-        />
-        <CardContent
-          css={css`
-            padding-bottom: 0.5em;
+          align-items: start;
+            padding-top: 1em;
           `}
         >
-          <ExpandableText
-            text={data.description}
-            maxLength={140}
+          <ToggleIconButton
+            isToggled={isFavoriteState}
+            onToggle={() => setIsFavoriteState(!isFavoriteState)}
+            defaultIcon={<FavoriteBorder />}
+            toggledIcon={<Favorite color='primary' />}
+            defaultTooltip='Добавить в избранное'
+            toggledTooltip='Удалить из избранного'
           />
-        </CardContent>
-        <CardActions>
-          <Typography 
-            paddingLeft={2}
-            display='flex'
-            gap='0.3em'
-          >
-            {distance} на <VacancySource source={data.source} />
-          </Typography>
         </CardActions>
-      </Box>
-      <Divider 
-        orientation='vertical' 
-        flexItem 
-        variant='middle' 
-      />
-      <Box  
-        display='flex'
-        flexDirection='column'
-        justifyContent='space-between'
-      >
-        <CardContent>
-          <VacancyPayment paymentFrom={paymentFrom} paymentTo={paymentTo} />
-        </CardContent>
-        <CardActions 
-          css={css`
-            justify-content: center;  
-          `}
-        >
-          <Link
-            href={data.link}
-            target='_blank'
-            rel='noopener'
+        <Divider
+          orientation='vertical'
+          flexItem
+          variant='middle'
+        />
+        <Box>        
+          <CardHeader
+            css={css`
+              padding-bottom: 0px;
+            `}
+            title={
+              <Typography 
+                variant='h5'
+                textAlign='start'
+                paddingLeft={1}
+              >
+                {data.profession}
+              </Typography>
+            }
+            subheader={
+              <Box
+                paddingLeft={1} 
+                textAlign='start'
+                display='flex'
+              >
+                <Typography>
+                  {data.firmName}
+                </Typography>
+                <Divider 
+                  css={css`
+                    margin-left: 1em;
+                    margin-right: 1em;
+                    `}
+                  orientation='vertical' 
+                  flexItem 
+                />
+                <Typography>
+                  {data.town}
+                </Typography>
+              </Box>
+            }
+          />
+          <CardContent
+            css={css`
+              padding-bottom: 0.5em;
+            `}
           >
-            <Button
-              variant='contained'
+            <ExpandableText
+              text={data.description}
+              options={{
+                minRows: 1,
+                maxRows: 3,
+                rowHeight: 24,
+                fadingColor: '255, 255, 255'
+              }}
+            />
+          </CardContent>
+          <CardActions>
+            <Typography 
+              paddingLeft={2}
+              display='flex'
+              gap='0.3em'
             >
-              Подробнее
-            </Button>
-          </Link>
-        </CardActions>
+              {distance} на <VacancySource source={data.source} />
+            </Typography>
+          </CardActions>
+        </Box>
       </Box>
+      
+      <Box css={css`display: flex;`} >
+        <Divider 
+          orientation='vertical' 
+          flexItem 
+          variant='middle' 
+        />
+        <Box  
+          display='flex'
+          flexDirection='column'
+          justifyContent='space-between'
+        >
+          <CardContent>
+            <VacancyPayment paymentFrom={paymentFrom} paymentTo={paymentTo} />
+          </CardContent>
+          <CardActions 
+            css={css`
+              justify-content: center;  
+            `}
+          >
+            <Link
+              href={data.link}
+              target='_blank'
+              rel='noopener'
+            >
+              <Button
+                variant='contained'
+              >
+                Подробнее
+              </Button>
+            </Link>
+          </CardActions>
+        </Box>
+      </Box>
+
     </Card>
   )
 }

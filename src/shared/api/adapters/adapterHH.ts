@@ -1,6 +1,5 @@
-import { Vacancy } from "@shared/api";
-import { combineDutyAndReqToDesc, type VacancyHH } from '@shared/api';
-import { toRightCurrencyCode } from '@shared/lib/toRightCurrencyCode';
+import { Vacancy, combineDutyAndReqToDesc, type VacancyHH } from "@shared/api";
+import { toRightCurrencyCode } from '@shared/lib';
 
 export const adapterHH = (data: Array<VacancyHH>): Array<Vacancy> => {
   return data.map(vacancy => {

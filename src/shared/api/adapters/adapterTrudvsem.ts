@@ -1,7 +1,5 @@
-import { Vacancy } from '@shared/api';
-import { combineDutyAndReqToDesc, type VacancyTrudvsem } from '@shared/api/';
-import { toUpperCaseFirstLetter } from '@shared/lib';
-import { toRightCurrencyCode } from '@shared/lib/toRightCurrencyCode';
+import { Vacancy, combineDutyAndReqToDesc, type VacancyTrudvsem } from '@shared/api/';
+import { toUpperCaseFirstLetter, toRightCurrencyCode } from '@shared/lib';
 import { convert } from 'html-to-text';
 
 export const adapterTrudvsem = (data: Array<VacancyTrudvsem>): Array<Vacancy> => {
