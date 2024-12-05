@@ -14,7 +14,8 @@ export const adapterSuperjob = (data: Array<VacancySuperjob>): Array<Vacancy> =>
       paymentTo: vacancy.payment_to,
       currency: vacancy.currency,
       link: vacancy.link,
-      datePublished: vacancy.date_published * 1000
+      datePublished: vacancy.date_published * 1000,
+      isFavorite: false
     }
   })
 }

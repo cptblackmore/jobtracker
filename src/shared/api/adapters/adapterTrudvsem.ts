@@ -20,7 +20,8 @@ export const adapterTrudvsem = (data: Array<VacancyTrudvsem>): Array<Vacancy> =>
       paymentTo: vacancy.salary_max,
       currency: toRightCurrencyCode(vacancy.currency),
       link: vacancy.vac_url,
-      datePublished: new Date(vacancy['creation-date']).getTime()
+      datePublished: new Date(vacancy['creation-date']).getTime(),
+      isFavorite: false
     }
   })
 }

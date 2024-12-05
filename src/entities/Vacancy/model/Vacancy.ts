@@ -10,4 +10,5 @@ export type Vacancy = {
   currency: string;
   link: string;
   datePublished: number;
+  isFavorite: boolean;
 }

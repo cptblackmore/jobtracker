@@ -14,7 +14,8 @@ export const adapterHH = (data: Array<VacancyHH>): Array<Vacancy> => {
       paymentTo: vacancy.salary?.to,
       currency: toRightCurrencyCode(vacancy.salary?.currency ?? 'RUB'),
       link: vacancy.alternate_url,
-      datePublished: Date.parse(vacancy.published_at)
+      datePublished: Date.parse(vacancy.published_at),
+      isFavorite: false
     }
   })
 }
