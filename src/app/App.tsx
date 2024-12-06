@@ -1,19 +1,13 @@
 import { CssBaseline } from '@mui/material'
-import { css, Global } from '@emotion/react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { HomePage } from '@pages/home'
+import { GlobalStyles } from './GlobalStyles'
 
-function App() {
+export const App = () => {
   return (
     <>
       <CssBaseline>
-          <Global 
-            styles={css`
-              body {
-                background-color:#36364d;
-              }
-            `}
-          />
+          <GlobalStyles />
           <BrowserRouter>
             <Routes>
               <Route path='/' element={<Navigate to='/home' />} />
@@ -22,7 +16,5 @@ function App() {
           </BrowserRouter>
       </CssBaseline>
     </>
-  )
+  );
 }
-
-export default App

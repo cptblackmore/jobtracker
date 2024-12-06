@@ -17,8 +17,8 @@
     }
   }
 
-  export const ExpandableText: React.FC<Props> = (
-    { text, options: {maxRows=3, minRows=1, rowHeight=24, fadingColor='255, 255, 255'} = {} }
+  export const ExpandableText: React.FC<Props> = ({ 
+    text, options: {maxRows=3, minRows=1, rowHeight=24, fadingColor='255, 255, 255'} = {} }
   ) => {
     const maxHeight = rowHeight * maxRows;
     const minHeight = rowHeight * minRows;

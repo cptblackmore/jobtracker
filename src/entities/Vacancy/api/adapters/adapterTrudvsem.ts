@@ -1,6 +1,8 @@
-import { Vacancy, combineDutyAndReqToDesc, type VacancyTrudvsem } from '@shared/api/';
 import { toUpperCaseFirstLetter, toRightCurrencyCode } from '@shared/lib';
 import { convert } from 'html-to-text';
+import { combineDutyAndReqToDesc } from './combineDutyAndReqToDesc';
+import { VacancyTrudvsem } from '../types/VacancyTrudvsem';
+import { Vacancy } from '@entities/Vacancy';
 
 export const adapterTrudvsem = (data: Array<VacancyTrudvsem>): Array<Vacancy> => {
   return data.map(item => {
@@ -23,5 +25,5 @@ export const adapterTrudvsem = (data: Array<VacancyTrudvsem>): Array<Vacancy> =>
       datePublished: new Date(vacancy['creation-date']).getTime(),
       isFavorite: false
     }
-  })
+  });
 }

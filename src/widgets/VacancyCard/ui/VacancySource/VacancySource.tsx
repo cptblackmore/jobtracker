@@ -24,4 +24,4 @@ export const VacancySource: React.FC<Props> = ({source}) => {
         <span>{source}</span>
       )
   }
-};
+}

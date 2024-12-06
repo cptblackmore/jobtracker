@@ -1,5 +1,5 @@
 import { FavoriteBorder, Favorite } from "@mui/icons-material";
-import { Vacancy } from "@shared/api";
+import { Vacancy } from "@entities/Vacancy";
 import { ToggleIconButton } from "@shared/ui";
 import { useState } from "react";
 
@@ -19,5 +19,5 @@ export const AddToFavorites: React.FC<Props> = ({ data }) => {
       defaultTooltip='Добавить в избранное'
       toggledTooltip='Удалить из избранного'
     />
-  )
-};
+  );
+}

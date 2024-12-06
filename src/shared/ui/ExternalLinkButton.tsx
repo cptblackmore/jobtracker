@@ -1,4 +1,4 @@
-import { Button, Link } from "@mui/material";
+import { Button, Link } from '@mui/material';
 
 interface Props {
   text: string;
@@ -11,4 +11,4 @@ export const ExternalLinkButton: React.FC<Props> = ({ text, link }) => {
       <Button variant='contained' >{text}</Button>
     </Link>
   );
-};
+}

@@ -1,4 +1,4 @@
-import getSymbolFromCurrency from "currency-symbol-map";
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 export function toRightCurrencyCode(currencyCode: string): string {
   switch (currencyCode) {

@@ -1,4 +1,4 @@
-import getSymbolFromCurrency from "currency-symbol-map";
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 export function formatNumberByCurrency(number: number, code: string): string {
   const numberFormatter = new Intl.NumberFormat('ru-RU', {minimumFractionDigits: 0, maximumFractionDigits: 0});

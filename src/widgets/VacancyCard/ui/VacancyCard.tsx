@@ -1,5 +1,5 @@
 import { Box, Card, Divider } from '@mui/material';
-import { Vacancy } from '@shared/api';
+import { Vacancy } from '@entities/Vacancy';
 import { vacancyCardStyle } from './styles';
 import { VacancyFeatures } from './VacancyFeatures';
 import { VacancyDetails } from './VacancyDetails';
@@ -23,4 +23,4 @@ export const VacancyCard: React.FC<Props> = ({ data }) => {
       </Box>
     </Card>
   );
-};
+}

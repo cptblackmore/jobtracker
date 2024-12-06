@@ -1,4 +1,4 @@
-import { AppBar, css, MenuItem, Stack, Typography } from "@mui/material";
+import { AppBar, css, MenuItem, Stack, Typography } from '@mui/material';
 
 interface Props {
   pages: Array<string>;
@@ -15,4 +15,4 @@ export const Header: React.FC<Props> = ({ pages }) => {
       </Stack>
     </AppBar>
   );
-};
+}

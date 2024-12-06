@@ -1,5 +1,5 @@
 import { Box, CardActions, CardContent } from '@mui/material';
-import { Vacancy } from '@shared/api';
+import { Vacancy } from '@entities/Vacancy';
 import { VacancyPayment } from './VacancyPayment';
 import { ExternalLinkButton } from '@shared/ui';
 import { formatNumberByCurrency } from '@shared/lib';
@@ -22,4 +22,4 @@ export const VacancyAdditional: React.FC<Props> = ({ data }) => {
       </CardActions>
     </Box>
   );
-};
+}

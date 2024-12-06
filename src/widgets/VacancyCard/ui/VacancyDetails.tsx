@@ -1,5 +1,5 @@
 import { Box, CardActions, CardContent, CardHeader, Divider, Typography as T } from '@mui/material';
-import { Vacancy } from '@shared/api';
+import { Vacancy } from '@entities/Vacancy';
 import { ExpandableText } from '@shared/ui';
 import { VacancySource } from './VacancySource/VacancySource';
 import { formatDistanceToNow } from 'date-fns';
@@ -40,4 +40,4 @@ export const VacancyDetails: React.FC<Props> = ({ data }) => {
       </CardActions>
     </Box>
   );
-};
+}

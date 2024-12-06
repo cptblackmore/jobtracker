@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useExpandable = () => {
   const [isFaded, setIsFaded] = useState(true);
@@ -14,5 +14,5 @@ export const useExpandable = () => {
     setIsFaded(true);
   }
 
-  return {isFaded, isExpanded, toggleCollapse, handleExited};
+  return {isFaded, isExpanded, toggleCollapse, handleExited}
 }

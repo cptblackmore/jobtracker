@@ -1,5 +1,5 @@
-import { Vacancy } from "@shared/api";
-import type { VacancySuperjob } from '@shared/api/';
+import { Vacancy } from '@entities/Vacancy'
+import { VacancySuperjob } from '../types/VacancySuperjob'
 
 export const adapterSuperjob = (data: Array<VacancySuperjob>): Array<Vacancy> => {
   return data.map(vacancy => {
@@ -17,5 +17,5 @@ export const adapterSuperjob = (data: Array<VacancySuperjob>): Array<Vacancy> =>
       datePublished: vacancy.date_published * 1000,
       isFavorite: false
     }
-  })
+  });
 }

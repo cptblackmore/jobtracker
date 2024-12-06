@@ -1,5 +1,7 @@
-import { Vacancy, combineDutyAndReqToDesc, type VacancyHH } from "@shared/api";
 import { toRightCurrencyCode } from '@shared/lib';
+import { combineDutyAndReqToDesc } from './combineDutyAndReqToDesc';
+import { Vacancy } from '@entities/Vacancy';
+import { VacancyHH } from '../types/VacancyHH';
 
 export const adapterHH = (data: Array<VacancyHH>): Array<Vacancy> => {
   return data.map(vacancy => {
@@ -17,5 +19,5 @@ export const adapterHH = (data: Array<VacancyHH>): Array<Vacancy> => {
       datePublished: Date.parse(vacancy.published_at),
       isFavorite: false
     }
-  })
+  });
 }

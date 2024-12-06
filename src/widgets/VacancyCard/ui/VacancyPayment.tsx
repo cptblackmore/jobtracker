@@ -13,4 +13,4 @@ export const VacancyPayment: React.FC<Props> = ({ paymentFrom, paymentTo }) => {
       {paymentTo ? <T whiteSpace='nowrap' textAlign='end' >до <b>{paymentTo}</b></T> : ''}
     </Box>
   );
-};
+}

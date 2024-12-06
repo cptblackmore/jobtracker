@@ -13,13 +13,14 @@ export class VacancyService {
     });
     return response.data.objects;  
   }
+  
   static async getHH(page = 0) {
     const response = await axios.get('http://localhost:3001/api/hh/vacancies', {
       params: {
         page,
         per_page: 10
       }
-    })
+    });
     return response.data.items;
   }
 
@@ -29,7 +30,7 @@ export class VacancyService {
         offset: page,
         limit: 10
       }
-    })
+    });
     return response.data.results.vacancies;
   }
 }

@@ -15,5 +15,5 @@ export const throttle = <T extends (...args: unknown[]) => unknown>(callback: T,
         callback();
       }, debounce);
     }
-  };
-};
+  }
+}
