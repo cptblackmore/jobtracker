@@ -1,18 +1,23 @@
-import { AppBar, css, MenuItem, Stack, Typography } from '@mui/material';
+import { AppBar, Container, Toolbar } from "@mui/material";
+import { useNavMenu } from "../model/useNavMenu";
+import { HeaderMd } from "./HeaderMd";
+import { HeaderXs } from "./HeaderXs";
 
 interface Props {
-  pages: Array<string>;
+  pages: Record<string, [string, string]>;
 }
 
 export const Header: React.FC<Props> = ({ pages }) => {
+  const { handleCloseNavMenu, handleOpenNavMenu, anchorElNav } = useNavMenu();
+
   return (
-    <AppBar position='sticky' css={css`display: flex; flex-direction: row; align-items: center; gap: 2em; padding: 0.5em; padding-left: 2em;`}>
-      <Typography variant='h4' height='100%' >jobtracker</Typography>
-      <Stack>
-        {pages.map((page) => (
-          <MenuItem key={page}>{page}</MenuItem>
-        ))}
-      </Stack>
+    <AppBar position="sticky">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <HeaderMd pages={pages} handleCloseNavMenu={handleCloseNavMenu} />
+          <HeaderXs pages={pages} handleCloseNavMenu={handleCloseNavMenu} handleOpenNavMenu={handleOpenNavMenu} anchorElNav={anchorElNav} />
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 }
