@@ -13,7 +13,7 @@ export const Header: React.FC<Props> = ({ pages }) => {
   return (
     <AppBar position="sticky">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters variant='dense' >
           <HeaderMd pages={pages} handleCloseNavMenu={handleCloseNavMenu} />
           <HeaderXs pages={pages} handleCloseNavMenu={handleCloseNavMenu} handleOpenNavMenu={handleOpenNavMenu} anchorElNav={anchorElNav} />
         </Toolbar>

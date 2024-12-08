@@ -11,8 +11,8 @@ interface Props {
 
 export const HeaderXs: React.FC<Props> = ({ pages, handleCloseNavMenu, handleOpenNavMenu, anchorElNav }) => {
   return (
-    <Box sx={{display: {xs: 'flex', md: 'none'}, justifyContent: 'space-between'}} >
-      <Box>
+    <Box sx={{display: {xs: 'flex', md: 'none'}, justifyContent: 'space-between', width: '100%'}} >
+      <Box flexGrow={1} >
         <IconButton
           size="large"
 
@@ -44,7 +44,9 @@ export const HeaderXs: React.FC<Props> = ({ pages, handleCloseNavMenu, handleOpe
           ))}
         </Menu>
       </Box>
-      <Logo titleSize="h5"/>
+      <Box flexGrow={1} display='flex' alignItems='center' >
+        <Logo titleSize="h5"/>
+      </Box>
     </Box>
   );
 };

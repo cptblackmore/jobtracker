@@ -15,7 +15,7 @@ export const HeaderMd: React.FC<Props> = ({ pages, handleCloseNavMenu }) => {
           <Button
             key={page[0]}
             onClick={handleCloseNavMenu}
-            sx={{ my: 2, color: 'white', display: 'block' }}
+            sx={{ my: 1, color: 'white', display: 'block' }}
             href={page[1]}
           >
             {page[0]}
