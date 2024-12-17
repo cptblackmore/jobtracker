@@ -1,12 +1,9 @@
 import axios from 'axios'
 
 export class VacancyService {
-  static async getSuperjob(page=0, count=10) {
+  static async getSuperjob(params) {
     const response = await axios.get('/superjob/2.0/vacancies/', {
-      params: {
-        page,
-        count: count
-      },
+      params,
       headers: {
         'X-Api-App-Id': 'v3.r.127820309.b68cc20ac962d5436d1f0f980e84fc6c604d5ded.c1c4d1a9f2ba2dc80ce328f4808fbe72d97346dd'
       }
@@ -14,22 +11,16 @@ export class VacancyService {
     return response.data.objects;  
   }
   
-  static async getHH(page = 0, count=10) {
+  static async getHH(params) {
     const response = await axios.get('http://localhost:3001/api/hh/vacancies', {
-      params: {
-        page,
-        per_page: count
-      }
+      params
     });
     return response.data.items;
   }
 
-  static async getTrudvsem(page = 0, count=10) {
+  static async getTrudvsem(params) {
     const response = await axios.get('https://opendata.trudvsem.ru/api/v1/vacancies', {
-      params: {
-        offset: page,
-        limit: count
-      }
+      params
     });
     return response.data.results.vacancies;
   }

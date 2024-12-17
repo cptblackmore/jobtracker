@@ -7,7 +7,7 @@ export const useVacancyList = (startPage=0, count=10) => {
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
   const vacancyIds = useRef<Set<string>>(new Set);
   const [fetchVacancies, isVacanciesLoading] = useFetching(async () => {
-    const newVacancies = await getVacancies(page, count);
+    const newVacancies = await getVacancies(page, count, {});
     const uniqueVacancies = newVacancies.filter((vacancy) => {
       if (!vacancyIds.current.has(vacancy.id)) {
         vacancyIds.current.add(vacancy.id);
