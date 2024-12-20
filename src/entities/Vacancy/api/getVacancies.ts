@@ -1,20 +1,20 @@
-import { Vacancy } from '@entities/Vacancy';
-import { VacancyService } from './VacancyService';
-import { adapterHH } from './adapters/adapterHH';
-import { adapterSuperjob } from './adapters/adapterSuperjob';
-import { adapterTrudvsem } from './adapters/adapterTrudvsem';
-import { paramsAdapter } from './adapters/paramsAdapter';
-import { VacancyFilters } from './types/VacancyFilters';
+import { Vacancy, VacancyParams, servicesRegistry } from '@entities/Vacancy';
+import { VacancyRequestService } from './VacancyRequestService';
 
-export const getVacancies = async (page: number, count: number, filters?: VacancyFilters): Promise<Vacancy[]> => {
-    const [responseSuperjob, responseHH, responseTrudvsem] = await Promise.all([
-      VacancyService.getSuperjob(paramsAdapter('superjob', page, count, filters)), 
-      VacancyService.getHH(paramsAdapter('hh', page, count, filters)), 
-      VacancyService.getTrudvsem(paramsAdapter('trudvsem', page, count, filters))
-    ]);
-    return [
-      ...adapterSuperjob(responseSuperjob),
-      ...adapterHH(responseHH),
-      ...adapterTrudvsem(responseTrudvsem)
-    ];
+export const getVacancies = async (params: VacancyParams): Promise<Vacancy[]> => {
+  const adapterSuperjob = servicesRegistry.superjob.adapter;
+  const adapterHH = servicesRegistry.hh.adapter;
+  const adapterTrudvsem = servicesRegistry.trudvsem.adapter;
+
+  const [responseSuperjob, responseHH, responseTrudvsem] = await Promise.all([
+    VacancyRequestService.getSuperjob(adapterSuperjob.adaptParams(params)), 
+    VacancyRequestService.getHH(adapterHH.adaptParams(params)), 
+    VacancyRequestService.getTrudvsem(adapterTrudvsem.adaptParams(params))
+  ]);
+
+  return [
+    ...adapterSuperjob.adaptVacancies(responseSuperjob),
+    ...adapterHH.adaptVacancies(responseHH),
+    ...adapterTrudvsem.adaptVacancies(responseTrudvsem)
+  ];
 }

@@ -10,7 +10,7 @@ interface Props {
 
 export const VacancyList: React.FC<Props> = ({ variant='default', href='' }) => {
   const count = variant === 'demo' ? 1 : 10;
-  const { page, setPage, vacancies, isVacanciesLoading } = useVacancyList(0, count);
+  const { page, setPage, vacancies, isVacanciesLoading } = useVacancyList({page: 0, count, filters: {}});
 
   return (
     <Stack direction='column' alignItems='center' spacing={1} css={vacancyListStyle} >

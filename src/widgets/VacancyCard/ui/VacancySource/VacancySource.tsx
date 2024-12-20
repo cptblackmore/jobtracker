@@ -1,27 +1,13 @@
-import { superjobIcon, trudvsemIcon, hhIcon } from '@shared/ui';
-import { sourceColorStyles, imgStyle, vacancySourceStyle } from './styles';
+import { servicesRegistry, Sources } from '@entities/Vacancy';
+import { imgStyle, vacancySourceStyle } from './styles';
 
 interface Props {
-  source: string;
+  source: Sources
 }
 
 export const VacancySource: React.FC<Props> = ({source}) => {
-  switch (source) {
-    case 'superjob':
-      return (
-        <span css={[vacancySourceStyle, sourceColorStyles.superjob]}>SuperJob <img src={superjobIcon} css={imgStyle}></img></span>
-      )
-    case 'hh':
-      return (
-        <span css={[vacancySourceStyle, sourceColorStyles.hh]}>HeadHunter <img src={hhIcon} css={imgStyle}></img></span>
-      )
-    case 'trudvsem':
-      return ( 
-        <span css={[vacancySourceStyle, sourceColorStyles.trudvsem]}>Работа России <img src={trudvsemIcon} css={imgStyle}></img></span>
-      )
-    default:
-      return (
-        <span>{source}</span>
-      )
-  }
+  const styles = servicesRegistry[source].styles
+  return (
+    <span css={[vacancySourceStyle, styles.color]} >{styles.name} <img src={styles.icon} css={imgStyle} /></span>
+  )
 }

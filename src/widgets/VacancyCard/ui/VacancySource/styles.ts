@@ -10,9 +10,3 @@ export const imgStyle = css`
   width: 1.1em;
   height: 1.1em;
 `;
-
-export const sourceColorStyles = {
-  superjob: css`color: #00AA87`,
-  hh: css`color: #D6001C`,
-  trudvsem: css`color: #004A97`
-};

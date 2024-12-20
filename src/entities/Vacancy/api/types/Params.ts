@@ -10,7 +10,7 @@ export interface SuperjobParams {
 
 export interface HHParams {
   page: number;
-  count: number;
+  per_page: number;
   text: string;
   salary: number | null;
   period: number;
