@@ -4,7 +4,7 @@ export const GlobalStyles: React.FC = () => {
   return (
     <Global styles={css`
       body {
-        background-color:#36364d;
+        background-color:#f5f4ff;
       }
     `} />
   );

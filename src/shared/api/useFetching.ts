@@ -1,19 +1,19 @@
 import { useState } from 'react'
 
-type UseFetching<T> = [
-  () => Promise<T>,
+type UseFetching<Args extends unknown[], T> = [
+  (...args: Args) => Promise<T>,
   boolean,
   string
 ]
 
-export const useFetching = <T>(callback: () => Promise<T>): UseFetching<T> => {
+export const useFetching = <T, Args extends unknown[] = []>(callback: (...args: Args) => Promise<T>): UseFetching<Args, T> => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const fetching = async (): Promise<T> => {
+  const fetching = async (...args: Args): Promise<T> => {
     try {
       setIsLoading(true);
-      const result = await callback();
+      const result = await callback(...args);
       return result;
     } catch (e) {
       if (typeof e === 'string') {
