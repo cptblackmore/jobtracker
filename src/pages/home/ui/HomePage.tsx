@@ -4,7 +4,6 @@ import { Header } from '@widgets/Header';
 import { containerStyles } from './styles';
 import { Contrast, FavoriteBorder, HowToReg, MoreHoriz, Search } from '@mui/icons-material';
 import { VacancyList } from '@widgets/VacancyList';
-import { Navigate } from 'react-router';
 
 export const HomePage: React.FC = () => {
   const pages: Record<string, [string, string]> = {

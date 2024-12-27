@@ -1,43 +1,43 @@
 import { VacancyCard } from '@widgets/VacancyCard';
-import { Box, Button, CircularProgress, Stack, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import { vacancyListStyle } from './styles';
 import { useVacancyList } from '../model/useVacancyList';
-import { Search } from '@mui/icons-material';
-import { useState } from 'react';
+import { VacancyFilter } from './VacancyFilter/VacancyFilter';
+import { VacancyParams } from '@entities/Vacancy';
 
 interface Props {
   variant?: 'default' | 'demo';
   href?: string;
+  initialFilters?: VacancyParams['filters'];
 }
 
-export const VacancyList: React.FC<Props> = ({ variant='default', href='' }) => {
-  const count = variant === 'demo' ? 1 : 10;
-  const [searchQuery, setSearchQuery] = useState('');
-  const { params, setPage, setFilters, vacancies, isVacanciesLoading } = useVacancyList({page: 0, count: 1, filters: {text: ''}});
+export const VacancyList: React.FC<Props> = ({ 
+  variant='default', 
+  href='/feed', 
+  initialFilters={text: '', period: 1}
+}) => {
+  const count = variant === 'demo' ? 1 : 5;
+  const { state, setPage, setFilters, isVacanciesLoading } = useVacancyList({page: 0, count, filters: initialFilters});
 
   return (
     <Box>
-      <Box sx={{display: 'flex', alignItems: 'center'}} >
-        <TextField 
-          label='Поиск вакансий по названию' 
-          variant='outlined' 
-          fullWidth 
-          size='small'
-          onChange={(e) => setSearchQuery(e.target.value)}
-          sx={{marginBottom: '0.5em'}} 
-        />
-        <Button variant='contained' sx={{height: '100%', marginLeft: '0.5em'}} onClick={() => setFilters({text: searchQuery})} >
-          <Search sx={{width: '100%'}} />
-        </Button>
-      </Box>
+      {variant === 'default' && (
+        <VacancyFilter filters={state.params.filters} setFilters={setFilters} />
+      )}
       <Stack direction='column' alignItems='center' spacing={1} css={vacancyListStyle} >
-        {vacancies.map((data, i) => (
+        {state.vacancies.map((data, i) => (
           <VacancyCard key={i} data={data} />
         ))}
         {isVacanciesLoading && (
           <CircularProgress size='5em' />
         )}
-        <Button variant='contained' href={href} onClick={() => setPage(params.page + 1)} >Показать ещё</Button>
+        <Box paddingTop={1} >
+          {variant === 'default' ? (
+            <Button variant='contained' onClick={() => setPage(state.params.page + 1)} >Показать ещё</Button>
+          ) : (
+            <Button variant='contained' href={href} >Найти больше</Button>
+          )}
+        </Box>
       </Stack>
     </Box>
   );

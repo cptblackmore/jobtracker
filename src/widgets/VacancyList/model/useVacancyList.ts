@@ -40,10 +40,9 @@ export const useVacancyList = (initialParams: VacancyParams) => {
   }, [])
 
   return {
-    params: state.params,
-    vacancies: state.vacancies, 
+    state,
     isVacanciesLoading,
     setPage: (page: number) => dispatch({type: 'SET_PAGE', page}),
     setFilters: (filters: VacancyParams['filters']) => dispatch({type: 'SET_FILTERS', filters})
-  }
+  };
 }

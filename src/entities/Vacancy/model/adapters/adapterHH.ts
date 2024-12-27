@@ -10,8 +10,9 @@ export const adapterHH = {
       page: params.page,
       per_page: params.count,
       text: params.filters?.text ?? '',
-      salary: params.filters?.salary ? (params.filters.salary.from + params.filters.salary.to) / 2 : null,
-      period: params.filters?.period ?? 1
+      salary: (((params.filters.salary?.from ?? 0) + (params.filters.salary?.to ?? 0)) / 2) || null,
+      only_with_salary: (params.filters?.salary?.from || params.filters?.salary?.to) ? true : false,
+      period: (params.filters?.period === 0 ? 99 : params.filters?.period) ?? 1
     }
   },
   adaptVacancies(data: Array<VacancyHH>): Array<Vacancy> { 

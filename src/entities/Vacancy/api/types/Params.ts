@@ -5,7 +5,7 @@ export interface SuperjobParams {
   payment_from: number | null;
   payment_to: number | null;
   no_agreement: 0 | 1;
-  period: number;
+  period: 0 | 1 | 3 | 7;
 }
 
 export interface HHParams {
@@ -13,7 +13,8 @@ export interface HHParams {
   per_page: number;
   text: string;
   salary: number | null;
-  period: number;
+  only_with_salary: boolean;
+  period: 99 | 1 | 3 | 7;
 }
 
 export interface TrudvsemParams {

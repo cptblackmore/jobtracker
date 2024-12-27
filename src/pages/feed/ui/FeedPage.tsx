@@ -15,7 +15,7 @@ export const FeedPage: React.FC = () => {
       <Header pages={pages} />
       <Container maxWidth='lg' css={containerStyles} >
         <Box maxWidth='md'>
-          <VacancyList />
+          <VacancyList/>
         </Box>
       </Container>
     </Box>

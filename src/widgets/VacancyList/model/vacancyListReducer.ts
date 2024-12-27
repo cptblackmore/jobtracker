@@ -3,7 +3,7 @@ import { Vacancy, VacancyParams } from "@entities/Vacancy";
 export type ActionVacancies = 'SET_VACANCIES' | 'ADD_VACANCIES';
 
 export type Action = 
-  | {type: 'SET_PAGE', page: number}
+  | {type: 'SET_PAGE', page: VacancyParams['page']}
   | {type: 'SET_FILTERS', filters: VacancyParams['filters']}
   | {type: ActionVacancies, vacancies: Array<Vacancy>}
 

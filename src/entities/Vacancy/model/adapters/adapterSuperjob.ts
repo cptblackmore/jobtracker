@@ -10,7 +10,7 @@ export const adapterSuperjob = {
       keyword: params.filters?.text ?? '',
       payment_from: params.filters?.salary?.from ?? null,
       payment_to: params.filters?.salary?.to ?? null,
-      no_agreement: params.filters?.salary ? 1 : 0,
+      no_agreement: (params.filters?.salary?.from || params.filters?.salary?.to) ? 1 : 0,
       period: params.filters?.period ?? 1
     }
   },
