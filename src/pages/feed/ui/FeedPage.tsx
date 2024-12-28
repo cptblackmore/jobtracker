@@ -7,7 +7,8 @@ import { containerStyles } from './styles';
 export const FeedPage: React.FC = () => {
   const pages: Record<string, [string, string]> = {
     home: ['Главная', '/home'],
-    feed: ['Вакансии', '/feed']
+    feed: ['Вакансии', '/feed'],
+    favorites: ['Избранное', '/favorites']
   }; // TODO Replace this with context or something
 
   return (

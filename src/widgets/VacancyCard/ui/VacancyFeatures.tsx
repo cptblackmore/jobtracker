@@ -1,4 +1,4 @@
-import { AddToFavorites } from '@features/AddToFavorites';
+import { FavoriteIconButton } from '@features/Favorites';
 import { CardActions } from '@mui/material';
 import { vacancyFeaturesStyle } from './styles';
 import { Vacancy } from '@entities/Vacancy';
@@ -10,7 +10,7 @@ interface Props {
 export const VacancyFeatures: React.FC<Props> = ({ data }) => {
   return (
     <CardActions css={vacancyFeaturesStyle} >
-      <AddToFavorites data={data} />
+      <FavoriteIconButton data={data} />
     </CardActions>
   );
 }
