@@ -3,13 +3,14 @@ import { HHParams, SuperjobParams, TrudvsemParams } from './types/Params';
 
 export class VacancyRequestService {
   static async getSuperjob(params: SuperjobParams) {
-    const response = await axios.get('/superjob/2.0/vacancies/', {
-      params,
-      headers: {
-        'X-Api-App-Id': 'v3.r.127820309.b68cc20ac962d5436d1f0f980e84fc6c604d5ded.c1c4d1a9f2ba2dc80ce328f4808fbe72d97346dd'
-      }
+    const response = await axios.get('http://localhost:3001/api/superjob/vacancies/', {
+      params
     });
     return response.data.objects;  
+  }
+  static async getSuperjobById(id: string) {
+    const response = await axios.get('http://localhost:3001/api/superjob/vacancies/' + id);
+    return response.data;
   }
   
   static async getHH(params: HHParams) {
@@ -18,11 +19,19 @@ export class VacancyRequestService {
     });
     return response.data.items;
   }
-
+  static async getHHById(id: string) {
+    const response = await axios.get('http://localhost:3001/api/hh/vacancies/' + id);
+    return response.data;
+  }
+  
   static async getTrudvsem(params: TrudvsemParams) {
     const response = await axios.get('https://opendata.trudvsem.ru/api/v1/vacancies', {
       params
     });
     return response.data.results.vacancies;
+  }
+  static async getTrudvsemById(companyId: string, id: string) {
+    const response = await axios.get(`https://opendata.trudvsem.ru/api/v1/vacancies/vacancy/${companyId}/${id}`);
+    return response.data.results.vacancies[0].vacancy;
   }
 }

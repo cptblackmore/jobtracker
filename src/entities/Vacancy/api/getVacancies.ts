@@ -7,7 +7,7 @@ export const getVacancies = async (params: VacancyParams): Promise<Vacancy[]> =>
   const adapterTrudvsem = servicesRegistry.trudvsem.adapter;
 
   const [responseSuperjob, responseHH, responseTrudvsem] = await Promise.all([
-    VacancyRequestService.getSuperjob(adapterSuperjob.adaptParams(params)), 
+    VacancyRequestService.getSuperjob(adapterSuperjob.adaptParams(params)),
     VacancyRequestService.getHH(adapterHH.adaptParams(params)), 
     VacancyRequestService.getTrudvsem(adapterTrudvsem.adaptParams(params))
   ]);

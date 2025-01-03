@@ -1,8 +1,8 @@
-export interface VacancyTrudvsem {
-  vacancy: Vacancy;
+export interface VacancyTrudvsemResponse {
+  vacancy: VacancyTrudvsem;
 }
 
-export interface Vacancy {
+export interface VacancyTrudvsem {
   id:               string;
   source:           string;
   region:           Region;

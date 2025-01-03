@@ -10,7 +10,7 @@ export default defineConfig({
       '/superjob': { // Локальный префикс для запросов
         target: 'https://api.superjob.ru', // Базовый адрес API
         changeOrigin: true, // Меняет Origin запроса на целевой адрес
-        rewrite: (path) => path.replace(/^\/superjob/, ''), // Убирает префикс /api
+        rewrite: (path) => { console.log(path); return path.replace(/^\/superjob/, '')}, // Убирает префикс /api
         secure: true, // Используем HTTPS
       },
       '/hh': {

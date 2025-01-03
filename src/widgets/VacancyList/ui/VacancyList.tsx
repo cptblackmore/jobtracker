@@ -25,8 +25,8 @@ export const VacancyList: React.FC<Props> = ({
         <VacancyFilter filters={state.params.filters} setFilters={setFilters} />
       )}
       <Stack direction='column' alignItems='center' spacing={1} css={vacancyListStyle} >
-        {state.vacancies.map((data, i) => (
-          <VacancyCard key={i} data={data} />
+        {state.vacancies.map((data) => (
+          <VacancyCard key={data.id} data={data} />
         ))}
         {isVacanciesLoading && (
           <CircularProgress size='5em' />

@@ -1,8 +1,9 @@
 import { toRightCurrencyCode } from '@shared/lib';
 import { combineDutyAndReqToDesc } from './combineDutyAndReqToDesc';
 import { Vacancy, VacancyParams } from '@entities/Vacancy';
-import { VacancyHH } from '../../api/types/VacancyHH';
+import { VacancyHH, VacancyHHById } from '../../api/types/VacancyHH';
 import { HHParams } from '../../api/types/Params';
+import { convert } from 'html-to-text';
 
 export const adapterHH = {
   adaptParams(params: VacancyParams): HHParams {
@@ -18,7 +19,7 @@ export const adapterHH = {
   adaptVacancies(data: Array<VacancyHH>): Array<Vacancy> { 
     return data.map(vacancy => {
       return {
-        id: 'hh-' + vacancy.id,
+        id: 'hh_' + vacancy.id,
         profession: vacancy.name,
         firmName: vacancy.employer.name,
         town: vacancy.area.name,
@@ -32,5 +33,22 @@ export const adapterHH = {
         isFavorite: false
       }
     });
+  },
+
+  adaptVacancy(vacancy: VacancyHHById): Vacancy {
+    return {
+      id: 'hh_' + vacancy.id,
+      profession: vacancy.name,
+      firmName: vacancy.employer.name,
+      town: vacancy.area.name,
+      description: convert(vacancy.description),
+      source: 'hh',
+      paymentFrom: vacancy.salary?.from,
+      paymentTo: vacancy.salary?.to,
+      currency: toRightCurrencyCode(vacancy.salary?.currency ?? 'RUB'),
+      link: vacancy.alternate_url,
+      datePublished: Date.parse(vacancy.published_at),
+      isFavorite: false
+    }
   }
 }

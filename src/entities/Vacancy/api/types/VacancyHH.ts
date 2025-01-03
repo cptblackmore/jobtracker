@@ -98,3 +98,7 @@ export interface Snippet {
     requirement:    null | string;
     responsibility: null | string;
 }
+
+export interface VacancyHHById extends Omit<VacancyHH, 'description'>{
+    description: string;
+}
