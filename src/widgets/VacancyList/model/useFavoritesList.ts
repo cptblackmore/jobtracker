@@ -1,36 +1,37 @@
 import { Vacancy } from "@entities/Vacancy";
 import { getVacancyById } from "@entities/Vacancy/api/getVacancyById";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useFavoritesList = (ids: Array<string>): {vacancies: Vacancy[], isLoading: boolean} => {
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const isFirstRender = useRef(true);
-  const isDoubleRender = useRef(true); // TODO Remove it before release
-  const fetchVacancies = async () => {
-    setIsLoading(true);
-    const promises = ids.map(async (id) => {
-      try {
-        const fetchedVacancy = await getVacancyById(id);
-        setVacancies((prev) => [...prev, fetchedVacancy]);
-      } catch (error) {
-        console.error(`Failed to fetch vacancy with id ${id}`, error);
-      }
-    });
-    await Promise.allSettled(promises);
-    setIsLoading(false);
-  };
-
+  
   useEffect(() => {
-    if (!isFirstRender.current) {
-      isDoubleRender.current = false;
-    } else {
-      isFirstRender.current = false;
-      if (ids.length > 0) {
-        fetchVacancies();
-      }
-    }
+    let isCancelled = false;
+    
+    const fetchVacancies = async () => {
+      setIsLoading(true);
+      setVacancies([]);
+
+      const promises = ids.map(async (id) => {
+        if (isCancelled) return;
+        try {
+          const fetchedVacancy = await getVacancyById(id);
+          if (!isCancelled) setVacancies((prev) => [...prev, fetchedVacancy]);
+        } catch (e) {
+          console.error(`Failed to fetch vacancy with id ${id}`, e);
+        }
+      });
+      if (!isCancelled) await Promise.allSettled(promises);
+      if (!isCancelled) setIsLoading(false);
+    };
+
+    fetchVacancies();
+
+    return () => {
+      isCancelled = true;
+    };
   }, [ids]);
 
-  return {vacancies, isLoading};
+  return { vacancies, isLoading };
 }

@@ -1,5 +1,6 @@
-import { Box, Button } from "@mui/material";
-import { Logo } from "@widgets/Logo";
+import { Box, Button } from '@mui/material';
+import { Logo } from '@widgets/Logo';
+import { Link as RouterLink } from 'react-router';
 
 interface Props {
   pages: Record<string, [string, string]>;
@@ -15,8 +16,9 @@ export const HeaderMd: React.FC<Props> = ({ pages, handleCloseNavMenu }) => {
           <Button
             key={page[0]}
             onClick={handleCloseNavMenu}
+            component={RouterLink}
+            to={page[1]}
             sx={{ my: 1, color: 'white', display: 'block' }}
-            href={page[1]}
           >
             {page[0]}
           </Button>

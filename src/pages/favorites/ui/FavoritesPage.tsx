@@ -1,17 +1,26 @@
 import { Box, Container, Typography as T } from "@mui/material";
 import { Favorite } from '@mui/icons-material';
 import { Header } from "@widgets/Header";
-import { getFavorites } from "@features/Favorites";
+import { FavoritesContext, getFavorites } from "@features/Favorites";
 import { FavoritesList } from "@widgets/VacancyList/ui/FavoritesList";
+import { useContext, useEffect, useState } from "react";
+import { observer } from "mobx-react-lite";
 
-export const FavoritesPage: React.FC = () => {
+export const FavoritesPage: React.FC = observer(() => {
   const pages: Record<string, [string, string]> = {
     home: ['Главная', '/home'],
     feed: ['Вакансии', '/feed'],
     favorites: ['Избранное', '/favorites']
   }; // TODO Replace this with context or something
 
-  const savedVacancyIds = getFavorites();
+  const [savedVacancyIds, setSavedVacancyIds] = useState(getFavorites());
+  const { favoritesStore } = useContext(FavoritesContext);
+
+  useEffect(() => {
+    if (favoritesStore.isSynced) {
+      setSavedVacancyIds(getFavorites());
+    }
+  }, [favoritesStore.isSynced]);
 
   return (
     <Box>
@@ -33,4 +42,4 @@ export const FavoritesPage: React.FC = () => {
       </Container>
     </Box>
   );
-};
+});

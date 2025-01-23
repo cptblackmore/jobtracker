@@ -1,6 +1,7 @@
-import { Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Logo } from "@widgets/Logo";
+import { Logo } from '@widgets/Logo';
+import { Link as RouterLink } from 'react-router';
 
 interface Props {
   pages: Record<string, [string, string]>;
@@ -39,7 +40,7 @@ export const HeaderXs: React.FC<Props> = ({ pages, handleCloseNavMenu, handleOpe
         >
           {Object.values(pages).map((page) => (
             <MenuItem key={page[0]} onClick={handleCloseNavMenu} href={page[1]} >
-              <Button href={page[1]} sx={{ textAlign: 'center' }}>{page[0]}</Button>
+              <Button component={RouterLink} to={page[1]} sx={{ textAlign: 'center' }}>{page[0]}</Button>
             </MenuItem>
           ))}
         </Menu>
