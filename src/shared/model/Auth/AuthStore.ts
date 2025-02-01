@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { UserData, AuthResponse } from '@shared/model';
+import { UserData, AuthResponse, AlertsStore, createAlert } from '@shared/model';
 import { AuthService } from '@shared/api';
 import axios from 'axios';
 
@@ -7,8 +7,10 @@ export class AuthStore {
   user = {} as UserData;
   isAuth = false;
   isLoading = false;
+  private alertStore: AlertsStore;
 
-  constructor() {
+  constructor(alertsStore: AlertsStore) {
+    this.alertStore = alertsStore;
     makeAutoObservable(this);
   }
 
@@ -31,11 +33,9 @@ export class AuthStore {
       localStorage.setItem('token', response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.userDto);
-
-      window.dispatchEvent(new Event('userLoggedIn'));
     } catch (e) {
       if (e instanceof Error) {
-        console.log(e.message);
+        this.alertStore.addAlert(createAlert(e.message, 'error'));
       }
     } finally {
       this.setLoading(false);
@@ -49,11 +49,10 @@ export class AuthStore {
       localStorage.setItem('token', response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.userDto);
-
-      window.dispatchEvent(new Event('userLoggedIn'));
+      this.alertStore.addAlert(createAlert(`Регистрация прошла успешно. На вашу почту ${response.data.userDto.email} отправлено письмо для подтверждения.`, 'warning'));
     } catch (e) {
       if (e instanceof Error) {
-        console.log(e.message);
+        this.alertStore.addAlert(createAlert(e.message, 'error'));
       }
     } finally {
       this.setLoading(false);
@@ -66,8 +65,6 @@ export class AuthStore {
       localStorage.removeItem('token');
       this.setAuth(false);
       this.setUser({} as UserData);
-
-      window.dispatchEvent(new Event('userLoggedOut'));
     } catch (e) {
       if (e instanceof Error) {
         console.log(e.message);
@@ -84,8 +81,6 @@ export class AuthStore {
       localStorage.setItem('token', response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.userDto);
-
-      window.dispatchEvent(new Event('userLoggedIn'));
     } catch (e) {
       if (e instanceof Error) {
         console.log(e.message);

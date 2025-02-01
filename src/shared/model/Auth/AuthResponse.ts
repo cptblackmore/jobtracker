@@ -1,4 +1,4 @@
-import { UserData } from './UserData';
+import { UserData } from '../types/UserData';
 
 export interface AuthResponse {
   accessToken: string,
