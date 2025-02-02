@@ -1,47 +1,50 @@
 import { getVacancies, Vacancy, VacancyParams } from "@entities/Vacancy";
-import { useFetching } from "@shared/api";
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { ActionVacancies, vacancyListReducer } from "./vacancyListReducer";
 
 export const useVacancyList = (initialParams: VacancyParams) => {
   const [state, dispatch] = useReducer(vacancyListReducer, {params: initialParams, vacancies: []});
   const vacancyIds = useRef<Set<string>>(new Set);
-  const isFirstRender = useRef(true);
-  const isDoubleRender = useRef(true); // TODO Remove it before release
-  
-  const [fetchVacancies, isVacanciesLoading] = useFetching(async (type: ActionVacancies) => {
-    const newVacancies: Array<Vacancy> = await getVacancies(state.params);
-    const uniqueVacancies: Array<Vacancy> = newVacancies.filter((vacancy) => {
-      if (!vacancyIds.current.has(vacancy.id)) {
-        vacancyIds.current.add(vacancy.id);
-        return true;
-      }
-      return false;
-    });
-    dispatch({type, vacancies: uniqueVacancies});
-  });
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const [previousPage, setPreviousPage] = useState(initialParams.page);
+
   useEffect(() => {
-    if (isFirstRender.current || isDoubleRender.current) return;
-    fetchVacancies('ADD_VACANCIES');
-  }, [state.params.page])
-  useEffect(() => {
-    vacancyIds.current.clear();
-    if (isFirstRender.current || isDoubleRender.current) return;
-    fetchVacancies('SET_VACANCIES');
-  }, [state.params.filters])
-  useEffect(() => {
-    if (!isFirstRender.current) {
-      isDoubleRender.current = false;
+    let isCancelled = false;
+
+    const fetchVacancies = async (type: ActionVacancies) => {
+      setIsLoading(true);
+
+      if (isCancelled) return;
+      const newVacancies: Array<Vacancy> = await getVacancies(state.params);
+      if (isCancelled) return;
+      const uniqueVacancies: Array<Vacancy> = newVacancies.filter((vacancy) => {
+        if (!vacancyIds.current.has(vacancy.id)) {
+          vacancyIds.current.add(vacancy.id);
+          return true;
+        }
+        return false;
+      });
+      if (isCancelled) return;
+      dispatch({type, vacancies: uniqueVacancies});
+      setIsLoading(false);
+    }
+
+    if (previousPage !== state.params.page) {
+      setPreviousPage(state.params.page);
+      fetchVacancies('ADD_VACANCIES');
     } else {
-      isFirstRender.current = false;
+      vacancyIds.current.clear();
       fetchVacancies('SET_VACANCIES');
     }
-  }, [])
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [state.params.filters, state.params.page])
 
   return {
     state,
-    isVacanciesLoading,
+    isLoading,
     setPage: (page: number) => dispatch({type: 'SET_PAGE', page}),
     setFilters: (filters: VacancyParams['filters']) => dispatch({type: 'SET_FILTERS', filters})
   };

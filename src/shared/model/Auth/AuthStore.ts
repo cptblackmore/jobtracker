@@ -7,6 +7,7 @@ export class AuthStore {
   user = {} as UserData;
   isAuth = false;
   isLoading = false;
+  isModalOpen = false;
   private alertStore: AlertsStore;
 
   constructor(alertsStore: AlertsStore) {
@@ -26,6 +27,10 @@ export class AuthStore {
     this.isLoading = bool;
   }
 
+  setModalOpen(bool: boolean) {
+    this.isModalOpen = bool;
+  }
+
   async login(email: string, password: string) {
     this.setLoading(true);
     try {
@@ -33,6 +38,7 @@ export class AuthStore {
       localStorage.setItem('token', response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.userDto);
+      this.setModalOpen(false);
     } catch (e) {
       if (e instanceof Error) {
         this.alertStore.addAlert(createAlert(e.message, 'error'));
@@ -50,6 +56,7 @@ export class AuthStore {
       this.setAuth(true);
       this.setUser(response.data.userDto);
       this.alertStore.addAlert(createAlert(`Регистрация прошла успешно. На вашу почту ${response.data.userDto.email} отправлено письмо для подтверждения.`, 'warning'));
+      this.setModalOpen(false);
     } catch (e) {
       if (e instanceof Error) {
         this.alertStore.addAlert(createAlert(e.message, 'error'));

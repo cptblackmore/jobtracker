@@ -1,12 +1,19 @@
 import { FavoritesContext, favoritesStore } from '@features/Favorites';
 import { AuthContext, authStore } from '@shared/model';
 import { AlertsContext, alertsStore } from '@shared/model';
+import { useEffect } from 'react';
 
 interface Props {
   children: React.ReactNode;
 }
 
 export const StoresProvider: React.FC<Props> = ({ children }) => {
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      authStore.checkAuth();
+    }
+  }, [])
+
   return (
     <AlertsContext.Provider value={{ alertsStore }} >
       <AuthContext.Provider value={{ authStore }} >

@@ -17,7 +17,7 @@ export const VacancyList: React.FC<Props> = ({
   initialFilters={text: '', period: 1}
 }) => {
   const count = variant === 'demo' ? 1 : 5;
-  const { state, setPage, setFilters, isVacanciesLoading } = useVacancyList({page: 0, count, filters: initialFilters});
+  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count, filters: initialFilters});
 
   return (
     <Box>
@@ -28,7 +28,7 @@ export const VacancyList: React.FC<Props> = ({
         {state.vacancies.map((data) => (
           <VacancyCard key={data.id} data={data} />
         ))}
-        {isVacanciesLoading && (
+        {isLoading && (
           <CircularProgress size='5em' />
         )}
         <Box paddingTop={1} >
