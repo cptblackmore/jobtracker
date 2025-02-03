@@ -7,12 +7,6 @@ import { useContext, useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 
 export const FavoritesPage: React.FC = observer(() => {
-  const pages: Record<string, [string, string]> = {
-    home: ['Главная', '/home'],
-    feed: ['Вакансии', '/feed'],
-    favorites: ['Избранное', '/favorites']
-  }; // TODO Replace this with context or something
-
   const [savedVacancyIds, setSavedVacancyIds] = useState(getFavorites());
   const { favoritesStore } = useContext(FavoritesContext);
 
@@ -24,7 +18,7 @@ export const FavoritesPage: React.FC = observer(() => {
 
   return (
     <Box>
-      <Header pages={pages} />
+      <Header />
       <Container maxWidth="md">
         <Box sx={{ padding: 3 }}>
           <T variant="h4" gutterBottom display='flex' alignItems='center' justifyContent='center' >

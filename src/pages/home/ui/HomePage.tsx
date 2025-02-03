@@ -6,15 +6,9 @@ import { Contrast, FavoriteBorder, HowToReg, MoreHoriz, Search } from '@mui/icon
 import { VacancyList } from '@widgets/VacancyList';
 
 export const HomePage: React.FC = () => {
-  const pages: Record<string, [string, string]> = {
-    home: ['Главная', '/home'],
-    feed: ['Вакансии', '/feed'],
-    favorites: ['Избранное', '/favorites']
-  }; // TODO Replace this with context or something
-
   return (
     <Box>
-      <Header pages={pages} />
+      <Header />
       <Container maxWidth='lg' css={containerStyles} >
         <Box maxWidth='md' paddingTop='1em' >
           <Card sx={{paddingLeft: '1em', paddingRight: '1em'}} >

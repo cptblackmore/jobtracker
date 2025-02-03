@@ -3,13 +3,12 @@ import { useNavMenu } from '../model/useNavMenu';
 import { HeaderMd } from './HeaderMd';
 import { HeaderXs } from './HeaderXs';
 import { AuthButton } from './AuthButton';
+import { useContext } from 'react';
+import { PagesContext } from '@shared/lib/PagesContext';
 
-interface Props {
-  pages: Record<string, [string, string]>;
-}
-
-export const Header: React.FC<Props> = ({ pages }) => {
+export const Header: React.FC = () => {
   const { handleCloseNavMenu, handleOpenNavMenu, anchorElNav } = useNavMenu();
+  const pages = useContext(PagesContext);
 
   return (
     <AppBar position="sticky">
