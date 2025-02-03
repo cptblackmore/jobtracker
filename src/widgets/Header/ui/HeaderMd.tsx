@@ -13,15 +13,17 @@ export const HeaderMd: React.FC<Props> = ({ pages, handleCloseNavMenu }) => {
       <Logo/>
       <Box sx={{ display: 'flex' }}>
         {Object.values(pages).map((page) => (
-          <Button
-            key={page[0]}
-            onClick={handleCloseNavMenu}
-            component={RouterLink}
-            to={page[1]}
-            sx={{ my: 1, color: 'white', display: 'block' }}
-          >
-            {page[0]}
-          </Button>
+          page[0] && (
+            <Button
+              key={page[0]}
+              onClick={handleCloseNavMenu}
+              component={RouterLink}
+              to={page[1]}
+              sx={{ my: 1, color: 'white', display: 'block' }}
+            >
+              {page[0]}
+            </Button>
+          )
         ))}
       </Box>
     </Box>
