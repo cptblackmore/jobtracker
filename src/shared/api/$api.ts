@@ -16,13 +16,14 @@ $api.interceptors.response.use(config => {
   return config;
 }, async (error) => {
   const originalRequest = error.config;
-  const networkError = error.code === 'ERR_NETWORK';
+
+  if (!error.response) {
+    throw new Error('Ошибка сети. Проверьте подключение или попробуйте позже.');
+  }
+
   const { code, message } = error.response.data;
   const status = error.response.status;
 
-  if (networkError) {
-    throw new Error('Ошибка сети. Проверьте подключение или попробуйте позже.');
-  }
 
   if (code === 'UNAUTHORIZED') {
     if (originalRequest && !originalRequest._isRetry) {
