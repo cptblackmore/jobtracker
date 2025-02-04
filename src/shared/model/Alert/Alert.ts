@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 interface BaseAlert {
   id: string;
   message: string;
+  duration?: number;
 }
 
 export interface Success extends BaseAlert {
@@ -23,9 +24,10 @@ export interface Error extends BaseAlert {
 
 export type Alert = Success | Info | Warning | Error;
 
-export const createAlert = (message: string, severity: Alert['severity']): Alert =>
+export const createAlert = (message: string, severity: Alert['severity'], duration?: number): Alert =>
   ({
     id: nanoid(),
     message,
-    severity
+    severity,
+    duration
   } as Alert);

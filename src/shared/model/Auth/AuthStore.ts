@@ -6,12 +6,13 @@ import axios from 'axios';
 export class AuthStore {
   user = {} as UserData;
   isAuth = false;
+  isActivated = false;
   isLoading = false;
   isModalOpen = false;
-  private alertStore: AlertsStore;
+  private alertsStore: AlertsStore;
 
   constructor(alertsStore: AlertsStore) {
-    this.alertStore = alertsStore;
+    this.alertsStore = alertsStore;
     makeAutoObservable(this);
   }
 
@@ -27,6 +28,10 @@ export class AuthStore {
     this.isLoading = bool;
   }
 
+  setActivated(bool: boolean) {
+    this.isActivated = bool;
+  }
+
   setModalOpen(bool: boolean) {
     this.isModalOpen = bool;
   }
@@ -36,12 +41,16 @@ export class AuthStore {
     try {
       const response = await AuthService.login(email, password);
       localStorage.setItem('token', response.data.accessToken);
+      this.setActivated(response.data.userDto.isActivated);
       this.setAuth(true);
       this.setUser(response.data.userDto);
       this.setModalOpen(false);
+      if (!this.isActivated) {
+      this.alertsStore.addAlert(createAlert('Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 'warning', 10000));
+      }
     } catch (e) {
       if (e instanceof Error) {
-        this.alertStore.addAlert(createAlert(e.message, 'error'));
+        this.alertsStore.addAlert(createAlert(e.message, 'error'));
       }
     } finally {
       this.setLoading(false);
@@ -55,11 +64,11 @@ export class AuthStore {
       localStorage.setItem('token', response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.userDto);
-      this.alertStore.addAlert(createAlert(`Регистрация прошла успешно. На вашу почту ${response.data.userDto.email} отправлено письмо для подтверждения.`, 'warning'));
+      this.alertsStore.addAlert(createAlert(`Регистрация прошла успешно. На вашу почту ${response.data.userDto.email} отправлено письмо для подтверждения.`, 'warning'));
       this.setModalOpen(false);
     } catch (e) {
       if (e instanceof Error) {
-        this.alertStore.addAlert(createAlert(e.message, 'error'));
+        this.alertsStore.addAlert(createAlert(e.message, 'error'));
       }
     } finally {
       this.setLoading(false);
@@ -86,8 +95,12 @@ export class AuthStore {
     try {
       const response = await axios.get<AuthResponse>('http://localhost:7000/api/refresh', { withCredentials: true });
       localStorage.setItem('token', response.data.accessToken);
+      this.setActivated(response.data.userDto.isActivated);
       this.setAuth(true);
       this.setUser(response.data.userDto);
+      if (!this.isActivated) {
+        this.alertsStore.addAlert(createAlert('Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 'warning', 10000));
+      }
     } catch (e) {
       if (e instanceof Error) {
         console.log(e.message);

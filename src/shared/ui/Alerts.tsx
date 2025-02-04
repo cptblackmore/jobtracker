@@ -11,7 +11,7 @@ export const Alerts = observer(() => {
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={!!alertsStore.currentAlert}
-        autoHideDuration={4000}
+        autoHideDuration={alertsStore.currentAlert.duration ?? 4000}
         onClose={() => alertsStore.closeAlert()}
         key={alertsStore.currentAlert.id}
         ClickAwayListenerProps={{

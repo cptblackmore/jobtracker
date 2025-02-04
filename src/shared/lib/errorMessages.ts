@@ -6,5 +6,5 @@ export const errorMessages: Record<string, string> = {
   UNAUTHORIZED: 'Требуется авторизация.',
   ACTIVATION_LINK_NOT_FOUND: 'Ссылка активации не найдена или указана неверно.',
   USER_ALREADY_ACTIVATED: 'Вы уже активировали аккаунт.',
-  UNKNOWN_ERROR: 'Произошла неизвестная ошибка.',
+  UNKNOWN_ERROR: 'Произошла непредвиденная ошибка.',
 }
