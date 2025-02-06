@@ -9,9 +9,7 @@ interface Props {
 
 export const StoresProvider: React.FC<Props> = ({ children }) => {
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      authStore.checkAuth();
-    }
+    authStore.checkAuth();
   }, [])
 
   return (

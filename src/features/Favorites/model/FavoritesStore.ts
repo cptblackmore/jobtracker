@@ -6,6 +6,7 @@ export class FavoritesStore {
   isAuth = false;
   isSynced = false;
   isActivated = false;
+  favoritesQuantity = 0;
   private alertsStore: AlertsStore;
 
   constructor(authStore: AuthStore, alertsStore: AlertsStore) {
@@ -19,6 +20,7 @@ export class FavoritesStore {
           this.setAuth(true);
           this.setActivated(authStore.isActivated);
           if (!authStore.isActivated) {
+            this.setFavoritesQuantity(0);
             this.alertsStore.addAlert(createAlert('Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000));
             return;
           }
@@ -44,6 +46,10 @@ export class FavoritesStore {
     this.isSynced = bool;
   }
 
+  setFavoritesQuantity(num: number) {
+    this.favoritesQuantity = num;
+  }
+
   async synchronizeFavorites(favorites: FavoritesResponse['favorites']) {
     try {
       if (!this.isAuth) return;
@@ -55,6 +61,7 @@ export class FavoritesStore {
       const response = await FavoritesService.synchronizeFavorites(favorites);
       window.localStorage.setItem('favorites', JSON.stringify(response.data.favorites) || '[]');
       this.setSynced(true);
+      this.setFavoritesQuantity(response.data.favorites.length);
       this.alertsStore.addAlert(createAlert('Избранные вакансии синхронизированы', 'info', 2000));
     } catch (e) {
       console.log(e);
@@ -66,6 +73,7 @@ export class FavoritesStore {
       if (!this.isSynced) return;
 
       await FavoritesService.updateFavorites(favorites);
+      this.setFavoritesQuantity(favorites.length);
     } catch (e) {
       console.log(e);
     }

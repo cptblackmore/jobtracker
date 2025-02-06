@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Button, CardContent, Divider, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Button, Typography } from '@mui/material';
 import { errorMessages } from '@shared/lib/errorMessages';
 import { AuthContext } from '@shared/model';
 import { observer } from 'mobx-react-lite';
@@ -38,7 +38,7 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
       case 'ACTIVATION_LINK_NOT_FOUND':
         description = (
           <>
-            Убедитесь, что перешли по актуальной ссылке из письма.  
+            Убедитесь, что перешли по актуальной ссылке из письма. Если письмо не приходит, попробуйте ещё раз:  
             <Box marginTop="1em" display='flex' justifyContent='center' >
               <Button variant="contained" >
                 Отправить ссылку повторно
@@ -68,20 +68,16 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
   }
 
   return (
-    <CardContent>
-      <Typography variant='h4' align='center' gutterBottom>
-        Активация аккаунта
-      </Typography>
-      <Divider sx={{ marginY: '1em' }} />
-      <Alert severity={severity} variant='outlined'>
-        <AlertTitle>{title}</AlertTitle>
-        {alertMessage}
-      </Alert>
-      <Box marginTop='2em' >
-        <Typography variant='body1' >
-          {description}
-        </Typography>
-      </Box>
-    </CardContent>
+      <>
+        <Alert severity={severity} variant='outlined'>
+          <AlertTitle>{title}</AlertTitle>
+          {alertMessage}
+        </Alert>
+        <Box marginTop='2em' >
+          <Typography variant='body1' >
+            {description}
+          </Typography>
+        </Box>
+      </>
   );
 });

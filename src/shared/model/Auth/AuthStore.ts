@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export class AuthStore {
   user = {} as UserData;
-  isAuth = false;
+  isAuth: boolean | null = null;
   isActivated = false;
   isLoading = false;
   isModalOpen = false;
@@ -16,7 +16,7 @@ export class AuthStore {
     makeAutoObservable(this);
   }
 
-  setAuth(bool: boolean) {
+  setAuth(bool: boolean | null) {
     this.isAuth = bool;
   }
 
@@ -62,6 +62,7 @@ export class AuthStore {
     try {
       const response = await AuthService.registration(email, password);
       localStorage.setItem('token', response.data.accessToken);
+      this.setActivated(false);
       this.setAuth(true);
       this.setUser(response.data.userDto);
       this.alertsStore.addAlert(createAlert(`Регистрация прошла успешно. На вашу почту ${response.data.userDto.email} отправлено письмо для подтверждения.`, 'warning'));
@@ -93,6 +94,11 @@ export class AuthStore {
   async checkAuth() {
     this.setLoading(true);
     try {
+      if (!localStorage.getItem('token')) {
+        this.setAuth(false);
+        return;
+      };
+
       const response = await axios.get<AuthResponse>('http://localhost:7000/api/refresh', { withCredentials: true });
       localStorage.setItem('token', response.data.accessToken);
       this.setActivated(response.data.userDto.isActivated);
