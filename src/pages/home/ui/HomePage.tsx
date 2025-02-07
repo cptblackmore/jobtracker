@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Container, Divider, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import React from 'react';
-import { Header } from '@widgets/Header';
+import { Nav } from '@widgets/Nav';
 import { containerStyles } from './styles';
 import { Contrast, FavoriteBorder, HowToReg, MoreHoriz, Search } from '@mui/icons-material';
 import { VacancyList } from '@widgets/VacancyList';
@@ -8,7 +8,7 @@ import { VacancyList } from '@widgets/VacancyList';
 export const HomePage: React.FC = () => {
   return (
     <Box>
-      <Header />
+      <Nav />
       <Container maxWidth='lg' css={containerStyles} >
         <Box maxWidth='md' paddingTop='1em' >
           <Card sx={{paddingLeft: '1em', paddingRight: '1em'}} >

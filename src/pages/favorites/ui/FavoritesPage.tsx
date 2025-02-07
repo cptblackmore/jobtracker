@@ -1,6 +1,6 @@
 import { Box, Container, Typography as T } from "@mui/material";
 import { Favorite } from '@mui/icons-material';
-import { Header } from "@widgets/Header";
+import { Nav } from "@widgets/Nav";
 import { FavoritesContext, getFavorites } from "@features/Favorites";
 import { FavoritesList } from "@widgets/VacancyList/ui/FavoritesList";
 import { useContext, useEffect, useState } from "react";
@@ -18,7 +18,7 @@ export const FavoritesPage: React.FC = observer(() => {
 
   return (
     <Box>
-      <Header />
+      <Nav />
       <Container maxWidth="md">
         <Box sx={{ padding: 3 }}>
           <T variant="h4" gutterBottom display='flex' alignItems='center' justifyContent='center' >

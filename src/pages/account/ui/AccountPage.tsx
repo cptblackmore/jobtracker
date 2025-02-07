@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Card, CardContent, Container, Divider, Typography as T } from '@mui/material';
 import { FiberManualRecord } from '@mui/icons-material';
-import { Header } from '@widgets/Header';
+import { Nav } from '@widgets/Nav';
 import { useContext } from 'react';
 import { AuthContext } from '@shared/model';
 import { observer } from 'mobx-react-lite';
@@ -12,7 +12,7 @@ export const AccountPage: React.FC = observer(() => {
 
   return (
     <>
-      <Header />
+      <Nav />
       <Container maxWidth='lg' >
         <Box
           maxWidth='md'

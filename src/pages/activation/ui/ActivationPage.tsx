@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Container, Divider, Typography as T } from '@mui/material';
 import React from 'react';
-import { Header } from '@widgets/Header';
+import { Nav } from '@widgets/Nav';
 import { useLocation } from 'react-router';
 import { ActivationLinkStatus } from './ActivationLinkStatus';
 
@@ -12,7 +12,7 @@ export const ActivationPage: React.FC = () => {
 
   return (
     <Box>
-      <Header />
+      <Nav />
       <Container maxWidth='lg' >
         <Box 
           maxWidth='md'

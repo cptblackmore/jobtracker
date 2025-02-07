@@ -14,14 +14,14 @@ export const Router: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Navigate to={pages.home[1]} />} />
-        <Route path='*' element={<Navigate to={pages.home[1]} />} />
-        <Route path={pages.home[1]} element={<HomePage />} />
-        <Route path={pages.feed[1]} element={<FeedPage />} />
-        <Route path={pages.favorites[1]} element={<FavoritesPage />} />
-        <Route path={pages.activation[1]} element={<ActivationPage />} />
+        <Route path='/' element={<Navigate to={pages.home.path} />} />
+        <Route path='*' element={<Navigate to={pages.home.path} />} />
+        <Route path={pages.home.path} element={<HomePage />} />
+        <Route path={pages.feed.path} element={<FeedPage />} />
+        <Route path={pages.favorites.path} element={<FavoritesPage />} />
+        <Route path={pages.activation.path} element={<ActivationPage />} />
         <Route element={<ProtectedRoute />} >
-          <Route path={pages.account[1]} element={<AccountPage />} />
+          <Route path={pages.account.path} element={<AccountPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

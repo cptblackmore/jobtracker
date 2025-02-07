@@ -1,10 +1,10 @@
-import { Box, CircularProgress, Container, Typography as T } from "@mui/material";
-import { Header } from "@widgets/Header";
+import { Box, CircularProgress, Container, Typography as T } from '@mui/material';
+import { Nav } from '@widgets/Nav';
 
 export const LoadingPage: React.FC = () => {
   return (
     <Box>
-      <Header />
+      <Nav />
       <Container >
         <Box display='flex' flexDirection='column' alignItems='center' gap={2} marginTop={5} >
           <T variant="h4" >Подождите, идёт загрузка</T>

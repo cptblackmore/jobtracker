@@ -1,13 +1,13 @@
 import { Box, Container } from '@mui/material';
 import { VacancyList } from '@widgets/VacancyList';
 import React from 'react';
-import { Header } from '@widgets/Header';
+import { Nav } from '@widgets/Nav';
 import { containerStyles } from './styles';
 
 export const FeedPage: React.FC = () => {
   return (
     <Box>
-      <Header />
+      <Nav />
       <Container maxWidth='lg' css={containerStyles} >
         <Box maxWidth='md'>
           <VacancyList/>
