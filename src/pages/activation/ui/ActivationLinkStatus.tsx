@@ -1,4 +1,4 @@
-import { Alert, AlertTitle, Box, Button, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Button, Typography as T } from '@mui/material';
 import { errorMessages } from '@shared/lib/errorMessages';
 import { AuthContext } from '@shared/model';
 import { observer } from 'mobx-react-lite';
@@ -13,17 +13,21 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
   const { authStore } = useContext(AuthContext);
   const isAuth = authStore.isAuth;
 
+  if (authStore.isActivated) return (
+    <T>Ваш аккаунт не нуждается в активации. Если у вас всё ещё есть проблемы, свяжитесь с поддержкой.</T>
+  )
+
   let title: string;
   let severity: 'success' | 'error';
-  let description: string | JSX.Element;
+  let description: JSX.Element;
   let alertMessage: string = '';
 
   if (success) {
     title = 'Успех!';
     severity = 'success';
     description = isAuth
-      ? 'Теперь избранные вакансии сохраняются на вашем аккаунте и доступны с любого устройства.'
-      : 'Ваш аккаунт активирован! Чтобы использовать избранное, войдите в аккаунт.';
+      ? <T>Теперь избранные вакансии сохраняются на вашем аккаунте и доступны с любого устройства.</T>
+      : <T>Ваш аккаунт активирован! Чтобы использовать избранное, войдите в аккаунт.</T>;
     alertMessage = 'Ваш аккаунт успешно активирован!';
 
   } else {
@@ -33,17 +37,21 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
 
     switch (errorCode) {
       case 'USER_ALREADY_ACTIVATED':
-        description = 'Этот аккаунт уже активирован. Если у вас всё ещё есть проблемы, свяжитесь с поддержкой.';
+        description = <T>Этот аккаунт уже активирован. Если у вас всё ещё есть проблемы, свяжитесь с поддержкой.</T>;
         break;
       case 'ACTIVATION_LINK_NOT_FOUND':
         description = (
           <>
-            Убедитесь, что перешли по актуальной ссылке из письма. Если письмо не приходит, попробуйте ещё раз:  
-            <Box marginTop="1em" display='flex' justifyContent='center' >
-              <Button variant="contained" >
-                Отправить ссылку повторно
-              </Button>
-            </Box>
+            <T>Убедитесь, что перешли по актуальной ссылке из письма. Если письмо не приходит, попробуйте ещё раз.</T>  
+            {authStore.isAuth ? (
+                <Box marginTop='1em' display='flex' justifyContent='center' >
+                <Button variant='contained' onClick={() => authStore.resend()} >
+                  Отправить письмо повторно
+                </Button>
+              </Box>
+            ) : (
+              <T>Авторизуйтесь, чтобы повторная отправка письма стала доступна.</T>
+            )}
           </>
         );
         break;
@@ -52,7 +60,7 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
           <>
             Обратитесь в поддержку. <br/>
             Код:
-            <Typography 
+            <T 
               variant='body1' 
               fontFamily='monospace'
               paddingLeft={1}
@@ -60,7 +68,7 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
               sx={{backgroundColor: 'rgb(60, 60, 60)', color: 'rgb(255, 255, 255)'}} 
             >
               {errorCode}
-            </Typography>
+            </T>
           </>
         );
         break;
@@ -74,9 +82,7 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
           {alertMessage}
         </Alert>
         <Box marginTop='2em' >
-          <Typography variant='body1' >
-            {description}
-          </Typography>
+          {description}
         </Box>
       </>
   );

@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx';
-import { UserData, AuthResponse, AlertsStore, createAlert } from '@shared/model';
+import { UserData, AlertsStore, createAlert } from '@shared/model';
 import { AuthService } from '@shared/api';
-import axios from 'axios';
 
 export class AuthStore {
   user = {} as UserData;
@@ -63,9 +62,9 @@ export class AuthStore {
       const response = await AuthService.registration(email, password);
       localStorage.setItem('token', response.data.accessToken);
       this.setActivated(false);
+      this.alertsStore.addAlert(createAlert(`Регистрация прошла успешно. На вашу почту ${response.data.userDto.email} отправлено письмо для подтверждения.`, 'warning'));
       this.setAuth(true);
       this.setUser(response.data.userDto);
-      this.alertsStore.addAlert(createAlert(`Регистрация прошла успешно. На вашу почту ${response.data.userDto.email} отправлено письмо для подтверждения.`, 'warning'));
       this.setModalOpen(false);
     } catch (e) {
       if (e instanceof Error) {
@@ -81,7 +80,22 @@ export class AuthStore {
     try {
       localStorage.removeItem('token');
       this.setAuth(false);
+      this.setActivated(false);
       this.setUser({} as UserData);
+    } catch (e) {
+      if (e instanceof Error) {
+        this.alertsStore.addAlert(createAlert(e.message, 'error'));
+      }
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  async resend() {
+    this.setLoading(true);
+    try {
+      await AuthService.resend();
+      this.alertsStore.addAlert(createAlert(`На вашу почту ${this.user.email} отправлено письмо для подтверждения.`, 'info'));
     } catch (e) {
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));
@@ -102,11 +116,11 @@ export class AuthStore {
       const response = await AuthService.refresh();
       localStorage.setItem('token', response.data.accessToken);
       this.setActivated(response.data.userDto.isActivated);
-      this.setAuth(true);
-      this.setUser(response.data.userDto);
       if (!this.isActivated) {
         this.alertsStore.addAlert(createAlert('Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 'warning', 10000));
       }
+      this.setAuth(true);
+      this.setUser(response.data.userDto);
     } catch (e) {
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));

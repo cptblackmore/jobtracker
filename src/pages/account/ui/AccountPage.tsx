@@ -40,7 +40,14 @@ export const AccountPage: React.FC = observer(() => {
                     <Alert variant='outlined' severity='warning' >
                       Ваш аккаунт не активирован и избранные вакансии не сохраняются!
                     </Alert>
-                    <Button variant='outlined' color='warning' sx={{ mt: 1 }} >Отправить ссылку повторно</Button>
+                    <Button 
+                      variant='outlined' 
+                      color='warning' 
+                      sx={{ mt: 1 }} 
+                      onClick={() => authStore.resend()}
+                    >
+                      Отправить письмо повторно
+                    </Button>
                   </Box>
                 )}
               </Box>
