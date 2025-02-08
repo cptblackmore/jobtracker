@@ -84,7 +84,7 @@ export class AuthStore {
       this.setUser({} as UserData);
     } catch (e) {
       if (e instanceof Error) {
-        console.log(e.message);
+        this.alertsStore.addAlert(createAlert(e.message, 'error'));
       }
     } finally {
       this.setLoading(false);
@@ -99,7 +99,7 @@ export class AuthStore {
         return;
       };
 
-      const response = await axios.get<AuthResponse>('http://localhost:7000/api/refresh', { withCredentials: true });
+      const response = await AuthService.refresh();
       localStorage.setItem('token', response.data.accessToken);
       this.setActivated(response.data.userDto.isActivated);
       this.setAuth(true);
@@ -109,7 +109,7 @@ export class AuthStore {
       }
     } catch (e) {
       if (e instanceof Error) {
-        console.log(e.message);
+        this.alertsStore.addAlert(createAlert(e.message, 'error'));
       }
     } finally {
       this.setLoading(false);

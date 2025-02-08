@@ -34,7 +34,7 @@ export const NavMenu: React.FC = () => {
           vertical: 'top',
           horizontal: 'left',
         }}
-        open={Boolean(anchorElMenu)}
+        open={!!anchorElMenu}
         onClose={handleCloseMenu}
       >
         {Object.values(pages).map((page) => (
@@ -46,7 +46,7 @@ export const NavMenu: React.FC = () => {
         ))}
         <Divider />
         {authStore.isAuth ? (
-          <AccountMenuItems handleCloseMenu={handleCloseMenu} />
+          AccountMenuItems({ handleCloseMenu })
         ) : (
           <MenuItem key='login' onClick={() => {handleCloseMenu(); authStore.setModalOpen(true)}} >
             Вход
