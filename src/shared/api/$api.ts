@@ -8,7 +8,6 @@ export const $api = axios.create({
 });
 
 $api.interceptors.request.use(config => {
-  console.log(config);
   config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
   return config;
 });
@@ -39,7 +38,7 @@ $api.interceptors.response.use(config => {
     }
   }
 
-  throw new Error(errorMessages[code] || `Непредвиденная ошибка: ${status} ${message}`);
+  throw new Error(errorMessages[code] || `Непредвиденная ошибка: ${status}. ${message}`);
 })
 
 export default $api;

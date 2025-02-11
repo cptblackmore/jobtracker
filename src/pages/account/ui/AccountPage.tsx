@@ -1,14 +1,19 @@
-import { Alert, Box, Button, Card, CardContent, Container, Divider, Typography as T } from '@mui/material';
+import { Alert, Box, Card, CardContent, Container, Divider, Typography as T } from '@mui/material';
 import { FiberManualRecord } from '@mui/icons-material';
 import { Nav } from '@widgets/Nav';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '@shared/model';
 import { observer } from 'mobx-react-lite';
 import { FavoritesContext } from '@features/Favorites';
+import { CooldownButton } from '@shared/ui';
 
 export const AccountPage: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
   const { favoritesStore } = useContext(FavoritesContext);
+
+  useEffect(() => {
+    authStore.updateCurrentTime();
+  }, [])
 
   return (
     <>
@@ -40,14 +45,18 @@ export const AccountPage: React.FC = observer(() => {
                     <Alert variant='outlined' severity='warning' >
                       Ваш аккаунт не активирован и избранные вакансии не сохраняются!
                     </Alert>
-                    <Button 
+                    <CooldownButton
                       variant='outlined' 
-                      color='warning' 
-                      sx={{ mt: 1 }} 
-                      onClick={() => authStore.resend()}
+                      color='warning'
+                      sx={{ mt: 1 }}
+                      onClick={() => {
+                        authStore.resend();
+                      }}
+                      cooldown={authStore.resendCooldown}
+                      onCooldownEnd={() => authStore.updateCurrentTime()}
                     >
                       Отправить письмо повторно
-                    </Button>
+                    </CooldownButton>
                   </Box>
                 )}
               </Box>

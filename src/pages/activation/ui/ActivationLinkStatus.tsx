@@ -1,8 +1,9 @@
-import { Alert, AlertTitle, Box, Button, Typography as T } from '@mui/material';
+import { Alert, AlertTitle, Box, Typography as T } from '@mui/material';
 import { errorMessages } from '@shared/lib/errorMessages';
 import { AuthContext } from '@shared/model';
+import { CooldownButton } from '@shared/ui';
 import { observer } from 'mobx-react-lite';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 interface Props {
   success: boolean;
@@ -13,9 +14,9 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
   const { authStore } = useContext(AuthContext);
   const isAuth = authStore.isAuth;
 
-  if (authStore.isActivated) return (
-    <T>Ваш аккаунт не нуждается в активации. Если у вас всё ещё есть проблемы, свяжитесь с поддержкой.</T>
-  )
+  useEffect(() => {
+    authStore.updateCurrentTime();
+  }, [])
 
   let title: string;
   let severity: 'success' | 'error';
@@ -45,9 +46,18 @@ export const ActivationLinkStatus: React.FC<Props> = observer(({ success, errorC
             <T>Убедитесь, что перешли по актуальной ссылке из письма. Если письмо не приходит, попробуйте ещё раз.</T>  
             {authStore.isAuth ? (
                 <Box marginTop='1em' display='flex' justifyContent='center' >
-                <Button variant='contained' onClick={() => authStore.resend()} >
-                  Отправить письмо повторно
-                </Button>
+                    <CooldownButton
+                      variant='outlined' 
+                      color='warning'
+                      sx={{ mt: 1 }}
+                      onClick={() => {
+                        authStore.resend();
+                      }}
+                      cooldown={authStore.resendCooldown}
+                      onCooldownEnd={() => authStore.updateCurrentTime()}
+                    >
+                      Отправить письмо повторно
+                    </CooldownButton>
               </Box>
             ) : (
               <T>Авторизуйтесь, чтобы повторная отправка письма стала доступна.</T>

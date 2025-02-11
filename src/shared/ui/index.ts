@@ -5,3 +5,4 @@ export { superjobIcon, hhIcon, trudvsemIcon };
 export { ToggleIconButton } from './ToggleIconButton/ToggleIconButton';
 export { ExpandableText } from './ExpandableText/ExpandableText';
 export { ExternalLinkButton } from './ExternalLinkButton';
+export { CooldownButton } from './CooldownButton';

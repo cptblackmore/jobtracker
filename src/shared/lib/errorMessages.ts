@@ -7,5 +7,6 @@ export const errorMessages: Record<string, string> = {
   ACTIVATION_LINK_NOT_FOUND: 'Ссылка активации не найдена или указана неверно.',
   USER_ALREADY_ACTIVATED: 'Вы уже активировали аккаунт.',
   REFRESH_TOKEN_CONFLICT: 'Возникли проблемы с авторизацией. Перезагрузите страницу.',
+  TOO_MANY_RESENDS: 'Вы уже отправили письмо для подтверждения. Дождитесь окончания задержки.',
   UNKNOWN_ERROR: 'Произошла непредвиденная ошибка.',
 }

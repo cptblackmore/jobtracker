@@ -11,7 +11,7 @@ export class AuthService {
     return $api.post<AuthResponse>('/registration', { email, password });
   }
 
-  static async resend(): Promise<AxiosResponse> {
+  static async resend(): Promise<AxiosResponse<AuthResponse>> {
     return $api.get('/resend');
   }
 

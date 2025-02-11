@@ -8,6 +8,7 @@ export class AuthStore {
   isActivated = false;
   isLoading = false;
   isModalOpen = false;
+  currentTime: number = Date.now();
   private alertsStore: AlertsStore;
 
   constructor(alertsStore: AlertsStore) {
@@ -33,6 +34,10 @@ export class AuthStore {
 
   setModalOpen(bool: boolean) {
     this.isModalOpen = bool;
+  }
+
+  updateCurrentTime() {
+    this.currentTime = Date.now();
   }
 
   async login(email: string, password: string) {
@@ -94,7 +99,9 @@ export class AuthStore {
   async resend() {
     this.setLoading(true);
     try {
-      await AuthService.resend();
+      const response = await AuthService.resend();
+      this.updateCurrentTime();
+      this.setUser(response.data.userDto);
       this.alertsStore.addAlert(createAlert(`На вашу почту ${this.user.email} отправлено письмо для подтверждения.`, 'info'));
     } catch (e) {
       if (e instanceof Error) {
@@ -128,5 +135,12 @@ export class AuthStore {
     } finally {
       this.setLoading(false);
     }
+  }
+
+  get resendCooldown() {
+    if (!this.user.nextResendAt) return 0;
+    const seconds = Math.floor(Date.parse(this.user.nextResendAt) / 1000 - this.currentTime / 1000);
+    if (seconds <= 0) return 0;
+    return seconds;
   }
 }
