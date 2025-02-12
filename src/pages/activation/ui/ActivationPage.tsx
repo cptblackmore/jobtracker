@@ -1,14 +1,17 @@
 import { Box, Card, CardContent, Container, Divider, Typography as T } from '@mui/material';
 import React from 'react';
 import { Nav } from '@widgets/Nav';
-import { useLocation } from 'react-router';
-import { ActivationLinkStatus } from './ActivationLinkStatus';
+import { Navigate, useLocation } from 'react-router';
+import { ActivationMessages } from './ActivationMessages';
 
 export const ActivationPage: React.FC = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const success = params.get('success') === 'true';
-  const errorCode = params.get('errorCode') || 'UNKNOWN_ERROR';
+  const code = params.get('code') ?? '';
+
+  if (!code) {
+    return <Navigate to='/' replace />;
+  }
 
   return (
     <Box>
@@ -28,7 +31,7 @@ export const ActivationPage: React.FC = () => {
                 Активация аккаунта
               </T>
               <Divider sx={{ marginY: '1em' }} />
-              <ActivationLinkStatus success={success} errorCode={errorCode} />
+              <ActivationMessages code={code} />
             </CardContent>
           </Card>
         </Box>

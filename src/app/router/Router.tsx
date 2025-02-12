@@ -7,9 +7,13 @@ import { PagesContext } from '@shared/lib';
 import { ActivationPage } from '@pages/activation';
 import { AccountPage } from '@pages/account';
 import { ProtectedRoute } from './ProtectedRoute';
+import { AuthContext } from '@shared/model';
+import { observer } from 'mobx-react-lite';
+import { WaitingRoute } from './WaitingRoute';
 
-export const Router: React.FC = () => {
+export const Router: React.FC = observer(() => {
   const pages = useContext(PagesContext);
+  const { authStore } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
@@ -19,11 +23,13 @@ export const Router: React.FC = () => {
         <Route path={pages.home.path} element={<HomePage />} />
         <Route path={pages.feed.path} element={<FeedPage />} />
         <Route path={pages.favorites.path} element={<FavoritesPage />} />
-        <Route path={pages.activation.path} element={<ActivationPage />} />
-        <Route element={<ProtectedRoute />} >
+        <Route element={<WaitingRoute isReady={authStore.isAuth !== null} />} >
+          <Route path={pages.activation.path} element={<ActivationPage />} />
+        </Route>
+        <Route element={<ProtectedRoute isAllowed={authStore.isAuth} />} >
           <Route path={pages.account.path} element={<AccountPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
   );
-};
+});
