@@ -46,7 +46,7 @@ export const NavMenu: React.FC = () => {
         ))}
         <Divider />
         {authStore.isAuth ? (
-          AccountMenuItems({ handleCloseMenu })
+          <AccountMenuItems handleCloseMenu={handleCloseMenu} />
         ) : (
           <MenuItem key='login' onClick={() => {handleCloseMenu(); authStore.setModalOpen(true)}} >
             Вход
