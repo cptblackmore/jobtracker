@@ -50,7 +50,12 @@ export class AuthStore {
       this.setUser(response.data.userDto);
       this.setModalOpen(false);
       if (!this.isActivated) {
-      this.alertsStore.addAlert(createAlert('Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 'warning', 10000));
+      this.alertsStore.addAlert(
+        createAlert(
+          'Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 'warning',
+          10000
+        )
+      );
       }
     } catch (e) {
       if (e instanceof Error) {
@@ -120,6 +125,27 @@ export class AuthStore {
         return;
       };
 
+      if (localStorage.getItem('refreshTime')) {
+        console.log('TEST');
+        await new Promise((resolve) => {
+          // let attempts = 5;
+          const interval = setInterval(() => {
+            if (!localStorage.getItem('refreshTime')) {
+              clearInterval(interval);
+              resolve(true);
+            }
+            // if (attempts === 0) {
+            //   clearInterval(interval);
+            //   this.setLoading(false);
+            //   this.alertsStore.addAlert(createAlert('Превышено время ожидания. Авторизуйтесь заново.', 'error'))
+            //   throw new Error('Превышено время ожидания');
+            // } else {
+            //   attempts--;
+            // }
+          }, 1000)
+        })
+        localStorage.setItem('refreshTime', String(Date.now()));
+      } else localStorage.setItem('refreshTime', String(Date.now()));
       const response = await AuthService.refresh();
       localStorage.setItem('token', response.data.accessToken);
       this.setActivated(response.data.userDto.isActivated);
@@ -128,12 +154,18 @@ export class AuthStore {
       }
       this.setAuth(true);
       this.setUser(response.data.userDto);
+      localStorage.removeItem('refreshTime');
     } catch (e) {
+      this.setAuth(false);
+      this.setUser({} as UserData);
+
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));
       }
     } finally {
-      this.setLoading(false);
+      // if (!localStorage.getItem('refreshTime')) {
+        this.setLoading(false);
+      // }
     }
   }
 

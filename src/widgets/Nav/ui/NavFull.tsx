@@ -1,10 +1,11 @@
-import { Box, Button, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import { AuthContext } from '@shared/model';
 import { Logo } from '@widgets/Logo';
 import { observer } from 'mobx-react-lite';
 import { AccountMenu } from './AccountMenu';
 import { useContext } from 'react';
 import { NavToolbar } from './NavToolbar';
+import { LoginButton } from './LoginButton';
 
 export const NavFull: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -19,13 +20,7 @@ export const NavFull: React.FC = observer(() => {
         {authStore.isAuth ? (
           <AccountMenu />
         ) : (
-          authStore.isLoading ? (
-            <Box display='flex' alignItems='center' >
-              <CircularProgress size={25} sx={{color: 'white', mr: 2.5}} />
-            </Box>
-          ) : (
-            <Button sx={{color: 'white'}} onClick={() => authStore.setModalOpen(true)} >Вход</Button>
-          )
+          <LoginButton />
         )}
       </Box>
     </Box>

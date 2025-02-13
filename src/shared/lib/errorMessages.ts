@@ -6,7 +6,7 @@ export const errorMessages: Record<string, string> = {
   UNAUTHORIZED: 'Вы не авторизованы.',
   ACTIVATION_LINK_NOT_FOUND: 'Ссылка активации не найдена или указана неверно.',
   USER_ALREADY_ACTIVATED: 'Вы уже активировали аккаунт.',
-  REFRESH_TOKEN_CONFLICT: 'Возникли проблемы с авторизацией. Перезагрузите страницу.',
+  INVALID_REFRESH_TOKEN: 'Ошибка авторизации. Перезагрузите страницу или войдите заново.',
   TOO_MANY_RESENDS: 'Вы уже отправили письмо для подтверждения. Дождитесь окончания задержки.',
   UNKNOWN_ERROR: 'Произошла непредвиденная ошибка.',
 }
