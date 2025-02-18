@@ -14,12 +14,12 @@ export class FavoritesStore {
     makeAutoObservable(this);
     
     reaction(
-      () => authStore.isAuth,
-      (isAuth) => {
-        if (isAuth) {
+      () => authStore.isInit,
+      () => {
+        if (authStore.isAuth) {
           this.setAuth(true);
-          this.setActivated(authStore.isActivated);
-          if (!authStore.isActivated) {
+          this.setActivated(authStore.user.isActivated);
+          if (!this.isActivated) {
             this.setFavoritesQuantity(0);
             this.alertsStore.addAlert(createAlert('Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000));
             return;

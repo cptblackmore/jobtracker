@@ -40,7 +40,7 @@ export const AccountPage: React.FC = observer(() => {
                   <FiberManualRecord color={favoritesStore.isSynced ? 'success' : 'error'} sx={{ mx: 1, fontSize: 18 }} />
                 </Box>
                 <T>Сохранённые вакансии: {favoritesStore.favoritesQuantity}</T>
-                {!authStore.isActivated && (
+                {!authStore.user.isActivated && (
                   <Box display='flex' flexDirection='column' sx={{ mt: 1 }} >
                     <Alert variant='outlined' severity='warning' >
                       Ваш аккаунт не активирован и избранные вакансии не сохраняются!

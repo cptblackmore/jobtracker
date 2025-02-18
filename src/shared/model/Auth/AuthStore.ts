@@ -6,9 +6,8 @@ import { broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
 
 export class AuthStore {
   isInit = false;
+  isAuth = false;
   user = {} as UserData;
-  isAuth: boolean | null = null; // TODO return boolean only after isInit implementation
-  isActivated = false; // TODO delete after replacing by user.isActivated
   isLoading = false;
   isModalOpen = false;
   currentTime: number = Date.now();
@@ -31,7 +30,7 @@ export class AuthStore {
     this.isInit = bool;
   }
 
-  setAuth(bool: boolean | null) { // TODO return boolean only after isInit implementation
+  setAuth(bool: boolean) {
     this.isAuth = bool;
   }
 
@@ -41,10 +40,6 @@ export class AuthStore {
 
   setLoading(bool: boolean) {
     this.isLoading = bool;
-  }
-
-  setActivated(bool: boolean) { // TODO delete after replacing by user.isActivated
-    this.isActivated = bool;
   }
 
   setModalOpen(bool: boolean) {
@@ -60,14 +55,13 @@ export class AuthStore {
     try {
       const response = await AuthService.login(email, password);
       localStorage.setItem('token', response.data.accessToken);
-      this.setActivated(response.data.userDto.isActivated);
       this.setUser(response.data.userDto);
       this.setAuth(true);
       this.setModalOpen(false);
       authChannel.postMessage(
-        {type: 'login', payload: {isAuth: this.isAuth, user: {...this.user}, isActivated: this.isActivated}} // TODO delete this.isActivated after replacing by user.isActivated
+        {type: 'login', payload: {isAuth: this.isAuth, user: {...this.user}}}
       );
-      if (!this.isActivated) {
+      if (!this.user.isActivated) {
       this.alertsStore.addAlert(
         createAlert(
           'Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 'warning',
@@ -89,12 +83,11 @@ export class AuthStore {
     try {
       const response = await AuthService.registration(email, password);
       localStorage.setItem('token', response.data.accessToken);
-      this.setActivated(false); // TODO delete after replacing by user.isActivated
       this.setUser(response.data.userDto);
       this.setAuth(true);
       this.setModalOpen(false);
       authChannel.postMessage(
-        {type: 'login', payload: {isAuth: this.isAuth, user: {...this.user}, isActivated: this.isActivated}} // TODO delete this.isActivated after replacing by user.isActivated
+        {type: 'login', payload: {isAuth: this.isAuth, user: {...this.user}}}
       );
       this.alertsStore.addAlert(
         createAlert(
@@ -114,7 +107,6 @@ export class AuthStore {
   async logout() {
     try {
       localStorage.removeItem('token');
-      this.setActivated(false); // TODO delete after replacing by user.isActivated
       this.setUser({} as UserData);
       this.setAuth(false);
       authChannel.postMessage({type: 'logout'});
@@ -147,10 +139,9 @@ export class AuthStore {
         sessionStorage.setItem('refreshing', 'true');
         const response = await AuthService.refresh();
         localStorage.setItem('token', response.data.accessToken);
-        this.setActivated(response.data.userDto.isActivated); // TODO delete after replacing by user.isActivated
         this.setUser(response.data.userDto);
         this.setAuth(true);
-        if (!this.isActivated) { // TODO replace by !this.user.isActivated
+        if (!this.user.isActivated) {
           this.alertsStore.addAlert(
             createAlert(
               'Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.',
@@ -177,7 +168,6 @@ export class AuthStore {
     try {
       if (!localStorage.getItem('token')) {
         this.setInit(true);
-        this.setAuth(false); // TODO delete after isInit implementation
         return;
       };
       
@@ -187,7 +177,7 @@ export class AuthStore {
         'pong',
         async () => {
           authChannel.postMessage({type: 'request_auth'});
-          await waitForCondition(() => this.isAuth !== null); // TODO reaplce isAuth by isInit after isInit implementation
+          await waitForCondition(() => this.isInit);
         },
         () => this.refresh(),
         500

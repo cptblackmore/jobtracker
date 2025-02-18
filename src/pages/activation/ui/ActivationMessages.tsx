@@ -68,7 +68,7 @@ export const ActivationMessages: React.FC<Props> = observer(({ code }) => {
     ),
   };
 
-  if (code !== 'ACTIVATION_SUCCESS' && authStore.isActivated) {
+  if (code !== 'ACTIVATION_SUCCESS' && authStore.user.isActivated) {
     return activationMessages['USER_ALREADY_ACTIVATED'];
   }
 

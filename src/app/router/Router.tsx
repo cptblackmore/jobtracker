@@ -23,10 +23,10 @@ export const Router: React.FC = observer(() => {
         <Route path={pages.home.path} element={<HomePage />} />
         <Route path={pages.feed.path} element={<FeedPage />} />
         <Route path={pages.favorites.path} element={<FavoritesPage />} />
-        <Route element={<WaitingRoute isReady={authStore.isAuth !== null} />} >
+        <Route element={<WaitingRoute isReady={authStore.isInit} />} >
           <Route path={pages.activation.path} element={<ActivationPage />} />
         </Route>
-        <Route element={<ProtectedRoute isAllowed={authStore.isAuth} />} >
+        <Route element={<ProtectedRoute isInit={authStore.isInit} isAllowed={authStore.isAuth} />} >
           <Route path={pages.account.path} element={<AccountPage />} />
         </Route>
       </Routes>
