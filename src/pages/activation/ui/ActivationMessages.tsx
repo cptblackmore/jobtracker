@@ -51,9 +51,9 @@ export const ActivationMessages: React.FC<Props> = observer(({ code }) => {
                 variant="outlined"
                 color="warning"
                 sx={{ mt: 1 }}
-                onClick={authStore.resend}
+                onClick={() => authStore.resend()}
                 cooldown={authStore.resendCooldown}
-                onCooldownEnd={authStore.updateCurrentTime}
+                onCooldownEnd={() => authStore.updateCurrentTime()}
               >
                 Отправить письмо повторно
               </CooldownButton>

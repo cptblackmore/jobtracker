@@ -2,12 +2,12 @@ import { LoadingPage } from '@pages/loading';
 import { Navigate, Outlet } from 'react-router';
 
 interface Props {
-  isInit: boolean;
+  isReady: boolean;
   isAllowed: boolean | null;
 }
 
-export const ProtectedRoute: React.FC<Props> = ({ isInit, isAllowed }) => {
-  if (!isInit) {
+export const ProtectedRoute: React.FC<Props> = ({ isReady, isAllowed }) => {
+  if (!isReady) {
     return <LoadingPage />;
   }
 

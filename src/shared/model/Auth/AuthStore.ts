@@ -6,7 +6,6 @@ import { broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
 
 export class AuthStore {
   isInit = false;
-  isAuth = false;
   user = {} as UserData;
   isLoading = false;
   isModalOpen = false;
@@ -19,6 +18,10 @@ export class AuthStore {
     setupAuthChannelListener(this);
   }
 
+  get isAuth() {
+    return !!this.user?.id;
+  }
+
   get resendCooldown() {
     if (!this.user.nextResendAt) return 0;
     const seconds = Math.floor((Date.parse(this.user.nextResendAt) - this.currentTime) / 1000);
@@ -28,10 +31,6 @@ export class AuthStore {
 
   setInit(bool: boolean) {
     this.isInit = bool;
-  }
-
-  setAuth(bool: boolean) {
-    this.isAuth = bool;
   }
 
   setUser(user: UserData) {
@@ -56,10 +55,9 @@ export class AuthStore {
       const response = await AuthService.login(email, password);
       localStorage.setItem('token', response.data.accessToken);
       this.setUser(response.data.userDto);
-      this.setAuth(true);
       this.setModalOpen(false);
       authChannel.postMessage(
-        {type: 'login', payload: {isAuth: this.isAuth, user: {...this.user}}}
+        {type: 'login', payload: {...this.user}}
       );
       if (!this.user.isActivated) {
       this.alertsStore.addAlert(
@@ -84,10 +82,9 @@ export class AuthStore {
       const response = await AuthService.registration(email, password);
       localStorage.setItem('token', response.data.accessToken);
       this.setUser(response.data.userDto);
-      this.setAuth(true);
       this.setModalOpen(false);
       authChannel.postMessage(
-        {type: 'login', payload: {isAuth: this.isAuth, user: {...this.user}}}
+        {type: 'login', payload: {...this.user}}
       );
       this.alertsStore.addAlert(
         createAlert(
@@ -108,7 +105,6 @@ export class AuthStore {
     try {
       localStorage.removeItem('token');
       this.setUser({} as UserData);
-      this.setAuth(false);
       authChannel.postMessage({type: 'logout'});
     } catch (e) {
       if (e instanceof Error) {
@@ -140,7 +136,6 @@ export class AuthStore {
         const response = await AuthService.refresh();
         localStorage.setItem('token', response.data.accessToken);
         this.setUser(response.data.userDto);
-        this.setAuth(true);
         if (!this.user.isActivated) {
           this.alertsStore.addAlert(
             createAlert(

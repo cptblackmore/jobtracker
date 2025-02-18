@@ -13,17 +13,16 @@ export const setupAuthChannelListener = (authStore: AuthStore) => {
     if (type === 'request_auth') {
       await waitForCondition(() => authStore.isInit);
       authChannel.postMessage(
-        {type: 'response_auth', payload: {isAuth: authStore.isAuth, user: {...authStore.user}}}
+        {type: 'response_auth', payload: {...authStore.user}}
       ); 
     }
 
     if (type === 'response_auth' || type === 'login') {
-      authStore.setUser(event.data.payload.user);
-      authStore.setAuth(event.data.payload.isAuth);
+      authStore.setUser(event.data.payload);
+      authStore.setInit(true);
     }
 
     if (type === 'logout') {
-      authStore.setAuth(false);
       authStore.setUser({} as UserData);
     }
   }

@@ -3,22 +3,20 @@ import { FavoritesService, FavoritesResponse } from '@features/Favorites';
 import { createAlert, AlertsStore, AuthStore } from '@shared/model';
 
 export class FavoritesStore {
-  isAuth = false;
   isSynced = false;
-  isActivated = false;
   favoritesQuantity = 0;
   private alertsStore: AlertsStore;
+  private authStore: AuthStore;
 
   constructor(authStore: AuthStore, alertsStore: AlertsStore) {
     this.alertsStore = alertsStore;
+    this.authStore = authStore;
     makeAutoObservable(this);
     
     reaction(
-      () => authStore.isInit,
-      () => {
-        if (authStore.isAuth) {
-          this.setAuth(true);
-          this.setActivated(authStore.user.isActivated);
+      () => authStore.isAuth,
+      (isAuth) => {
+        if (isAuth) {
           if (!this.isActivated) {
             this.setFavoritesQuantity(0);
             this.alertsStore.addAlert(createAlert('Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000));
@@ -27,19 +25,18 @@ export class FavoritesStore {
           const favorites = JSON.parse(window.localStorage.getItem('favorites') || '[]');
           this.synchronizeFavorites(favorites);
         } else {
-          this.setAuth(false);
           this.setSynced(false);
         }
       }
     )
   }
 
-  setAuth(bool: boolean) {
-    this.isAuth = bool;
+  get isAuth() {
+    return !!this.authStore.isAuth;
   }
 
-  setActivated(bool: boolean) {
-    this.isActivated = bool;
+  get isActivated() {
+    return !!this.authStore.user?.isActivated;
   }
 
   setSynced(bool: boolean) {
@@ -64,7 +61,9 @@ export class FavoritesStore {
       this.setFavoritesQuantity(response.data.favorites.length);
       this.alertsStore.addAlert(createAlert('Избранные вакансии синхронизированы', 'info', 2000));
     } catch (e) {
-      console.log(e);
+      if (e instanceof Error) {
+        this.alertsStore.addAlert(createAlert(e.message, 'error'));
+      }    
     }
   }
 
@@ -75,7 +74,9 @@ export class FavoritesStore {
       await FavoritesService.updateFavorites(favorites);
       this.setFavoritesQuantity(favorites.length);
     } catch (e) {
-      console.log(e);
+      if (e instanceof Error) {
+        this.alertsStore.addAlert(createAlert(e.message, 'error'));
+      }
     }
   }
 }
