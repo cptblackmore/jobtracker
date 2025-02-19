@@ -62,7 +62,7 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
           </Button>
         </Stack>
         <Collapse in={showAdditional}>
-          <VacancyFilterAdditional state={state} dispatch={dispatch} />
+          <VacancyFilterAdditional filters={filters} state={state} dispatch={dispatch} />
         </Collapse>
       </Stack>
     </Paper>
