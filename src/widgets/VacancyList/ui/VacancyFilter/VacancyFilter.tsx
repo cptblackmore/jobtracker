@@ -1,9 +1,9 @@
-import { VacancyParams } from '@entities/Vacancy';
+import { VacancyParams, VacancyPeriod, VacancyType } from '@entities/Vacancy';
 import { FilterList, FilterListOff } from '@mui/icons-material';
 import { Button, Collapse, FormControl, Paper, Stack, TextField } from '@mui/material';
 import { ToggleIconButton } from '@shared/ui';
-import { useVacancyFilter } from '../../model/VacancyFilter/useVacancyFilter';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
+import { useState } from 'react';
 
 interface Props {
   filters: VacancyParams['filters'];
@@ -11,24 +11,21 @@ interface Props {
 }
 
 export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
-  const { showAdditional, setShowAdditional, state, dispatch } = useVacancyFilter(filters);
+  const [showAdditional, setShowAdditional] = useState(false);
+  const [text, setText] = useState(filters?.text ?? '');
   
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // const formData = new FormData(e.currentTarget);
-    // const newFilters: VacancyParams['filters'] = {
-    //   text: formData.get('text') as string,
-    //   period: Number(formData.get('period')) as 0 | 1 | 3 | 7,
-    //   salary: {
-    //     from: Number(formData.get('salaryFrom')),
-    //     to: Number(formData.get('salaryTo'))
-    //   }
-    // };
+    const formData = new FormData(e.currentTarget);
+    const newFilters: VacancyParams['filters'] = {
+      text: formData.get('text') as string,
+      period: Number(formData.get('period')) as VacancyPeriod,
+      salary: formData.get('salary') === 'on' ? {from: Number(formData.get('salaryFrom')), to: Number(formData.get('salaryTo'))} : undefined,
+      type: formData.get('type') !== 'none' ? formData.get('type') as VacancyType : undefined
+    };
 
-    // setFilters(newFilters);
-
-    setFilters(state);
+    setFilters(newFilters);
   }
 
   return (
@@ -45,8 +42,8 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
               name='text'
               variant='outlined'
               size='small'
-              value={state?.text ?? ''}
-              onChange={(e) => dispatch({type: 'SET_TEXT', text: e.target.value})}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
           </FormControl>
           <ToggleIconButton 
@@ -62,7 +59,7 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
           </Button>
         </Stack>
         <Collapse in={showAdditional}>
-          <VacancyFilterAdditional filters={filters} state={state} dispatch={dispatch} />
+          <VacancyFilterAdditional filters={filters} />
         </Collapse>
       </Stack>
     </Paper>

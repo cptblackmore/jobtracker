@@ -13,6 +13,7 @@ export const adapterTrudvsem = {
       text: params.filters?.text ?? ''
     }
   },
+
   adaptVacancies(data: Array<VacancyTrudvsemResponse>): Array<Vacancy> {
     return data.map(item => {
       const vacancy = item.vacancy;
@@ -36,6 +37,7 @@ export const adapterTrudvsem = {
       }
     });
   },
+  
   adaptVacancy(vacancy: VacancyTrudvsem): Vacancy {
     
     const descriptionDuty = toUpperCaseFirstLetter(convert(vacancy.duty));

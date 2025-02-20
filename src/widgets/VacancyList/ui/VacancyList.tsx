@@ -14,7 +14,7 @@ interface Props {
 export const VacancyList: React.FC<Props> = ({ 
   variant='default', 
   href='/feed', 
-  initialFilters={text: '', period: 1}
+  initialFilters={}
 }) => {
   const count = variant === 'demo' ? 1 : 5;
   const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count, filters: initialFilters});
