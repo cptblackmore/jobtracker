@@ -1,3 +1,5 @@
+import { Sources } from "@entities/Vacancy/model/Sources";
+
 export type VacancyPeriod = 0 | 1 | 3 | 7;
 
 export type VacancyType = 'full' | 'shift' | 'fifo';
@@ -13,5 +15,6 @@ export interface VacancyParams {
       to?: number;
     };
     type?: VacancyType;
+    sources?: Sources[];
   }
 }

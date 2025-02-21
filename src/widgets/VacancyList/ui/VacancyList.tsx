@@ -7,13 +7,13 @@ import { VacancyParams } from '@entities/Vacancy';
 
 interface Props {
   variant?: 'default' | 'demo';
-  href?: string;
+  href?: string; // TODO replace by route
   initialFilters?: VacancyParams['filters'];
 }
 
 export const VacancyList: React.FC<Props> = ({ 
   variant='default', 
-  href='/feed', 
+  href='/feed', // TODO replace by route
   initialFilters={}
 }) => {
   const count = variant === 'demo' ? 1 : 5;
@@ -35,7 +35,7 @@ export const VacancyList: React.FC<Props> = ({
           {variant === 'default' ? (
             <Button variant='contained' onClick={() => setPage(state.params.page + 1)} >Показать ещё</Button>
           ) : (
-            <Button variant='contained' href={href} >Найти больше</Button>
+            <Button variant='contained' href={href} >Найти больше</Button> // TODO replace href by route
           )}
         </Box>
       </Stack>

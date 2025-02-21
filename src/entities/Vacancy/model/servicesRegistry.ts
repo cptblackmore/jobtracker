@@ -1,5 +1,6 @@
 import { HHParams, SuperjobParams, TrudvsemParams } from "../api/types/Params";
 import { VacancyHH } from "../api/types/VacancyHH";
+import { VacancyParams } from "../api/types/VacancyParams";
 import { VacancySuperjob } from "../api/types/VacancySuperjob";
 import { VacancyTrudvsem, VacancyTrudvsemResponse } from "../api/types/VacancyTrudvsem";
 import { hhStyles, superjobStyles, trudvsemStyles } from "../ui/servicesStyles";
@@ -16,6 +17,7 @@ export interface ServiceConfig {
     VacancySuperjob | VacancyHH | VacancyTrudvsem | VacancyTrudvsemResponse
   >;
   styles: ServiceStyles;
+  incompatibleFilters?: Array<keyof VacancyParams['filters']>;
 }
 
 export const servicesRegistry: Record<Sources, ServiceConfig> = {
@@ -29,6 +31,7 @@ export const servicesRegistry: Record<Sources, ServiceConfig> = {
   },
   trudvsem: {
     adapter: adapterTrudvsem,
-    styles: trudvsemStyles
+    styles: trudvsemStyles,
+    incompatibleFilters: ['period', 'type', 'salary']
   }
 } as const;

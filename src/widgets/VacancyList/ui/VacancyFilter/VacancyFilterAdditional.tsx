@@ -1,9 +1,8 @@
-import { servicesRegistry, Sources, VacancyParams, VacancyPeriod, VacancyType } from "@entities/Vacancy";
-import { Stack, MenuItem, Divider, Slider, TextField, Grid2, FormControlLabel, Checkbox, Box, IconButton, Tooltip, Button } from "@mui/material";
-import { useState } from "react";
+import { servicesRegistry, VacancyParams, VacancyPeriod, VacancyType } from "@entities/Vacancy";
+import { Stack, MenuItem, Divider, Slider, TextField, Grid2, FormControlLabel, Checkbox, Box, IconButton, Tooltip } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Info } from "@mui/icons-material";
 import { VacancySource } from "@widgets/VacancyCard/ui/VacancySource/VacancySource";
-import { ServiceConfig } from "@entities/Vacancy/model/servicesRegistry";
 import { typedEntries } from "@shared/lib";
 
 interface Props {
@@ -28,6 +27,58 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters }) => {
     setSalary({ ...salary, [field]: Number(e.target.value) });
     setIsSalaryEnabled(true);
   };
+
+  const [services, setServices] = useState(
+    typedEntries(servicesRegistry).map(([source, config]) => (
+      {
+        source,
+        color: config.styles.color,
+        incompatibleFilters: config.incompatibleFilters,
+        checked: true,
+        incompatible: false
+      }
+    ))
+  );
+
+  useEffect(() => {
+    const selectedFilters: Array<keyof VacancyParams['filters']> = [];
+
+    if (period !== 0) selectedFilters.push('period');
+    if (type !== 'none') selectedFilters.push('type');
+    if (isSalaryEnabled) selectedFilters.push('salary');
+
+    setServices(services.map((service) => {
+      return {
+        ...service,
+        incompatible: selectedFilters.some(filter => service.incompatibleFilters?.includes(filter))
+      }
+    }));
+  }, [services, period, type, isSalaryEnabled])
+  
+  function resetFilters() {
+    setPeriod(0);
+    setType('none');
+    setIsSalaryEnabled(false);
+  }
+
+  function handleServiceChange(service) {
+    if (service.incompatible) {
+      resetFilters();
+      setServices(services.map((s) => {
+        return {
+          ...s,
+          checked: s.source === service.source ? true : s.checked
+        }
+      }))
+    } else {
+      setServices(services.map((s) => {
+        return {
+          ...s,
+          checked: s.source === service.source ? !s.checked : s.checked
+        }
+      }))
+    }
+  }
 
   return (
     <Box>
@@ -129,15 +180,20 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters }) => {
       </Grid2>
       <Divider sx={{my: 2}} />
       <Box display='flex' >
-        {typedEntries(servicesRegistry).map(([source, config]) => (
+        {services.map(service => (
           <FormControlLabel
-            key={source}
-            control={<Checkbox sx={{
-              "& .MuiSvgIcon-root": {
-                color: config.styles.color
-              }
-            }} />}
-            label={<VacancySource source={source} />}
+            sx={{opacity: service.incompatible ? 0.5 : 1}}
+            key={service.source}
+            name='source'
+            value={service.source}
+            control={
+              <Checkbox 
+                sx={{'& .MuiSvgIcon-root': {color: service.color}}}
+                checked={service.checked && !service.incompatible}
+                onChange={() => handleServiceChange(service)}
+              />
+            }
+            label={<VacancySource source={service.source} />}
           />
         ))}
       </Box>

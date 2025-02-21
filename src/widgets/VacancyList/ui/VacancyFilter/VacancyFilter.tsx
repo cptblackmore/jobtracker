@@ -1,4 +1,4 @@
-import { VacancyParams, VacancyPeriod, VacancyType } from '@entities/Vacancy';
+import { Sources, VacancyParams, VacancyPeriod, VacancyType } from '@entities/Vacancy';
 import { FilterList, FilterListOff } from '@mui/icons-material';
 import { Button, Collapse, FormControl, Paper, Stack, TextField } from '@mui/material';
 import { ToggleIconButton } from '@shared/ui';
@@ -22,7 +22,8 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
       text: formData.get('text') as string,
       period: Number(formData.get('period')) as VacancyPeriod,
       salary: formData.get('salary') === 'on' ? {from: Number(formData.get('salaryFrom')), to: Number(formData.get('salaryTo'))} : undefined,
-      type: formData.get('type') !== 'none' ? formData.get('type') as VacancyType : undefined
+      type: formData.get('type') !== 'none' ? formData.get('type') as VacancyType : undefined,
+      sources: Array.from(formData.getAll('source') as Iterable<string>).map((source) => source as Sources)
     };
 
     setFilters(newFilters);
