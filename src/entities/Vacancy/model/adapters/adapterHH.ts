@@ -4,8 +4,9 @@ import { Vacancy, VacancyParams, VacancyType } from '@entities/Vacancy';
 import { VacancyHH, VacancyHHById } from '../../api/types/VacancyHH';
 import { HHParams } from '../../api/types/Params';
 import { convert } from 'html-to-text';
+import { Adapter } from './Adapter';
 
-export const adapterHH = {
+export const adapterHH: Adapter<HHParams, VacancyHH> = {
   adaptParams(params: VacancyParams): HHParams {
     const typeMap: Record<VacancyType, HHParams['schedule']> = {
       full: 'fullDay',

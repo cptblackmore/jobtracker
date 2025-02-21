@@ -4,8 +4,9 @@ import { combineDutyAndReqToDesc } from './combineDutyAndReqToDesc';
 import { Vacancy, VacancyParams } from '@entities/Vacancy';
 import { VacancyTrudvsem, VacancyTrudvsemResponse } from '../../api/types/VacancyTrudvsem';
 import { TrudvsemParams } from '../../api/types/Params';
+import { Adapter } from './Adapter';
 
-export const adapterTrudvsem = {
+export const adapterTrudvsem: Adapter<TrudvsemParams, VacancyTrudvsemResponse | VacancyTrudvsem> = {
   adaptParams(params: VacancyParams): TrudvsemParams {
     return {
       offset: params.page,

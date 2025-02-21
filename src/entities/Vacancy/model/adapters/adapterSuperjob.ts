@@ -1,8 +1,9 @@
 import { Vacancy, VacancyParams, VacancyType } from '@entities/Vacancy'
 import { VacancySuperjob } from '../../api/types/VacancySuperjob'
 import { SuperjobParams } from '../../api/types/Params';
+import { Adapter } from './Adapter';
 
-export const adapterSuperjob = {
+export const adapterSuperjob: Adapter<SuperjobParams, VacancySuperjob> = {
   adaptParams(params: VacancyParams): SuperjobParams {
     const typeMap: Record<VacancyType, SuperjobParams['type_of_work']> = {
       full: 6,

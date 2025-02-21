@@ -1,9 +1,19 @@
+import { HHParams, SuperjobParams, TrudvsemParams } from "../api/types/Params";
+import { VacancyHH } from "../api/types/VacancyHH";
+import { VacancySuperjob } from "../api/types/VacancySuperjob";
+import { VacancyTrudvsem, VacancyTrudvsemResponse } from "../api/types/VacancyTrudvsem";
 import { hhStyles, superjobStyles, trudvsemStyles } from "../ui/servicesStyles";
+import { Adapter } from "./adapters/Adapter";
 import { adapterHH } from "./adapters/adapterHH";
 import { adapterSuperjob } from "./adapters/adapterSuperjob";
 import { adapterTrudvsem } from "./adapters/adapterTrudvsem";
+import { ServiceStyles } from "./ServiceStyles";
+import { Sources } from "./Sources";
 
-export const servicesRegistry = {
+export const servicesRegistry: Record<Sources, { 
+  adapter: Adapter<SuperjobParams | HHParams | TrudvsemParams, VacancySuperjob | VacancyHH | VacancyTrudvsem | VacancyTrudvsemResponse>, 
+  styles: ServiceStyles
+}> = {
   superjob: {
     adapter: adapterSuperjob,
     styles: superjobStyles
