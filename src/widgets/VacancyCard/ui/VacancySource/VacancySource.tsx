@@ -8,6 +8,6 @@ interface Props {
 export const VacancySource: React.FC<Props> = ({source}) => {
   const styles = servicesRegistry[source].styles
   return (
-    <span css={[vacancySourceStyle, styles.color]} >{styles.name} <img src={styles.icon} css={imgStyle} /></span>
+    <span css={[vacancySourceStyle, {color: styles.color}]} >{styles.name} <img src={styles.icon} css={imgStyle} /></span>
   )
 }

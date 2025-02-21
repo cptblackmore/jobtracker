@@ -10,10 +10,15 @@ import { adapterTrudvsem } from "./adapters/adapterTrudvsem";
 import { ServiceStyles } from "./ServiceStyles";
 import { Sources } from "./Sources";
 
-export const servicesRegistry: Record<Sources, { 
-  adapter: Adapter<SuperjobParams | HHParams | TrudvsemParams, VacancySuperjob | VacancyHH | VacancyTrudvsem | VacancyTrudvsemResponse>, 
-  styles: ServiceStyles
-}> = {
+export interface ServiceConfig {
+  adapter: Adapter<
+    SuperjobParams | HHParams | TrudvsemParams,
+    VacancySuperjob | VacancyHH | VacancyTrudvsem | VacancyTrudvsemResponse
+  >;
+  styles: ServiceStyles;
+}
+
+export const servicesRegistry: Record<Sources, ServiceConfig> = {
   superjob: {
     adapter: adapterSuperjob,
     styles: superjobStyles
@@ -26,4 +31,4 @@ export const servicesRegistry: Record<Sources, {
     adapter: adapterTrudvsem,
     styles: trudvsemStyles
   }
-}
+} as const;

@@ -6,3 +6,5 @@ export { debounce } from './debounce';
 export { PagesContext, pages } from './PagesContext';
 export { broadcastRequestWithFallback} from './broadcastRequestWithFallback';
 export { waitForCondition } from './waitForCondition';
+export type { Entries } from './Entries';
+export { typedEntries } from './typedEntries';
