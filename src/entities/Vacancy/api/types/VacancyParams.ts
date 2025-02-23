@@ -4,16 +4,24 @@ export type VacancyPeriod = 0 | 1 | 3 | 7;
 
 export type VacancyType = 'full' | 'shift' | 'fifo';
 
+export type SwitchableVacancyType = 'none' | VacancyType;
+
+interface VacancySalary {
+  from?: number;
+  to?: number;
+}
+
+export interface SwitchableVacancySalary extends VacancySalary {
+  enabled?: boolean;
+}
+
 export interface VacancyParams {
   page: number;
   count: number;
   filters: {
     text?: string;
     period?: VacancyPeriod;
-    salary?: {
-      from?: number;
-      to?: number;
-    };
+    salary?: VacancySalary;
     type?: VacancyType;
     sources?: Sources[];
   }
