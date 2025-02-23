@@ -1,8 +1,4 @@
-import { HHParams, SuperjobParams, TrudvsemParams } from "../api/types/Params";
-import { VacancyHH } from "../api/types/VacancyHH";
 import { VacancyParams } from "../api/types/VacancyParams";
-import { VacancySuperjob } from "../api/types/VacancySuperjob";
-import { VacancyTrudvsem, VacancyTrudvsemResponse } from "../api/types/VacancyTrudvsem";
 import { hhStyles, superjobStyles, trudvsemStyles } from "../ui/servicesStyles";
 import { Adapter } from "./adapters/Adapter";
 import { adapterHH } from "./adapters/adapterHH";
@@ -11,16 +7,13 @@ import { adapterTrudvsem } from "./adapters/adapterTrudvsem";
 import { ServiceStyles } from "./ServiceStyles";
 import { Sources } from "./Sources";
 
-export interface ServiceConfig {
-  adapter: Adapter<
-    SuperjobParams | HHParams | TrudvsemParams,
-    VacancySuperjob | VacancyHH | VacancyTrudvsem | VacancyTrudvsemResponse
-  >;
+export interface ServiceConfig<K extends Sources> {
+  adapter: Adapter<K>;
   styles: ServiceStyles;
   incompatibleFilters?: Array<keyof VacancyParams['filters']>;
 }
 
-export const servicesRegistry: Record<Sources, ServiceConfig> = {
+export const servicesRegistry: {[K in Sources]: ServiceConfig<K>} = {
   superjob: {
     adapter: adapterSuperjob,
     styles: superjobStyles

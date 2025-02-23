@@ -1,8 +1,9 @@
 import { VacancyParams } from "@entities/Vacancy/api/types/VacancyParams";
 import { Vacancy } from "../Vacancy";
+import { SourcesMapping } from "../Sources";
 
-export interface Adapter<P, V> {
-  adaptParams(params: VacancyParams): P;
-  adaptVacancies(data: Array<V>): Array<Vacancy>;
-  adaptVacancy(vacancy: V): Vacancy;
+export interface Adapter<K extends keyof SourcesMapping> {
+  adaptParams(params: VacancyParams): SourcesMapping[K]['params'];
+  adaptVacancies(data: Array<SourcesMapping[K]['vacancy']>): Array<Vacancy>;
+  adaptVacancy(vacancy: SourcesMapping[K]['vacancy']): Vacancy;
 }
