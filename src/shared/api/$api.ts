@@ -20,7 +20,7 @@ $api.interceptors.response.use(config => {
   const originalRequest = error.config;
 
   if (!error.response) {
-    throw new Error('Ошибка сети. Проверьте подключение или попробуйте позже.');
+    throw new Error(errorMessages['ERR_NETWORK']);
   }
 
   const { code, message } = error.response.data;

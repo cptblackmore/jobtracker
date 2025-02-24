@@ -8,6 +8,7 @@ export class VacancyRequestService {
     });
     return response.data.objects;  
   }
+
   static async getSuperjobById(id: string) {
     const response = await axios.get('http://localhost:3001/api/superjob/vacancies/' + id);
     return response.data;
@@ -30,6 +31,7 @@ export class VacancyRequestService {
     });
     return response.data.results.vacancies;
   }
+  
   static async getTrudvsemById(companyId: string, id: string) {
     const response = await axios.get(`https://opendata.trudvsem.ru/api/v1/vacancies/vacancy/${companyId}/${id}`);
     return response.data.results.vacancies[0].vacancy;

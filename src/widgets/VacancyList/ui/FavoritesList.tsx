@@ -2,13 +2,16 @@ import { VacancyCard } from '@widgets/VacancyCard';
 import { Box, CircularProgress, Stack } from '@mui/material';
 import { vacancyListStyle } from './styles';
 import { useFavoritesList } from '../model/useFavoritesList';
+import { AlertsContext } from '@shared/model';
+import { useContext } from 'react';
 
 interface Props {
   ids: string[];
 }
 
 export const FavoritesList: React.FC<Props> = ({ ids }) => {
-  const { vacancies, isLoading } = useFavoritesList(ids);
+  const { alertsStore } = useContext(AlertsContext);
+  const { vacancies, isLoading } = useFavoritesList(ids, alertsStore);
 
   return (
     <Box>

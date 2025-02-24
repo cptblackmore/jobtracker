@@ -4,6 +4,8 @@ import { vacancyListStyle } from './styles';
 import { useVacancyList } from '../model/useVacancyList';
 import { VacancyFilter } from './VacancyFilter/VacancyFilter';
 import { VacancyParams } from '@entities/Vacancy';
+import { AlertsContext } from '@shared/model';
+import { useContext } from 'react';
 
 interface Props {
   variant?: 'default' | 'demo';
@@ -17,7 +19,8 @@ export const VacancyList: React.FC<Props> = ({
   initialFilters={sources: ['superjob', 'hh', 'trudvsem']}
 }) => {
   const count = variant === 'demo' ? 1 : 5;
-  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count, filters: initialFilters});
+  const { alertsStore } = useContext(AlertsContext);
+  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count, filters: initialFilters}, alertsStore);
 
   return (
     <Box>
