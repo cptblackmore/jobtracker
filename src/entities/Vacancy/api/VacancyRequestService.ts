@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { HHParams, SuperjobParams, TrudvsemParams } from './types/Params';
 
 export class VacancyRequestService {
@@ -34,6 +34,7 @@ export class VacancyRequestService {
   
   static async getTrudvsemById(companyId: string, id: string) {
     const response = await axios.get(`https://opendata.trudvsem.ru/api/v1/vacancies/vacancy/${companyId}/${id}`);
+    if (!response.data.results?.vacancies) throw new AxiosError('Vacancy not found', 'FAVORITES_NOT_FOUND');
     return response.data.results.vacancies[0].vacancy;
   }
 }

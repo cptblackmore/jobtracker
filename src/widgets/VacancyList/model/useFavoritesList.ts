@@ -1,16 +1,21 @@
 import { Vacancy } from '@entities/Vacancy';
 import { getVacancyById } from '@entities/Vacancy/api/getVacancyById';
+import { FavoritesContext, getFavorites } from '@features/Favorites';
+import { deleteFromFavorites } from '@features/Favorites/model/deleteFromFavorites';
 import { errorMessages } from '@shared/lib/errorMessages';
-import { AlertsStore, createAlert } from '@shared/model';
+import { AlertsContext, createAlert } from '@shared/model';
 import { AxiosError } from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-export const useFavoritesList = (ids: Array<string>, alertsStore: AlertsStore): {vacancies: Vacancy[], isLoading: boolean} => {
+export const useFavoritesList = (ids: Array<string>): {vacancies: Vacancy[], isLoading: boolean} => {
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const { alertsStore } = useContext(AlertsContext);
+  const { favoritesStore } = useContext(FavoritesContext);
+
   useEffect(() => {
     let isCancelled = false;
+    const errorCodes = new Set<string>();
     
     const fetchVacancies = async () => {
       setIsLoading(true);
@@ -23,19 +28,29 @@ export const useFavoritesList = (ids: Array<string>, alertsStore: AlertsStore): 
           if (!isCancelled) setVacancies((prev) => [...prev, fetchedVacancy]);
         } catch (e) {
           if (e instanceof AxiosError) {
-            console.log(e);
-            const code = e.code ?? '';
-            if (e.status === 404) {
-              alertsStore.addAlert(createAlert('Некоторые вакансии были удалены из источников. Список избранного обновлён', 'warning'));
-            } else if (errorMessages[code]) {
-              alertsStore.addAlert(createAlert(errorMessages[code], 'error'));
+            const code = e.code ?? 'UNKNOWN_ERROR';
+            if (code === 'FAVORITES_NOT_FOUND' || e.status === 404) {
+              deleteFromFavorites(id);
+              errorCodes.add('FAVORITES_NOT_FOUND')
             } else {
-              alertsStore.addAlert(createAlert(`${errorMessages['UNKNOWN_ERROR']} ${e.message}`, 'error'));
+              if (code) errorCodes.add(code);
             }
           }
         }
       });
       if (!isCancelled) await Promise.allSettled(promises);
+      if (!isCancelled && errorCodes.size > 0) {
+        for (const errorCode of errorCodes) {
+          if (errorCode === 'FAVORITES_NOT_FOUND') {
+            favoritesStore.updateFavorites(getFavorites());
+            alertsStore.addAlert(createAlert(errorMessages['FAVORITES_NOT_FOUND'], 'warning'));
+          } else if (errorMessages[errorCode]) {
+            alertsStore.addAlert(createAlert(errorMessages[errorCode], 'error'));
+          } else {
+            alertsStore.addAlert(createAlert(`${errorMessages['UNKNOWN_ERROR']} ${errorCode}`, 'error'));
+          }
+        }
+      }
       if (!isCancelled) setIsLoading(false);
     };
 
