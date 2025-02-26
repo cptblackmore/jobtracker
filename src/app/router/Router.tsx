@@ -21,7 +21,9 @@ export const Router: React.FC = observer(() => {
         <Route path='*' element={<Navigate to={pages.home.path} />} />
         <Route path={pages.home.path} element={<HomePage />} />
         <Route path={pages.feed.path} element={<FeedPage />} />
-        <Route path={pages.favorites.path} element={<FavoritesPage />} />
+        <Route element={<ProtectedRoute isReady={authStore.isInit} isAllowed={true} />} >
+          <Route path={pages.favorites.path} element={<FavoritesPage />} />
+        </Route>
         <Route element={<ProtectedRoute isReady={authStore.isInit} isAllowed={true} />} >
           <Route path={pages.activation.path} element={<ActivationPage />} />
         </Route>
