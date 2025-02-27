@@ -6,7 +6,7 @@ import { VacancyTrudvsem, VacancyTrudvsemResponse } from '../../api/types/Vacanc
 import { TrudvsemParams } from '../../api/types/Params';
 import { Adapter } from './Adapter';
 
-export const adapterTrudvsem: Adapter<TrudvsemParams, VacancyTrudvsemResponse | VacancyTrudvsem> = {
+export const adapterTrudvsem: Adapter<'trudvsem'> = {
   adaptParams(params: VacancyParams): TrudvsemParams {
     return {
       offset: params.page,

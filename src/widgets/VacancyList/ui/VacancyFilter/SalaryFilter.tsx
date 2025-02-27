@@ -2,9 +2,7 @@ import { SwitchableVacancySalary } from '@entities/Vacancy/api/types/VacancyPara
 import { Box, Slider, Stack, TextField } from '@mui/material';
 import { filterLabelsMap } from '@widgets/VacancyList/model/VacancyFilter/filterLabelsMap';
 import { SalaryFilterAction } from '@widgets/VacancyList/model/VacancyFilter/useSalaryFitler';
-
-const SALARY_MIN = 0;
-const SALARY_MAX = 500_000;
+import { SALARY_MIN, SALARY_MAX, SALARY_STEP } from '@widgets/VacancyList';
 
 interface Props {
   handleSalaryChange: ({ action, payload }: SalaryFilterAction) => void;
@@ -20,7 +18,7 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
         valueLabelDisplay='auto'
         min={SALARY_MIN}
         max={SALARY_MAX}
-        step={1000}
+        step={SALARY_STEP}
         marks={[
           { value: SALARY_MIN, label: `${SALARY_MIN / 1000}k` },
           { value: Math.floor((SALARY_MAX - SALARY_MIN) / 2), label: `${Math.floor((SALARY_MAX - SALARY_MIN) / 2 / 1000)}k` },
@@ -33,18 +31,26 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
           name='salaryFrom'
           type='number'
           size='small'
+          slotProps={{htmlInput: {step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX}}}
           fullWidth
-          value={salaryFilter?.from}
-          onChange={(e) => handleSalaryChange({action: 'input', payload: {field: 'from', value: Number(e.target.value) || 0}})}
+          value={salaryFilter?.from !== 0 ? salaryFilter?.from : ''}
+          onChange={(e) => handleSalaryChange({
+            action: 'input', 
+            payload: {field: 'from', value: Number(e.target.value)}
+          })}
         />
         <TextField
           label={filterLabelsMap.salaryTo}
           name='salaryTo'
           type='number'
           size='small'
+          slotProps={{htmlInput: {step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX}}}
           fullWidth
-          value={salaryFilter?.to}
-          onChange={(e) => handleSalaryChange({action: 'input', payload: {field: 'to', value: Number(e.target.value) || 0}})}
+          value={salaryFilter?.to !== 0 ? salaryFilter?.to : ''}
+          onChange={(e) => handleSalaryChange({
+            action: 'input', 
+            payload: {field: 'to', value: Number(e.target.value)}
+          })}
         />
       </Stack>
     </Box>

@@ -6,7 +6,7 @@ import { HHParams } from '../../api/types/Params';
 import { convert } from 'html-to-text';
 import { Adapter } from './Adapter';
 
-export const adapterHH: Adapter<HHParams, VacancyHH> = {
+export const adapterHH: Adapter<'hh'> = {
   adaptParams(params: VacancyParams): HHParams {
     const typeMap: Record<VacancyType, HHParams['schedule']> = {
       full: 'fullDay',
@@ -18,7 +18,7 @@ export const adapterHH: Adapter<HHParams, VacancyHH> = {
       page: params.page,
       per_page: params.count,
       text: params.filters?.text ?? '',
-      salary: (((params.filters.salary?.from ?? 0) + (params.filters.salary?.to ?? 0)) / 2) || null,
+      salary: Math.floor((((params.filters.salary?.from ?? 0) + (params.filters.salary?.to ?? 0)) / 2)) || null,
       only_with_salary: (params.filters?.salary?.from || params.filters?.salary?.to) ? true : false,
       period: (params.filters?.period === 0 ? 99 : params.filters?.period) ?? 99,
       schedule: params.filters?.type ? typeMap[params.filters?.type] : null

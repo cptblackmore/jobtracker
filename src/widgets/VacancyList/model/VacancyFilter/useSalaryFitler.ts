@@ -1,4 +1,5 @@
 import { SwitchableVacancySalary } from '@entities/Vacancy/api/types/VacancyParams';
+import { SALARY_MAX, SALARY_MIN } from '@widgets/VacancyList';
 import { useCallback, useState } from 'react';
 
 export interface SalaryFilterAction {
@@ -9,8 +10,8 @@ export interface SalaryFilterAction {
 export const useSalaryFilter = (initialSalary?: SwitchableVacancySalary) => {
   const [salaryFilter, setSalaryFilter] = useState<SwitchableVacancySalary>({
     enabled: !!((initialSalary?.from ?? null) || (initialSalary?.to ?? null)),
-    from: initialSalary?.from ?? 0,
-    to: initialSalary?.to ?? 500_000,
+    from: initialSalary?.from ?? SALARY_MIN,
+    to: initialSalary?.to ?? SALARY_MAX,
   });
 
   const handleSalaryChange = useCallback(({ action, payload }: SalaryFilterAction) => {
@@ -25,7 +26,29 @@ export const useSalaryFilter = (initialSalary?: SwitchableVacancySalary) => {
           return prev;
         case 'input':
           if (payload && !Array.isArray(payload)) {
-            return { ...prev, enabled: true, [payload.field]: Number(payload.value) };
+            const value = payload.value;
+            
+            if (payload.field === 'from') {
+              const prevTo = prev?.to ?? SALARY_MAX;
+              const newValue = prevTo < SALARY_MAX ? value : SALARY_MAX;
+              const isValueGreater = value > prevTo;
+
+              return { 
+                enabled: true, 
+                from: isValueGreater ? newValue : value,
+                to: isValueGreater ? newValue : prevTo
+              };
+            } else {
+              const prevFrom = prev?.from ?? SALARY_MIN;
+              const newValue = prevFrom > SALARY_MIN ? value : SALARY_MIN;
+              const isValueLess = value < prevFrom;
+
+              return { 
+                enabled: true, 
+                from: isValueLess ? newValue : prevFrom, 
+                to: isValueLess ? newValue : value
+              };
+            }
           }
           return prev;
         default:

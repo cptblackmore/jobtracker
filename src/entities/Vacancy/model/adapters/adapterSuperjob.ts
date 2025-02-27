@@ -3,7 +3,7 @@ import { VacancySuperjob } from '../../api/types/VacancySuperjob'
 import { SuperjobParams } from '../../api/types/Params';
 import { Adapter } from './Adapter';
 
-export const adapterSuperjob: Adapter<SuperjobParams, VacancySuperjob> = {
+export const adapterSuperjob: Adapter<'superjob'> = {
   adaptParams(params: VacancyParams): SuperjobParams {
     const typeMap: Record<VacancyType, SuperjobParams['type_of_work']> = {
       full: 6,
