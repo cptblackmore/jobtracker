@@ -8,3 +8,4 @@ export { broadcastRequestWithFallback} from './broadcastRequestWithFallback';
 export { waitForCondition } from './waitForCondition';
 export type { Entries } from './Entries';
 export { typedEntries } from './typedEntries';
+export { useEffectOnceByCondition } from './useEffectOnceByCondition';

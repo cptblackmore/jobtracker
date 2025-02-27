@@ -8,7 +8,7 @@ import { AxiosError } from 'axios';
 export const useVacancyList = (initialParams: VacancyParams) => {
   const [state, dispatch] = useReducer(vacancyListReducer, {params: initialParams, vacancies: []});
   const vacancyIds = useRef<Set<string>>(new Set);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [previousPage, setPreviousPage] = useState(initialParams.page);
   const { alertsStore } = useContext(AlertsContext); 
   
