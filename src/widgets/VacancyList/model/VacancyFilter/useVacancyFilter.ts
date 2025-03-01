@@ -18,7 +18,7 @@ export const useVacancyFilter = (initialFilters: VacancyParams['filters']) => {
   }, [resetPeriod, resetType, resetSalaryFilter]);
   
   const selectedFilters = useMemo(() => calculateSelectedFilters(period, type, salaryFilter.enabled), [period, type, salaryFilter.enabled]);
-  const { services, resetServices, handleServiceChange } = useServicesFilter(selectedFilters, resetFilters, initialFilters?.sources);
+  const { services, resetServices, handleServiceChange } = useServicesFilter(selectedFilters, resetFilters, initialFilters?.excludedSources);
 
   const resetFiltersAndServices = useCallback(() => {
     resetFilters();

@@ -18,7 +18,7 @@ interface Props {
 export const VacancyList: React.FC<Props> = ({ 
   variant='default', 
   href='/feed', // TODO replace by route
-  initialFilters={sources: ['superjob', 'hh', 'trudvsem']}
+  initialFilters={}
 }) => {
   const count = variant === 'demo' ? 1 : 5;
   const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count, filters: initialFilters});
@@ -30,7 +30,7 @@ export const VacancyList: React.FC<Props> = ({
   }, [inView]);
 
   useEffectOnceByCondition(() => {
-    alertsStore.addAlert(createAlert('Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 'info'));
+    if (variant === 'default') alertsStore.addAlert(createAlert('Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 'info'));
   }, [isLoading], !isLoading)
 
   return (

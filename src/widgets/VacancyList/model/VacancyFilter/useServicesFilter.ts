@@ -10,8 +10,8 @@ export interface Service {
   incompatible: boolean
 }
 
-export const useServicesFilter = (selectedFilters: Array<keyof VacancyParams['filters']>, resetFilters: () => void, initialServices?: Sources[]) => {
-  const [enabledServices, setEnabledServices] = useState(initialServices ?? []);
+export const useServicesFilter = (selectedFilters: Array<keyof VacancyParams['filters']>, resetFilters: () => void, initialExcludedSources?: Sources[]) => {
+  const [disabledServices, setDisabledServices] = useState(initialExcludedSources ?? []);
 
   const services: Service[] = useMemo(() => {
     return typedEntries(servicesRegistry).map(([source, config]) => (
@@ -19,24 +19,24 @@ export const useServicesFilter = (selectedFilters: Array<keyof VacancyParams['fi
         source,
         color: config.styles.color,
         incompatibleFilters: config.incompatibleFilters,
-        checked: enabledServices.includes(source),
+        checked: !disabledServices.includes(source),
         incompatible: selectedFilters.some(filter =>
           config.incompatibleFilters?.includes(filter)
         )
       }
     ))
-  }, [enabledServices, selectedFilters]);
+  }, [disabledServices, selectedFilters]);
 
   const handleServiceChange = useCallback((service: Service) => {
     if (service.incompatible) {
       resetFilters();
-      setEnabledServices(prev => [...prev, service.source]);
+      setDisabledServices([]);
     } else {
-      setEnabledServices(prev => {
-        if (prev.includes(service.source)) {
-          return prev.filter(s => s !== service.source);
-        } else {
+      setDisabledServices(prev => {
+        if (!prev.includes(service.source)) {
           return [...prev, service.source];
+        } else {
+          return prev.filter(s => s !== service.source);
         }
       })
     }

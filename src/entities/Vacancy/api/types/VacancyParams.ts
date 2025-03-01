@@ -6,7 +6,7 @@ export type VacancyType = 'full' | 'shift' | 'fifo';
 
 export type SwitchableVacancyType = 'none' | VacancyType;
 
-interface VacancySalary {
+export interface VacancySalary {
   from?: number;
   to?: number;
 }
@@ -23,6 +23,6 @@ export interface VacancyParams {
     period?: VacancyPeriod;
     salary?: VacancySalary;
     type?: VacancyType;
-    sources?: Sources[];
+    excludedSources?: Sources[];
   }
 }

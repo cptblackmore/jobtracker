@@ -7,9 +7,9 @@ export const getVacancies = async (params: VacancyParams): Promise<Vacancy[]> =>
   const adapterTrudvsem = servicesRegistry.trudvsem.adapter;
 
   const [responseSuperjob, responseHH, responseTrudvsem] = await Promise.all([
-    params.filters?.sources?.includes('superjob') ? VacancyRequestService.getSuperjob(adapterSuperjob.adaptParams(params)) : [],
-    params.filters?.sources?.includes('hh') ? VacancyRequestService.getHH(adapterHH.adaptParams(params)) : [], 
-    params.filters?.sources?.includes('trudvsem') ? VacancyRequestService.getTrudvsem(adapterTrudvsem.adaptParams(params)) : []
+    !params.filters?.excludedSources?.includes('superjob') ? VacancyRequestService.getSuperjob(adapterSuperjob.adaptParams(params)) : [],
+    !params.filters?.excludedSources?.includes('hh') ? VacancyRequestService.getHH(adapterHH.adaptParams(params)) : [], 
+    !params.filters?.excludedSources?.includes('trudvsem') ? VacancyRequestService.getTrudvsem(adapterTrudvsem.adaptParams(params)) : []
   ]);
 
   return [

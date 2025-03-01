@@ -23,7 +23,7 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
       period: Number(formData.get('period')) as VacancyPeriod,
       salary: formData.get('salary') === 'on' ? {from: Number(formData.get('salaryFrom')), to: Number(formData.get('salaryTo'))} : undefined,
       type: formData.get('type') !== 'none' ? formData.get('type') as VacancyType : undefined,
-      sources: Array.from(formData.getAll('source') as Iterable<string>).map((source) => source as Sources)
+      excludedSources: formData.getAll('excludedSource').map((source) => source as Sources)
     };
 
     setFilters(newFilters);
