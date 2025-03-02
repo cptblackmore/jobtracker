@@ -1,15 +1,15 @@
 import { Vacancy, VacancyParams, servicesRegistry } from '@entities/Vacancy';
 import { VacancyRequestService } from './VacancyRequestService';
 
-export const getVacancies = async (params: VacancyParams): Promise<Vacancy[]> => {
+export const getVacancies = async (params: VacancyParams, signal: AbortSignal): Promise<Vacancy[]> => {
   const adapterSuperjob = servicesRegistry.superjob.adapter;
   const adapterHH = servicesRegistry.hh.adapter;
   const adapterTrudvsem = servicesRegistry.trudvsem.adapter;
 
   const [responseSuperjob, responseHH, responseTrudvsem] = await Promise.all([
-    !params.filters?.excludedSources?.includes('superjob') ? VacancyRequestService.getSuperjob(adapterSuperjob.adaptParams(params)) : [],
-    !params.filters?.excludedSources?.includes('hh') ? VacancyRequestService.getHH(adapterHH.adaptParams(params)) : [], 
-    !params.filters?.excludedSources?.includes('trudvsem') ? VacancyRequestService.getTrudvsem(adapterTrudvsem.adaptParams(params)) : []
+    !params.filters?.excludedSources?.includes('superjob') ? VacancyRequestService.getSuperjob(adapterSuperjob.adaptParams(params), signal) : [],
+    !params.filters?.excludedSources?.includes('hh') ? VacancyRequestService.getHH(adapterHH.adaptParams(params), signal) : [], 
+    !params.filters?.excludedSources?.includes('trudvsem') ? VacancyRequestService.getTrudvsem(adapterTrudvsem.adaptParams(params), signal) : []
   ]);
 
   return [

@@ -1,12 +1,11 @@
-import { getVacancies, Vacancy, VacancyParams } from '@entities/Vacancy';
-import { useContext, useEffect, useReducer, useRef, useState } from 'react';
+import { VacancyParams } from '@entities/Vacancy';
+import { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import { ActionVacancies, vacancyListReducer } from './vacancyListReducer';
-import { AlertsContext, createAlert } from '@shared/model';
-import { errorMessages } from '@shared/lib/errorMessages';
-import { AxiosError } from 'axios';
+import { AlertsContext } from '@shared/model';
 import { useLocation } from 'react-router';
 import { isEqual } from '@shared/lib';
 import { parseUrlSearch } from './VacancyFilter/parseUrlSearch';
+import { fetchVacancies } from './fetchVacancies';
 
 export const useVacancyList = (initialParams: VacancyParams) => {
   const location = useLocation();
@@ -16,56 +15,26 @@ export const useVacancyList = (initialParams: VacancyParams) => {
   const [previousPage, setPreviousPage] = useState(initialParams.page);
   const { alertsStore } = useContext(AlertsContext); 
 
-  useEffect(() => {
-    let isCancelled = false;
-    const errors = new Set<string>();
+  const fetchVacanciesCallback = useCallback(async (actionType: ActionVacancies, signal: AbortSignal) => {
+    setIsLoading(true);
+    await fetchVacancies(state.params, dispatch, vacancyIds, actionType, signal, alertsStore);
+    setIsLoading(false);
+  }, [state.params, vacancyIds, alertsStore]);
 
-    const fetchVacancies = async (type: ActionVacancies) => {
-      setIsLoading(true);
-      try {
-        if (isCancelled) return;
-        const newVacancies: Array<Vacancy> = await getVacancies(state.params);
-        if (isCancelled) return;
-        const uniqueVacancies: Array<Vacancy> = newVacancies.filter((vacancy) => {
-          if (!vacancyIds.current.has(vacancy.id)) {
-            vacancyIds.current.add(vacancy.id);
-            return true;
-          }
-          return false;
-        });
-        if (isCancelled) return;
-        dispatch({type, vacancies: uniqueVacancies});
-      } catch (e) {
-        if (e instanceof AxiosError) {
-          const code = e.code ?? null;
-          if (code) errors.add(code);
-        }
-      } finally {
-        if (!isCancelled) {
-          setIsLoading(false);
-          if (errors.size > 0) {
-            for (const error of errors) {
-              if (errorMessages[error]) {
-                alertsStore.addAlert(createAlert(errorMessages[error], 'error'));
-              } else {
-                alertsStore.addAlert(createAlert(`${errorMessages['UNKNOWN_ERROR']} ${error}`, 'error'));
-              }
-            }
-          }
-        }
-      }
-    }
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
     if (previousPage !== state.params.page) {
       setPreviousPage(state.params.page);
-      fetchVacancies('ADD_VACANCIES');
+      fetchVacanciesCallback('ADD_VACANCIES', signal);
     } else {
       vacancyIds.current.clear();
-      fetchVacancies('SET_VACANCIES');
+      fetchVacanciesCallback('SET_VACANCIES', signal);
     }
 
     return () => {
-      isCancelled = true;
+      controller.abort();
     };
   }, [state.params.filters, state.params.page]);
 

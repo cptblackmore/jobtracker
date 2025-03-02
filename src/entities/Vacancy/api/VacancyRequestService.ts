@@ -2,23 +2,24 @@ import axios, { AxiosError } from 'axios'
 import { HHParams, SuperjobParams, TrudvsemParams } from './types/Params';
 
 export class VacancyRequestService {
-  static async getSuperjob(params: SuperjobParams) {
+  static async getSuperjob(params: SuperjobParams, signal: AbortSignal) {
     const response = await axios.get('http://localhost:3001/api/superjob/vacancies/', {
-      params
+      params,
+      signal
     });
     return response.data.objects;  
   }
 
   static async getSuperjobById(id: string, signal: AbortSignal) {
     const response = await axios.get('http://localhost:3001/api/superjob/vacancies/' + id, { signal });
-    console.log('test');
     if (!response.data?.id) throw new AxiosError('Vacancy not found', 'FAVORITES_NOT_FOUND');
     return response.data;
   }
   
-  static async getHH(params: HHParams) {
+  static async getHH(params: HHParams, signal: AbortSignal) {
     const response = await axios.get('http://localhost:3001/api/hh/vacancies', {
-      params
+      params,
+      signal
     });
     return response.data.items;
   }
@@ -27,9 +28,10 @@ export class VacancyRequestService {
     return response.data;
   }
   
-  static async getTrudvsem(params: TrudvsemParams) {
+  static async getTrudvsem(params: TrudvsemParams, signal: AbortSignal) {
     const response = await axios.get('https://opendata.trudvsem.ru/api/v1/vacancies', {
-      params
+      params,
+      signal
     });
     return response.data.results.vacancies;
   }

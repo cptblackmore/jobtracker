@@ -1,11 +1,8 @@
 import { Vacancy } from '@entities/Vacancy';
-import { getVacancyById } from '@entities/Vacancy/api/getVacancyById';
-import { FavoritesContext, getFavorites } from '@features/Favorites';
-import { deleteFromFavorites } from '@features/Favorites/model/deleteFromFavorites';
-import { errorMessages } from '@shared/lib/errorMessages';
-import { AlertsContext, createAlert } from '@shared/model';
-import axios, { AxiosError } from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import { FavoritesContext } from '@features/Favorites';
+import { AlertsContext } from '@shared/model';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { fetchFavorites } from './fetchFavorites';
 
 export const useFavoritesList = (ids: Array<string>): {vacancies: Vacancy[], isLoading: boolean} => {
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
@@ -13,52 +10,17 @@ export const useFavoritesList = (ids: Array<string>): {vacancies: Vacancy[], isL
   const { alertsStore } = useContext(AlertsContext);
   const { favoritesStore } = useContext(FavoritesContext);
 
+  const fetchFavoritesCallback = useCallback(async (signal: AbortSignal) => {
+    setIsLoading(true);
+    await fetchFavorites(ids, setVacancies, signal, alertsStore, favoritesStore);
+    setIsLoading(false);
+  }, [ids, alertsStore, favoritesStore]);
+
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
-    const errorCodes = new Set<string>();
-    
-    const fetchVacancies = async () => {
-      setIsLoading(true);
-      setVacancies([]);
 
-      const promises = ids.map(async (id) => {
-        try {
-          const fetchedVacancy = await getVacancyById(id, signal);
-          setVacancies((prev) => [...prev, fetchedVacancy]);
-        } catch (e) {
-          if (axios.isCancel(e)) return;
-          if (e instanceof AxiosError) {
-            const code = e.code ?? 'UNKNOWN_ERROR';
-            if (code === 'FAVORITES_NOT_FOUND' || e.status === 404) {
-              deleteFromFavorites(id);
-              errorCodes.add('FAVORITES_NOT_FOUND')
-            } else {
-              if (code) errorCodes.add(code);
-            }
-          }
-        }
-      });
-
-      await Promise.allSettled(promises);
-
-      if (errorCodes.size > 0) {
-        for (const errorCode of errorCodes) {
-          if (errorCode === 'FAVORITES_NOT_FOUND') {
-            favoritesStore.updateFavorites(getFavorites());
-            alertsStore.addAlert(createAlert(errorMessages['FAVORITES_NOT_FOUND'], 'warning'));
-          } else if (errorCode === 'UNKNOWN_ERROR') {
-            alertsStore.addAlert(createAlert(`${errorMessages['UNKNOWN_ERROR']} ${errorCode}`, 'error'));
-          } else {
-            alertsStore.addAlert(createAlert(errorMessages[errorCode], 'error'));
-          }
-        }
-      }
-
-      setIsLoading(false);
-    };
-
-    fetchVacancies();
+    fetchFavoritesCallback(signal);
 
     return () => {
       controller.abort();
