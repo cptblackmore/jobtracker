@@ -2,8 +2,8 @@ import { VacancyPeriod } from '@entities/Vacancy';
 import { SelectChangeEvent } from '@mui/material';
 import { useCallback, useState } from 'react';
 
-export const usePeriodFilter = (initialPeriod?: VacancyPeriod) => {
-  const [period, setPeriod] = useState(initialPeriod ?? 0);
+export const usePeriodFilter = () => {
+  const [period, setPeriod] = useState<VacancyPeriod>(0);
 
   const handlePeriodChange = useCallback((e: SelectChangeEvent<VacancyPeriod>) => {
     setPeriod(Number(e.target.value) as VacancyPeriod);
@@ -13,5 +13,5 @@ export const usePeriodFilter = (initialPeriod?: VacancyPeriod) => {
     setPeriod(0);
   }
 
-  return { period, resetPeriod, handlePeriodChange };
+  return { period, resetPeriod, setPeriod, handlePeriodChange };
 };

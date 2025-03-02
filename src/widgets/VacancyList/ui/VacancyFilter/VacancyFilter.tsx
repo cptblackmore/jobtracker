@@ -1,9 +1,9 @@
-import { Sources, VacancyParams, VacancyPeriod, VacancyType } from '@entities/Vacancy';
+import { VacancyParams } from '@entities/Vacancy';
 import { FilterList, FilterListOff } from '@mui/icons-material';
 import { Button, Collapse, FormControl, Paper, Stack, TextField } from '@mui/material';
 import { ToggleIconButton } from '@shared/ui';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
-import { useState } from 'react';
+import { useVacancyFilter } from '@widgets/VacancyList/model/VacancyFilter/useVacancyFilter';
 
 interface Props {
   filters: VacancyParams['filters'];
@@ -11,23 +11,13 @@ interface Props {
 }
 
 export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
-  const [showAdditional, setShowAdditional] = useState(false);
-  const [text, setText] = useState(filters?.text ?? '');
-  
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const newFilters: VacancyParams['filters'] = {
-      text: formData.get('text') as string,
-      period: Number(formData.get('period')) as VacancyPeriod,
-      salary: formData.get('salary') === 'on' ? {from: Number(formData.get('salaryFrom')), to: Number(formData.get('salaryTo'))} : undefined,
-      type: formData.get('type') !== 'none' ? formData.get('type') as VacancyType : undefined,
-      excludedSources: formData.getAll('excludedSource').map((source) => source as Sources)
-    };
-
-    setFilters(newFilters);
-  }
+  const {
+    showAdditional,
+    setShowAdditional,
+    text,
+    setText,
+    handleSubmit
+  } = useVacancyFilter(filters, setFilters);
 
   return (
     <Paper 

@@ -1,6 +1,6 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { Divider, Grid2, Box } from '@mui/material';
-import { useVacancyFilter } from '@widgets/VacancyList/model/VacancyFilter/useVacancyFilter';
+import { useVacancyFilterAdditional } from '@widgets/VacancyList/model/VacancyFilter/useVacancyFilterAdditional';
 import { SalaryFilter } from './SalaryFilter';
 import { ServiceSelection } from './ServiceSelection';
 import { BasicFilters } from './BasicFilters';
@@ -21,7 +21,7 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters }) => {
     services, 
     handleServiceChange, 
     resetFiltersAndServices
-  } = useVacancyFilter(filters);
+  } = useVacancyFilterAdditional(filters);
 
   return (
     <Box>

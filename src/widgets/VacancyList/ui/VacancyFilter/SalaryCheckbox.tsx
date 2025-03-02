@@ -16,7 +16,7 @@ export const SalaryCheckbox: React.FC<Props> = ({ salaryFilter, handleSalaryChan
         label={filterLabelsMap.enableSalary + ' (₽)'}
         control={
           <Checkbox 
-            checked={salaryFilter.enabled} 
+            checked={!!salaryFilter.enabled} 
             onChange={() => handleSalaryChange({action: 'toggle'})} 
             name='salary' 
           />

@@ -10,8 +10,8 @@ export interface Service {
   incompatible: boolean
 }
 
-export const useServicesFilter = (selectedFilters: Array<keyof VacancyParams['filters']>, resetFilters: () => void, initialExcludedSources?: Sources[]) => {
-  const [disabledServices, setDisabledServices] = useState(initialExcludedSources ?? []);
+export const useServicesFilter = (selectedFilters: Array<keyof VacancyParams['filters']>, resetFilters: () => void) => {
+  const [disabledServices, setDisabledServices] = useState<Sources[]>([]);
 
   const services: Service[] = useMemo(() => {
     return typedEntries(servicesRegistry).map(([source, config]) => (
@@ -46,5 +46,5 @@ export const useServicesFilter = (selectedFilters: Array<keyof VacancyParams['fi
     typedEntries(servicesRegistry).map(([source]) => source)
   }
 
-  return { services, resetServices, handleServiceChange };
+  return { services, resetServices, setDisabledServices, handleServiceChange };
 };

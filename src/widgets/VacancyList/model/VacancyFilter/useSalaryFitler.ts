@@ -7,14 +7,12 @@ export interface SalaryFilterAction {
   payload?: number[] | { field: 'from' | 'to'; value: number };
 }
 
-export const useSalaryFilter = (initialSalary?: SwitchableVacancySalary) => {
+export const useSalaryFilter = () => {
   const [salaryFilter, setSalaryFilter] = useState<SwitchableVacancySalary>(() => {
-    const from = initialSalary?.from ?? SALARY_MIN;
-    const to = initialSalary?.to ?? SALARY_MAX;
     return {
-      enabled: !!((initialSalary?.from ?? null) || (initialSalary?.to ?? null)),
-      from,
-      to: to < from ? from : to,
+      enabled: false,
+      from: SALARY_MIN,
+      to: SALARY_MAX
     }
   });
 
@@ -65,5 +63,5 @@ export const useSalaryFilter = (initialSalary?: SwitchableVacancySalary) => {
     setSalaryFilter(prev => ({...prev, enabled: false}));
   }
 
-  return { salaryFilter, resetSalaryFilter, handleSalaryChange };
+  return { salaryFilter, resetSalaryFilter, setSalaryFilter, handleSalaryChange };
 };
