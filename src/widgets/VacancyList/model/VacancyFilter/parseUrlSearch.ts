@@ -1,4 +1,4 @@
-import { servicesRegistry, Sources, VacancyParams, VacancyPeriod, VacancyType } from '@entities/Vacancy';
+import { sourcesRegistry, Sources, VacancyParams, VacancyPeriod, VacancyType } from '@entities/Vacancy';
 import { validateValue, filterValidValues, typedKeys, typedEntries } from '@shared/lib';
 import { SALARY_MIN, SALARY_MAX } from '@widgets/VacancyList/config/salaryConfig';
 import { calculateSelectedFilters } from './calculateSelectedFilters';
@@ -14,14 +14,14 @@ export const parseUrlSearch = (search?: string): VacancyParams['filters'] | unde
   const salaryTo = validateValue(params.get('to'), [], Number, {range: {min: SALARY_MIN, max: SALARY_MAX}});
 
   const excludedSources = new Set<Sources>(
-    filterValidValues<Sources>(params.get('excludedSources')?.split(',') ?? [], typedKeys(servicesRegistry))
+    filterValidValues<Sources>(params.get('excludedSources')?.split(',') ?? [], typedKeys(sourcesRegistry))
   );
   const selectedFilters = calculateSelectedFilters(
     period ?? 0, 
     type ?? 'none', 
     !!((salaryFrom ?? null) || (salaryTo ?? null))
   );
-  for (const [source, config] of typedEntries(servicesRegistry)) {
+  for (const [source, config] of typedEntries(sourcesRegistry)) {
     if (selectedFilters.some(filter => config.incompatibleFilters?.includes(filter))) {
       excludedSources.add(source);
     }

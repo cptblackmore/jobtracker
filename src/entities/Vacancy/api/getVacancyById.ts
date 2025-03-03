@@ -1,31 +1,31 @@
-import { servicesRegistry, Vacancy } from '@entities/Vacancy';
-import { VacancyRequestService } from './VacancyRequestService';
+import { sourcesRegistry, Vacancy } from '@entities/Vacancy';
+import { VacancyService } from './VacancyService';
 import { adapterTrudvsem } from '../model/adapters/adapterTrudvsem';
 
 export const getVacancyById = async (id: string, signal: AbortSignal): Promise<Vacancy> => {
-  const [service, ...rest] = id.split('_');
+  const [source, ...rest] = id.split('_');
   
-  const adapterSuperjob = servicesRegistry.superjob.adapter;
-  const adapterHH = servicesRegistry.hh.adapter;
+  const adapterSuperjob = sourcesRegistry.superjob.adapter;
+  const adapterHH = sourcesRegistry.hh.adapter;
 
-  switch (service) {
+  switch (source) {
     case 'sj': {
       const vacancyId = rest[0];
-      const vacancy = await VacancyRequestService.getSuperjobById(vacancyId, signal);
+      const vacancy = await VacancyService.getSuperjobById(vacancyId, signal);
       return adapterSuperjob.adaptVacancy(vacancy);
     }
     case 'hh': {
       const vacancyId = rest[0];
-      const vacancy = await VacancyRequestService.getHHById(vacancyId, signal);
+      const vacancy = await VacancyService.getHHById(vacancyId, signal);
       return adapterHH.adaptVacancy(vacancy);
     }
     case 'tv': {
       const [companyId, vacancyId] = rest;
-      const vacancy = await VacancyRequestService.getTrudvsemById(companyId, vacancyId, signal);
+      const vacancy = await VacancyService.getTrudvsemById(companyId, vacancyId, signal);
       return adapterTrudvsem.adaptVacancy(vacancy);
     }
     default: {
-      throw new Error(`Неизвестный сервис: ${service}`);
+      throw new Error(`Неизвестный источник: ${source}`);
     }
   }
 };

@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { HHParams, SuperjobParams, TrudvsemParams } from './types/Params';
 
-export class VacancyRequestService {
+export class VacancyService {
   static async getSuperjob(params: SuperjobParams, signal: AbortSignal) {
     const response = await axios.get('http://localhost:3001/api/superjob/vacancies/', {
       params,

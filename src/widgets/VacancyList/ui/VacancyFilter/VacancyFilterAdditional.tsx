@@ -2,7 +2,7 @@ import { VacancyParams } from '@entities/Vacancy';
 import { Divider, Grid2, Box } from '@mui/material';
 import { useVacancyFilterAdditional } from '@widgets/VacancyList/model/VacancyFilter/useVacancyFilterAdditional';
 import { SalaryFilter } from './SalaryFilter';
-import { ServiceSelection } from './ServiceSelection';
+import { SourceSelection } from './SourceSelection';
 import { BasicFilters } from './BasicFilters';
 import { SalaryCheckbox } from './SalaryCheckbox';
 
@@ -18,16 +18,16 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters }) => {
     handleTypeChange, 
     salaryFilter, 
     handleSalaryChange,
-    services, 
-    handleServiceChange, 
-    resetFiltersAndServices
+    sources, 
+    handleSourceChange, 
+    resetFiltersAndSources
   } = useVacancyFilterAdditional(filters);
 
   return (
     <Box>
       <Grid2 container mt={2} >
         <Grid2 size={3} pr={2} >
-          <BasicFilters period={period} type={type} handlePeriodChange={handlePeriodChange} handleTypeChange={handleTypeChange} resetFiltersAndServices={resetFiltersAndServices} />
+          <BasicFilters period={period} type={type} handlePeriodChange={handlePeriodChange} handleTypeChange={handleTypeChange} resetFiltersAndSources={resetFiltersAndSources} />
         </Grid2>
         <Divider flexItem orientation='vertical' sx={{mr: '-1px'}} />  
         <Grid2 size={9} pl={3} pr={1} >
@@ -36,7 +36,7 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters }) => {
         </Grid2>
       </Grid2>
       <Divider sx={{my: 2}} />
-      <ServiceSelection services={services} handleServiceChange={handleServiceChange} />
+      <SourceSelection sources={sources} handleSourceChange={handleSourceChange} />
     </Box>
   );
 };

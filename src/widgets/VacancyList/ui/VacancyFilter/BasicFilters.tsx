@@ -7,10 +7,16 @@ interface Props {
   type: SwitchableVacancyType;
   handlePeriodChange: (e: SelectChangeEvent<VacancyPeriod>) => void;
   handleTypeChange: (e: SelectChangeEvent<SwitchableVacancyType>) => void;
-  resetFiltersAndServices: () => void;
+  resetFiltersAndSources: () => void;
 }
 
-export const BasicFilters: React.FC<Props> = ({ period, type, handlePeriodChange, handleTypeChange, resetFiltersAndServices }) => {
+export const BasicFilters: React.FC<Props> = ({ 
+  period, 
+  type, 
+  handlePeriodChange, 
+  handleTypeChange, 
+  resetFiltersAndSources 
+}) => {
   return (
     <Stack spacing={2} >
       <FormControl>
@@ -50,7 +56,7 @@ export const BasicFilters: React.FC<Props> = ({ period, type, handlePeriodChange
           <MenuItem value={'fifo'} >Вахтовый метод</MenuItem>
         </Select>
       </FormControl>
-      <Button color='warning' onClick={resetFiltersAndServices} >Сбросить фильтры</Button>
+      <Button color='warning' onClick={resetFiltersAndSources} >Сбросить фильтры</Button>
     </Stack>
   );
 };

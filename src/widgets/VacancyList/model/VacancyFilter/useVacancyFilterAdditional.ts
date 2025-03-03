@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { usePeriodFilter } from './usePeriodFilter';
 import { useTypeFilter } from './useTypeFilter';
 import { useSalaryFilter } from './useSalaryFitler';
-import { useServicesFilter } from './useServicesFilter';
+import { useSourcesFilter } from './useSourcesFilter';
 import { calculateSelectedFilters } from './calculateSelectedFilters';
 
 export const useVacancyFilterAdditional = (filters: VacancyParams['filters']) => {
@@ -18,12 +18,12 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters']) =>
   }, [resetPeriod, resetType, resetSalaryFilter]);
   
   const selectedFilters = useMemo(() => calculateSelectedFilters(period, type, salaryFilter.enabled), [period, type, salaryFilter.enabled]);
-  const { services, resetServices, setDisabledServices, handleServiceChange } = useServicesFilter(selectedFilters, resetFilters);
+  const { sources, resetSources, setDisabledSources, handleSourceChange } = useSourcesFilter(selectedFilters, resetFilters);
 
-  const resetFiltersAndServices = useCallback(() => {
+  const resetFiltersAndSources = useCallback(() => {
     resetFilters();
-    resetServices();
-  }, [resetFilters, resetServices]);
+    resetSources();
+  }, [resetFilters, resetSources]);
 
   useEffect(() => {
     const from = filters?.salary?.from ?? 0;
@@ -36,7 +36,7 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters']) =>
       from,
       to: to < from ? from : to
     });
-    setDisabledServices(filters?.excludedSources ?? []);
+    setDisabledSources(filters?.excludedSources ?? []);
   }, [filters])
 
   return {
@@ -46,8 +46,8 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters']) =>
     handleTypeChange, 
     salaryFilter, 
     handleSalaryChange,
-    services, 
-    handleServiceChange, 
-    resetFiltersAndServices
+    sources, 
+    handleSourceChange, 
+    resetFiltersAndSources
   };
 };
