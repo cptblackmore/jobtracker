@@ -4,7 +4,7 @@ import { SALARY_MIN, SALARY_MAX } from '@widgets/VacancyList/config/salaryConfig
 import { calculateSelectedFilters } from './calculateSelectedFilters';
 
 export const parseUrlSearch = (search?: string): VacancyParams['filters'] | undefined => {
-  const params = new URLSearchParams(search || location.search);
+  const params = new URLSearchParams(typeof search === 'string' ? search : location.search);
   if (params.size === 0) return undefined;
 
   const text = params.get('text') ?? undefined;

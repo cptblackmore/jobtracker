@@ -1,9 +1,9 @@
-export function urlParametrizeEntries(obj: object): string { 
+export function urlParametrizeObject(obj: object): string { 
   return Object.entries(obj).reduce<string[]>((acc, [key, value]) => {
     if (value === undefined || value === null || value === '') return acc;
 
     if (value instanceof Object && !(value instanceof Array)) {
-      const nested = urlParametrizeEntries(value);
+      const nested = urlParametrizeObject(value);
       if (nested) acc.push(nested);
       return acc;
     };

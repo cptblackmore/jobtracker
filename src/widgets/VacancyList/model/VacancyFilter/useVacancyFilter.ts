@@ -1,8 +1,7 @@
 import { VacancyParams, VacancyPeriod, VacancyType, Sources } from '@entities/Vacancy';
-import { isEqual, urlParametrizeEntries } from '@shared/lib';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router';
-import { parseUrlSearch } from '../VacancyFilter/parseUrlSearch';
+import { useNavigate } from 'react-router';
+import { updateUrlFilters } from './updateUrlFitlers';
 
 export const useVacancyFilter = (
   filters: VacancyParams['filters'], 
@@ -10,7 +9,6 @@ export const useVacancyFilter = (
 ) => {
   const [showAdditional, setShowAdditional] = useState(false);
   const [text, setText] = useState(filters?.text ?? '');
-  const location = useLocation();
   const navigate = useNavigate();
   
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -25,20 +23,8 @@ export const useVacancyFilter = (
       excludedSources: formData.getAll('excludedSource').map((source) => source as Sources)
     };
 
+    updateUrlFilters(newFilters, navigate)
     setFilters(newFilters);
-
-    const periodAsParam = newFilters?.period === 0 ? null : newFilters?.period;
-    const updatedParams = urlParametrizeEntries({...newFilters, period: periodAsParam});
-    const currentUrl = new URL(window.location.href);
-    const newPathnameAndSearch = `${location.pathname}?${updatedParams}`;
-    const newUrl = new URL(newPathnameAndSearch, window.location.origin);
-    if (!isEqual(parseUrlSearch(currentUrl.search), parseUrlSearch(newUrl.search))) {
-      if (updatedParams) {
-        navigate(newPathnameAndSearch);
-      } else {
-        navigate(location.pathname);
-      }
-    }
   }
 
   useEffect(() => {

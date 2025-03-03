@@ -12,5 +12,5 @@ export { useEffectOnceByCondition } from './useEffectOnceByCondition';
 export { validateValue } from './validateValue';
 export { filterValidValues } from './filterValidValues';
 export { typedKeys } from './typedKeys';
-export { urlParametrizeEntries } from './urlParametrizeEntries';
+export { urlParametrizeObject } from './urlParametrizeObject';
 export { isEqual } from './isEqual';
