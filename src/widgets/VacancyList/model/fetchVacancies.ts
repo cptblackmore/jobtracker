@@ -24,7 +24,9 @@ export const fetchVacancies = async (
     });
     dispatch({type: actionType, vacancies: uniqueVacancies});
   } catch (e) {
-    if (axios.isCancel(e)) return;
+    if (axios.isCancel(e)) {
+      throw e;
+    };
     if (e instanceof AxiosError) {
       const code = e.code ?? null;
       if (code) errors.add(code);

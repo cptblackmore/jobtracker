@@ -6,6 +6,7 @@ import { useLocation } from 'react-router';
 import { isEqual } from '@shared/lib';
 import { parseUrlSearch } from './VacancyFilter/parseUrlSearch';
 import { fetchVacancies } from './fetchVacancies';
+import axios from 'axios';
 
 export const useVacancyList = (initialParams: VacancyParams) => {
   const location = useLocation();
@@ -17,7 +18,13 @@ export const useVacancyList = (initialParams: VacancyParams) => {
 
   const fetchVacanciesCallback = useCallback(async (actionType: ActionVacancies, signal: AbortSignal) => {
     setIsLoading(true);
-    await fetchVacancies(state.params, dispatch, vacancyIds, actionType, signal, alertsStore);
+    try {
+      await fetchVacancies(state.params, dispatch, vacancyIds, actionType, signal, alertsStore);
+      setIsLoading(false);
+    } catch (e) {
+      if (axios.isCancel(e)) return;
+      setIsLoading(false);
+    }
     setIsLoading(false);
   }, [state.params, vacancyIds, alertsStore]);
 
