@@ -14,3 +14,4 @@ export { filterValidValues } from './filterValidValues';
 export { typedKeys } from './typedKeys';
 export { urlParametrizeObject } from './urlParametrizeObject';
 export { isEqual } from './isEqual';
+export { chunkerize } from './chunkerize';

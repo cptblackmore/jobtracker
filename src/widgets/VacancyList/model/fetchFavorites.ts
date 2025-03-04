@@ -13,16 +13,19 @@ export const fetchFavorites = async (
   signal: AbortSignal,
   alertsStore: AlertsStore,
   favoritesStore: FavoritesStore
-) => {
-  setVacancies([]);
+): Promise<Vacancy[]> => {
   const errorCodes = new Set<string>();
+  const result: Vacancy[] = [];
 
   const promises = ids.map(async (id) => {
     try {
       const fetchedVacancy = await getVacancyById(id, signal);
-      setVacancies((prev) => [...prev, fetchedVacancy]);
+      // setVacancies((prev) => [...prev, fetchedVacancy]);
+      result.push(fetchedVacancy);
     } catch (e) {
-      if (axios.isCancel(e)) return;
+      if (axios.isCancel(e)) {
+        return Promise.reject(e);
+      };
       if (e instanceof AxiosError) {
         const code = e.code ?? 'UNKNOWN_ERROR';
         if (code === 'FAVORITES_NOT_FOUND' || e.status === 404) {
@@ -34,7 +37,8 @@ export const fetchFavorites = async (
       }
     }
   });
-  await Promise.allSettled(promises);
+  await Promise.all(promises);
 
   if (errorCodes.size > 0) handleErrors(errorCodes, alertsStore, () => favoritesStore.updateFavorites(getFavorites()));
+  return result;
 };
