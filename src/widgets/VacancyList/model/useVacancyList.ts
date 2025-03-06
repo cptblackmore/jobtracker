@@ -19,7 +19,8 @@ export const useVacancyList = (initialParams: VacancyParams) => {
   const fetchVacanciesCallback = useCallback(async (actionType: ActionVacancies, signal: AbortSignal) => {
     setIsLoading(true);
     try {
-      await fetchVacancies(state.params, dispatch, vacancyIds, actionType, signal, alertsStore);
+      const result = await fetchVacancies(state.params, vacancyIds, signal, alertsStore);
+      dispatch({type: actionType, vacancies: result || []});
       setIsLoading(false);
     } catch (e) {
       if (axios.isCancel(e)) return;
