@@ -15,6 +15,14 @@ export class VacancyService {
     if (!response.data?.id) throw new AxiosError('Vacancy not found', 'FAVORITES_NOT_FOUND');
     return response.data;
   }
+
+  static async getSuperjobByIds(ids: string[], signal: AbortSignal) {
+    const response = await axios.get('http://localhost:3001/api/superjob/vacancies/?' + ids.map((el, i) => {
+      return `ids[${i}]=${el}`
+    }).join('&'), { signal });
+    // TODO handle 404 errors
+    return response.data.objects;
+  }
   
   static async getHH(params: HHParams, signal: AbortSignal) {
     const response = await axios.get('http://localhost:3001/api/hh/vacancies', {
@@ -23,6 +31,7 @@ export class VacancyService {
     });
     return response.data.items;
   }
+
   static async getHHById(id: string, signal: AbortSignal) {
     const response = await axios.get('http://localhost:3001/api/hh/vacancies/' + id, { signal });
     return response.data;

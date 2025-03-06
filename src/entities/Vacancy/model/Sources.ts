@@ -9,4 +9,11 @@ export interface SourcesMapping {
   trudvsem: { params: TrudvsemParams; vacancy: VacancyTrudvsem | VacancyTrudvsemResponse };
 }
 
+export const sourcesIdsMapping = {
+  superjob: 'sj',
+  hh: 'hh',
+  trudvsem: 'tv',
+} as const;
+
 export type Sources = keyof SourcesMapping;
+export type SourceId = (typeof sourcesIdsMapping)[Sources];

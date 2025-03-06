@@ -14,7 +14,7 @@ export const  useFavoritesList = (idChunk: Array<string>): {vacancies: Vacancy[]
   const fetchFavoritesCallback = useCallback(async (signal: AbortSignal) => {
     setIsLoading(true);
     try {
-      const result = await fetchFavorites(idChunk, setVacancies, signal, alertsStore, favoritesStore);
+      const result = await fetchFavorites(idChunk, signal, alertsStore, favoritesStore);
       const sortedResult = result.sort((a, b) => {
         return idChunk.indexOf(a.id) - idChunk.indexOf(b.id);
       })

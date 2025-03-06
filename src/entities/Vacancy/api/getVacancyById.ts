@@ -1,26 +1,23 @@
 import { sourcesRegistry, Vacancy } from '@entities/Vacancy';
 import { VacancyService } from './VacancyService';
-import { adapterTrudvsem } from '../model/adapters/adapterTrudvsem';
+import { SourceId } from '../model/Sources';
 
-export const getVacancyById = async (id: string, signal: AbortSignal): Promise<Vacancy> => {
-  const [source, ...rest] = id.split('_');
-  
+export const getVacancyById = async (id: string, source: SourceId, signal: AbortSignal): Promise<Vacancy> => {
   const adapterSuperjob = sourcesRegistry.superjob.adapter;
   const adapterHH = sourcesRegistry.hh.adapter;
+  const adapterTrudvsem = sourcesRegistry.trudvsem.adapter;
 
   switch (source) {
     case 'sj': {
-      const vacancyId = rest[0];
-      const vacancy = await VacancyService.getSuperjobById(vacancyId, signal);
+      const vacancy = await VacancyService.getSuperjobById(id, signal);
       return adapterSuperjob.adaptVacancy(vacancy);
     }
     case 'hh': {
-      const vacancyId = rest[0];
-      const vacancy = await VacancyService.getHHById(vacancyId, signal);
+      const vacancy = await VacancyService.getHHById(id, signal);
       return adapterHH.adaptVacancy(vacancy);
     }
     case 'tv': {
-      const [companyId, vacancyId] = rest;
+      const [companyId, vacancyId] = id.split('_');
       const vacancy = await VacancyService.getTrudvsemById(companyId, vacancyId, signal);
       return adapterTrudvsem.adaptVacancy(vacancy);
     }
