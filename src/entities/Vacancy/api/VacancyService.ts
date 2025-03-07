@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { HHParams, SuperjobParams, TrudvsemParams } from './types/Params';
 
 export class VacancyService {
@@ -11,17 +11,13 @@ export class VacancyService {
   }
 
   static async getSuperjobById(id: string, signal: AbortSignal) {
-    const response = await axios.get('http://localhost:3001/api/superjob/vacancies/' + id, { signal });
-    if (!response.data?.id) throw new AxiosError('Vacancy not found', 'FAVORITES_NOT_FOUND');
-    return response.data;
+    return await axios.get('http://localhost:3001/api/superjob/vacancies/' + id, { signal });
   }
 
   static async getSuperjobByIds(ids: string[], signal: AbortSignal) {
-    const response = await axios.get('http://localhost:3001/api/superjob/vacancies/?' + ids.map((el, i) => {
+    return await axios.get('http://localhost:3001/api/superjob/vacancies/?' + ids.map((el, i) => {
       return `ids[${i}]=${el}`
     }).join('&'), { signal });
-    // TODO handle 404 errors
-    return response.data.objects;
   }
   
   static async getHH(params: HHParams, signal: AbortSignal) {
@@ -33,8 +29,7 @@ export class VacancyService {
   }
 
   static async getHHById(id: string, signal: AbortSignal) {
-    const response = await axios.get('http://localhost:3001/api/hh/vacancies/' + id, { signal });
-    return response.data;
+    return await axios.get('http://localhost:3001/api/hh/vacancies/' + id, { signal });
   }
   
   static async getTrudvsem(params: TrudvsemParams, signal: AbortSignal) {
@@ -46,8 +41,6 @@ export class VacancyService {
   }
   
   static async getTrudvsemById(companyId: string, id: string, signal: AbortSignal) {
-    const response = await axios.get(`https://opendata.trudvsem.ru/api/v1/vacancies/vacancy/${companyId}/${id}`, { signal });
-    if (!response.data.results?.vacancies) throw new AxiosError('Vacancy not found', 'FAVORITES_NOT_FOUND');
-    return response.data.results.vacancies[0].vacancy;
+    return await axios.get(`https://opendata.trudvsem.ru/api/v1/vacancies/vacancy/${companyId}/${id}`, { signal });
   }
 }

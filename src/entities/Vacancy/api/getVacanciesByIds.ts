@@ -1,14 +1,25 @@
-import { sourcesRegistry, Vacancy } from '@entities/Vacancy';
+import { sourcesRegistry } from '@entities/Vacancy';
 import { VacancyService } from './VacancyService';
 import { SourceId } from '../model/Sources';
+import { VacanciesWithMissingIds } from './types/VacanciesWithMissingIds';
 
-export const getVacanciesByIds = async (ids: string[], source: SourceId, signal: AbortSignal): Promise<Vacancy[]> => {
+export const getVacanciesByIds = async (ids: string[], source: SourceId, signal: AbortSignal): Promise<VacanciesWithMissingIds> => {
   const adapterSuperjob = sourcesRegistry.superjob.adapter;
 
   switch (source) {
     case 'sj': {
-      const vacancies = await VacancyService.getSuperjobByIds(ids, signal);
-      return adapterSuperjob.adaptVacancies(vacancies);
+      const response = await VacancyService.getSuperjobByIds(ids, signal);
+      if (response.data.objects.length !== ids.length) {
+        const responseIds = new Set(response.data.objects.map(vacancy => String(vacancy.id)));
+        const missingIds = ids.filter(id => !responseIds.has(id));
+        if (missingIds.length > 0) {
+          return { 
+            vacancies: adapterSuperjob.adaptVacancies(response.data.objects), 
+            missingIds 
+          };
+        }
+      }
+      return { vacancies: adapterSuperjob.adaptVacancies(response.data.objects) };
     }
     case 'hh': {
       throw new Error(`${source} не поддерживает множественное получение вакансий`);
