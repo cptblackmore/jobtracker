@@ -25,8 +25,8 @@ export const adapterHH: Adapter<'hh'> = {
     }
   },
 
-  adaptVacancies(data: Array<VacancyHH>): Array<Vacancy> { 
-    return data.map(vacancy => {
+  adaptVacancies(vacancies: Array<VacancyHH>): Array<Vacancy> { 
+    return vacancies.map(vacancy => {
       return {
         id: 'hh_' + vacancy.id,
         profession: vacancy.name,

@@ -23,8 +23,8 @@ export const adapterSuperjob: Adapter<'superjob'> = {
     }
   },
 
-  adaptVacancies(data: Array<VacancySuperjob>): Array<Vacancy> {
-    return data.map(vacancy => {
+  adaptVacancies(vacancies: Array<VacancySuperjob>): Array<Vacancy> {
+    return vacancies.map(vacancy => {
       return {
         id: 'sj_' + vacancy.id.toString(),
         profession: vacancy.profession,

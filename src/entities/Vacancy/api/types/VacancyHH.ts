@@ -1,3 +1,16 @@
+export interface VacancyHHMultipleResponse {
+    items: VacancyHH[];
+    found: number;
+    pages: number;
+    page: number;
+    per_page: number;
+    clusters: unknown;
+    arguments: unknown;
+    fixes: unknown;
+    suggests: unknown;
+    alternate_url: string;
+}
+
 export interface VacancyHH {
     id:                        string;
     premium:                   boolean;

@@ -1,3 +1,11 @@
+export interface VacancySuperjobMultipleResponse {
+  objects: VacancySuperjob[];
+  total: number;
+  more: boolean;
+  subscription_id: number;
+  subscription_active: boolean;
+}
+
 export interface VacancySuperjob {
   canEdit:                       boolean;
   is_closed:                     boolean;

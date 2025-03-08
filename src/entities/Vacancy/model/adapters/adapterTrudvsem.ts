@@ -2,7 +2,7 @@ import { toUpperCaseFirstLetter, toRightCurrencyCode } from '@shared/lib';
 import { convert } from 'html-to-text';
 import { combineDutyAndReqToDesc } from './combineDutyAndReqToDesc';
 import { Vacancy, VacancyParams } from '@entities/Vacancy';
-import { VacancyTrudvsem, VacancyTrudvsemResponse } from '../../api/types/VacancyTrudvsem';
+import { VacancyTrudvsem } from '../../api/types/VacancyTrudvsem';
 import { TrudvsemParams } from '../../api/types/Params';
 import { Adapter } from './Adapter';
 
@@ -15,9 +15,8 @@ export const adapterTrudvsem: Adapter<'trudvsem'> = {
     }
   },
 
-  adaptVacancies(data: Array<VacancyTrudvsemResponse>): Array<Vacancy> {
-    return data.map(item => {
-      const vacancy = item.vacancy;
+  adaptVacancies(vacancies: Array<VacancyTrudvsem>): Array<Vacancy> {
+    return vacancies.map(vacancy => {
       const descriptionDuty = toUpperCaseFirstLetter(convert(vacancy.duty));
       const descriptionReq = toUpperCaseFirstLetter(convert(vacancy.requirement.qualification ?? ''));
       const description = combineDutyAndReqToDesc(descriptionDuty, descriptionReq);

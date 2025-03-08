@@ -11,7 +11,7 @@ import axios from 'axios';
 export const useVacancyList = (initialParams: VacancyParams) => {
   const location = useLocation();
   const [state, dispatch] = useReducer(vacancyListReducer, {params: { ...initialParams, filters: parseUrlSearch() || initialParams['filters'] }, vacancies: []});
-  const vacancyIds = useRef<Set<string>>(new Set);
+  const vacancyUniqueIds = useRef<Set<string>>(new Set);
   const [isLoading, setIsLoading] = useState(true);
   const [previousPage, setPreviousPage] = useState(initialParams.page);
   const { alertsStore } = useContext(AlertsContext); 
@@ -19,15 +19,22 @@ export const useVacancyList = (initialParams: VacancyParams) => {
   const fetchVacanciesCallback = useCallback(async (actionType: ActionVacancies, signal: AbortSignal) => {
     setIsLoading(true);
     try {
-      const result = await fetchVacancies(state.params, vacancyIds, signal, alertsStore);
-      dispatch({type: actionType, vacancies: result || []});
+      const result = await fetchVacancies(state.params, signal, alertsStore);
+      const uniqueVacancies = result.filter(vacancy => {
+        if (!vacancyUniqueIds.current.has(vacancy.id)) {
+          vacancyUniqueIds.current.add(vacancy.id);
+          return true;
+        }
+        return false;
+      });
+      dispatch({type: actionType, vacancies: uniqueVacancies || []});
       setIsLoading(false);
     } catch (e) {
       if (axios.isCancel(e)) return;
       setIsLoading(false);
     }
     setIsLoading(false);
-  }, [state.params, vacancyIds, alertsStore]);
+  }, [state.params, vacancyUniqueIds, alertsStore]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -37,7 +44,7 @@ export const useVacancyList = (initialParams: VacancyParams) => {
       setPreviousPage(state.params.page);
       fetchVacanciesCallback('ADD_VACANCIES', signal);
     } else {
-      vacancyIds.current.clear();
+      vacancyUniqueIds.current.clear();
       fetchVacanciesCallback('SET_VACANCIES', signal);
     }
 

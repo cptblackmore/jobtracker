@@ -1,5 +1,19 @@
-export interface VacancyTrudvsemResponse {
+export interface VacancyTrudvsemContainer {
   vacancy: VacancyTrudvsem;
+}
+
+export interface VacancyTrudvsemResponse {
+  status: 200;
+  request: {
+    api: string;
+  };
+  meta: {
+    total: number;
+    limit: number;
+  };
+  results: {
+    vacancies: VacancyTrudvsemContainer[];
+  };
 }
 
 export interface VacancyTrudvsem {
