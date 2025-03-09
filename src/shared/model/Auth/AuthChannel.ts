@@ -12,12 +12,19 @@ export const setupAuthChannelListener = (authStore: AuthStore) => {
 
     if (type === 'request_auth') {
       await waitForCondition(() => authStore.isInit);
-      authChannel.postMessage(
-        {type: 'response_auth', payload: {...authStore.user}}
-      ); 
+      if (authStore.isLeader) {
+        console.log('sent response_auth');
+        authChannel.postMessage(
+          {type: 'response_auth', payload: {...authStore.user}}
+        ); 
+      }
     }
 
     if (type === 'response_auth' || type === 'login') {
+      if (type === 'response_auth') {
+        console.log('received response_auth');
+        if (authStore.isLeader) authStore.setLeader(false);
+      }
       authStore.setUser(event.data.payload);
       authStore.setInit(true);
     }

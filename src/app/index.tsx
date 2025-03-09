@@ -5,11 +5,11 @@ import { StoresProvider } from './context/StoresProvider.tsx';
 import { PagesProvider } from './context/PagesProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // <StrictMode>
     <StoresProvider>
       <PagesProvider>
         <App />
       </PagesProvider>
     </StoresProvider>
-  </StrictMode>,
+  // </StrictMode>,
 );
