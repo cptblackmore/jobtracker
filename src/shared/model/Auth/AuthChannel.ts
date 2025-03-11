@@ -1,6 +1,8 @@
-import { waitForCondition } from "@shared/lib";
-import { UserData } from "../types/UserData";
-import { AuthStore } from "./AuthStore";
+import { waitForCondition } from '@shared/lib';
+import { UserData } from '../types/UserData';
+import { AuthStore } from './AuthStore';
+import { toJS } from 'mobx';
+import { electLeader } from './tabSynchronization/electLeader';
 
 export const authChannel = new BroadcastChannel('auth');
 
@@ -13,24 +15,29 @@ export const setupAuthChannelListener = (authStore: AuthStore) => {
     if (type === 'request_auth') {
       await waitForCondition(() => authStore.isInit);
       if (authStore.isLeader) {
-        console.log('sent response_auth');
         authChannel.postMessage(
-          {type: 'response_auth', payload: {...authStore.user}}
+          {type: 'response_auth', payload: toJS(authStore.user)}
         ); 
       }
     }
 
     if (type === 'response_auth' || type === 'login') {
-      if (type === 'response_auth') {
-        console.log('received response_auth');
-        if (authStore.isLeader) authStore.setLeader(false);
-      }
       authStore.setUser(event.data.payload);
       authStore.setInit(true);
     }
 
     if (type === 'logout') {
       authStore.setUser({} as UserData);
+    }
+
+    if (type === 'check_leader') {
+      if (authStore.isLeader) {
+        authChannel.postMessage({type: 'leader_here'});
+      }
+    }
+
+    if (type === 'leader_left') {
+      electLeader(authStore, authChannel);
     }
   }
 }

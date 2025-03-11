@@ -1,9 +1,12 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, toJS } from 'mobx';
 import { UserData, AlertsStore, createAlert } from '@shared/model';
 import { AuthService } from '@shared/api';
 import { authChannel, setupAuthChannelListener } from './AuthChannel';
 import { broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
 import { nanoid } from 'nanoid';
+import { startHeartbeatCheck } from './tabSynchronization/startHeartbeatCheck';
+import { electLeader } from './tabSynchronization/electLeader';
+import { isTabLeader } from './tabSynchronization/isThisTabLeader';
 
 export class AuthStore {
   isInit = false;
@@ -12,8 +15,8 @@ export class AuthStore {
   isModalOpen = false;
   currentTime: number = Date.now();
   isLeader = false;
-  private LEADER_TIMEOUT = 3000;
-  private tabId = nanoid();
+  tabId = nanoid();
+  LEADER_TIMEOUT = 3000;
   private alertsStore: AlertsStore;
 
   constructor(alertsStore: AlertsStore) {
@@ -21,43 +24,11 @@ export class AuthStore {
     makeAutoObservable(this);
     setupAuthChannelListener(this);
     window.addEventListener('beforeunload', () => {
-      const leaderData = JSON.parse(localStorage.getItem('leader') || '{}') ;
-      if (leaderData && leaderData.id === this.tabId) {
+      if (isTabLeader(this.tabId)) {
         localStorage.removeItem('leader');
         sessionStorage.removeItem('refreshing');
+        authChannel.postMessage({type: 'leader_left'});
         this.setLeader(false);
-      }
-    });
-    window.addEventListener('storage', (event) => {
-      if (event.key === 'leader' && !event.newValue) {
-        setTimeout(async () => {
-          if (this.currentTime - JSON.parse(localStorage.getItem('leader') || '{"id": "", "time": 0}').time > this.LEADER_TIMEOUT) {
-            console.log('get leader after leader left');
-            localStorage.setItem('leader', JSON.stringify({id: this.tabId, time: Date.now()}));
-            this.setLeader(true);
-            this.refresh();
-            const hbInterval = setInterval(() => {
-              // if (!this.isLeader) {
-              //   console.log('heartbeat stopped');
-              //   clearInterval(hbInterval);
-              // }
-              console.log('heartbeat');
-              const now = Date.now();
-              const leaderData = JSON.parse(localStorage.getItem('leader') || '{}') ;
-              if (leaderData && leaderData.id === this.tabId) {
-                const updatedLeader = {
-                  id: this.tabId,
-                  time: now
-                }
-                localStorage.setItem('leader', JSON.stringify(updatedLeader));
-              }
-            }, this.LEADER_TIMEOUT - 1000);
-          } else {
-            console.log('not won leader, so request auth');
-            authChannel.postMessage({type: 'request_auth'});
-            await waitForCondition(() => this.isInit);
-          }
-        }, Math.random() * 1000);
       }
     });
   }
@@ -105,7 +76,7 @@ export class AuthStore {
       this.setUser(response.data.userDto);
       this.setModalOpen(false);
       authChannel.postMessage(
-        {type: 'login', payload: {...this.user}}
+        {type: 'login', payload: toJS(this.user)}
       );
       if (!this.user.isActivated) {
       this.alertsStore.addAlert(
@@ -132,7 +103,7 @@ export class AuthStore {
       this.setUser(response.data.userDto);
       this.setModalOpen(false);
       authChannel.postMessage(
-        {type: 'login', payload: {...this.user}}
+        {type: 'login', payload: toJS(this.user)}
       );
       this.alertsStore.addAlert(
         createAlert(
@@ -179,12 +150,12 @@ export class AuthStore {
 
   async refresh() {
     if (!sessionStorage.getItem('refreshing')) {
-      console.log('refresh');
       try {
         sessionStorage.setItem('refreshing', 'true');
         const response = await AuthService.refresh();
         localStorage.setItem('token', response.data.accessToken);
         this.setUser(response.data.userDto);
+        this.setInit(true);
         if (!this.user.isActivated) {
           this.alertsStore.addAlert(
             createAlert(
@@ -209,7 +180,6 @@ export class AuthStore {
 
   async checkAuth() {
     this.setLoading(true);
-    console.log(this.tabId);
     try {
       if (!localStorage.getItem('token')) {
         this.setInit(true);
@@ -218,67 +188,18 @@ export class AuthStore {
       
       await broadcastRequestWithFallback(
         authChannel,
-        'ping',
-        'pong',
+        'check_leader',
+        'leader_here',
         async () => {
-          if (this.currentTime - JSON.parse(localStorage.getItem('leader') || '{"id": "", "time": 0}').time > this.LEADER_TIMEOUT) {
-            setTimeout(async () => {
-              if (this.currentTime - JSON.parse(localStorage.getItem('leader') || '{"id": "", "time": 0}').time > this.LEADER_TIMEOUT) {
-                console.log('get leader');
-                localStorage.setItem('leader', JSON.stringify({id: this.tabId, time: Date.now()}));
-                this.setLeader(true);
-                this.refresh();
-                const hbInterval = setInterval(() => {
-                  // if (!this.isLeader) {
-                  //   console.log('heartbeat stopped');
-                  //   clearInterval(hbInterval);
-                  // }
-                  console.log('heartbeat');
-                  const now = Date.now();
-                  const leaderData = JSON.parse(localStorage.getItem('leader') || '{}') ;
-                  if (leaderData && leaderData.id === this.tabId) {
-                    const updatedLeader = {
-                      id: this.tabId,
-                      time: now
-                    }
-                    localStorage.setItem('leader', JSON.stringify(updatedLeader));
-                  }
-                }, this.LEADER_TIMEOUT - 1000);
-              } else {
-                console.log('not won leader, so request auth');
-                authChannel.postMessage({type: 'request_auth'});
-                await waitForCondition(() => this.isInit);
-              }
-            }, Math.random() * 1000 + 100);
-          } else {
-            console.log('leader already set, so request auth');
-            authChannel.postMessage({type: 'request_auth'});
-            await waitForCondition(() => this.isInit);
-          }
+          authChannel.postMessage({type: 'request_auth'});
+          await waitForCondition(() => this.isInit);
+          startHeartbeatCheck(this, authChannel);
         },
-        () => {
-          console.log('did not hear pong, so get leader');
-          console.log('get leader');
-          localStorage.setItem('leader', JSON.stringify({id: this.tabId, time: Date.now()}));
-          this.setLeader(true);
-          this.refresh();
-          const hbInterval = setInterval(() => {
-            // if (!this.isLeader) {
-            //   console.log('heartbeat stopped');
-            //   clearInterval(hbInterval);
-            // }
-            console.log('heartbeat');
-            const now = Date.now();
-            const leaderData = JSON.parse(localStorage.getItem('leader') || '{}') ;
-            if (leaderData && leaderData.id === this.tabId) {
-              const updatedLeader = {
-                id: this.tabId,
-                time: now
-              }
-              localStorage.setItem('leader', JSON.stringify(updatedLeader));
-            }
-          }, this.LEADER_TIMEOUT - 1000);
-        },
+        () => electLeader(
+          this, 
+          authChannel,
+          () => this.refresh()
+        ),
         500
       );
     } catch (e) {
@@ -287,7 +208,6 @@ export class AuthStore {
       }
     } finally {
       this.setLoading(false);
-      this.setInit(true);
     }
   }
 }
