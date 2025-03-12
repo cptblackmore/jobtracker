@@ -1,5 +1,5 @@
 import { makeAutoObservable, toJS } from 'mobx';
-import { UserData, AlertsStore, createAlert } from '@shared/model';
+import { UserData, AlertsStore, createAlert, Alert } from '@shared/model';
 import { AuthService } from '@shared/api';
 import { authChannel, setupAuthChannelListener } from './AuthChannel';
 import { broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
@@ -22,7 +22,7 @@ export class AuthStore {
   constructor(alertsStore: AlertsStore) {
     this.alertsStore = alertsStore;
     makeAutoObservable(this);
-    setupAuthChannelListener(this);
+    setupAuthChannelListener(this, alertsStore);
     window.addEventListener('beforeunload', () => {
       if (isTabLeader(this.tabId)) {
         localStorage.removeItem('leader');
@@ -120,11 +120,12 @@ export class AuthStore {
     }
   }
 
-  async logout() {
+  async logout(reason?: string, severity?: Alert['severity']) {
     try {
       localStorage.removeItem('token');
       this.setUser({} as UserData);
-      authChannel.postMessage({type: 'logout'});
+      authChannel.postMessage({type: 'logout', payload: {reason, severity}});
+      if (reason) this.alertsStore.addAlert(createAlert(reason, severity || 'error'));
     } catch (e) {
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));
@@ -154,6 +155,7 @@ export class AuthStore {
         sessionStorage.setItem('refreshing', 'true');
         const response = await AuthService.refresh();
         localStorage.setItem('token', response.data.accessToken);
+        await AuthService.acknowledgeRefresh();
         this.setUser(response.data.userDto);
         this.setInit(true);
         if (!this.user.isActivated) {
@@ -167,7 +169,7 @@ export class AuthStore {
         }
       } catch (e) {
         if (e instanceof Error) {
-          throw new Error(e.message);
+          throw e;
         }
       } finally {
         sessionStorage.removeItem('refreshing');
@@ -192,8 +194,8 @@ export class AuthStore {
         'leader_here',
         async () => {
           authChannel.postMessage({type: 'request_auth'});
-          await waitForCondition(() => this.isInit);
           startHeartbeatCheck(this, authChannel);
+          await waitForCondition(() => this.isInit);
         },
         () => electLeader(
           this, 
@@ -204,7 +206,7 @@ export class AuthStore {
       );
     } catch (e) {
       if (e instanceof Error) {
-        this.alertsStore.addAlert(createAlert(e.message, 'error'));
+        await this.logout(e.message, 'error');
       }
     } finally {
       this.setLoading(false);

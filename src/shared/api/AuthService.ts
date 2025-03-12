@@ -19,6 +19,10 @@ export class AuthService {
     return $api.get<AuthResponse>('/refresh');
   }
 
+  static async acknowledgeRefresh(): Promise<AxiosResponse<AuthResponse>> {
+    return $api.post<AuthResponse>('/refresh/ack');
+  }
+
   static async logout(): Promise<void> {
     return $api.post('/logout');
   }

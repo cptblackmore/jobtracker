@@ -3,10 +3,11 @@ import { UserData } from '../types/UserData';
 import { AuthStore } from './AuthStore';
 import { toJS } from 'mobx';
 import { electLeader } from './tabSynchronization/electLeader';
+import { AlertsStore, createAlert } from '../Alert';
 
 export const authChannel = new BroadcastChannel('auth');
 
-export const setupAuthChannelListener = (authStore: AuthStore) => {
+export const setupAuthChannelListener = (authStore: AuthStore, alertsStore: AlertsStore) => {
   authChannel.onmessage = async (event) => {
     const type = event.data.type;
 
@@ -28,6 +29,9 @@ export const setupAuthChannelListener = (authStore: AuthStore) => {
 
     if (type === 'logout') {
       authStore.setUser({} as UserData);
+      if (event.data.payload.reason) {
+        alertsStore.addAlert(createAlert(event.data.payload.reason, event.data.payload.severity || 'error'));
+      }
     }
 
     if (type === 'check_leader') {
