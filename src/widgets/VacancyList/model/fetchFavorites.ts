@@ -13,17 +13,29 @@ export const fetchFavorites = async (
   idChunk: string[], 
   signal: AbortSignal,
   alertsStore: AlertsStore,
-  favoritesStore: FavoritesStore
+  favoritesStore: FavoritesStore,
+  onProgress?: (completed: number) => void
 ): Promise<Vacancy[]> => {
   const errorCodes = new Set<string>();
 
   const batches = typedEntries(getSourceBatches(idChunk));
 
+  const progressStep = 100 / idChunk.length;
+  let completedPromises = 0;
+
+  const trackPromise = <T>(promise: Promise<T>, length = 1): Promise<T> =>
+    promise.finally(() => {
+      completedPromises += length;
+      if (onProgress) {
+        onProgress(completedPromises * progressStep);
+      }
+    });
+
   const results = await Promise.all(
     batches.map(async ([source, ids]): Promise<Vacancy[] | null> => {
       try {
         if (source === 'sj') {
-          const result = await getVacanciesByIds(ids, source, signal);
+          const result = await trackPromise(getVacanciesByIds(ids, source, signal), ids.length);
           if (result.missingIds && result.missingIds.length > 0) {
             deleteFromFavorites(result.missingIds.map(id => source + '_' + id));
             errorCodes.add('FAVORITES_NOT_FOUND');
@@ -31,7 +43,7 @@ export const fetchFavorites = async (
           return result.vacancies;
         } else {
           const settledResults = await Promise.allSettled(
-            ids.map(id => getVacancyById(id, source, signal))
+            ids.map(id => trackPromise(getVacancyById(id, source, signal)))
           );
   
           settledResults.forEach(result => {

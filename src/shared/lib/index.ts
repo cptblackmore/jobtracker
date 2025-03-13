@@ -15,3 +15,5 @@ export { typedKeys } from './typedKeys';
 export { urlParametrizeObject } from './urlParametrizeObject';
 export { isEqual } from './isEqual';
 export { chunkerize } from './chunkerize';
+export { downloadTextFile } from './downloadTextFile';
+export { uploadJsonFile } from './uploadJsonFile';

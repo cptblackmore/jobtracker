@@ -3,3 +3,4 @@ export type { VacancyPeriod, VacancyType, VacancyParams } from './api/types/Vaca
 export type { Sources } from './model/Sources'
 export { sourcesRegistry } from './model/sourcesRegistry';
 export { getVacancies } from './api/getVacancies';
+export { vacanciesToText } from './lib/vacanciesToText';

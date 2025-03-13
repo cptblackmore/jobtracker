@@ -3,6 +3,7 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 export function toRightCurrencyCode(currencyCode: string): string {
   switch (currencyCode) {
     case 'руб.':
+    case 'rub':
     case '«руб.»':
     case 'RUR':
       return 'RUB';

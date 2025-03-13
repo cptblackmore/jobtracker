@@ -3,7 +3,7 @@ import { Box, CircularProgress, Stack } from '@mui/material';
 import { vacancyListStyle } from './styles';
 import { useFavoritesList } from '../model/useFavoritesList';
 import { chunkerize } from '@shared/lib';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface Props {
@@ -11,13 +11,11 @@ interface Props {
 }
 
 export const FavoritesList: React.FC<Props> = ({ ids }) => {
-  const [idChunks] = useState(chunkerize([...ids].reverse(), 5));
-  const [page, setPage] = useState(0);
-  const { vacancies, isLoading } = useFavoritesList(idChunks[page]);
-  const { ref, inView } = useInView({triggerOnce: true});
+  const { vacancies, isLoading, page, setPage } = useFavoritesList(ids);
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (inView && page < idChunks.length - 1) setPage(page + 1);
+    if (inView && page < chunkerize(ids, 5).length - 1) setPage(page + 1);
   }, [inView]);
 
   return (
