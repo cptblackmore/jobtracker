@@ -1,10 +1,10 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { Divider, Grid2, Box } from '@mui/material';
-import { useVacancyFilterAdditional } from '@widgets/VacancyList/model/VacancyFilter/useVacancyFilterAdditional';
 import { SalaryFilter } from './SalaryFilter';
 import { SourceSelection } from './SourceSelection';
 import { BasicFilters } from './BasicFilters';
 import { SalaryCheckbox } from './SalaryCheckbox';
+import { useVacancyFilterAdditional } from '../model/useVacancyFilterAdditional';
 
 interface Props {
   filters: VacancyParams['filters'];

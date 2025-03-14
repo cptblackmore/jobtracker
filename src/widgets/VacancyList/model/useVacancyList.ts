@@ -4,7 +4,7 @@ import { ActionVacancies, vacancyListReducer } from './vacancyListReducer';
 import { AlertsContext } from '@shared/model';
 import { useLocation } from 'react-router';
 import { isEqual } from '@shared/lib';
-import { parseUrlSearch } from './VacancyFilter/parseUrlSearch';
+import { parseUrlSearch } from '@widgets/VacancyFilter';
 import { fetchVacancies } from './fetchVacancies';
 import axios from 'axios';
 

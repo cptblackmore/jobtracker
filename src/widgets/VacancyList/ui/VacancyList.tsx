@@ -2,7 +2,7 @@ import { VacancyCard } from '@widgets/VacancyCard';
 import { Box, CircularProgress, Stack } from '@mui/material';
 import { vacancyListStyle } from './styles';
 import { useVacancyList } from '../model/useVacancyList';
-import { VacancyFilter } from './VacancyFilter/VacancyFilter';
+import { VacancyFilter } from '@widgets/VacancyFilter';
 import { VacancyParams } from '@entities/Vacancy';
 import { useInView } from 'react-intersection-observer'
 import { useContext, useEffect } from 'react';

@@ -1,8 +1,8 @@
 import { SwitchableVacancySalary } from '@entities/Vacancy/api/types/VacancyParams';
 import { Info } from '@mui/icons-material';
 import { Box, Checkbox, Fade, FormControlLabel, IconButton, Tooltip } from '@mui/material';
-import { filterLabelsMap } from '@widgets/VacancyList/model/VacancyFilter/filterLabelsMap';
-import { SalaryFilterAction } from '@widgets/VacancyList/model/VacancyFilter/useSalaryFitler';
+import { filterLabelsMap } from '../model/filterLabelsMap';
+import { SalaryFilterAction } from '../model/useSalaryFitler';
 
 interface Props {
   salaryFilter: SwitchableVacancySalary;

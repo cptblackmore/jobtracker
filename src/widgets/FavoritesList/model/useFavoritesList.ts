@@ -2,9 +2,9 @@ import { Vacancy } from '@entities/Vacancy';
 import { FavoritesContext } from '@features/Favorites';
 import { AlertsContext } from '@shared/model';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { fetchFavorites } from './fetchFavorites';
 import axios from 'axios';
 import { chunkerize } from '@shared/lib';
+import { fetchFavorites } from './fetchFavorites';
 
 export const  useFavoritesList = (ids: string[]) => {
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);

@@ -1,7 +1,7 @@
 import { FavoritesContext } from '@features/Favorites';
 import { deleteFromFavoritesLS } from '@features/Favorites/model/deleteFromFavoritesLS';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { fetchFavorites } from './fetchFavorites';
+import { fetchFavorites } from '@widgets/FavoritesList';
 import { AlertsContext, createAlert } from '@shared/model';
 import axios from 'axios';
 import { downloadTextFile, uploadJsonFile } from '@shared/lib';

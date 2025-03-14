@@ -3,7 +3,7 @@ import { FilterList, FilterListOff } from '@mui/icons-material';
 import { Button, Collapse, FormControl, Paper, Stack, TextField } from '@mui/material';
 import { ToggleIconButton } from '@shared/ui';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
-import { useVacancyFilter } from '@widgets/VacancyList/model/VacancyFilter/useVacancyFilter';
+import { useVacancyFilter } from '../model/useVacancyFilter';
 
 interface Props {
   filters: VacancyParams['filters'];

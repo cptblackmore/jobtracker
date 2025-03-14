@@ -1,6 +1,6 @@
 import { sourcesRegistry, Sources, VacancyParams, VacancyPeriod, VacancyType } from '@entities/Vacancy';
 import { validateValue, filterValidValues, typedKeys, typedEntries } from '@shared/lib';
-import { SALARY_MIN, SALARY_MAX } from '@widgets/VacancyList/config/salaryConfig';
+import { SALARY_MIN, SALARY_MAX } from '@widgets/VacancyFilter/config/salaryConfig';
 import { calculateSelectedFilters } from './calculateSelectedFilters';
 
 export const parseUrlSearch = (search?: string): VacancyParams['filters'] | undefined => {

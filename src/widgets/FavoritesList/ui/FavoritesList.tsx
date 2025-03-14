@@ -1,10 +1,10 @@
 import { VacancyCard } from '@widgets/VacancyCard';
 import { Box, CircularProgress, Stack } from '@mui/material';
-import { vacancyListStyle } from './styles';
 import { useFavoritesList } from '../model/useFavoritesList';
 import { chunkerize } from '@shared/lib';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { favoritesListStyle } from './styles';
 
 interface Props {
   ids: string[];
@@ -20,7 +20,7 @@ export const FavoritesList: React.FC<Props> = ({ ids }) => {
 
   return (
     <Box>
-      <Stack direction="column" alignItems="center" spacing={1} css={vacancyListStyle}>
+      <Stack direction="column" alignItems="center" spacing={1} css={favoritesListStyle}>
         {vacancies.map((data) => (
           <VacancyCard key={data.id} data={data} />
         ))}

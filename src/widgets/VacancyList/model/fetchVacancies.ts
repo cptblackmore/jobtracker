@@ -1,7 +1,7 @@
 import { getVacancies, sourcesRegistry, Vacancy, VacancyParams } from '@entities/Vacancy';
 import { AlertsStore } from '@shared/model';
 import axios, { AxiosError } from 'axios';
-import { handleErrors } from './handleErrors';
+import { handleErrors } from '../../FavoritesList/model/handleErrors';
 import { typedKeys } from '@shared/lib';
 
 export const fetchVacancies = async (

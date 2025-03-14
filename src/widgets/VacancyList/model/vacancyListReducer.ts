@@ -1,4 +1,4 @@
-import { Vacancy, VacancyParams } from "@entities/Vacancy";
+import { Vacancy, VacancyParams } from '@entities/Vacancy';
 
 export type ActionVacancies = 'SET_VACANCIES' | 'ADD_VACANCIES';
 

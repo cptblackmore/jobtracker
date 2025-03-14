@@ -1,6 +1,5 @@
 import { Vacancy } from '@entities/Vacancy';
 import { getVacancyById } from '@entities/Vacancy/api/getVacancyById';
-import { handleErrors } from './handleErrors';
 import { AlertsStore } from '@shared/model';
 import { FavoritesStore, getFavoritesLS } from '@features/Favorites';
 import { typedEntries } from '@shared/lib';
@@ -8,6 +7,7 @@ import { getVacanciesByIds } from '@entities/Vacancy/api/getVacanciesByIds';
 import axios, { AxiosError } from 'axios';
 import { deleteFromFavoritesLS } from '@features/Favorites/model/deleteFromFavoritesLS';
 import { getSourceBatches } from './getSourceBatches';
+import { handleErrors } from './handleErrors';
 
 export const fetchFavorites = async (
   idChunk: string[], 

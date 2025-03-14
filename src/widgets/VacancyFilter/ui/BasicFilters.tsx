@@ -1,6 +1,6 @@
 import { SwitchableVacancyType, VacancyPeriod } from '@entities/Vacancy/api/types/VacancyParams';
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
-import { filterLabelsMap } from '@widgets/VacancyList/model/VacancyFilter/filterLabelsMap';
+import { filterLabelsMap } from '../model/filterLabelsMap';
 
 interface Props {
   period: VacancyPeriod;

@@ -2,10 +2,10 @@
   import { FavoriteBorder } from '@mui/icons-material';
   import { Nav } from '@widgets/Nav';
   import { FavoritesContext, getFavoritesLS } from '@features/Favorites';
-  import { FavoritesList } from '@widgets/VacancyList/ui/FavoritesList';
+  import { FavoritesList } from '@widgets/FavoritesList';
   import { useContext, useEffect, useState } from 'react';
   import { observer } from 'mobx-react-lite';
-  import { FavoritesActions } from '@widgets/VacancyList/ui/FavoritesActions';
+  import { FavoritesActions } from '@widgets/FavoritesActions/ui/FavoritesActions';
 
   export const FavoritesPage: React.FC = observer(() => {
     const [savedVacancyIds, setSavedVacancyIds] = useState(getFavoritesLS());
