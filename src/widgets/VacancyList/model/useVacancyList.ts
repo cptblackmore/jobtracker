@@ -45,6 +45,8 @@ export const useVacancyList = (initialParams: VacancyParams) => {
       fetchVacanciesCallback('ADD_VACANCIES', signal);
     } else {
       vacancyUniqueIds.current.clear();
+      setPreviousPage(0);
+      dispatch({type: 'SET_PAGE', page: 0})
       fetchVacanciesCallback('SET_VACANCIES', signal);
     }
 
