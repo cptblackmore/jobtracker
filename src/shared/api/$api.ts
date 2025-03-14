@@ -1,6 +1,6 @@
 import { AuthResponse } from '@shared/model';
-import axios from 'axios';import { errorMessages } from '../lib/errorMessages';
-;
+import axios from 'axios';
+import { errorMessages } from '../lib/errorMessages';
 
 export const $api = axios.create({
   withCredentials: true,
@@ -8,7 +8,7 @@ export const $api = axios.create({
 });
 
 $api.interceptors.request.use(config => {
-  if (config.url !== '/refresh') {
+  if (config.url?.split('/')[1] !== '/refresh') {
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
   }
   return config;
@@ -31,16 +31,18 @@ $api.interceptors.response.use(config => {
     if (originalRequest && !originalRequest._isRetry) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.get<AuthResponse>('http://localhost:7000/api/refresh', { withCredentials: true });
+        const response = await axios.get<AuthResponse>(`${import.meta.env.VITE_API_URL}/refresh`, { withCredentials: true });
         localStorage.setItem('token', response.data.accessToken);
+        await axios.post(`${import.meta.env.VITE_API_URL}/refresh/ack`, {}, { withCredentials: true });
         $api.request(originalRequest);
       } catch {
         throw new Error(errorMessages[code]);
       }
     }
+  } else {
+    throw new Error(errorMessages[code] || `Непредвиденная ошибка: ${status}. ${message}`);
   }
 
-  throw new Error(errorMessages[code] || `Непредвиденная ошибка: ${status}. ${message}`);
 })
 
 export default $api;
