@@ -3,7 +3,7 @@ import React from 'react';
 import { Nav } from '@widgets/Nav';
 import { containerStyles } from './styles';
 import { Contrast, FavoriteBorder, HowToReg, MoreHoriz, Search } from '@mui/icons-material';
-import { VacancyList } from '@widgets/VacancyList';
+import { VacancyListDemo } from '@widgets/VacancyList';
 
 export const HomePage: React.FC = () => {
   return (
@@ -40,7 +40,7 @@ export const HomePage: React.FC = () => {
               </List>
               <Divider css={{margin: '1em'}} />
               <Typography variant='h5' align='center' marginBottom={2} >А пока что вы можете просмотреть самые актуальные вакансии:</Typography>
-              <VacancyList variant='demo' href='/feed' />
+              <VacancyListDemo />
             </CardContent>
           </Card>
         </Box>

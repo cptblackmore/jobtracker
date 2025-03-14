@@ -1,5 +1,5 @@
 import { VacancyCard } from '@widgets/VacancyCard';
-import { Box, Button, CircularProgress, Stack } from '@mui/material';
+import { Box, CircularProgress, Stack } from '@mui/material';
 import { vacancyListStyle } from './styles';
 import { useVacancyList } from '../model/useVacancyList';
 import { VacancyFilter } from './VacancyFilter/VacancyFilter';
@@ -10,18 +10,11 @@ import { AlertsContext, createAlert } from '@shared/model';
 import { useEffectOnceByCondition } from '@shared/lib';
 
 interface Props {
-  variant?: 'default' | 'demo';
-  href?: string; // TODO replace by route
   initialFilters?: VacancyParams['filters'];
 }
 
-export const VacancyList: React.FC<Props> = ({ 
-  variant='default', 
-  href='/feed', // TODO replace by route
-  initialFilters={}
-}) => {
-  const count = variant === 'demo' ? 1 : 5;
-  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count, filters: initialFilters});
+export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
+  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count: 5, filters: initialFilters});
   const { ref, inView } = useInView({triggerOnce: true});
   const { alertsStore } = useContext(AlertsContext);
 
@@ -30,14 +23,12 @@ export const VacancyList: React.FC<Props> = ({
   }, [inView]);
 
   useEffectOnceByCondition(() => {
-    if (variant === 'default') alertsStore.addAlert(createAlert('Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 'info'));
+    alertsStore.addAlert(createAlert('Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 'info'));
   }, [isLoading], !isLoading)
 
   return (
     <Box>
-      {variant === 'default' && (
-        <VacancyFilter filters={state.params.filters} setFilters={setFilters} />
-      )}
+      <VacancyFilter filters={state.params.filters} setFilters={setFilters} />
       <Stack direction='column' alignItems='center' spacing={1} css={vacancyListStyle} >
         {state.vacancies.map((data) => (
           <VacancyCard key={data.id} data={data} />
@@ -45,12 +36,7 @@ export const VacancyList: React.FC<Props> = ({
         {isLoading ? (
           <CircularProgress size='5em' />
         ) : (
-          variant === 'default' && <Box ref={ref} ></Box>
-        )}
-        {variant === 'demo' && (
-          <Box paddingTop={1} >
-            <Button variant='contained' href={href} >Найти больше</Button> 
-          </Box> // TODO replace href by route
+          <Box ref={ref} ></Box>
         )}
       </Stack>
     </Box>

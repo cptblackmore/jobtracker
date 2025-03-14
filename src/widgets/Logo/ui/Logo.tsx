@@ -1,5 +1,6 @@
-import { Box, Typography as T } from "@mui/material";
+import { Box, Typography as T } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
+import { Link as RouterLink } from 'react-router';
 
 interface Props {
   titleSize?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
@@ -12,8 +13,8 @@ export const Logo: React.FC<Props> = ({ titleSize='h6' }) => {
       <T
         variant={titleSize}
         noWrap
-        component="a"
-        href="home"
+        component={RouterLink}
+        to='/home'
         sx={{
           mr: 1,
           display: 'flex',
