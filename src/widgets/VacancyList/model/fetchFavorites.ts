@@ -2,11 +2,11 @@ import { Vacancy } from '@entities/Vacancy';
 import { getVacancyById } from '@entities/Vacancy/api/getVacancyById';
 import { handleErrors } from './handleErrors';
 import { AlertsStore } from '@shared/model';
-import { FavoritesStore, getFavorites } from '@features/Favorites';
+import { FavoritesStore, getFavoritesLS } from '@features/Favorites';
 import { typedEntries } from '@shared/lib';
 import { getVacanciesByIds } from '@entities/Vacancy/api/getVacanciesByIds';
 import axios, { AxiosError } from 'axios';
-import { deleteFromFavorites } from '@features/Favorites/model/deleteFromFavorites';
+import { deleteFromFavoritesLS } from '@features/Favorites/model/deleteFromFavoritesLS';
 import { getSourceBatches } from './getSourceBatches';
 
 export const fetchFavorites = async (
@@ -37,7 +37,7 @@ export const fetchFavorites = async (
         if (source === 'sj') {
           const result = await trackPromise(getVacanciesByIds(ids, source, signal), ids.length);
           if (result.missingIds && result.missingIds.length > 0) {
-            deleteFromFavorites(result.missingIds.map(id => source + '_' + id));
+            deleteFromFavoritesLS(result.missingIds.map(id => source + '_' + id));
             errorCodes.add('FAVORITES_NOT_FOUND');
           }
           return result.vacancies;
@@ -52,7 +52,7 @@ export const fetchFavorites = async (
                 const code = result.reason.code ?? 'UNKNOWN_ERROR';
                 if (code === 'FAVORITES_NOT_FOUND') {
                   const missingId = result.reason.request?.data.id ?? '';
-                  deleteFromFavorites(source + '_' + missingId);
+                  deleteFromFavoritesLS(source + '_' + missingId);
                   errorCodes.add('FAVORITES_NOT_FOUND');
                 } else {
                   throw result.reason;
@@ -77,7 +77,7 @@ export const fetchFavorites = async (
   ));
   
   if (errorCodes.size > 0) {
-    handleErrors(errorCodes, alertsStore, () => favoritesStore.updateFavorites(getFavorites()));
+    handleErrors(errorCodes, alertsStore, () => favoritesStore.updateFavorites(getFavoritesLS()));
   }
   
   return results.flat().filter(result => result != null);

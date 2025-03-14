@@ -1,4 +1,4 @@
-export const addToFavorites = (vacancyId: string): string[] => {
+export const addToFavoritesLS = (vacancyId: string): string[] => {
   const favorites = JSON.parse(window.localStorage.getItem('favorites') || '[]');
   if (!favorites.includes(vacancyId)) {
     favorites.push(vacancyId);

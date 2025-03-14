@@ -1,11 +1,11 @@
 import { FavoritesContext } from '@features/Favorites';
-import { deleteFromFavorites } from '@features/Favorites/model/deleteFromFavorites';
+import { deleteFromFavoritesLS } from '@features/Favorites/model/deleteFromFavoritesLS';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { fetchFavorites } from './fetchFavorites';
 import { AlertsContext, createAlert } from '@shared/model';
 import axios from 'axios';
 import { downloadTextFile, uploadJsonFile } from '@shared/lib';
-import { addToFavorites } from '@features/Favorites/model/addToFavorites';
+import { addToFavoritesLS } from '@features/Favorites/model/addToFavoritesLS';
 import { downloadJsonFile } from '@shared/lib/downloadJsonFile';
 import { vacanciesToText } from '@entities/Vacancy';
 
@@ -20,7 +20,7 @@ export const useFavoritesActions = (ids: string[], setIds: Dispatch<SetStateActi
 
   const handleDeleteFavorites = () => {
     setModalOpen(false);
-    deleteFromFavorites(ids);
+    deleteFromFavoritesLS(ids);
     setIds([]);
     favoritesStore.updateFavorites([]);
   }
@@ -48,7 +48,7 @@ export const useFavoritesActions = (ids: string[], setIds: Dispatch<SetStateActi
   const handleImportFavorites = () => {
     uploadJsonFile().then(parsedIds => {
       for (const id of parsedIds) {
-        addToFavorites(id);
+        addToFavoritesLS(id);
       }
       favoritesStore.updateFavorites(ids);
       setIds(prev => {

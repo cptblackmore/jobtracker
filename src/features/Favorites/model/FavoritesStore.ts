@@ -1,5 +1,5 @@
 import { makeAutoObservable, reaction } from 'mobx';
-import { FavoritesService, FavoritesResponse, getFavorites } from '@features/Favorites';
+import { FavoritesService, FavoritesResponse, getFavoritesLS } from '@features/Favorites';
 import { createAlert, AlertsStore, AuthStore } from '@shared/model';
 
 export class FavoritesStore {
@@ -22,7 +22,7 @@ export class FavoritesStore {
             this.alertsStore.addAlert(createAlert('Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000));
             return;
           }
-          const favorites = getFavorites();
+          const favorites = getFavoritesLS();
           this.synchronizeFavorites(favorites);
         } else {
           this.setSynced(false);

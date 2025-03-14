@@ -1,19 +1,19 @@
   import { Box, Container, Typography as T } from '@mui/material';
   import { FavoriteBorder } from '@mui/icons-material';
   import { Nav } from '@widgets/Nav';
-  import { FavoritesContext, getFavorites } from '@features/Favorites';
+  import { FavoritesContext, getFavoritesLS } from '@features/Favorites';
   import { FavoritesList } from '@widgets/VacancyList/ui/FavoritesList';
   import { useContext, useEffect, useState } from 'react';
   import { observer } from 'mobx-react-lite';
   import { FavoritesActions } from '@widgets/VacancyList/ui/FavoritesActions';
 
   export const FavoritesPage: React.FC = observer(() => {
-    const [savedVacancyIds, setSavedVacancyIds] = useState(getFavorites());
+    const [savedVacancyIds, setSavedVacancyIds] = useState(getFavoritesLS());
     const { favoritesStore } = useContext(FavoritesContext);
 
     useEffect(() => {
       if (favoritesStore.isSynced) {
-        setSavedVacancyIds(getFavorites());
+        setSavedVacancyIds(getFavoritesLS());
       }
     }, [favoritesStore.isSynced]);
 
