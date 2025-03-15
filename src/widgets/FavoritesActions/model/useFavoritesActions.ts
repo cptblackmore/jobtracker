@@ -4,10 +4,10 @@ import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { fetchFavorites } from '@widgets/FavoritesList';
 import { AlertsContext, createAlert } from '@shared/model';
 import axios from 'axios';
-import { downloadTextFile, uploadJsonFile } from '@shared/lib';
+import { downloadCsvFile, downloadTextFile, uploadJsonFile } from '@shared/lib';
 import { addToFavoritesLS } from '@features/Favorites/model/addToFavoritesLS';
 import { downloadJsonFile } from '@shared/lib/downloadJsonFile';
-import { vacanciesToText } from '@entities/Vacancy';
+import { vacanciesToCsv, vacanciesToText } from '@entities/Vacancy';
 
 export const useFavoritesActions = (ids: string[], setIds: Dispatch<SetStateAction<string[]>>) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,12 +25,17 @@ export const useFavoritesActions = (ids: string[], setIds: Dispatch<SetStateActi
     favoritesStore.updateFavorites([]);
   }
 
-  const handleDownloadFavorites = async () => {
+  const handleDownloadFavorites = async (format: 'txt' | 'csv') => {
     setIsLoading(true);
     try {
       const favorites = await fetchFavorites(ids, signal, alertsStore, favoritesStore, setProgress);
-      const text = vacanciesToText(favorites);
-      downloadTextFile(text, 'favorites');
+      if (format === 'txt') {
+        const text = vacanciesToText(favorites);
+        downloadTextFile(text, 'favorites');
+      } else {
+        const csv = vacanciesToCsv(favorites);
+        downloadCsvFile(csv, 'favorites');
+      }
       setIsLoading(false);
     } catch (e) {
       if (axios.isCancel(e)) return;

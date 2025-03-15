@@ -17,3 +17,4 @@ export { isEqual } from './isEqual';
 export { chunkerize } from './chunkerize';
 export { downloadTextFile } from './downloadTextFile';
 export { uploadJsonFile } from './uploadJsonFile';
+export { downloadCsvFile } from './downloadCsvFile';

@@ -8,7 +8,7 @@
   import { FavoritesActions } from '@widgets/FavoritesActions/ui/FavoritesActions';
 
   export const FavoritesPage: React.FC = observer(() => {
-    const [savedVacancyIds, setSavedVacancyIds] = useState(getFavoritesLS());
+    const [savedVacancyIds, setSavedVacancyIds] = useState<string[]>([]);
     const { favoritesStore } = useContext(FavoritesContext);
 
     useEffect(() => {
@@ -16,6 +16,10 @@
         setSavedVacancyIds(getFavoritesLS());
       }
     }, [favoritesStore.isSynced]);
+
+    useEffect(() => {
+      setSavedVacancyIds(favoritesStore.favorites);
+    }, [favoritesStore.favorites]);
 
     return (
       <Box>

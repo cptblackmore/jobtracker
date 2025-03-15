@@ -3,6 +3,7 @@ import { FavoritesService, FavoritesResponse, getFavoritesLS } from '@features/F
 import { createAlert, AlertsStore, AuthStore } from '@shared/model';
 
 export class FavoritesStore {
+  favorites: string[] = JSON.parse(window.localStorage.getItem('favorites') || '[]');
   isSynced = false;
   favoritesQuantity = 0;
   private alertsStore: AlertsStore;
@@ -48,6 +49,10 @@ export class FavoritesStore {
     return !!this.authStore.user?.isActivated;
   }
 
+  setFavorites(favorites: string[]) {
+    this.favorites = favorites;
+  }
+
   setSynced(bool: boolean) {
     this.isSynced = bool;
   }
@@ -70,6 +75,7 @@ export class FavoritesStore {
 
       const response = await FavoritesService.synchronizeFavorites(favorites);
       window.localStorage.setItem('favorites', JSON.stringify(response.data.favorites) || '[]');
+      this.setFavorites(response.data.favorites || []);
       this.setSynced(true);
       this.setFavoritesQuantity(response.data.favorites.length);
       this.alertsStore.addAlert(createAlert('Избранные вакансии синхронизированы', 'info', 2000));
@@ -85,6 +91,7 @@ export class FavoritesStore {
       if (!this.isSynced) return;
 
       await FavoritesService.updateFavorites(favorites);
+      this.setFavorites(favorites || []);
       this.setFavoritesQuantity(favorites.length);
     } catch (e) {
       if (e instanceof Error) {

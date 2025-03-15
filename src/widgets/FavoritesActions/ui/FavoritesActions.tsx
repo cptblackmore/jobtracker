@@ -39,12 +39,21 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
           <Divider orientation='vertical' flexItem />
           <Button 
             fullWidth 
-            disabled={ids.length === 0 || isLoading} 
+            disabled={ids.length === 0 || isLoading}
             variant='contained' 
-            onClick={handleDownloadFavorites}
+            onClick={() => handleDownloadFavorites('txt')}
             endIcon={isLoading && <CircularProgress size={15} color='inherit' />}
           >
             {isLoading ? 'Загрузка...' : 'Скачать TXT'}
+          </Button>
+          <Button 
+            fullWidth 
+            disabled={ids.length === 0 || isLoading} 
+            variant='contained' 
+            onClick={() => handleDownloadFavorites('csv')}
+            endIcon={isLoading && <CircularProgress size={15} color='inherit' />}
+          >
+            {isLoading ? 'Загрузка...' : 'Скачать CSV'}
           </Button>
           <Button 
             fullWidth 
@@ -52,14 +61,14 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
             variant='contained' 
             onClick={handleExportFavorites}
           >
-            Экспорт JSON
+            Экспорт
           </Button>
           <Button 
             fullWidth 
             variant='contained' 
             onClick={handleImportFavorites}
           >
-            Импорт JSON
+            Импорт
           </Button>
         </Box>
         {isLoading && (
