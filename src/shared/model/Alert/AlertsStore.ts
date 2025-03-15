@@ -27,4 +27,17 @@ export class AlertsStore {
       this.currentAlert = this.alerts.shift()!;
     }
   }
+
+  removeAlertsByTag(tag: string) {
+    this.alerts = this.alerts.filter(alert => alert.tag !== tag);
+
+    if (this.currentAlert && this.currentAlert.tag === tag) {
+      this.closeAlert();
+    }
+  }
+
+  clear() {
+    this.alerts = [];
+    this.currentAlert = null;
+  }
 }

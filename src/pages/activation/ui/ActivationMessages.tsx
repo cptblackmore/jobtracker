@@ -15,6 +15,9 @@ export const ActivationMessages: React.FC<Props> = observer(({ code }) => {
 
   useEffect(() => {
     authStore.updateCurrentTime();
+    if (code === 'ACTIVATION_SUCCESS') {
+      authStore.authChannel.postMessage({type: 'update_user'});
+    }
   }, []);
 
   const activationMessages: Record<string, JSX.Element> = {

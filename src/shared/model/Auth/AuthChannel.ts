@@ -43,5 +43,9 @@ export const setupAuthChannelListener = (authStore: AuthStore, alertsStore: Aler
     if (type === 'leader_left') {
       electLeader(authStore, authChannel);
     }
+
+    if (type === 'update_user') {
+      authStore.updateUser();
+    }
   }
 }

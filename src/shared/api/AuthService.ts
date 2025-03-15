@@ -1,4 +1,4 @@
-import { AuthResponse } from '@shared/model';
+import { AuthResponse, UserData } from '@shared/model';
 import $api from './$api'
 import { AxiosResponse } from 'axios';
 
@@ -19,8 +19,12 @@ export class AuthService {
     return $api.get<AuthResponse>('/refresh');
   }
 
-  static async acknowledgeRefresh(): Promise<AxiosResponse<AuthResponse>> {
-    return $api.post<AuthResponse>('/refresh/ack');
+  static async acknowledgeRefresh(): Promise<AxiosResponse> {
+    return $api.post('/refresh/ack');
+  }
+
+  static async getUser(): Promise<AxiosResponse<UserData>> {
+    return $api.get<UserData>('/user');
   }
 
   static async logout(): Promise<void> {

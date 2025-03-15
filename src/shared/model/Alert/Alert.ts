@@ -4,6 +4,7 @@ interface BaseAlert {
   id: string;
   message: string;
   duration?: number;
+  tag?: string;
 }
 
 export interface Success extends BaseAlert {
@@ -24,10 +25,11 @@ export interface Error extends BaseAlert {
 
 export type Alert = Success | Info | Warning | Error;
 
-export const createAlert = (message: string, severity: Alert['severity'], duration?: number): Alert =>
+export const createAlert = (message: string, severity: Alert['severity'], duration?: number, tag?: string): Alert =>
   ({
     id: nanoid(),
     message,
     severity,
-    duration
+    duration,
+    tag
   } as Alert);

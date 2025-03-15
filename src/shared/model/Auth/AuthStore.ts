@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx';
+import { makeAutoObservable, reaction, toJS } from 'mobx';
 import { UserData, AlertsStore, createAlert, Alert } from '@shared/model';
 import { AuthService } from '@shared/api';
 import { authChannel, setupAuthChannelListener } from './AuthChannel';
@@ -17,6 +17,7 @@ export class AuthStore {
   isLeader = false;
   tabId = nanoid();
   LEADER_TIMEOUT = 3000;
+  authChannel = authChannel;
   private alertsStore: AlertsStore;
 
   constructor(alertsStore: AlertsStore) {
@@ -31,6 +32,16 @@ export class AuthStore {
         this.setLeader(false);
       }
     });
+    
+    reaction(
+      () => this.user?.isActivated, 
+      (isActivated) => {
+        if (isActivated) {
+          this.alertsStore.removeAlertsByTag('activation-required');
+        }
+      },
+      {equals: (prev, next) => prev === next}
+    )
   }
 
   get isAuth() {
@@ -81,8 +92,10 @@ export class AuthStore {
       if (!this.user.isActivated) {
       this.alertsStore.addAlert(
         createAlert(
-          'Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 'warning',
-          10000
+          'Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.', 
+          'warning',
+          10000,
+          'activation-required'
         )
       );
       }
@@ -149,6 +162,18 @@ export class AuthStore {
     }
   }
 
+  async getUser() {
+    try {
+      const response = await AuthService.getUser();
+      this.setUser(response.data);
+      this.setInit(true);
+    } catch (e) {
+      if (e instanceof Error) {
+        throw e;
+      }
+    }
+  }
+
   async refresh() {
     if (!sessionStorage.getItem('refreshing')) {
       try {
@@ -163,7 +188,8 @@ export class AuthStore {
             createAlert(
               'Ваш аккаунт не активирован, проверьте вашу почту! Если письмо не пришло или ссылка не работает, повторите запрос в личном кабинете.',
               'warning',
-              10000
+              10000,
+              'activation-required'
             )
           );
         }
@@ -177,6 +203,19 @@ export class AuthStore {
     } else {
       await waitForCondition(() => !sessionStorage.getItem('refreshing'));
       this.refresh();
+    }
+  }
+
+  async updateUser() {
+    if (this.isAuth && this.isLeader) {
+      try {
+        await this.getUser();
+        authChannel.postMessage({type: 'response_auth', payload: toJS(this.user)});
+      } catch (e) {
+        if (e instanceof Error) {
+          this.logout(e.message, 'error');
+        }
+      }
     }
   }
 

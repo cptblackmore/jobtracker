@@ -14,12 +14,16 @@ export class FavoritesStore {
     makeAutoObservable(this);
     
     reaction(
-      () => authStore.isAuth,
-      (isAuth) => {
+      () => ({isAuth: authStore.isAuth, isActivated: authStore.user?.isActivated}),
+      ({ isAuth, isActivated }) => {
         if (isAuth) {
-          if (!this.isActivated) {
+          if (!isActivated) {
             this.setFavoritesQuantity(0);
-            this.alertsStore.addAlert(createAlert('Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000));
+            this.alertsStore.addAlert(
+              createAlert(
+                'Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000, 'activation-required'
+              )
+            );
             return;
           }
           const favorites = getFavoritesLS();
@@ -27,6 +31,11 @@ export class FavoritesStore {
         } else {
           this.setSynced(false);
         }
+      },
+      {
+        equals: (prev, next) =>
+          prev.isAuth === next.isAuth &&
+          prev.isActivated === next.isActivated
       }
     )
   }
@@ -51,7 +60,11 @@ export class FavoritesStore {
     try {
       if (!this.isAuth) return;
       if (!this.isActivated) {
-        this.alertsStore.addAlert(createAlert('Избранное не сохраняется на вашем аккаунте, т.к. он не активирован!', 'warning', 2000));
+        this.alertsStore.addAlert(
+          createAlert(
+            'Избранное не сохраняется на вашем аккаунте, т.к. он не активирован!', 'warning', 2000, 'activation-required'
+          )
+        );
         return;
       }
 

@@ -34,7 +34,7 @@ $api.interceptors.response.use(config => {
         const response = await axios.get<AuthResponse>(`${import.meta.env.VITE_API_URL}/refresh`, { withCredentials: true });
         localStorage.setItem('token', response.data.accessToken);
         await axios.post(`${import.meta.env.VITE_API_URL}/refresh/ack`, {}, { withCredentials: true });
-        $api.request(originalRequest);
+        return $api.request(originalRequest);
       } catch {
         throw new Error(errorMessages[code]);
       }
