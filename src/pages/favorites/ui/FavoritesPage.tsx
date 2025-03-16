@@ -1,24 +1,20 @@
   import { Box, Container, Typography as T } from '@mui/material';
   import { FavoriteBorder } from '@mui/icons-material';
   import { Nav } from '@widgets/Nav';
-  import { FavoritesContext, getFavoritesLS } from '@features/Favorites';
+  import { FavoritesContext } from '@features/Favorites';
   import { FavoritesList } from '@widgets/FavoritesList';
   import { useContext, useEffect, useState } from 'react';
   import { observer } from 'mobx-react-lite';
   import { FavoritesActions } from '@widgets/FavoritesActions/ui/FavoritesActions';
 
   export const FavoritesPage: React.FC = observer(() => {
-    const [savedVacancyIds, setSavedVacancyIds] = useState<string[]>([]);
     const { favoritesStore } = useContext(FavoritesContext);
+    const [savedVacancyIds, setSavedVacancyIds] = useState<string[]>(favoritesStore.favorites);
 
     useEffect(() => {
-      if (favoritesStore.isSynced) {
-        setSavedVacancyIds(getFavoritesLS());
+      if (favoritesStore.favorites.length > savedVacancyIds.length) {
+        setSavedVacancyIds(favoritesStore.favorites);
       }
-    }, [favoritesStore.isSynced]);
-
-    useEffect(() => {
-      setSavedVacancyIds(favoritesStore.favorites);
     }, [favoritesStore.favorites]);
 
     return (
@@ -27,8 +23,13 @@
         <Container maxWidth="md">
           <Box sx={{ padding: 3 }}>
             <T variant="h4" gutterBottom display='flex' alignItems='center' justifyContent='center' >
-              Избранные вакансии&nbsp;
+              Избранные вакансии
             </T>
+            {favoritesStore.favorites.length > 0 && (
+              <T variant='body1' color='text.secondary' display='flex' ml={2} justifyContent='start' >
+                Количество: {favoritesStore.favorites.length}
+              </T>
+            )}
             <FavoritesActions ids={savedVacancyIds} setIds={setSavedVacancyIds} />
             {savedVacancyIds.length > 0 ? (
               <FavoritesList ids={savedVacancyIds} />

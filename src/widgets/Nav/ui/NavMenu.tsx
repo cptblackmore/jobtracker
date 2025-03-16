@@ -6,10 +6,13 @@ import { useContext } from 'react';
 import { useMenu } from '../model/useMenu';
 import { PagesContext } from '@shared/lib';
 import { useNavigate } from 'react-router';
+import { FavoritesContext } from '@features/Favorites';
+import { observer } from 'mobx-react-lite';
 
-export const NavMenu: React.FC = () => {
+export const NavMenu: React.FC = observer(() => {
   const { handleCloseMenu, handleOpenMenu, anchorElMenu } = useMenu();
   const { authStore } = useContext(AuthContext);
+  const { favoritesStore } = useContext(FavoritesContext);
   const navigate = useNavigate();
   const pages = useContext(PagesContext);
 
@@ -41,6 +44,7 @@ export const NavMenu: React.FC = () => {
           page.inNav && (
             <MenuItem key={page.id} onClick={() => {handleCloseMenu(); navigate(page.path)}} >
               {page.name}
+              {page.id === 2 && favoritesStore.favorites.length > 0 ? ` (${favoritesStore.favorites.length})` : ''}
             </MenuItem>
           )
         ))}
@@ -55,4 +59,4 @@ export const NavMenu: React.FC = () => {
       </Menu>
     </Box>
   );
-};
+});

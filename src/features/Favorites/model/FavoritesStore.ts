@@ -62,17 +62,16 @@ export class FavoritesStore {
   }
 
   async synchronizeFavorites(favorites: FavoritesResponse['favorites']) {
+    if (!this.isAuth) return;
+    if (!this.isActivated) {
+      this.alertsStore.addAlert(
+        createAlert(
+          'Избранное не сохраняется на вашем аккаунте, т.к. он не активирован!', 'warning', 2000, 'activation-required'
+        )
+      );
+      return;
+    }
     try {
-      if (!this.isAuth) return;
-      if (!this.isActivated) {
-        this.alertsStore.addAlert(
-          createAlert(
-            'Избранное не сохраняется на вашем аккаунте, т.к. он не активирован!', 'warning', 2000, 'activation-required'
-          )
-        );
-        return;
-      }
-
       const response = await FavoritesService.synchronizeFavorites(favorites);
       window.localStorage.setItem('favorites', JSON.stringify(response.data.favorites) || '[]');
       this.setFavorites(response.data.favorites || []);
@@ -87,11 +86,10 @@ export class FavoritesStore {
   }
 
   async updateFavorites(favorites: FavoritesResponse['favorites']) {
+    this.setFavorites(favorites || []);
+    if (!this.isSynced) return;
     try {
-      if (!this.isSynced) return;
-
       await FavoritesService.updateFavorites(favorites);
-      this.setFavorites(favorites || []);
       this.setFavoritesQuantity(favorites.length);
     } catch (e) {
       if (e instanceof Error) {

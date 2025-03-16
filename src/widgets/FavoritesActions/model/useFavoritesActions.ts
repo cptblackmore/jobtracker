@@ -55,10 +55,9 @@ export const useFavoritesActions = (ids: string[], setIds: Dispatch<SetStateActi
       for (const id of parsedIds) {
         addToFavoritesLS(id);
       }
-      favoritesStore.updateFavorites(ids);
-      setIds(prev => {
-        return [...new Set([...prev, ...parsedIds])];
-      });
+      const newIds = [...new Set([...ids, ...parsedIds])]
+      favoritesStore.updateFavorites(newIds);
+      setIds(newIds);
     }).catch(e => alertsStore.addAlert(createAlert(e.message, 'error')));
   }
 
