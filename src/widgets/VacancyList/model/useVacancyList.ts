@@ -65,7 +65,7 @@ export const useVacancyList = (initialParams: VacancyParams) => {
   return {
     state,
     isLoading,
-    setPage: (page: number) => dispatch({type: 'SET_PAGE', page}),
-    setFilters: (filters: VacancyParams['filters']) => dispatch({type: 'SET_FILTERS', filters})
+    setPage: useCallback((page: number) => dispatch({type: 'SET_PAGE', page}), [dispatch]),
+    setFilters: useCallback((filters: VacancyParams['filters']) => dispatch({type: 'SET_FILTERS', filters}), [dispatch])
   };
 }
