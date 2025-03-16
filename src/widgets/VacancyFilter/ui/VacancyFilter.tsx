@@ -50,7 +50,7 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
           </Button>
         </Stack>
         <Collapse in={showAdditional}>
-          <VacancyFilterAdditional filters={filters} />
+          <VacancyFilterAdditional filters={filters} setShowAdditional={setShowAdditional} />
         </Collapse>
       </Stack>
     </Paper>

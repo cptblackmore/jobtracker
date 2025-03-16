@@ -1,12 +1,12 @@
 import { VacancyParams } from '@entities/Vacancy';
-import { useCallback, useEffect, useMemo } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo } from 'react';
 import { usePeriodFilter } from './usePeriodFilter';
 import { useTypeFilter } from './useTypeFilter';
 import { useSalaryFilter } from './useSalaryFitler';
 import { useSourcesFilter } from './useSourcesFilter';
 import { calculateSelectedFilters } from './calculateSelectedFilters';
 
-export const useVacancyFilterAdditional = (filters: VacancyParams['filters']) => {
+export const useVacancyFilterAdditional = (filters: VacancyParams['filters'], setShowAdditional: Dispatch<SetStateAction<boolean>>) => {
   const { period, resetPeriod, setPeriod, handlePeriodChange } = usePeriodFilter();
   const { type, resetType, setType, handleTypeChange } = useTypeFilter();
   const { salaryFilter, resetSalaryFilter, setSalaryFilter, handleSalaryChange } = useSalaryFilter();
@@ -48,6 +48,7 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters']) =>
     handleSalaryChange,
     sources, 
     handleSourceChange, 
-    resetFiltersAndSources
+    resetFiltersAndSources,
+    handleInvalid: () => setShowAdditional(true)
   };
 };

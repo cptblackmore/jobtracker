@@ -6,10 +6,11 @@ import { SalaryFilterAction } from '../model/useSalaryFitler';
 
 interface Props {
   handleSalaryChange: ({ action, payload }: SalaryFilterAction) => void;
-  salaryFilter: SwitchableVacancySalary
+  salaryFilter: SwitchableVacancySalary;
+  handleInvalid: () => void
 }
 
-export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter }) => {
+export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter, handleInvalid }) => {
   return (
     <Box sx={{opacity: salaryFilter.enabled ? 1 : 0.5}} >
       <Slider
@@ -34,6 +35,7 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
           slotProps={{htmlInput: {step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX}}}
           fullWidth
           value={salaryFilter?.from !== 0 ? salaryFilter?.from : ''}
+          onInvalid={handleInvalid}
           onChange={(e) => handleSalaryChange({
             action: 'input', 
             payload: {field: 'from', value: Number(e.target.value)}
@@ -47,6 +49,7 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
           slotProps={{htmlInput: {step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX}}}
           fullWidth
           value={salaryFilter?.to !== 0 ? salaryFilter?.to : ''}
+          onInvalid={handleInvalid}
           onChange={(e) => handleSalaryChange({
             action: 'input', 
             payload: {field: 'to', value: Number(e.target.value)}

@@ -8,6 +8,7 @@ interface Props {
   handlePeriodChange: (e: SelectChangeEvent<VacancyPeriod>) => void;
   handleTypeChange: (e: SelectChangeEvent<SwitchableVacancyType>) => void;
   resetFiltersAndSources: () => void;
+  handleInvalid: () => void;
 }
 
 export const BasicFilters: React.FC<Props> = ({ 
@@ -15,7 +16,8 @@ export const BasicFilters: React.FC<Props> = ({
   type, 
   handlePeriodChange, 
   handleTypeChange, 
-  resetFiltersAndSources 
+  resetFiltersAndSources,
+  handleInvalid
 }) => {
   return (
     <Stack spacing={2} >
@@ -28,6 +30,7 @@ export const BasicFilters: React.FC<Props> = ({
           name='period'
           value={period} 
           size='small'
+          onInvalid={handleInvalid}
           onChange={(e) => handlePeriodChange(e)}
         >
           <MenuItem value={1} >1 день</MenuItem>
@@ -45,6 +48,7 @@ export const BasicFilters: React.FC<Props> = ({
           inputProps={{id: 'type'}}
           value={type} 
           size='small'
+          onInvalid={handleInvalid}
           onChange={(e) => handleTypeChange(e)}
           sx={{
             '& .MuiSelect-select': {color: type === 'none' ? 'text.secondary' : 'text.primary'}

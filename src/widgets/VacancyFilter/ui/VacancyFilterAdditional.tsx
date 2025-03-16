@@ -5,12 +5,14 @@ import { SourceSelection } from './SourceSelection';
 import { BasicFilters } from './BasicFilters';
 import { SalaryCheckbox } from './SalaryCheckbox';
 import { useVacancyFilterAdditional } from '../model/useVacancyFilterAdditional';
+import { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   filters: VacancyParams['filters'];
+  setShowAdditional: Dispatch<SetStateAction<boolean>>
 }
 
-export const VacancyFilterAdditional: React.FC<Props> = ({ filters }) => {
+export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAdditional }) => {
   const { 
     period, 
     handlePeriodChange, 
@@ -20,19 +22,27 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters }) => {
     handleSalaryChange,
     sources, 
     handleSourceChange, 
-    resetFiltersAndSources
-  } = useVacancyFilterAdditional(filters);
+    resetFiltersAndSources,
+    handleInvalid
+  } = useVacancyFilterAdditional(filters, setShowAdditional);
 
   return (
     <Box>
       <Grid2 container mt={2} >
         <Grid2 size={3} pr={2} >
-          <BasicFilters period={period} type={type} handlePeriodChange={handlePeriodChange} handleTypeChange={handleTypeChange} resetFiltersAndSources={resetFiltersAndSources} />
+          <BasicFilters 
+            period={period} 
+            type={type} 
+            handlePeriodChange={handlePeriodChange} 
+            handleTypeChange={handleTypeChange} 
+            resetFiltersAndSources={resetFiltersAndSources}
+            handleInvalid={handleInvalid}
+          />
         </Grid2>
         <Divider flexItem orientation='vertical' sx={{mr: '-1px'}} />  
         <Grid2 size={9} pl={3} pr={1} >
           <SalaryCheckbox salaryFilter={salaryFilter} handleSalaryChange={handleSalaryChange} />
-          <SalaryFilter handleSalaryChange={handleSalaryChange} salaryFilter={salaryFilter} />
+          <SalaryFilter handleSalaryChange={handleSalaryChange} salaryFilter={salaryFilter} handleInvalid={handleInvalid} />
         </Grid2>
       </Grid2>
       <Divider sx={{my: 2}} />
