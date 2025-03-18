@@ -9,7 +9,7 @@ export const FeedPage: React.FC = () => {
     <Box>
       <Nav />
       <Container maxWidth='lg' css={containerStyles} >
-        <Box maxWidth='md'>
+        <Box maxWidth='md' sx={{width: '100%'}} >
           <VacancyList/>
         </Box>
       </Container>

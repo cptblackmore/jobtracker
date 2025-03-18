@@ -31,7 +31,7 @@ export const VacancyDetails: React.FC<Props> = ({ data }) => {
         }
       />
       <CardContent sx={{paddingBottom: 0}} >
-        <ExpandableText text={data.description} />
+        <ExpandableText text={data.description} options={{timeout: 0}} />
       </CardContent>
       <CardActions>
         <T paddingLeft={2} display='flex' gap='0.3em' >

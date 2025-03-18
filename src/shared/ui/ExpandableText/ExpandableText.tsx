@@ -14,12 +14,20 @@
       minRows?: number;
       rowHeight?: number;
       fadingColor?: string;
-    }
+      timeout?: number | 'auto' | { enter?: number; exit?: number };
+    };
   }
 
   export const ExpandableText: React.FC<Props> = ({ 
-    text, options: {maxRows=3, minRows=1, rowHeight=24, fadingColor='255, 255, 255'} = {} }
-  ) => {
+    text, 
+    options: {
+      maxRows=3, 
+      minRows=1, 
+      rowHeight=24, 
+      fadingColor='255, 255, 255',
+      timeout
+    } = {}
+  }) => {
     const maxHeight = rowHeight * maxRows;
     const minHeight = rowHeight * minRows;
     const textRef = useRef<HTMLDivElement | null>(null);
@@ -46,7 +54,7 @@
       <Box sx={{display: 'flex'}} >
         <Collapse
           in={isExpanded}
-          timeout='auto'
+          timeout={timeout ?? 'auto'}
           collapsedSize={collapsedHeight}
           css={fadedCollapseStyle(isFaded, isOverflowed, fadingColor)}
           onExited={handleExited}

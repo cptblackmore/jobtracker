@@ -1,26 +1,21 @@
 import { VacancyCard } from '@widgets/VacancyCard';
-import { Box, CircularProgress, Stack } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { vacancyListStyle } from './styles';
 import { useVacancyList } from '../model/useVacancyList';
 import { VacancyFilter } from '@widgets/VacancyFilter';
 import { VacancyParams } from '@entities/Vacancy';
-import { useInView } from 'react-intersection-observer'
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { AlertsContext, createAlert } from '@shared/model';
 import { useEffectOnceByCondition } from '@shared/lib';
+import { Virtuoso } from 'react-virtuoso';
 
 interface Props {
   initialFilters?: VacancyParams['filters'];
 }
 
 export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
-  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count: 5, filters: initialFilters});
-  const { ref, inView } = useInView({triggerOnce: true});
+  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count: 50, filters: initialFilters});
   const { alertsStore } = useContext(AlertsContext);
-
-  useEffect(() => {
-    if (inView) setPage(state.params.page + 1);
-  }, [inView]);
 
   useEffectOnceByCondition(() => {
     alertsStore.addAlert(createAlert('Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 'info'));
@@ -29,16 +24,29 @@ export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
   return (
     <Box>
       <VacancyFilter filters={state.params.filters} setFilters={setFilters} />
-      <Stack direction='column' alignItems='center' spacing={1} css={vacancyListStyle} >
-        {state.vacancies.map((data) => (
-          <VacancyCard key={data.id} data={data} />
-        ))}
-        {isLoading ? (
-          <CircularProgress size='5em' />
-        ) : (
-          <Box ref={ref} ></Box>
-        )}
-      </Stack>
+      <Box css={vacancyListStyle} >
+        <Virtuoso
+          useWindowScroll
+          increaseViewportBy={1200}
+          data={state.vacancies}
+          itemContent={(_, vacancy) => (
+            <div key={vacancy.id} style={{paddingBottom: '1em'}} >
+              <VacancyCard data={vacancy} />
+            </div>
+          )}
+          endReached={() => {
+            if (!isLoading) setPage(state.params.page + 1);
+          }}
+          components={{
+            Footer: () =>
+              isLoading ? (
+                <Box display='flex' justifyContent='center' >
+                  <CircularProgress size='5em' />
+                </Box>
+              ) : null
+          }}
+        />
+      </Box>
     </Box>
   );
 }
