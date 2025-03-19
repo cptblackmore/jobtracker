@@ -1,4 +1,4 @@
-import { Box, CardActions, CardContent, CardHeader, Divider, Typography as T } from '@mui/material';
+import { Box, CardContent, CardHeader, Divider, Typography as T } from '@mui/material';
 import { Vacancy } from '@entities/Vacancy';
 import { ExpandableText } from '@shared/ui';
 import { VacancySource } from './VacancySource/VacancySource';
@@ -30,14 +30,12 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
           </Box>
         }
       />
-      <CardContent sx={{paddingBottom: 0}} >
+      <CardContent sx={{'&:last-child': {paddingBottom: 1}}} >
         <ExpandableText text={vacancy.description} options={{timeout: 0}} />
-      </CardContent>
-      <CardActions>
-        <T paddingLeft={2} display='flex' gap='0.3em' >
+        <T display='flex' px={1} pt={2} gap='0.3em' >
           {howLongAgo} на <VacancySource source={vacancy.source} />
         </T>
-      </CardActions>
+      </CardContent>
     </Box>
   );
 }
