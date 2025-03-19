@@ -6,7 +6,8 @@ import axios from 'axios';
 import { chunkerize } from '@shared/lib';
 import { fetchFavorites } from './fetchFavorites';
 
-export const  useFavoritesList = (ids: string[]) => {
+export const  useFavoritesList = (initialIds: string[]) => {
+  const [ids, setIds] = useState(initialIds);
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -15,6 +16,8 @@ export const  useFavoritesList = (ids: string[]) => {
   const { favoritesStore } = useContext(FavoritesContext);
 
   const fetchFavoritesCallback = useCallback(async (actionType: 'SET_FAVORITES' | 'ADD_FAVORITES', signal: AbortSignal) => {
+    if (ids.length === 0) return;
+    
     setIsLoading(true);
     try {
       const idChunk = chunkerize([...ids].reverse(), 5)[page];
@@ -35,6 +38,18 @@ export const  useFavoritesList = (ids: string[]) => {
   }, [ids, page, alertsStore, favoritesStore]);
 
   useEffect(() => {
+    if (favoritesStore.favorites.length > ids.length) {
+      setIds(favoritesStore.favorites);
+    }
+  }, [favoritesStore.favorites]);
+
+  useEffect(() => {
+    if (ids.length === 0) {
+      setVacancies([]);
+      setIsLoading(false);
+      return;
+    }
+
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -54,5 +69,12 @@ export const  useFavoritesList = (ids: string[]) => {
     };
   }, [ids, page]);
 
-  return { vacancies, isLoading, page, setPage };
+  return { 
+    vacancies, 
+    isLoading, 
+    page, 
+    setPage, 
+    ids, 
+    setIds 
+  };
 }

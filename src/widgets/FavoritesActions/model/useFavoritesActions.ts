@@ -21,8 +21,8 @@ export const useFavoritesActions = (ids: string[], setIds: Dispatch<SetStateActi
   const handleDeleteFavorites = () => {
     setModalOpen(false);
     deleteFromFavoritesLS(ids);
-    setIds([]);
     favoritesStore.updateFavorites([]);
+    setIds([]);
   }
 
   const handleDownloadFavorites = async (format: 'txt' | 'csv') => {

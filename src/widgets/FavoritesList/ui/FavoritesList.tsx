@@ -1,35 +1,53 @@
-import { VacancyCard } from '@widgets/VacancyCard';
-import { Box, CircularProgress, Stack } from '@mui/material';
+import { Box, Typography as T } from '@mui/material';
 import { useFavoritesList } from '../model/useFavoritesList';
-import { chunkerize } from '@shared/lib';
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
 import { favoritesListStyle } from './styles';
+import { VirtualizedVacancyList } from '@widgets/VacancyList';
+import { useContext } from 'react';
+import { FavoritesContext } from '@features/Favorites';
+import { FavoritesActions } from '@widgets/FavoritesActions';
+import { FavoriteBorder } from '@mui/icons-material';
+import { observer } from 'mobx-react-lite';
 
-interface Props {
-  ids: string[];
-}
-
-export const FavoritesList: React.FC<Props> = ({ ids }) => {
-  const { vacancies, isLoading, page, setPage } = useFavoritesList(ids);
-  const { ref, inView } = useInView();
-
-  useEffect(() => {
-    if (inView && page < chunkerize(ids, 5).length - 1) setPage(page + 1);
-  }, [inView]);
+export const FavoritesList: React.FC = observer(() => {
+  const { favoritesStore } = useContext(FavoritesContext);
+  const { 
+    vacancies, 
+    isLoading, 
+    page, setPage, 
+    ids, 
+    setIds 
+  } = useFavoritesList(favoritesStore.favorites);
 
   return (
     <Box>
-      <Stack direction="column" alignItems="center" spacing={1} css={favoritesListStyle}>
-        {vacancies.map((data) => (
-          <VacancyCard key={data.id} data={data} />
-        ))}
-        {isLoading ? (
-          <CircularProgress size="5em" />
-        ) : (
-          <Box ref={ref} ></Box>
-        )}
-      </Stack>
+      {favoritesStore.favorites.length > 0 && (
+        <T variant='body1' color='text.secondary' display='flex' ml={2} justifyContent='start' >
+          Количество: {favoritesStore.favorites.length}
+        </T>
+      )}
+      <FavoritesActions ids={ids} setIds={setIds} />
+      {favoritesStore.favorites.length > 0 ? (
+        <Box css={favoritesListStyle} >
+          <VirtualizedVacancyList 
+            vacancies={vacancies}
+            isLoading={isLoading}
+            page={page}
+            setPage={setPage}
+          />
+        </Box>
+      ) : (
+        <Box>
+          <T variant='body1' color='text.secondary' display='flex' mt={5} justifyContent='center' >
+            У вас пока нет избранных вакансий.
+          </T>
+          <T variant='body1' color='text.secondary' display='flex' mt={3} justifyContent='center' >
+            Чтобы добавить вакансию в избранные, нажмите на иконку <FavoriteBorder sx={{mx: 0.5}} /> в карточке вакансии
+          </T>
+          <T variant='body1' color='text.secondary' display='flex' mt={1} justifyContent='center' >
+            или импортируйте вакансии из JSON файла.
+          </T>
+        </Box>
+      )}
     </Box>
   );
-};
+});
