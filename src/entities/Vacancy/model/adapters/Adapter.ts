@@ -4,6 +4,6 @@ import { SourcesMapping } from "../Sources";
 
 export interface Adapter<K extends keyof SourcesMapping> {
   adaptParams(params: VacancyParams): SourcesMapping[K]['params'];
-  adaptVacancies(data: Array<SourcesMapping[K]['vacancy']>): Array<Vacancy>;
+  adaptVacancies(vacancies: Array<SourcesMapping[K]['vacancy']>): Array<Vacancy>;
   adaptVacancy(vacancy: SourcesMapping[K]['vacancy']): Vacancy;
 }

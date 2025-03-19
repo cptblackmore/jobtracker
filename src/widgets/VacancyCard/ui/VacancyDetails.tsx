@@ -6,11 +6,11 @@ import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 
 interface Props {
-  data: Vacancy;
+  vacancy: Vacancy;
 }
 
-export const VacancyDetails: React.FC<Props> = ({ data }) => {
-  const datePublished = new Date(data.datePublished);
+export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
+  const datePublished = new Date(vacancy.datePublished);
   const howLongAgo = formatDistanceToNow(datePublished, { addSuffix: true, locale: ru });
 
   return (
@@ -19,23 +19,23 @@ export const VacancyDetails: React.FC<Props> = ({ data }) => {
         sx={{paddingBottom: 0}}
         title={
           <T variant='h5' textAlign='start' paddingLeft={1} >
-            {data.profession}
+            {vacancy.profession}
           </T>
         }
         subheader={
           <Box paddingLeft={1} textAlign='start' display='flex' >
-            <T>{data.firmName}</T>
+            <T>{vacancy.firmName}</T>
             <Divider sx={{marginLeft: '1em', marginRight: '1em'}} orientation='vertical' flexItem />
-            <T>{data.town}</T>
+            <T>{vacancy.town}</T>
           </Box>
         }
       />
       <CardContent sx={{paddingBottom: 0}} >
-        <ExpandableText text={data.description} options={{timeout: 0}} />
+        <ExpandableText text={vacancy.description} options={{timeout: 0}} />
       </CardContent>
       <CardActions>
         <T paddingLeft={2} display='flex' gap='0.3em' >
-          {howLongAgo} на <VacancySource source={data.source} />
+          {howLongAgo} на <VacancySource source={vacancy.source} />
         </T>
       </CardActions>
     </Box>

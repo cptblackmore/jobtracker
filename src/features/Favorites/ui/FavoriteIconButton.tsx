@@ -9,20 +9,20 @@ import { observer } from 'mobx-react-lite';
 import { FavoritesContext } from '../model/FavoritesContext';
 
 interface Props {
-  data: Vacancy;
+  favorite: Vacancy;
 }
 
-export const FavoriteIconButton: React.FC<Props> = observer(({ data }) => {
-  const [isFavorite, setIsFavorite] = useState(isVacancyFavoriteLS(data.id));
+export const FavoriteIconButton: React.FC<Props> = observer(({ favorite }) => {
+  const [isFavorite, setIsFavorite] = useState(isVacancyFavoriteLS(favorite.id));
   const { favoritesStore } = useContext(FavoritesContext);
 
   function handleToggle() {
     if (isFavorite) {
-      const favorites = deleteFromFavoritesLS(data.id);
+      const favorites = deleteFromFavoritesLS(favorite.id);
       favoritesStore.updateFavorites(favorites);
       setIsFavorite(false);
     } else {
-      const favorites = addToFavoritesLS(data.id);
+      const favorites = addToFavoritesLS(favorite.id);
       favoritesStore.updateFavorites(favorites);
       setIsFavorite(true);
     }

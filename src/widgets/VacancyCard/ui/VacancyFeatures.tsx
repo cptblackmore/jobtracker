@@ -4,13 +4,13 @@ import { vacancyFeaturesStyle } from './styles';
 import { Vacancy } from '@entities/Vacancy';
 
 interface Props {
-  data: Vacancy;
+  vacancy: Vacancy;
 }
 
-export const VacancyFeatures: React.FC<Props> = ({ data }) => {
+export const VacancyFeatures: React.FC<Props> = ({ vacancy }) => {
   return (
     <CardActions css={vacancyFeaturesStyle} >
-      <FavoriteIconButton data={data} />
+      <FavoriteIconButton favorite={vacancy} />
     </CardActions>
   );
 }

@@ -18,7 +18,7 @@ export const VirtualizedVacancyList: React.FC<Props> = ({ vacancies, isLoading, 
       data={vacancies}
       itemContent={(_, vacancy) => (
         <div style={{paddingBottom: '1em'}} >
-          <VacancyCard key={vacancy.id} data={vacancy} />
+          <VacancyCard key={vacancy.id} vacancy={vacancy} />
         </div>
       )}
       endReached={() => {
