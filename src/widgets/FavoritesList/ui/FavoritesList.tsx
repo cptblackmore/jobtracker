@@ -1,6 +1,5 @@
 import { Box, Typography as T } from '@mui/material';
 import { useFavoritesList } from '../model/useFavoritesList';
-import { favoritesListStyle } from './styles';
 import { VirtualizedVacancyList } from '@widgets/VacancyList';
 import { useContext } from 'react';
 import { FavoritesContext } from '@features/Favorites';
@@ -27,14 +26,12 @@ export const FavoritesList: React.FC = observer(() => {
       )}
       <FavoritesActions ids={ids} setIds={setIds} />
       {favoritesStore.favorites.length > 0 ? (
-        <Box css={favoritesListStyle} >
-          <VirtualizedVacancyList 
-            vacancies={vacancies}
-            isLoading={isLoading}
-            page={page}
-            setPage={setPage}
-          />
-        </Box>
+        <VirtualizedVacancyList 
+          vacancies={vacancies}
+          isLoading={isLoading}
+          page={page}
+          setPage={setPage}
+        />
       ) : (
         <Box>
           <T variant='body1' color='text.secondary' display='flex' mt={5} justifyContent='center' >

@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import { vacancyListStyle } from './styles';
 import { useVacancyList } from '../model/useVacancyList';
 import { VacancyFilter } from '@widgets/VacancyFilter';
 import { VacancyParams } from '@entities/Vacancy';
@@ -23,14 +22,12 @@ export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
   return (
     <Box>
       <VacancyFilter filters={state.params.filters} setFilters={setFilters} />
-      <Box css={vacancyListStyle} >
-        <VirtualizedVacancyList 
-          vacancies={state.vacancies}
-          isLoading={isLoading}
-          page={state.params.page}
-          setPage={setPage}
-        />
-      </Box>
+      <VirtualizedVacancyList 
+        vacancies={state.vacancies}
+        isLoading={isLoading}
+        page={state.params.page}
+        setPage={setPage}
+      />
     </Box>
   );
 }
