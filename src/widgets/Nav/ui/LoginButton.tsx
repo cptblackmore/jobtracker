@@ -9,10 +9,18 @@ export const LoginButton: React.FC = observer(() => {
   return (
     authStore.isLoading ? (
       <Box display='flex' alignItems='center' >
-        <CircularProgress size={25} sx={{color: 'white', mr: 2.5}} />
+        <CircularProgress 
+          size={25}
+          sx={{mr: 2.5, color: (theme) => theme.palette.primary.contrastText}} 
+        />
       </Box>
     ) : (
-      <Button sx={{color: 'white'}} onClick={() => authStore.setModalOpen(true)} >Вход</Button>
+      <Button
+        sx={{color: (theme) => theme.palette.primary.contrastText}} 
+        onClick={() => authStore.setModalOpen(true)} 
+      >
+        Вход
+      </Button>
     )
   );
 });

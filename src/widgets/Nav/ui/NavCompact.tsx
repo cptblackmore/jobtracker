@@ -21,7 +21,10 @@ export const NavCompact: React.FC = observer(() => {
       <Grid2 size={3} >
         {authStore.isLoading && (
           <Box display='flex' justifyContent='flex-end' alignItems='center' height='100%' >
-            <CircularProgress size={25} sx={{color: 'white', mr: 2}} />
+            <CircularProgress 
+              size={25} 
+              sx={{mr: 2, color: (theme) => theme.palette.primary.contrastText}}
+            />
           </Box>
         )}
       </Grid2>

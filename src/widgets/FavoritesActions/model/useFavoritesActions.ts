@@ -28,7 +28,7 @@ export const useFavoritesActions = (ids: string[], setIds: Dispatch<SetStateActi
   const handleDownloadFavorites = async (format: 'txt' | 'csv') => {
     setIsLoading(true);
     try {
-      const favorites = await fetchFavorites(ids, signal, alertsStore, favoritesStore, setProgress);
+      const favorites = await fetchFavorites(favoritesStore.favorites, signal, alertsStore, favoritesStore, setProgress);
       if (format === 'txt') {
         const text = vacanciesToText(favorites);
         downloadTextFile(text, 'favorites');

@@ -11,29 +11,29 @@ export const NavToolbar: React.FC = observer(() => {
 
   return (
     <Toolbar variant='dense' >
-    {Object.values(pages).map((page) => (
-      page.inNav && (
-        <Tooltip 
-          title={
-            page.id === 2 
-            ? 
-            `${favoritesStore.favorites.length > 0 ? `Вакансий в избранном: ${favoritesStore.favorites.length}` : 'Список избранных вакансий пуст'}` 
-            : 
-            ''
-          } 
-          key={page.id}
-        >
-          <Button
+      {Object.values(pages).map((page) => (
+        page.inNav && (
+          <Tooltip 
+            title={
+              page.id === 2 
+              ? 
+              `${favoritesStore.favorites.length > 0 ? `Вакансий в избранном: ${favoritesStore.favorites.length}` : 'Список избранных вакансий пуст'}` 
+              : 
+              ''
+            } 
             key={page.id}
-            component={RouterLink}
-            to={page.path}
-            sx={{ my: 1, color: 'white', display: 'block' }}
           >
-            {page.name}
-          </Button>
-        </Tooltip>
-      )
-    ))}
-  </Toolbar>
+            <Button
+              key={page.id}
+              component={RouterLink}
+              to={page.path}
+              sx={{my: 1, display: 'block', color: (theme) => theme.palette.primary.contrastText}}
+            >
+              {page.name}
+            </Button>
+          </Tooltip>
+        )
+      ))}
+    </Toolbar>
   );
 });

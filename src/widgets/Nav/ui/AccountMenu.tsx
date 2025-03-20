@@ -10,11 +10,10 @@ export const AccountMenu: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
   const { handleCloseMenu, handleOpenMenu, anchorElMenu } = useMenu();
 
-
   return (
     <Box display='flex' alignItems='center' >
       <Button 
-        sx={{color: 'white'}} 
+        sx={{color: (theme) => theme.palette.primary.contrastText}} 
         onClick={handleOpenMenu}
         endIcon={<Box display='flex' >{anchorElMenu ? <ArrowDropUp /> : <ArrowDropDown />}</Box>}
       >

@@ -38,7 +38,6 @@ export const fetchFavorites = async (
           const result = await trackPromise(getVacanciesByIds(ids, source, signal), ids.length);
           if (result.missingIds && result.missingIds.length > 0) {
             deleteFromFavoritesLS(result.missingIds.map(id => source + '_' + id));
-            console.log('1');
             errorCodes.add('FAVORITES_NOT_FOUND');
           }
           return result.vacancies;
@@ -54,7 +53,6 @@ export const fetchFavorites = async (
                 if (code === 'FAVORITES_NOT_FOUND') {
                   const missingId = result.reason.request?.data.id ?? '';
                   deleteFromFavoritesLS(source + '_' + missingId);
-                  console.log('2');
                   errorCodes.add('FAVORITES_NOT_FOUND');
                 } else {
                   throw result.reason;

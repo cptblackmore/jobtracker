@@ -13,7 +13,7 @@ export const VacancyListDemo: React.FC<Props> = ({ initialFilters={} }) => {
 
   return (
     <>
-      <Box sx={{p: 1, backgroundColor: '#f5f4ff', borderRadius: 1}} >
+      <Box sx={{p: 1, backgroundColor: (theme) => theme.palette.background.default, borderRadius: 1}} >
         <Stack direction='column' alignItems='center' spacing={1} >
           {state.vacancies.map((vacancy) => (
             <VacancyCard key={vacancy.id} vacancy={vacancy} />

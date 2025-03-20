@@ -4,6 +4,10 @@ import { ExpandableText } from '@shared/ui';
 import { VacancySource } from './VacancySource/VacancySource';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import { useTheme } from '@mui/material/styles';
+import { blendColors } from '@shared/lib';
+import { ThemesContext } from '@shared/theme/ThemesContext';
+import { useContext } from 'react';
 
 interface Props {
   vacancy: Vacancy;
@@ -12,6 +16,8 @@ interface Props {
 export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
   const datePublished = new Date(vacancy.datePublished);
   const howLongAgo = formatDistanceToNow(datePublished, { addSuffix: true, locale: ru });
+  const { config } = useContext(ThemesContext);
+  const theme = useTheme();
 
   return (
     <Box>        
@@ -31,7 +37,17 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
         }
       />
       <CardContent sx={{'&:last-child': {paddingBottom: 1}}} >
-        <ExpandableText text={vacancy.description} options={{timeout: 0}} />
+        <ExpandableText 
+          text={vacancy.description} 
+          options={{
+            timeout: 0, 
+            fadingColor: blendColors(
+              theme.palette.background.paper, 
+              config.muiPaperOverlay.bgcolor, 
+              config.muiPaperOverlay.opacity
+            )
+          }} 
+        />
         <T display='flex' px={1} pt={2} gap='0.3em' >
           {howLongAgo} на <VacancySource source={vacancy.source} />
         </T>

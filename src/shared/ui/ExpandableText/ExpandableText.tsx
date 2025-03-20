@@ -24,7 +24,7 @@
       maxRows=3, 
       minRows=1, 
       rowHeight=24, 
-      fadingColor='255, 255, 255',
+      fadingColor='#fff',
       timeout
     } = {}
   }) => {
