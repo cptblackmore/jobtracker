@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { NavMenu } from './NavMenu';
 import { useContext } from 'react';
 import { AuthContext } from '@shared/model';
+import { ToggleThemeButton } from './toggleThemeButton';
 
 export const NavCompact: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -11,7 +12,15 @@ export const NavCompact: React.FC = observer(() => {
   return (
     <Grid2 container >
       <Grid2 size={3} >
-        <NavMenu />
+        <Box display='flex' alignItems='center' justifyContent='flex-start' height='100%' gap={1} >
+          <NavMenu />
+          {authStore.isLoading && (
+            <CircularProgress 
+              size={25} 
+              sx={{mr: 2, color: (theme) => theme.palette.primary.contrastText}}
+            />
+          )}
+        </Box>
       </Grid2>
       <Grid2 size={6} >
         <Box display='flex' alignItems='center' justifyContent='center' height='100%' >
@@ -19,14 +28,9 @@ export const NavCompact: React.FC = observer(() => {
         </Box>
       </Grid2>
       <Grid2 size={3} >
-        {authStore.isLoading && (
-          <Box display='flex' justifyContent='flex-end' alignItems='center' height='100%' >
-            <CircularProgress 
-              size={25} 
-              sx={{mr: 2, color: (theme) => theme.palette.primary.contrastText}}
-            />
-          </Box>
-        )}
+        <Box display='flex' alignItems='center' justifyContent='flex-end' height='100%' >
+          <ToggleThemeButton />
+        </Box>
       </Grid2>
     </Grid2>
   );
