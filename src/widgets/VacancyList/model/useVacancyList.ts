@@ -1,9 +1,9 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import { ActionVacancies, vacancyListReducer } from './vacancyListReducer';
-import { AlertsContext } from '@shared/model';
+import { AlertsContext, createAlert } from '@shared/model';
 import { useLocation } from 'react-router';
-import { isEqual } from '@shared/lib';
+import { isEqual, useEffectOnceByCondition } from '@shared/lib';
 import { parseUrlSearch } from '@widgets/VacancyFilter';
 import { fetchVacancies } from './fetchVacancies';
 import axios from 'axios';
@@ -36,6 +36,10 @@ export const useVacancyList = (initialParams: VacancyParams) => {
     setIsLoading(false);
   }
 
+  useEffectOnceByCondition(() => {
+    alertsStore.addAlert(createAlert('Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 'info'));
+  }, [isLoading], !isLoading)
+
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -66,6 +70,6 @@ export const useVacancyList = (initialParams: VacancyParams) => {
     state,
     isLoading,
     toNextPage: useCallback(() => dispatch({type: 'SET_PAGE', page: state.params.page + 1}), [dispatch, state.params.page]),
-    setFilters: useCallback((filters: VacancyParams['filters']) => dispatch({type: 'SET_FILTERS', filters}), [dispatch])
+    setFilters: useCallback((filters: VacancyParams['filters']) => dispatch({type: 'SET_FILTERS', filters}), [dispatch]),
   };
 }

@@ -1,8 +1,8 @@
 import { SwitchableVacancySalary } from '@entities/Vacancy/api/types/VacancyParams';
 import { Box, Slider, Stack, TextField } from '@mui/material';
-import { SALARY_MIN, SALARY_MAX, SALARY_STEP } from '../config/salaryConfig';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { SalaryFilterAction } from '../model/useSalaryFitler';
+import { SALARY_MAX, SALARY_MIN, SALARY_STEP } from '@shared/config';
 
 interface Props {
   handleSalaryChange: ({ action, payload }: SalaryFilterAction) => void;

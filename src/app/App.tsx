@@ -8,11 +8,10 @@ export const App = () => {
   return (
     <>
       <ThemesProvider>
-        <CssBaseline>
-          <Router />
-          <Alerts />
-          <AuthModal />
-        </CssBaseline>
+        <CssBaseline />
+        <Router />
+        <Alerts />
+        <AuthModal />
       </ThemesProvider>
     </>
   );

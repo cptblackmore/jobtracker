@@ -1,6 +1,6 @@
 import { SwitchableVacancySalary } from '@entities/Vacancy/api/types/VacancyParams';
+import { SALARY_MAX, SALARY_MIN } from '@shared/config';
 import { useCallback, useState } from 'react';
-import { SALARY_MIN, SALARY_MAX } from '../config/salaryConfig';
 
 export interface SalaryFilterAction {
   action: 'toggle' | 'slider' | 'input';

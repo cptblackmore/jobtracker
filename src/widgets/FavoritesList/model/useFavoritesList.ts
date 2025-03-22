@@ -5,9 +5,9 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { chunkerize } from '@shared/lib';
 import { fetchFavorites } from './fetchFavorites';
+import { FAVORITES_CHUNK_SIZE } from '@shared/config';
 
 export const  useFavoritesList = () => {
-  const FAVORITES_CHUNK_SIZE = 5;
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(0);
