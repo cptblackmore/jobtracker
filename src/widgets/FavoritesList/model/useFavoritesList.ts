@@ -41,6 +41,10 @@ export const  useFavoritesList = () => {
     try {
       const idChunk = chunkerize([...displayedIds].reverse(), FAVORITES_CHUNK_SIZE)[page];
       const result = await fetchFavorites(idChunk, signal, alertsStore, favoritesStore);
+      if (result.length === 0) {
+        toNextPage();
+        return;
+      }
       const sortedResult = result.sort((a, b) => {
         return idChunk.indexOf(a.id) - idChunk.indexOf(b.id);
       })

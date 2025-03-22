@@ -28,8 +28,14 @@ export const getVacancyById = async (id: string, source: SourceId, signal: Abort
         const response = await VacancyService.getHHById(id, signal);
         return adapterHH.adaptVacancy(response.data);
       } catch (e) {
-        if (e instanceof AxiosError && e.status === 404) {
-          throw createVacancyNotFoundError(e, id);
+        if (e instanceof AxiosError) {
+          if (e.status === 404) {
+            throw createVacancyNotFoundError(e, id);
+          }
+          if (e.status === 403) {
+            throw new AxiosError(e.message, 'FAVORITES_NOT_AVAILABLE');
+          }
+          throw e;
         } else {
           throw e;
         }

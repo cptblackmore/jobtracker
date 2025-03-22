@@ -10,6 +10,8 @@ export const handleErrors = (
     if (errorCode === 'FAVORITES_NOT_FOUND') {
       if (onFavoritesNotFound) onFavoritesNotFound();
       alertsStore.addAlert(createAlert(errorMessages['FAVORITES_NOT_FOUND'], 'warning'));
+    } else if (errorCode === 'FAVORITES_NOT_AVAILABLE') {
+      alertsStore.addAlert(createAlert(errorMessages['FAVORITES_NOT_AVAILABLE'], 'warning'));
     } else {
       const message = errorMessages[errorCode] || `${errorMessages['UNKNOWN_ERROR']} ${errorCode}`;
       alertsStore.addAlert(createAlert(message, 'error'));
