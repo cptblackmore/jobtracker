@@ -18,7 +18,7 @@ export const NavToolbar: React.FC = observer(() => {
             title={
               page.id === 2 
               ? 
-              `${favoritesStore.favorites.length > 0 ? `Вакансий в избранном: ${favoritesStore.favorites.length}` : 'Список избранных вакансий пуст'}` 
+              `${favoritesStore.ids.length > 0 ? `Вакансий в избранном: ${favoritesStore.ids.length}` : 'Список избранных вакансий пуст'}` 
               : 
               ''
             } 

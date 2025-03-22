@@ -10,27 +10,30 @@ import { observer } from 'mobx-react-lite';
 export const FavoritesList: React.FC = observer(() => {
   const { favoritesStore } = useContext(FavoritesContext);
   const { 
-    vacancies, 
+    vacancies,
     isLoading, 
-    page, setPage, 
-    ids, 
-    setIds 
-  } = useFavoritesList(favoritesStore.favorites);
+    toNextPage,
+    clearDisplayedFavorites,
+    resetDisplayedFavorites,
+    displayedIdsLength
+  } = useFavoritesList();
 
   return (
     <Box>
-      {favoritesStore.favorites.length > 0 && (
+      {favoritesStore.ids.length > 0 && (
         <T variant='body1' color='text.secondary' display='flex' ml={2} justifyContent='start' >
-          Количество: {favoritesStore.favorites.length}
+          Количество: {favoritesStore.ids.length}
         </T>
       )}
-      <FavoritesActions ids={ids} setIds={setIds} />
-      {favoritesStore.favorites.length > 0 ? (
+      <FavoritesActions 
+        clearDisplayedFavorites={clearDisplayedFavorites} 
+        resetDisplayedFavorites={resetDisplayedFavorites} 
+      />
+      {displayedIdsLength > 0 ? (
         <VirtualizedVacancyList 
           vacancies={vacancies}
           isLoading={isLoading}
-          page={page}
-          setPage={setPage}
+          toNextPage={toNextPage}
         />
       ) : (
         <Box>

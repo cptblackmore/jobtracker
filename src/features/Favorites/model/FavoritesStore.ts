@@ -1,11 +1,10 @@
 import { makeAutoObservable, reaction } from 'mobx';
-import { FavoritesService, FavoritesResponse, getFavoritesLS } from '@features/Favorites';
+import { FavoritesService, FavoritesResponse, getFavoritesLS, deleteFavoritesLS, addFavoritesLS, setFavoritesLS } from '@features/Favorites';
 import { createAlert, AlertsStore, AuthStore } from '@shared/model';
 
 export class FavoritesStore {
-  favorites: string[] = JSON.parse(window.localStorage.getItem('favorites') || '[]');
+  ids: string[] = JSON.parse(window.localStorage.getItem('favorites') || '[]');
   isSynced = false;
-  favoritesQuantity = 0;
   private alertsStore: AlertsStore;
   private authStore: AuthStore;
 
@@ -19,7 +18,6 @@ export class FavoritesStore {
       ({ isAuth, isActivated }) => {
         if (isAuth) {
           if (!isActivated) {
-            this.setFavoritesQuantity(0);
             this.alertsStore.addAlert(
               createAlert(
                 'Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000, 'activation-required'
@@ -49,16 +47,34 @@ export class FavoritesStore {
     return !!this.authStore.user?.isActivated;
   }
 
-  setFavorites(favorites: string[]) {
-    this.favorites = favorites;
+  setIds(favoritesIds: string[]) {
+    this.ids = favoritesIds;
   }
 
   setSynced(bool: boolean) {
     this.isSynced = bool;
   }
 
-  setFavoritesQuantity(num: number) {
-    this.favoritesQuantity = num;
+  isFavorite(id: string) {
+    return this.ids.includes(id);
+  }
+
+  deleteFavorites(favoritesIds: string | string[]) {
+    const newIds = deleteFavoritesLS(favoritesIds) ?? [];
+    this.setIds(newIds);
+    if (this.isSynced) this.updateFavorites(newIds);
+  }
+
+  addFavorites(favoritesIds: string | string[]) {
+    const newIds = addFavoritesLS(favoritesIds) ?? [];
+    this.setIds(newIds);
+    if (this.isSynced) this.updateFavorites(newIds);
+  }
+
+  clearFavorites() {
+    this.setIds([]);
+    setFavoritesLS([]);
+    if (this.isSynced) this.updateFavorites([]); 
   }
 
   async synchronizeFavorites(favorites: FavoritesResponse['favorites']) {
@@ -73,10 +89,9 @@ export class FavoritesStore {
     }
     try {
       const response = await FavoritesService.synchronizeFavorites(favorites);
-      window.localStorage.setItem('favorites', JSON.stringify(response.data.favorites) || '[]');
-      this.setFavorites(response.data.favorites || []);
+      setFavoritesLS(response.data.favorites || []);
+      this.setIds(response.data.favorites || []);
       this.setSynced(true);
-      this.setFavoritesQuantity(response.data.favorites.length);
       this.alertsStore.addAlert(createAlert('Избранные вакансии синхронизированы', 'info', 2000));
     } catch (e) {
       if (e instanceof Error) {
@@ -86,11 +101,9 @@ export class FavoritesStore {
   }
 
   async updateFavorites(favorites: FavoritesResponse['favorites']) {
-    this.setFavorites(favorites || []);
     if (!this.isSynced) return;
     try {
       await FavoritesService.updateFavorites(favorites);
-      this.setFavoritesQuantity(favorites.length);
     } catch (e) {
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));

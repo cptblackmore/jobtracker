@@ -1,14 +1,14 @@
 import { Box, Button, CircularProgress, Divider, LinearProgress, Paper } from '@mui/material';
 import { DeleteFavoritesModal } from './DeleteFavoritesModal';
-import { Dispatch, SetStateAction } from 'react';
 import { useFavoritesActions } from '../model/useFavoritesActions';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
-  ids: string[];
-  setIds: Dispatch<SetStateAction<string[]>>
+  clearDisplayedFavorites: () => void;
+  resetDisplayedFavorites: () => void;
 }
 
-export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
+export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavorites, resetDisplayedFavorites }) => {
   const {
     modalOpen, 
     setModalOpen, 
@@ -17,8 +17,9 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
     handleDeleteFavorites, 
     handleDownloadFavorites, 
     handleExportFavorites, 
-    handleImportFavorites
-  } = useFavoritesActions(ids, setIds);
+    handleImportFavorites,
+    favoritesStore
+  } = useFavoritesActions(clearDisplayedFavorites, resetDisplayedFavorites);
 
   return (
     <>
@@ -29,7 +30,7 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
         <Box display='flex' justifyContent='space-between' gap={2} >
           <Button 
             fullWidth 
-            disabled={ids.length === 0} 
+            disabled={favoritesStore.ids.length === 0} 
             variant='outlined' 
             color='error' 
             onClick={() => setModalOpen(true)} 
@@ -39,7 +40,7 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
           <Divider orientation='vertical' flexItem />
           <Button 
             fullWidth 
-            disabled={ids.length === 0 || isLoading}
+            disabled={favoritesStore.ids.length === 0 || isLoading}
             variant='contained' 
             onClick={() => handleDownloadFavorites('txt')}
             endIcon={isLoading && <CircularProgress size={15} color='inherit' />}
@@ -48,7 +49,7 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
           </Button>
           <Button 
             fullWidth 
-            disabled={ids.length === 0 || isLoading} 
+            disabled={favoritesStore.ids.length === 0 || isLoading} 
             variant='contained' 
             onClick={() => handleDownloadFavorites('csv')}
             endIcon={isLoading && <CircularProgress size={15} color='inherit' />}
@@ -57,7 +58,7 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
           </Button>
           <Button 
             fullWidth 
-            disabled={ids.length === 0} 
+            disabled={favoritesStore.ids.length === 0} 
             variant='contained' 
             onClick={handleExportFavorites}
           >
@@ -81,4 +82,4 @@ export const FavoritesActions: React.FC<Props> = ({ ids, setIds }) => {
       </Paper>
     </>
   );
-}
+});

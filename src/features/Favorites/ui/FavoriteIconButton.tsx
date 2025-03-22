@@ -1,10 +1,7 @@
 import { FavoriteBorder, Favorite } from '@mui/icons-material';
 import { Vacancy } from '@entities/Vacancy';
 import { ToggleIconButton } from '@shared/ui';
-import { useContext, useState } from 'react';
-import { isVacancyFavoriteLS } from '../model/isVacancyFavoriteLS';
-import { addToFavoritesLS } from '../model/addToFavoritesLS';
-import { deleteFromFavoritesLS } from '../model/deleteFromFavoritesLS';
+import { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { FavoritesContext } from '../model/FavoritesContext';
 
@@ -13,18 +10,14 @@ interface Props {
 }
 
 export const FavoriteIconButton: React.FC<Props> = observer(({ favorite }) => {
-  const [isFavorite, setIsFavorite] = useState(isVacancyFavoriteLS(favorite.id));
   const { favoritesStore } = useContext(FavoritesContext);
+  const isFavorite = favoritesStore.isFavorite(favorite.id);
 
   function handleToggle() {
     if (isFavorite) {
-      const favorites = deleteFromFavoritesLS(favorite.id);
-      favoritesStore.updateFavorites(favorites);
-      setIsFavorite(false);
+      favoritesStore.deleteFavorites(favorite.id);
     } else {
-      const favorites = addToFavoritesLS(favorite.id);
-      favoritesStore.updateFavorites(favorites);
-      setIsFavorite(true);
+      favoritesStore.addFavorites(favorite.id);
     }
   }
 

@@ -44,7 +44,7 @@ export const NavMenu: React.FC = observer(() => {
           page.inNav && (
             <MenuItem key={page.id} onClick={() => {handleCloseMenu(); navigate(page.path)}} >
               {page.name}
-              {page.id === 2 && favoritesStore.favorites.length > 0 ? ` (${favoritesStore.favorites.length})` : ''}
+              {page.id === 2 && favoritesStore.ids.length > 0 ? ` (${favoritesStore.ids.length})` : ''}
             </MenuItem>
           )
         ))}

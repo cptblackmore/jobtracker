@@ -39,7 +39,7 @@ export const AccountPage: React.FC = observer(() => {
                   <T>Синхронизация с базой данных:</T>
                   <FiberManualRecord color={favoritesStore.isSynced ? 'success' : 'error'} sx={{ mx: 1, fontSize: 18 }} />
                 </Box>
-                <T>Сохранённые вакансии: {favoritesStore.favoritesQuantity}</T>
+                <T>Вакансий сохранено удалённо: {authStore.user.isActivated ? favoritesStore.ids.length : 0}</T>
                 {!authStore.user.isActivated && (
                   <Box display='flex' flexDirection='column' sx={{ mt: 1 }} >
                     <Alert variant='outlined' severity='warning' >

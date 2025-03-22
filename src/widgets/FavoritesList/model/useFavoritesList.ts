@@ -6,21 +6,40 @@ import axios from 'axios';
 import { chunkerize } from '@shared/lib';
 import { fetchFavorites } from './fetchFavorites';
 
-export const  useFavoritesList = (initialIds: string[]) => {
-  const [ids, setIds] = useState(initialIds);
+export const  useFavoritesList = () => {
+  const FAVORITES_CHUNK_SIZE = 5;
   const [vacancies, setVacancies] = useState<Array<Vacancy>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [previousPage, setPreviousPage] = useState(page);
   const { alertsStore } = useContext(AlertsContext);
   const { favoritesStore } = useContext(FavoritesContext);
+  const [displayedIds, setDisplayedIds] = useState(favoritesStore.ids);
 
-  const fetchFavoritesCallback = useCallback(async (actionType: 'SET_FAVORITES' | 'ADD_FAVORITES', signal: AbortSignal) => {
-    if (ids.length === 0) return;
-    
+  const toNextPage = useCallback(() => {
+    if (page < (Math.ceil(favoritesStore.ids.length / FAVORITES_CHUNK_SIZE) - 1)) {
+      setPage(page + 1);
+    }
+  }, [page, favoritesStore.ids.length]);
+
+  const clearDisplayedFavorites = () => {
+    setVacancies([]);
+    setDisplayedIds([]);
+    setPage(0);
+    setPreviousPage(0);
+  }
+
+  const resetDisplayedFavorites = () => {
+    setVacancies([]);
+    setDisplayedIds(favoritesStore.ids);
+    setPage(0);
+    setPreviousPage(0);
+  }
+
+  const fetchAndUpdateFavorites = async (actionType: 'SET_FAVORITES' | 'ADD_FAVORITES', signal: AbortSignal) => {
     setIsLoading(true);
     try {
-      const idChunk = chunkerize([...ids].reverse(), 5)[page];
+      const idChunk = chunkerize([...displayedIds].reverse(), FAVORITES_CHUNK_SIZE)[page];
       const result = await fetchFavorites(idChunk, signal, alertsStore, favoritesStore);
       const sortedResult = result.sort((a, b) => {
         return idChunk.indexOf(a.id) - idChunk.indexOf(b.id);
@@ -35,46 +54,40 @@ export const  useFavoritesList = (initialIds: string[]) => {
       if (axios.isCancel(e)) return;
       setIsLoading(false);
     }
-  }, [ids, page, alertsStore, favoritesStore]);
+  }
 
   useEffect(() => {
-    if (favoritesStore.favorites.length > ids.length) {
-      setIds(favoritesStore.favorites);
+    if (favoritesStore.ids.length > displayedIds.length) {
+      setDisplayedIds(favoritesStore.ids);      
     }
-  }, [favoritesStore.favorites]);
+  }, [favoritesStore.ids.length]);
 
   useEffect(() => {
-    if (ids.length === 0) {
-      setVacancies([]);
-      setIsLoading(false);
-      return;
-    }
-
     const controller = new AbortController();
     const signal = controller.signal;
-
+    
     if (previousPage !== page) {
       setPreviousPage(page);
-      fetchFavoritesCallback('ADD_FAVORITES', signal);
+      fetchAndUpdateFavorites('ADD_FAVORITES', signal);
     } else {
       if (page !== 0) {
         setPreviousPage(0);
         setPage(0);
       }
-      fetchFavoritesCallback('SET_FAVORITES', signal);
+      fetchAndUpdateFavorites('SET_FAVORITES', signal);
     }
 
     return () => {
       controller.abort();
     };
-  }, [ids, page]);
+  }, [displayedIds, page]);
 
   return { 
-    vacancies, 
+    vacancies,
     isLoading, 
-    page, 
-    setPage, 
-    ids, 
-    setIds 
+    toNextPage,
+    clearDisplayedFavorites,
+    resetDisplayedFavorites,
+    displayedIdsLength: displayedIds.length
   };
 }

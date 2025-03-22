@@ -1,11 +1,10 @@
 import { Vacancy } from '@entities/Vacancy';
 import { getVacancyById } from '@entities/Vacancy/api/getVacancyById';
 import { AlertsStore } from '@shared/model';
-import { FavoritesStore, getFavoritesLS } from '@features/Favorites';
+import { FavoritesStore } from '@features/Favorites';
 import { typedEntries } from '@shared/lib';
 import { getVacanciesByIds } from '@entities/Vacancy/api/getVacanciesByIds';
 import axios, { AxiosError } from 'axios';
-import { deleteFromFavoritesLS } from '@features/Favorites/model/deleteFromFavoritesLS';
 import { getSourceBatches } from './getSourceBatches';
 import { handleErrors } from './handleErrors';
 
@@ -17,6 +16,7 @@ export const fetchFavorites = async (
   onProgress?: (completed: number) => void
 ): Promise<Vacancy[]> => {
   const errorCodes = new Set<string>();
+  const missingIds: string[] = [];
 
   const batches = typedEntries(getSourceBatches(idChunk));
 
@@ -37,7 +37,7 @@ export const fetchFavorites = async (
         if (source === 'sj') {
           const result = await trackPromise(getVacanciesByIds(ids, source, signal), ids.length);
           if (result.missingIds && result.missingIds.length > 0) {
-            deleteFromFavoritesLS(result.missingIds.map(id => source + '_' + id));
+            missingIds.push(...result.missingIds.map(id => source + '_' + id));
             errorCodes.add('FAVORITES_NOT_FOUND');
           }
           return result.vacancies;
@@ -52,7 +52,7 @@ export const fetchFavorites = async (
                 const code = result.reason.code ?? 'UNKNOWN_ERROR';
                 if (code === 'FAVORITES_NOT_FOUND') {
                   const missingId = result.reason.request?.data.id ?? '';
-                  deleteFromFavoritesLS(source + '_' + missingId);
+                  missingIds.push(source + '_' + missingId);
                   errorCodes.add('FAVORITES_NOT_FOUND');
                 } else {
                   throw result.reason;
@@ -77,7 +77,7 @@ export const fetchFavorites = async (
   ));
   
   if (errorCodes.size > 0) {
-    handleErrors(errorCodes, alertsStore, () => favoritesStore.updateFavorites(getFavoritesLS()));
+    handleErrors(errorCodes, alertsStore, () => favoritesStore.deleteFavorites(missingIds));
   }
   
   return results.flat().filter(result => result != null);

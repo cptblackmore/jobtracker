@@ -16,7 +16,7 @@ export const useVacancyList = (initialParams: VacancyParams) => {
   const [previousPage, setPreviousPage] = useState(initialParams.page);
   const { alertsStore } = useContext(AlertsContext); 
 
-  const fetchVacanciesCallback = useCallback(async (actionType: ActionVacancies, signal: AbortSignal) => {
+  const fetchAndUpdateVacancies = async (actionType: ActionVacancies, signal: AbortSignal) => {
     setIsLoading(true);
     try {
       const result = await fetchVacancies(state.params, signal, alertsStore);
@@ -34,7 +34,7 @@ export const useVacancyList = (initialParams: VacancyParams) => {
       setIsLoading(false);
     }
     setIsLoading(false);
-  }, [state.params, vacancyUniqueIds, alertsStore]);
+  }
 
   useEffect(() => {
     const controller = new AbortController();
@@ -42,12 +42,12 @@ export const useVacancyList = (initialParams: VacancyParams) => {
 
     if (previousPage !== state.params.page) {
       setPreviousPage(state.params.page);
-      fetchVacanciesCallback('ADD_VACANCIES', signal);
+      fetchAndUpdateVacancies('ADD_VACANCIES', signal);
     } else {
       vacancyUniqueIds.current.clear();
       setPreviousPage(0);
       dispatch({type: 'SET_PAGE', page: 0})
-      fetchVacanciesCallback('SET_VACANCIES', signal);
+      fetchAndUpdateVacancies('SET_VACANCIES', signal);
     }
 
     return () => {
@@ -65,7 +65,7 @@ export const useVacancyList = (initialParams: VacancyParams) => {
   return {
     state,
     isLoading,
-    setPage: useCallback((page: number) => dispatch({type: 'SET_PAGE', page}), [dispatch]),
+    toNextPage: useCallback(() => dispatch({type: 'SET_PAGE', page: state.params.page + 1}), [dispatch, state.params.page]),
     setFilters: useCallback((filters: VacancyParams['filters']) => dispatch({type: 'SET_FILTERS', filters}), [dispatch])
   };
 }

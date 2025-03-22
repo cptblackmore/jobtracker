@@ -12,7 +12,8 @@ interface Props {
 }
 
 export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
-  const { state, setPage, setFilters, isLoading } = useVacancyList({page: 0, count: 5, filters: initialFilters});
+  const VACANCIES_COUNT_PER_SOURCE = 5;
+  const { state, toNextPage, setFilters, isLoading } = useVacancyList({page: 0, count: VACANCIES_COUNT_PER_SOURCE, filters: initialFilters});
   const { alertsStore } = useContext(AlertsContext);
 
   useEffectOnceByCondition(() => {
@@ -25,8 +26,7 @@ export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
       <VirtualizedVacancyList 
         vacancies={state.vacancies}
         isLoading={isLoading}
-        page={state.params.page}
-        setPage={setPage}
+        toNextPage={toNextPage}
       />
     </Box>
   );

@@ -6,11 +6,10 @@ import { Box, CircularProgress } from '@mui/material';
 interface Props {
   vacancies: Vacancy[];
   isLoading: boolean;
-  page: number;
-  setPage: (page: number) => void;
+  toNextPage: () => void;
 }
 
-export const VirtualizedVacancyList: React.FC<Props> = ({ vacancies, isLoading, page, setPage }) => {
+export const VirtualizedVacancyList: React.FC<Props> = ({ vacancies, isLoading, toNextPage }) => {
   return (
     <Virtuoso 
       useWindowScroll
@@ -21,9 +20,7 @@ export const VirtualizedVacancyList: React.FC<Props> = ({ vacancies, isLoading, 
           <VacancyCard key={vacancy.id} vacancy={vacancy} />
         </div>
       )}
-      endReached={() => {
-        if (!isLoading) setPage(page + 1);
-      }}
+      endReached={() => toNextPage()}
       components={{
         Footer: () => (
           isLoading ? (
