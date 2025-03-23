@@ -1,5 +1,5 @@
 import { FavoritesContext } from '@features/Favorites';
-import { Button, Toolbar, Tooltip } from '@mui/material';
+import { Button, Fade, Toolbar, Tooltip } from '@mui/material';
 import { PagesContext } from '@shared/lib';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
@@ -23,6 +23,7 @@ export const NavToolbar: React.FC = observer(() => {
               ''
             } 
             key={page.id}
+            TransitionComponent={Fade}
           >
             <Button
               key={page.id}

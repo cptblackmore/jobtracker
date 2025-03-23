@@ -13,19 +13,21 @@ interface Props {
 export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter, handleInvalid }) => {
   return (
     <Box sx={{opacity: salaryFilter.enabled ? 1 : 0.5}} >
-      <Slider
-        value={[salaryFilter?.from ?? SALARY_MIN, salaryFilter?.to ?? SALARY_MAX]}
-        onChange={(_, newValue) => handleSalaryChange({action: 'slider', payload: newValue as number[]})}
-        valueLabelDisplay='auto'
-        min={SALARY_MIN}
-        max={SALARY_MAX}
-        step={SALARY_STEP}
-        marks={[
-          { value: SALARY_MIN, label: `${SALARY_MIN / 1000}k` },
-          { value: Math.floor((SALARY_MAX - SALARY_MIN) / 2), label: `${Math.floor((SALARY_MAX - SALARY_MIN) / 2 / 1000)}k` },
-          { value: SALARY_MAX, label: `${SALARY_MAX / 1000}k` },
-        ]}
-      />
+      <Box px={1} >
+        <Slider
+          value={[salaryFilter?.from ?? SALARY_MIN, salaryFilter?.to ?? SALARY_MAX]}
+          onChange={(_, newValue) => handleSalaryChange({action: 'slider', payload: newValue as number[]})}
+          valueLabelDisplay='auto'
+          min={SALARY_MIN}
+          max={SALARY_MAX}
+          step={SALARY_STEP}
+          marks={[
+            { value: SALARY_MIN, label: `${SALARY_MIN / 1000}k` },
+            { value: Math.floor((SALARY_MAX - SALARY_MIN) / 2), label: `${Math.floor((SALARY_MAX - SALARY_MIN) / 2 / 1000)}k` },
+            { value: SALARY_MAX, label: `${SALARY_MAX / 1000}k` },
+          ]}
+        />
+      </Box>
       <Stack direction='row' spacing={2} mt={2} >
         <TextField
           label={filterLabelsMap.salaryFrom}

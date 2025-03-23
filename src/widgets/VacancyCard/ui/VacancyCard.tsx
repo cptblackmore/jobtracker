@@ -12,7 +12,7 @@ interface Props {
 export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
   return (
     <Card css={vacancyCardStyle} >
-      <Box display='flex' >
+      <Box display='flex' flexGrow={1} >
         <VacancyFeatures vacancy={vacancy} />
         <Divider orientation='vertical' flexItem variant='middle' />
         <VacancyDetails vacancy={vacancy} />

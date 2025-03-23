@@ -67,8 +67,8 @@
           <ToggleIconButton
             isToggled={isExpanded}
             onToggle={toggleCollapse}
-            defaultIcon={<ExpandMore />}
-            toggledIcon={<ExpandLess />}
+            defaultIcon={<ExpandMore color='primary' />}
+            toggledIcon={<ExpandLess color='primary' />}
             defaultTooltip='Развернуть'
             toggledTooltip='Свернуть'
           />

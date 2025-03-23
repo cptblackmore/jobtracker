@@ -4,6 +4,7 @@ import { Button, Collapse, FormControl, Paper, Stack, TextField } from '@mui/mat
 import { ToggleIconButton } from '@shared/ui';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
 import { useVacancyFilter } from '../model/useVacancyFilter';
+import { filterLabelsMap } from '../model/filterLabelsMap';
 
 interface Props {
   filters: VacancyParams['filters'];
@@ -25,34 +26,32 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
       component='form'
       onSubmit={handleSubmit}
     >
-      <Stack spacing={2} >
-        <Stack direction='row' spacing={2} justifyContent='end' >
-          <FormControl fullWidth >
-            <TextField
-              label='Поиск вакансий'
-              name='text'
-              variant='outlined'
-              size='small'
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </FormControl>
-          <ToggleIconButton 
-            isToggled={showAdditional} 
-            onToggle={() => setShowAdditional((prev) => !prev)} 
-            defaultIcon={<FilterList color='primary' />}
-            toggledIcon={<FilterListOff />}
-            defaultTooltip='Дополнительные фильтры'
-            toggledTooltip='Скрыть дополнительные фильтры'
+      <Stack direction='row' spacing={2} justifyContent='end' >
+        <FormControl fullWidth >
+          <TextField
+            label={filterLabelsMap.text}
+            name='text'
+            variant='outlined'
+            size='small'
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
-          <Button variant='contained' color='primary' type='submit' >
-            Искать
-          </Button>
-        </Stack>
-        <Collapse in={showAdditional}>
-          <VacancyFilterAdditional filters={filters} setShowAdditional={setShowAdditional} />
-        </Collapse>
+        </FormControl>
+        <ToggleIconButton 
+          isToggled={showAdditional} 
+          onToggle={() => setShowAdditional((prev) => !prev)} 
+          defaultIcon={<FilterList color='primary' />}
+          toggledIcon={<FilterListOff color='primary' />}
+          defaultTooltip='Показать дополнительные фильтры'
+          toggledTooltip='Скрыть дополнительные фильтры'
+        />
+        <Button variant='contained' color='primary' type='submit' >
+          Искать
+        </Button>
       </Stack>
+      <Collapse in={showAdditional} >
+        <VacancyFilterAdditional filters={filters} setShowAdditional={setShowAdditional} />
+      </Collapse>
     </Paper>
   );
 };

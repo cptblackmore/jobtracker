@@ -18,7 +18,11 @@ export const VacancyAdditional: React.FC<Props> = ({ vacancy }) => {
         <VacancyPayment paymentFrom={paymentFrom} paymentTo={paymentTo} />
       </CardContent>
       <CardActions sx={{justifyContent: 'center'}} >
-        <ExternalLinkButton text={'Подробнее'} link={vacancy.link} />
+        <ExternalLinkButton 
+          text={'Подробнее'} 
+          variant='text'
+          link={vacancy.link} 
+        />
       </CardActions>
     </Box>
   );

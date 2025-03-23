@@ -10,6 +10,9 @@ export const darkTheme = createTheme({
       main: '#ad865a',
       contrastText: '#fff',
     },
+    info: {
+      main: '#ad865a',
+    },
     secondary: {
       main: '#ff4242',
     }

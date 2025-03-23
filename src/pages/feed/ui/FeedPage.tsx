@@ -2,14 +2,24 @@ import { Box, Container } from '@mui/material';
 import { VacancyList } from '@widgets/VacancyList';
 import React from 'react';
 import { Nav } from '@widgets/Nav';
-import { containerStyles } from './styles';
+import { Typography as T } from '@mui/material';
 
 export const FeedPage: React.FC = () => {
   return (
     <Box>
       <Nav />
-      <Container maxWidth='lg' css={containerStyles} >
-        <Box maxWidth='md' sx={{width: '100%'}} >
+      <Container maxWidth='lg' >
+        <Box my={4} >
+            <T 
+              variant='h4' 
+              gutterBottom
+              ml={2}
+              display='flex' 
+              alignItems='center' 
+              justifyContent='flex-start'
+            >
+              Поиск вакансий
+            </T>
           <VacancyList/>
         </Box>
       </Container>

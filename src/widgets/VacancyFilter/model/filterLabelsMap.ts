@@ -1,5 +1,5 @@
 export const filterLabelsMap: Record<string, string> = {
-  text: 'Поиск вакансий',
+  text: 'Название вакансии',
   period: 'Период размещения',
   type: 'Тип занятости',
   salary: 'Заработная плата',

@@ -6,9 +6,16 @@
     return (
       <Box>
         <Nav />
-        <Container maxWidth="md">
-          <Box sx={{ padding: 3 }}>
-            <T variant="h4" gutterBottom display='flex' alignItems='center' justifyContent='center' >
+        <Container maxWidth='lg' >
+          <Box my={4} >
+            <T 
+              variant='h4' 
+              gutterBottom
+              ml={2}
+              display='flex' 
+              alignItems='center' 
+              justifyContent='flex-start'
+            >
               Избранные вакансии
             </T>
             <FavoritesList />
