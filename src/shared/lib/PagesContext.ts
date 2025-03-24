@@ -23,13 +23,13 @@ interface PageInAccountNav extends Page {
   inAccountNav: true;
 }
 
-type PageKeys = 'home' | 'feed' | 'favorites' | 'activation' | 'account';
+type PageKeys = 'home' | 'search' | 'favorites' | 'activation' | 'account';
 
 export type Pages = Record<PageKeys, PageNowhere | PageInNav | PageInAccountNav>;
 
 export const pages: Pages = {
   home: {id: 0, name: 'Главная', path: '/home', inNav: true, inAccountNav: false},
-  feed: {id: 1, name: 'Вакансии', path: '/feed', inNav: true, inAccountNav: false},
+  search: {id: 1, name: 'Поиск', path: '/search', inNav: true, inAccountNav: false},
   favorites: {id: 2, name: 'Избранное', path: '/favorites', inNav: true, inAccountNav: false},
   activation: {id: 3, name: 'Активация', path: '/activation', inNav: false, inAccountNav: false},
   account: {id: 4, name: 'Личный кабинет', path: '/account', inAccountNav: true, inNav: false}

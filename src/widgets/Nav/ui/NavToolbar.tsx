@@ -4,7 +4,6 @@ import { PagesContext } from '@shared/lib';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router';
-import { ToggleThemeButton } from './toggleThemeButton';
 
 export const NavToolbar: React.FC = observer(() => {
   const pages = useContext(PagesContext);
@@ -36,7 +35,6 @@ export const NavToolbar: React.FC = observer(() => {
           </Tooltip>
         )
       ))}
-      <ToggleThemeButton />
     </Toolbar>
   );
 });

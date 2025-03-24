@@ -1,5 +1,5 @@
 import { FavoritesPage } from '@pages/favorites';
-import { FeedPage } from '@pages/feed';
+import { SearchPage } from '@pages/search';
 import { HomePage } from '@pages/home';
 import { useContext } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
@@ -20,7 +20,7 @@ export const Router: React.FC = observer(() => {
         <Route path='/' element={<Navigate to={pages.home.path} />} />
         <Route path='*' element={<Navigate to={pages.home.path} />} />
         <Route path={pages.home.path} element={<HomePage />} />
-        <Route path={pages.feed.path} element={<FeedPage />} />
+        <Route path={pages.search.path} element={<SearchPage />} />
         <Route element={<ProtectedRoute isReady={authStore.isInit} isAllowed={true} />} >
           <Route path={pages.favorites.path} element={<FavoritesPage />} />
         </Route>

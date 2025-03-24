@@ -1,69 +1,27 @@
-import { Alert, Box, Card, CardContent, Container, Divider, Typography as T } from '@mui/material';
-import { FiberManualRecord } from '@mui/icons-material';
+import { Box, Card, Container, Divider } from '@mui/material';
 import { Nav } from '@widgets/Nav';
-import { useContext, useEffect } from 'react';
-import { AuthContext } from '@shared/model';
-import { observer } from 'mobx-react-lite';
-import { FavoritesContext } from '@features/Favorites';
-import { CooldownButton } from '@shared/ui';
+import { AccountInfo } from '@widgets/AccountInfo';
+import { PageTitle } from '@widgets/PageTitle';
+import { AccountActions } from '@widgets/AccountActions';
+import { AccountActivation } from '@widgets/AccountActivation';
 
-export const AccountPage: React.FC = observer(() => {
-  const { authStore } = useContext(AuthContext);
-  const { favoritesStore } = useContext(FavoritesContext);
-
-  useEffect(() => {
-    authStore.updateCurrentTime();
-  }, [])
-
+export const AccountPage: React.FC = () => {
   return (
     <>
       <Nav />
-      <Container maxWidth='lg' >
-        <Box
-          maxWidth='md'
-          margin='auto'
-          paddingTop='2em'
-          display='flex'
-          flexDirection='column'
-          alignItems='center'
-        >
-          <Card sx={{width: '100%'}} >
-            <CardContent>
-              <T variant='h4' align='center' gutterBottom >
-                Личный кабинет
-              </T>
-              <Divider sx={{marginBottom: '1em'}} />
-              <Box>
-                <T>E-mail: {authStore.user.email}</T>
-                <Box sx={{ display: 'flex', alignItems: 'center' }} >
-                  <T>Синхронизация с базой данных:</T>
-                  <FiberManualRecord color={favoritesStore.isSynced ? 'success' : 'error'} sx={{ mx: 1, fontSize: 18 }} />
-                </Box>
-                <T>Вакансий сохранено удалённо: {authStore.user.isActivated ? favoritesStore.ids.length : 0}</T>
-                {!authStore.user.isActivated && (
-                  <Box display='flex' flexDirection='column' sx={{ mt: 1 }} >
-                    <Alert variant='outlined' severity='warning' >
-                      Ваш аккаунт не активирован и избранные вакансии не сохраняются!
-                    </Alert>
-                    <CooldownButton
-                      variant='outlined' 
-                      color='warning'
-                      sx={{ mt: 1 }}
-                      onClick={() => {
-                        authStore.resend();
-                      }}
-                      cooldown={authStore.resendCooldown}
-                      onCooldownEnd={() => authStore.updateCurrentTime()}
-                    >
-                      Отправить письмо повторно
-                    </CooldownButton>
-                  </Box>
-                )}
-              </Box>
-            </CardContent>
+      <Container maxWidth='md' >
+        <Box my={4} >
+          <PageTitle title='Личный кабинет' />
+          <Card>
+            <Box display='flex' alignItems='stretch' height='100%'>
+              <AccountInfo />
+              <Divider orientation='vertical' flexItem />
+              <AccountActions />
+            </Box>
+            <AccountActivation />
           </Card>
         </Box>
       </Container>
     </>
   );
-});
+};

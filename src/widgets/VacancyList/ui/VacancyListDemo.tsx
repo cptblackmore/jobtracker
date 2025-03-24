@@ -3,6 +3,8 @@ import { Box, Button, CircularProgress, Stack } from '@mui/material';
 import { useVacancyList } from '../model/useVacancyList';
 import { VacancyParams } from '@entities/Vacancy';
 import { Link as RouterLink } from 'react-router';
+import { useContext } from 'react';
+import { PagesContext } from '@shared/lib';
 
 interface Props {
   initialFilters?: VacancyParams['filters'];
@@ -10,6 +12,7 @@ interface Props {
 
 export const VacancyListDemo: React.FC<Props> = ({ initialFilters={} }) => {
   const { state, isLoading } = useVacancyList({page: 0, count: 1, filters: initialFilters});
+  const pages = useContext(PagesContext);
 
   return (
     <>
@@ -27,7 +30,7 @@ export const VacancyListDemo: React.FC<Props> = ({ initialFilters={} }) => {
         <Button 
           variant='contained'
           component={RouterLink}
-          to={'/feed'}
+          to={pages.search.path}
         >
           Найти больше
         </Button> 

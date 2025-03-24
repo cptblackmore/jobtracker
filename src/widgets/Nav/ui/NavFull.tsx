@@ -6,6 +6,7 @@ import { AccountMenu } from './AccountMenu';
 import { useContext } from 'react';
 import { NavToolbar } from './NavToolbar';
 import { LoginButton } from './LoginButton';
+import { ToggleThemeButton } from './toggleThemeButton';
 
 export const NavFull: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -16,7 +17,8 @@ export const NavFull: React.FC = observer(() => {
         <Logo/>
         <NavToolbar />
       </Box>
-      <Box display='flex' >
+      <Box display='flex' alignItems='center' gap={2} >
+        <ToggleThemeButton />
         {authStore.isAuth ? (
           <AccountMenu />
         ) : (
