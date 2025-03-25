@@ -16,7 +16,7 @@ export const AccountInfo: React.FC = observer(() => {
         Общая информация:
       </T>
       <T>E-mail: {authStore.user.email}</T>
-      <Box sx={{ display: 'flex', alignItems: 'center' }} >
+      <Box sx={{display: 'flex', alignItems: 'center'}} >
         <T>Синхронизация с базой данных:</T>
         <FiberManualRecord color={favoritesStore.isSynced ? 'success' : 'error'} sx={{mx: 1, fontSize: 18}} />
       </Box>

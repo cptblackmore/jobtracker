@@ -13,7 +13,7 @@ export const AccountPage: React.FC = () => {
         <Box my={4} >
           <PageTitle title='Личный кабинет' />
           <Card>
-            <Box display='flex' alignItems='stretch' height='100%'>
+            <Box display='flex' >
               <AccountInfo />
               <Divider orientation='vertical' flexItem />
               <AccountActions />
