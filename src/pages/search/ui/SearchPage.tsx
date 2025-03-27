@@ -9,7 +9,7 @@ export const SearchPage: React.FC = () => {
     <Box>
       <Nav />
       <Container maxWidth='lg' >
-        <Box my={4} >
+        <Box py={4} >
           <PageTitle title='Поиск вакансий' />
           <VacancyList/>
         </Box>

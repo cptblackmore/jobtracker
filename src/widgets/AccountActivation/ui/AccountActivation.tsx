@@ -1,4 +1,4 @@
-import { Alert, Box, CardActions, CardContent, Divider } from '@mui/material';
+import { Alert, Box, CardActions, CardContent, CardHeader, Divider } from '@mui/material';
 import { AuthContext } from '@shared/model';
 import { CooldownButton } from '@shared/ui';
 import { Typography as T } from '@mui/material';
@@ -17,10 +17,14 @@ export const AccountActivation: React.FC = observer(() => {
       <>
         <Divider />
         <Box display='flex' flexDirection='column' >
+          <CardHeader 
+            title={
+              <T component='h2' variant='h6' >
+                Активация:
+              </T>
+            }
+          />
           <CardContent sx={{pb: 0}} >
-            <T variant='h6' align='left' mb={2} >
-              Активация:
-            </T>
             <Alert variant='outlined' severity='warning' >
               Ваш аккаунт не активирован и избранные вакансии не сохраняются удалённо!
             </Alert>

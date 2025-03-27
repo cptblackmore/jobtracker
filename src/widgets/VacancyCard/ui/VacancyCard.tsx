@@ -1,4 +1,4 @@
-import { Box, Card, Divider } from '@mui/material';
+import { Box, Card, Divider, Fade } from '@mui/material';
 import { Vacancy } from '@entities/Vacancy';
 import { vacancyCardStyle } from './styles';
 import { VacancyFeatures } from './VacancyFeatures';
@@ -11,14 +11,16 @@ interface Props {
 
 export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
   return (
-    <Card css={vacancyCardStyle} >
-      <Box display='flex' flexGrow={1} >
-        <VacancyFeatures vacancy={vacancy} />
+    <Fade in timeout={200} css={vacancyCardStyle} >
+      <Card>
+        <Box display='flex' flexGrow={1} >
+          <VacancyFeatures vacancy={vacancy} />
+          <Divider orientation='vertical' flexItem variant='middle' />
+          <VacancyDetails vacancy={vacancy} />
+        </Box>
         <Divider orientation='vertical' flexItem variant='middle' />
-        <VacancyDetails vacancy={vacancy} />
-      </Box>
-      <Divider orientation='vertical' flexItem variant='middle' />
-      <VacancyAdditional vacancy={vacancy} />
-    </Card>
+        <VacancyAdditional vacancy={vacancy} />
+      </Card>
+    </Fade>
   );
 }

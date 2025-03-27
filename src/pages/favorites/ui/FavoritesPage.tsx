@@ -8,7 +8,7 @@ import { PageTitle } from '@widgets/PageTitle';
       <Box>
         <Nav />
         <Container maxWidth='lg' >
-          <Box my={4} >
+          <Box py={4} >
             <PageTitle title='Избранные вакансии' />
             <FavoritesList />
           </Box>

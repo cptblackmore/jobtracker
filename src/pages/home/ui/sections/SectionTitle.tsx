@@ -4,14 +4,13 @@ interface Props {
   title: string;
 }
 
-export const PageTitle: React.FC<Props> = ({ title }) => {
+export const SectionTitle: React.FC<Props> = ({ title }) => {
   return (
-    <T
-      component='h1'
+    <T 
+      component='h2' 
       variant='h4' 
-      align='left'
-      gutterBottom
-      ml={2}
+      align='center' 
+      mb={4} 
     >
       {title}
     </T>

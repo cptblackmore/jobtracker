@@ -17,7 +17,7 @@ export const LoginButton: React.FC = observer(() => {
     ) : (
       <Button
         sx={{color: (theme) => theme.palette.primary.contrastText}} 
-        onClick={() => authStore.setModalOpen(true)} 
+        onClick={() => authStore.setModalOpen(true, 'login')} 
       >
         Вход
       </Button>

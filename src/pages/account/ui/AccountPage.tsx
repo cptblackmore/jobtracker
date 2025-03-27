@@ -10,7 +10,7 @@ export const AccountPage: React.FC = () => {
     <>
       <Nav />
       <Container maxWidth='md' >
-        <Box my={4} >
+        <Box py={4} >
           <PageTitle title='Личный кабинет' />
           <Card>
             <Box display='flex' >

@@ -13,6 +13,7 @@ export class AuthStore {
   user = {} as UserData;
   isLoading = false;
   isModalOpen = false;
+  isModalLoginForm = true;
   currentTime: number = Date.now();
   isLeader = false;
   tabId = nanoid();
@@ -67,8 +68,19 @@ export class AuthStore {
     this.isLoading = bool;
   }
 
-  setModalOpen(bool: boolean) {
+  setModalOpen(bool: boolean, formOnOpen?: 'login' | 'registration') {
+    if (formOnOpen) {
+      if (formOnOpen === 'login') {
+        this.setModalLoginForm(true);
+      } else {
+        this.setModalLoginForm(false);
+      }
+    }
     this.isModalOpen = bool;
+  }
+
+  setModalLoginForm(bool: boolean) {
+    this.isModalLoginForm = bool;
   }
 
   setLeader(bool: boolean) {

@@ -1,8 +1,7 @@
 import { AuthContext } from '@shared/model';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 export const useAuthModal = () => {
-  const [isLoginForm, setIsLoginForm] = useState(true);
   const { authStore } = useContext(AuthContext);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -12,7 +11,7 @@ export const useAuthModal = () => {
     const email = formJson.email as string;
     const password = formJson.password as string;
 
-    if (isLoginForm) {
+    if (authStore.isModalLoginForm) {
       authStore.login(email, password);
     } else {
       authStore.registration(email, password);
@@ -24,8 +23,14 @@ export const useAuthModal = () => {
   }
 
   function toggleForm() {
-    setIsLoginForm(prev => !prev);
+    authStore.setModalLoginForm(!authStore.isModalLoginForm);
   };
 
-  return { open: authStore.isModalOpen, setOpen, isLoginForm, toggleForm, handleSubmit };
+  return { 
+    open: authStore.isModalOpen, 
+    setOpen, 
+    isLoginForm: authStore.isModalLoginForm, 
+    toggleForm, 
+    handleSubmit 
+  };
 } 

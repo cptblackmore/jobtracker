@@ -18,7 +18,7 @@ export const ActivationPage: React.FC = () => {
     <Box>
       <Nav />
       <Container maxWidth='md' >
-        <Box my={4} >
+        <Box py={4} >
           <PageTitle title='Активация аккаунта' />
           <Card>
             <CardContent>
