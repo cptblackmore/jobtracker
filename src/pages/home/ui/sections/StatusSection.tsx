@@ -1,7 +1,6 @@
 import { sourcesRegistry } from '@entities/Vacancy';
 import { FiberManualRecord } from '@mui/icons-material';
 import { Box, Container, Divider, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import { imgStyle } from '@widgets/VacancyCard/ui/VacancySource/styles';
 import { Fragment } from 'react';
 import { SectionTitle } from './SectionTitle';
 
@@ -42,7 +41,7 @@ export const StatusSection: React.FC = () => {
                     }}
                     onClick={() => window.open(value.url.frontendOrigin, '_blank')}
                   >
-                    <ListItemIcon><img src={value.styles.icon} css={[imgStyle, {fontSize: '1.5em'}]} /></ListItemIcon>
+                    <ListItemIcon><img src={value.styles.icon} css={{width: '1.1em', height: '1.1em', fontSize: '1.5em'}} /></ListItemIcon>
                     <ListItemText primary={value.styles.name} secondary={value.url.frontendDomain} />
                     <ListItemIcon sx={{minWidth: 0}} ><FiberManualRecord color='success' /></ListItemIcon>
                   </ListItem>
