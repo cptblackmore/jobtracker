@@ -29,6 +29,10 @@ export const FavoriteIconButton: React.FC<Props> = observer(({ favorite }) => {
       toggledIcon={<Favorite color='primary' />}
       defaultTooltip='Добавить в избранное'
       toggledTooltip='Удалить из избранного'
+      options={{
+        tooltipEnterDelay: 500,
+        tooltipLeaveDelay: 300
+      }}
     />
   );
 });

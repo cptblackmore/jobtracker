@@ -3,7 +3,7 @@
   import { ToggleIconButton } from '@shared/ui';
   import { ExpandLess, ExpandMore } from '@mui/icons-material';
   import { throttle } from '@shared/lib';
-  import { fadedCollapseStyle } from './styles';
+  import { getFadedCollapseStyle } from './styles';
   import { updateDimensions } from './updateDimensions';
   import { useExpandable } from './useExpandable';
 
@@ -56,7 +56,7 @@
           in={isExpanded}
           timeout={timeout ?? 'auto'}
           collapsedSize={collapsedHeight}
-          css={fadedCollapseStyle(isFaded, isOverflowed, fadingColor)}
+          css={getFadedCollapseStyle(isFaded, isOverflowed, fadingColor)}
           onExited={handleExited}
         >
           <Typography variant='body1' component='div' ref={textRef} >
@@ -71,6 +71,10 @@
             toggledIcon={<ExpandLess color='primary' />}
             defaultTooltip='Развернуть'
             toggledTooltip='Свернуть'
+            options={{
+              tooltipEnterDelay: 500,
+              tooltipLeaveDelay: 300
+            }}
           />
         )}
       </Box>

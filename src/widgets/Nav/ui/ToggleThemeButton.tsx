@@ -17,9 +17,8 @@ export const ToggleThemeButton: React.FC = () => {
         defaultTooltip='Включить темную тему'
         toggledTooltip='Включить светлую тему'
         options={{
-          size: 1,
-          tooltipEnterDelay: 0,
-          tooltipLeaveDelay: 0
+          tooltipEnterDelay: 300,
+          tooltipLeaveDelay: 100
         }}
       />
     </Box>

@@ -1,25 +1,10 @@
-import { ReactNode, useRef } from 'react';
+import { useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import { Fade, IconButton, Tooltip } from '@mui/material';
-import { iconStyle, transitionStyles, wrapperStyle } from './styles';
+import { getIconStyle, transitionStyles, getWrapperStyle } from './styles';
+import { ToggleIconButtonProps } from '@shared/model';
 
-
-interface Props {
-  isToggled: boolean;
-  onToggle: () => void;
-  defaultIcon: ReactNode;
-  toggledIcon: ReactNode;
-  defaultTooltip?: string;
-  toggledTooltip?: string;
-  options?: {
-    duration?: number;
-    size?: number;
-    tooltipEnterDelay?: number;
-    tooltipLeaveDelay?: number;
-  }
-}
-
-export const ToggleIconButton: React.FC<Props> = ({ 
+export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({ 
   isToggled, 
   onToggle, 
   defaultIcon, 
@@ -28,9 +13,10 @@ export const ToggleIconButton: React.FC<Props> = ({
   toggledTooltip,
   options: {
     duration = 200,
-    size = 1.2,
-    tooltipEnterDelay = 500,
-    tooltipLeaveDelay = 300
+    size = 1,
+    wrapperSize,
+    tooltipEnterDelay = 0,
+    tooltipLeaveDelay = 0
   } = {}
 }) => {
   const firstIconRef = useRef(null);
@@ -44,17 +30,17 @@ export const ToggleIconButton: React.FC<Props> = ({
       leaveDelay={tooltipLeaveDelay}
       arrow
     >
-      <IconButton css={wrapperStyle(size)} onClick={() => onToggle()} >
+      <IconButton css={getWrapperStyle(size, wrapperSize)} onClick={() => onToggle()} >
         <Transition nodeRef={firstIconRef} in={!isToggled} timeout={duration} >
           {state => (
-            <div ref={firstIconRef} css={[iconStyle(size, duration), transitionStyles[state]]} >
+            <div ref={firstIconRef} css={[getIconStyle(duration, size, !isToggled), transitionStyles[state]]} >
               {defaultIcon}
             </div>
           )}
         </Transition>
         <Transition nodeRef={secondIconRef} in={isToggled} timeout={duration} >
           {state => (
-            <div ref={secondIconRef} css={[iconStyle(size, duration), transitionStyles[state]]} >
+            <div ref={secondIconRef} css={[getIconStyle(duration, size, isToggled), transitionStyles[state]]} >
               {toggledIcon}
             </div>
           )}

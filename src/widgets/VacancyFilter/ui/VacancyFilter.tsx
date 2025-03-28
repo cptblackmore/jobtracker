@@ -44,6 +44,10 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
           toggledIcon={<FilterListOff color='primary' />}
           defaultTooltip='Показать дополнительные фильтры'
           toggledTooltip='Скрыть дополнительные фильтры'
+          options={{
+            tooltipEnterDelay: 500,
+            tooltipLeaveDelay: 300
+          }}
         />
         <Button variant='contained' color='primary' type='submit' >
           Искать

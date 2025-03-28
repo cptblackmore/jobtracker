@@ -4,7 +4,7 @@ function createGradient(color: string) {
   return `linear-gradient(to top, rgba(${color}, 0.7) 10%, rgba(${color}, 0.5) 13%, rgba(${color}, 0) 50%)`;
 }
 
-export const fadedCollapseStyle = (isFaded: boolean, isOverflowed: boolean, fadingColor: string) => css`
+export const getFadedCollapseStyle = (isFaded: boolean, isOverflowed: boolean, fadingColor: string) => css`
   position: relative;
   ::after {
     content: '';
