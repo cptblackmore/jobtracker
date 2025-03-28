@@ -21,6 +21,7 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
           min={SALARY_MIN}
           max={SALARY_MAX}
           step={SALARY_STEP}
+          color='secondary'
           marks={[
             { value: SALARY_MIN, label: `${SALARY_MIN / 1000}k` },
             { value: Math.floor((SALARY_MAX - SALARY_MIN) / 2), label: `${Math.floor((SALARY_MAX - SALARY_MIN) / 2 / 1000)}k` },

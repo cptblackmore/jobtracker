@@ -27,6 +27,7 @@ export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange }
                 border: `1px solid ${source.color}`,
                 borderRadius: 1,
                 backgroundColor: `${source.checked && !source.incompatible ? source.color + '10' : 'transparent'}`,
+                transition: 'background-color 0.2s',
                 m: 0
               }}
               control={

@@ -15,7 +15,7 @@ export const FeaturesSection: React.FC = () => {
     <Box 
       component='section'  
       sx={{
-        backgroundColor: (theme) => theme.palette.primary.dark, 
+        backgroundColor: (theme) => theme.palette.primary.light, 
         color: (theme) => theme.palette.primary.contrastText
       }}
     >

@@ -72,6 +72,8 @@
             defaultTooltip='Развернуть'
             toggledTooltip='Свернуть'
             options={{
+              size: 1.2,
+              wrapperSize: 1.5,
               tooltipEnterDelay: 500,
               tooltipLeaveDelay: 300
             }}

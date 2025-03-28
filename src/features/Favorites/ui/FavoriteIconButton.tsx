@@ -26,10 +26,12 @@ export const FavoriteIconButton: React.FC<Props> = observer(({ favorite }) => {
       isToggled={isFavorite}
       onToggle={handleToggle}
       defaultIcon={<FavoriteBorder />}
-      toggledIcon={<Favorite color='primary' />}
+      toggledIcon={<Favorite color='secondary' />}
       defaultTooltip='Добавить в избранное'
       toggledTooltip='Удалить из избранного'
       options={{
+        size: 1.2,
+        wrapperSize: 1.5,
         tooltipEnterDelay: 500,
         tooltipLeaveDelay: 300
       }}

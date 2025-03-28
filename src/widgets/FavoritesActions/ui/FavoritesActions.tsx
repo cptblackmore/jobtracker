@@ -76,7 +76,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
           <Box
             sx={{mt: 2, width: '100%'}}
           >
-            <LinearProgress variant='determinate' value={progress} />
+            <LinearProgress variant='determinate' value={progress} color='secondary' />
           </Box>
         )}
       </Paper>

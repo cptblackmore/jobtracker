@@ -9,7 +9,14 @@ interface Props {
 export const Logo: React.FC<Props> = ({ titleSize='h6' }) => {
   return (
     <Box sx={{display: 'flex', alignItems: 'center'}} >
-      <WorkIcon sx={{ display: 'flex', mr: 1 }} />
+      <WorkIcon 
+        sx={{
+          display: 'flex', 
+          mr: 1, 
+          color: (theme) => theme.palette.primary.contrastText, 
+          transition: 'color 0.3s'
+        }}
+      />
       <T
         variant={titleSize}
         noWrap
@@ -21,7 +28,8 @@ export const Logo: React.FC<Props> = ({ titleSize='h6' }) => {
           fontFamily: 'monospace',
           fontWeight: 700,
           letterSpacing: '.3rem',
-          color: 'inherit',
+          color: (theme) => theme.palette.primary.contrastText,
+          transition: 'color 0.3s',
           textDecoration: 'none',
           paddingBottom: '0.2em'
         }}
