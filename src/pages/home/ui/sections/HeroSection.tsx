@@ -11,7 +11,7 @@ export const HeroSection: React.FC = () => {
     <Box
       component='section'
       sx={{
-        minHeight: '60vh',
+        minHeight: '50vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

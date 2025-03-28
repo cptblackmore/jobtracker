@@ -4,36 +4,36 @@ export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     background: {
-      default: '#191E24',
-      paper: '#1D232A',
+      default: '#1B1F23',
+      paper: '#22272E',
     },
     primary: {
-      main: '#8471ff',
-      contrastText: '#041349',
+      main: '#6498ff',
+      contrastText: '#22272E',
     },
     secondary: {
-      main: '#F43098',
-      contrastText: '#F9E4F0',
+      main: '#ff7f6e',
+      contrastText: '#22272E',
     },
     info: {
-      main: '#00BAFE',
-      contrastText: '#042E49',
+      main: '#5CACE2',
+      contrastText: '#E3F3FF',
     },
     success: {
-      main: '#00D390',
-      contrastText: '#004C39',
+      main: '#6CC799',
+      contrastText: '#D9F4E5',
     },
     warning: {
-      main: '#FCB700',
-      contrastText: '#793205',
+      main: '#E6B76C',
+      contrastText: '#FFF5E1',
     },
     error: {
-      main: '#FF627D',
-      contrastText: '#4D0218',
+      main: '#E66A6A',
+      contrastText: '#FFDADA',
     },
     text: {
-      primary: '#ECF9FF',
-      secondary: '#d4dde1',
+      primary: '#E2E6EA',
+      secondary: '#AAB2BD',
     },
   },
   typography: {

@@ -4,36 +4,36 @@ export const lightTheme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      default: '#F8F8F8',
+      default: '#F4F4F4',
       paper: '#FFFFFF',
     },
     primary: {
-      main: '#422AD5',
-      contrastText: '#E0E7FF',
+      main: '#375E97',
+      contrastText: '#EAF2FF',
     },
     secondary: {
-      main: '#F43098',
-      contrastText: '#F9E4F0',
+      main: '#f85f4b',
+      contrastText: '#FFF3F1',
     },
     info: {
-      main: '#00BAFE',
-      contrastText: '#042E49',
+      main: '#4A90E2',
+      contrastText: '#F0F6FF',
     },
     success: {
-      main: '#00D390',
-      contrastText: '#004C39',
+      main: '#5DAE8B',
+      contrastText: '#E3F4EC',
     },
     warning: {
-      main: '#FCB700',
-      contrastText: '#793205',
+      main: '#E6A157',
+      contrastText: '#FFF7E6',
     },
     error: {
-      main: '#FF627D',
-      contrastText: '#4D0218',
+      main: '#D9534F',
+      contrastText: '#FFECEC',
     },
     text: {
-      primary: '#18181B',
-      secondary: '#4d4d4d',
+      primary: '#2C2C2C',
+      secondary: '#555D66',
     },
   },
   typography: {
