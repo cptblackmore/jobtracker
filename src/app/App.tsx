@@ -3,7 +3,6 @@ import { Router } from './router/Router';
 import { Alerts } from '@shared/ui/Alerts';
 import { AuthModal } from '@widgets/AuthModal';
 import { ThemesProvider } from './context/ThemesProvider';
-import { ScrollToTopButton } from '@shared/ui';
   
 export const App = () => {
   return (
@@ -13,7 +12,6 @@ export const App = () => {
         <Router />
         <Alerts />
         <AuthModal />
-        <ScrollToTopButton />
       </ThemesProvider>
     </>
   );
