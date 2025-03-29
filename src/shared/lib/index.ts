@@ -1,3 +1,5 @@
+export type { Entries } from './Entries';
+export type { Page, Pages, PagesState } from './PagesContext';
 export { toUpperCaseFirstLetter } from './toUpperCaseFirstLetter';
 export { formatNumberByCurrency } from './formatNumberByCurrency';
 export { toRightCurrencyCode } from './toRightCurrencyCode';
@@ -6,7 +8,6 @@ export { debounce } from './debounce';
 export { PagesContext, pages } from './PagesContext';
 export { broadcastRequestWithFallback} from './broadcastRequestWithFallback';
 export { waitForCondition } from './waitForCondition';
-export type { Entries } from './Entries';
 export { typedEntries } from './typedEntries';
 export { useEffectOnceByCondition } from './useEffectOnceByCondition';
 export { validateValue } from './validateValue';

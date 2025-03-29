@@ -11,7 +11,7 @@ interface Props {
 export const AccountMenuItems: React.FC<Props> = ({ handleCloseMenu }) => {
   const { authStore } = useContext(AuthContext);
   const navigate = useNavigate();
-  const pages = useContext(PagesContext);
+  const { pages } = useContext(PagesContext);
 
   return (
     [

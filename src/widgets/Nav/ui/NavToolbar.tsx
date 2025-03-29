@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router';
 
 export const NavToolbar: React.FC = observer(() => {
-  const pages = useContext(PagesContext);
+  const { pages } = useContext(PagesContext);
   const { favoritesStore } = useContext(FavoritesContext);
 
   return (

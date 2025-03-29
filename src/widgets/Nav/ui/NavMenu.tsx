@@ -14,7 +14,7 @@ export const NavMenu: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
   const { favoritesStore } = useContext(FavoritesContext);
   const navigate = useNavigate();
-  const pages = useContext(PagesContext);
+  const { pages } = useContext(PagesContext);
 
   return (
     <Box>

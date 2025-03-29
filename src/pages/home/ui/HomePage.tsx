@@ -1,6 +1,4 @@
-import { Box } from '@mui/material';
 import React, { useContext } from 'react';
-import { Nav } from '@widgets/Nav';
 import { HeroSection } from './sections/HeroSection';
 import { FeaturesSection } from './sections/FeaturesSection';
 import { StatusSection } from './sections/StatusSection';
@@ -15,8 +13,7 @@ export const HomePage: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
 
   return (
-    <Box>
-      <Nav />
+    <>
       <HeroSection />
       <RevealOnScroll >
         <FeaturesSection />
@@ -38,6 +35,6 @@ export const HomePage: React.FC = observer(() => {
           <StatusSection />
         )
       ) : null}
-    </Box>
+    </>
   );
 });

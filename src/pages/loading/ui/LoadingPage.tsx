@@ -1,16 +1,20 @@
-import { Box, CircularProgress, Container, Typography as T } from '@mui/material';
-import { Nav } from '@widgets/Nav';
+import { Box, CircularProgress, Container } from '@mui/material';
+import { PageTitle } from '@widgets/PageTitle';
 
 export const LoadingPage: React.FC = () => {
   return (
-    <Box>
-      <Nav />
-      <Container >
-        <Box display='flex' flexDirection='column' alignItems='center' gap={2} marginTop={5} >
-          <T variant="h4" >Подождите, идёт загрузка</T>
-          <CircularProgress size={50} />
-        </Box>
-      </Container>
-    </Box>
+    <Container maxWidth='lg' >
+      <Box 
+        py={4}
+        gap={2}
+        display='flex'
+        flexDirection='column'
+        justifyContent='center'
+        alignItems='center'
+      >
+        <PageTitle title='Идёт загрузка...' />
+        <CircularProgress size={50} />
+      </Box>
+    </Container>
   );
 };

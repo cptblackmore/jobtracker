@@ -1,6 +1,5 @@
 import { Box, Card, CardContent, Container } from '@mui/material';
 import React from 'react';
-import { Nav } from '@widgets/Nav';
 import { Navigate, useLocation } from 'react-router';
 import { PageTitle } from '@widgets/PageTitle';
 import { ActivationMessage } from '@widgets/ActivationMessage';
@@ -15,8 +14,7 @@ export const ActivationPage: React.FC = () => {
   }
 
   return (
-    <Box>
-      <Nav />
+    <>
       <Container maxWidth='md' >
         <Box py={4} >
           <PageTitle title='Активация аккаунта' />
@@ -27,6 +25,6 @@ export const ActivationPage: React.FC = () => {
           </Card>
         </Box>
       </Container>
-    </Box>
+    </>
   );
 }
