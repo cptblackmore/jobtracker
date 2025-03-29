@@ -1,6 +1,6 @@
 import { DarkMode, DarkModeOutlined } from '@mui/icons-material';
 import { Box } from '@mui/material';
-import { ThemesContext } from '@shared/theme/ThemesContext';
+import { ThemesContext } from '@shared/ui/theme/ThemesContext';
 import { ToggleIconButton } from '@shared/ui';
 import { useContext } from 'react';
 

@@ -19,7 +19,7 @@ export const HeroSection: React.FC = () => {
       }}
     >
       <Container maxWidth='md'>
-        <T component='h1' variant='h3' gutterBottom >
+        <T component='h1' variant='h1' gutterBottom >
           Добро пожаловать в JobTracker
         </T>
         <T component='h2' variant='h5' mb={3} >

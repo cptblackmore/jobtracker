@@ -6,7 +6,7 @@ import { AccountMenu } from './AccountMenu';
 import { useContext } from 'react';
 import { NavToolbar } from './NavToolbar';
 import { LoginButton } from './LoginButton';
-import { ToggleThemeButton } from './toggleThemeButton';
+import { ToggleThemeButton } from './ToggleThemeButton';
 
 export const NavFull: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -14,7 +14,7 @@ export const NavFull: React.FC = observer(() => {
   return (
     <Box flexGrow={1} display='flex' justifyContent='space-between' >
       <Box display='flex' >
-        <Logo/>
+        <Logo />
         <NavToolbar />
       </Box>
       <Box display='flex' alignItems='center' gap={2} >

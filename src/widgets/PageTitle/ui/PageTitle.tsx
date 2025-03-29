@@ -8,7 +8,7 @@ export const PageTitle: React.FC<Props> = ({ title }) => {
   return (
     <T
       component='h1'
-      variant='h4' 
+      variant='h2' 
       align='left'
       gutterBottom
       ml={2}

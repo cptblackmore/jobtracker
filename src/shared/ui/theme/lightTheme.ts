@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material';
+import { typography } from './typography';
 
 export const lightTheme = createTheme({
   palette: {
@@ -36,7 +37,5 @@ export const lightTheme = createTheme({
       secondary: '#555D66',
     },
   },
-  typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-  },
+  typography
 });

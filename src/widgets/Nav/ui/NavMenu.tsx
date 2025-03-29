@@ -21,7 +21,7 @@ export const NavMenu: React.FC = observer(() => {
       <IconButton
         size='large'
         onClick={handleOpenMenu}
-        color='inherit'
+        sx={{color: (theme) => theme.palette.primary.contrastText}}
       >
         <MenuIcon />
       </IconButton>

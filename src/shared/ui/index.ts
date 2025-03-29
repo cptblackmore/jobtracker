@@ -8,3 +8,5 @@ export { ExternalLinkButton } from './ExternalLinkButton';
 export { CooldownButton } from './CooldownButton';
 export { RevealOnScroll } from './RevealOnScroll';
 export { ScrollToTopButton } from './ScrollToTopButton';
+export { LogoIcon } from './icons/LogoIcon';
+export { fonts } from './fonts';
