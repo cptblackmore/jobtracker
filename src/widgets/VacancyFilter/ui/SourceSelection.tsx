@@ -1,9 +1,10 @@
 import { Info } from '@mui/icons-material';
-import { Checkbox, Fade, FormControl, FormControlLabel, FormGroup, IconButton, Stack, Tooltip } from '@mui/material';
+import { alpha, Checkbox, Fade, FormControl, FormControlLabel, FormGroup, IconButton, lighten, Stack, Tooltip } from '@mui/material';
 import { VacancySource } from '@widgets/VacancySource/ui/VacancySource';
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { SourceFilter } from '../model/useSourcesFilter';
+import { ThemesContext } from '@shared/ui';
 
 interface Props {
   sources: SourceFilter[];
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange }) => {
+  const { themeMode } = useContext(ThemesContext);
+
   return (
     <FormControl component='fieldset' fullWidth >
       <FormGroup sx={{flexDirection: 'row', gap: 1}} >
@@ -24,9 +27,9 @@ export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange }
             <FormControlLabel
               sx={{
                 opacity: source.incompatible ? 0.5 : 1,
-                border: `1px solid ${source.color}`,
+                border: `1px solid ${themeMode === 'light' ? source.color : lighten(source.color, 0.4)}`,
                 borderRadius: 1,
-                backgroundColor: `${source.checked && !source.incompatible ? source.color + '10' : 'transparent'}`,
+                backgroundColor: `${source.checked && !source.incompatible ? (themeMode === 'light' ? alpha(source.color, 0.1) : alpha(lighten(source.color, 0.4), 0.2)) : 'transparent'}`,
                 transition: 'background-color 0.2s',
                 m: 0
               }}
@@ -35,7 +38,7 @@ export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange }
                   name='source'
                   size='small'
                   value={source.source}
-                  sx={{'& .MuiSvgIcon-root': {color: source.color}}}
+                  sx={{'& .MuiSvgIcon-root': {color: themeMode === 'light' ? source.color : lighten(source.color, 0.4)}}}
                   checked={source.checked && !source.incompatible}
                   onChange={() => handleSourceChange(source)}
                 />

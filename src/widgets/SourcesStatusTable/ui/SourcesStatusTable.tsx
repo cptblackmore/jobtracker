@@ -1,5 +1,5 @@
 import { sourcesRegistry } from '@entities/Vacancy';
-import { Table, TableBody, TableCell, TableContainer, TableRow, Tooltip } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, Zoom } from '@mui/material';
 import { typedEntries } from '@shared/lib';
 import { StatusIndicator } from '@shared/ui';
 import { VacancySource } from '@widgets/VacancySource';
@@ -33,6 +33,7 @@ export const SourcesStatusTable: React.FC = () => {
                 key={index} 
                 title={`Перейти на ${config.url.frontendDomain}`}
                 followCursor
+                TransitionComponent={Zoom}
                 PopperProps={{
                   modifiers: [
                     {

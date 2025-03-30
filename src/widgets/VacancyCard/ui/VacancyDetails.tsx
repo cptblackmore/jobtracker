@@ -6,7 +6,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { useTheme } from '@mui/material/styles';
 import { blendColors } from '@shared/lib';
-import { ThemesContext } from '@shared/ui/theme/ThemesContext';
+import { ThemesContext } from '@shared/ui';
 import { useContext } from 'react';
 
 interface Props {

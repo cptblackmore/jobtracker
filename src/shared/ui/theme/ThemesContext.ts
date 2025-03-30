@@ -1,6 +1,14 @@
 import { createContext } from 'react';
 
-export const ThemesContext = createContext({
+interface ThemesState {
+  themeMode: 'light' | 'dark',
+  toggleThemeMode: () => void,
+  config: {
+    muiPaperOverlay: {bgcolor: string, opacity: number}
+  }
+}
+
+export const ThemesContext = createContext<ThemesState>({
   themeMode: 'light',
   toggleThemeMode: () => {},
   config: {

@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@emotion/react';
-import { defineInitialTheme, darkTheme, lightTheme } from '@shared/ui/theme';
-import { ThemesContext } from '@shared/ui/theme/ThemesContext';
+import { defineInitialTheme, darkTheme, lightTheme } from '@shared/ui';
+import { ThemesContext } from '@shared/ui';
 import { ReactNode, useState } from 'react';
 
 interface Props {
