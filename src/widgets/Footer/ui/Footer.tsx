@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
           <Grid2 size={4} >
             <T variant='subtitle1' >Контакты</T>
             <Box display='flex' >
-              <T variant='subtitle2' >
+              <T component='p' variant='subtitle2' >
                 {'Почта: '}
                 <Link variant='body2' href='redshatterr@gmail.com' color='inherit' >
                   redshatterr@gmail.com

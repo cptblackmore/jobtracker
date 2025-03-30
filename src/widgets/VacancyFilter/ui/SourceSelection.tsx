@@ -1,6 +1,6 @@
 import { Info } from '@mui/icons-material';
 import { Checkbox, Fade, FormControl, FormControlLabel, FormGroup, IconButton, Stack, Tooltip } from '@mui/material';
-import { VacancySource } from '@widgets/VacancyCard/ui/VacancySource/VacancySource';
+import { VacancySource } from '@widgets/VacancySource/ui/VacancySource';
 import { Fragment } from 'react';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { SourceFilter } from '../model/useSourcesFilter';

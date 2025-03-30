@@ -1,6 +1,6 @@
 import { Box, Container } from '@mui/material';
 import { SectionTitle } from './SectionTitle';
-import { SourcesStatusList } from '@widgets/SourcesStatusList';
+import { SourcesStatusTable } from '@widgets/SourcesStatusTable';
 
 export const StatusSection: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ export const StatusSection: React.FC = () => {
       <Container maxWidth='md' >
         <Box py={8} maxWidth='sm' m='auto' width='100%' >
           <SectionTitle title='Статус источников вакансий' />
-          <SourcesStatusList />
+          <SourcesStatusTable />
         </Box>
       </Container>
     </Box>

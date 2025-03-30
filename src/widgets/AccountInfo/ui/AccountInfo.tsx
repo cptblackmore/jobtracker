@@ -1,10 +1,10 @@
-import { FiberManualRecord } from '@mui/icons-material';
-import { Box, CardContent, CardHeader } from '@mui/material';
-import { Typography as T } from '@mui/material';
+import { Box, CardContent, CardHeader, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow } from '@mui/material';
 import { useContext } from 'react';
 import { FavoritesContext } from '@features/Favorites';
 import { AuthContext } from '@shared/model';
 import { observer } from 'mobx-react-lite';
+import { CardHeaderTitle, StatusIndicator } from '@shared/ui';
+import { AccountTableCellHeader } from './AccountTableCellHeader';
 
 export const AccountInfo: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -14,18 +14,36 @@ export const AccountInfo: React.FC = observer(() => {
     <Box flexGrow={2} >
       <CardHeader 
         title={
-          <T component='h2' variant='h6' >
-            Общая информация
-          </T>
+          <CardHeaderTitle title='Общая информация' />
         }
       />
       <CardContent sx={{'&:last-child': {pb: 2}}} >
-        <T>E-mail: {authStore.user.email}</T>
-        <Box sx={{display: 'flex', alignItems: 'center'}} >
-          <T>Синхронизация с базой данных:</T>
-          <FiberManualRecord color={favoritesStore.isSynced ? 'success' : 'error'} sx={{mx: 1, fontSize: 18}} />
-        </Box>
-        <T>Сохранено вакансий на сервере: {authStore.user.isActivated ? favoritesStore.ids.length : 0}</T>
+        <TableContainer>
+          <Table 
+            sx={{
+              [`& .${tableCellClasses.root}`]: {borderBottom: 'none', py: 0.5},
+            }}
+          >
+            <TableBody>
+              <TableRow>
+                <AccountTableCellHeader>E-mail:</AccountTableCellHeader>
+                <TableCell sx={{px:0}} >{authStore.user.email}</TableCell>
+              </TableRow>
+              <TableRow>
+                <AccountTableCellHeader>Статус синхронизации:</AccountTableCellHeader>
+                <TableCell sx={{px:0}} >
+                  <StatusIndicator success={authStore.user.isActivated} />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <AccountTableCellHeader>Количество сохранённых вакансий:</AccountTableCellHeader>
+                <TableCell sx={{color: (theme) => theme.palette.info.main, fontWeight: 'bold', px: 0}}>
+                  {authStore.user.isActivated ? favoritesStore.ids.length : 0}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </CardContent>
     </Box>
   );

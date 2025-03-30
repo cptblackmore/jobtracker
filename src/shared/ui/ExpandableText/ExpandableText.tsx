@@ -1,5 +1,5 @@
   import React, { useEffect, useRef, useState } from 'react';
-  import { Typography, Collapse, Box } from '@mui/material';
+  import { Typography as T, Collapse, Box } from '@mui/material';
   import { ToggleIconButton } from '@shared/ui';
   import { ExpandLess, ExpandMore } from '@mui/icons-material';
   import { throttle } from '@shared/lib';
@@ -59,9 +59,9 @@
           css={getFadedCollapseStyle(isFaded, isOverflowed, fadingColor)}
           onExited={handleExited}
         >
-          <Typography variant='body1' component='div' ref={textRef} >
+          <T variant='body1' ref={textRef} >
             {text}
-          </Typography>
+          </T>
         </Collapse>
         {isOverflowed && (
           <ToggleIconButton

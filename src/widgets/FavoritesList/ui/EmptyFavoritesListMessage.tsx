@@ -5,7 +5,7 @@ import { Typography as T } from '@mui/material';
 export const EmptyFavoritesListMessage: React.FC = () => {
   return (
     <Box>
-    <T variant='body1' color='text.secondary' display='flex' mt={5} justifyContent='center' >
+    <T component='h2' variant='h5' color='text.secondary' display='flex' mt={5} justifyContent='center' >
       У вас пока нет избранных вакансий.
     </T>
     <T variant='body1' color='text.secondary' display='flex' mt={3} justifyContent='center' >

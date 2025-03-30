@@ -1,7 +1,7 @@
 import { Box, CardContent, CardHeader, Divider, Typography as T } from '@mui/material';
 import { Vacancy } from '@entities/Vacancy';
 import { ExpandableText } from '@shared/ui';
-import { VacancySource } from './VacancySource/VacancySource';
+import { VacancySource } from '../../VacancySource/ui/VacancySource';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { useTheme } from '@mui/material/styles';
@@ -24,15 +24,15 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
       <CardHeader
         sx={{paddingBottom: 0}}
         title={
-          <T variant='h5' textAlign='start' paddingLeft={1} >
+          <T component='h3' variant='h5' textAlign='start' paddingLeft={1} >
             {vacancy.profession}
           </T>
         }
         subheader={
           <Box paddingLeft={1} textAlign='start' display='flex' >
-            <T>{vacancy.firmName}</T>
+            <T component='h4' >{vacancy.firmName}</T>
             <Divider sx={{marginLeft: '1em', marginRight: '1em'}} orientation='vertical' flexItem />
-            <T>{vacancy.town}</T>
+            <T component='h4' >{vacancy.town}</T>
           </Box>
         }
       />

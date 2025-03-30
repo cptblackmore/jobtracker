@@ -27,7 +27,7 @@ export const HomePage: React.FC = observer(() => {
       ) : (
         <LoadingSection />
       )}
-      <RevealOnScroll>
+      <RevealOnScroll threshold={0.1} >
         <DemoSection />
       </RevealOnScroll>
       {authStore.isInit ? (

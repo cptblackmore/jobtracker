@@ -3,6 +3,7 @@ import { Typography as T } from '@mui/material';
 import { PagesContext } from '@shared/lib';
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router'
+import { CtaTitle } from './CtaTitle';
 
 export const HeroSection: React.FC = () => {
   const { pages } = useContext(PagesContext);
@@ -22,10 +23,9 @@ export const HeroSection: React.FC = () => {
         <T component='h1' variant='h1' gutterBottom >
           Добро пожаловать в JobTracker
         </T>
-        <T component='h2' variant='h5' mb={3} >
-          Ваш универсальный инструмент для быстрого поиска вакансий
-          с разных источников в один клик
-        </T>
+        <CtaTitle 
+          title='Ваш универсальный инструмент для быстрого поиска вакансий с разных источников в один клик'
+        />
         <Button 
           component={RouterLink}
           variant='contained' 

@@ -1,7 +1,7 @@
 import { Box, Button, Container } from '@mui/material';
-import { Typography as T } from '@mui/material';
 import { AuthContext } from '@shared/model';
 import { useContext } from 'react';
+import { CtaTitle } from './CtaTitle';
 
 export const RegistrationSection: React.FC = () => {
   const { authStore } = useContext(AuthContext);
@@ -18,9 +18,9 @@ export const RegistrationSection: React.FC = () => {
       }}
     >
       <Container maxWidth='sm'>
-        <T component='h2' variant='h5' mb={3} >
-          Заведите аккаунт и избранные вакансии будут  доступны с любого устройства
-        </T>
+        <CtaTitle 
+          title='Заведите аккаунт и избранные вакансии будут  доступны с любого устройства'
+        />
         <Button 
           variant='contained' 
           size='large' 

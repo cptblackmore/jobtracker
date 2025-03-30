@@ -10,3 +10,5 @@ export { RevealOnScroll } from './RevealOnScroll';
 export { ScrollToTopButton } from './ScrollToTopButton';
 export { LogoIcon } from './icons/LogoIcon';
 export { fonts } from './fonts';
+export { CardHeaderTitle } from './CardHeaderTitle';
+export { StatusIndicator } from './StatusIndicator/StatusIndicator';

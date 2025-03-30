@@ -1,7 +1,6 @@
 import { Alert, Box, CardActions, CardContent, CardHeader, Divider } from '@mui/material';
 import { AuthContext } from '@shared/model';
-import { CooldownButton } from '@shared/ui';
-import { Typography as T } from '@mui/material';
+import { CardHeaderTitle, CooldownButton } from '@shared/ui';
 import { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
@@ -19,9 +18,7 @@ export const AccountActivation: React.FC = observer(() => {
         <Box display='flex' flexDirection='column' >
           <CardHeader 
             title={
-              <T component='h2' variant='h6' >
-                Активация:
-              </T>
+              <CardHeaderTitle title='Активация' />
             }
           />
           <CardContent sx={{pb: 0}} >
