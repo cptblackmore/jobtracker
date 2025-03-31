@@ -14,6 +14,7 @@ export interface SourceConfig<K extends Sources> {
     frontendOrigin: string;
     frontendDomain: string;
     status: string;
+    api: string;
   }
   incompatibleFilters?: Array<keyof VacancyParams['filters']>;
 }
@@ -25,7 +26,8 @@ export const sourcesRegistry: {[K in Sources]: SourceConfig<K>} = {
     url: {
       frontendOrigin: 'https://superjob.ru', 
       frontendDomain: 'superjob.ru', 
-      status: 'https://api.superjob.ru'
+      status: 'https://api.superjob.ru',
+      api: 'https://api.superjob.ru/2.0'
     }
   },
   hh: {
@@ -34,7 +36,8 @@ export const sourcesRegistry: {[K in Sources]: SourceConfig<K>} = {
     url: {
       frontendOrigin: 'https://hh.ru', 
       frontendDomain: 'hh.ru', 
-      status: 'https://api.hh.ru/status'
+      status: 'https://api.hh.ru/status',
+      api: 'https://api.hh.ru'
     }
   },
   trudvsem: {
@@ -43,7 +46,8 @@ export const sourcesRegistry: {[K in Sources]: SourceConfig<K>} = {
     url: {
       frontendOrigin: 'https://trudvsem.ru', 
       frontendDomain: 'trudvsem.ru', 
-      status: 'https://opendata.trudvsem.ru/api/v1/vacancies?limit=1'
+      status: 'https://opendata.trudvsem.ru/api/v1/vacancies?limit=1',
+      api: 'https://opendata.trudvsem.ru/api/v1'
     },
     incompatibleFilters: ['period', 'type', 'salary']
   }
