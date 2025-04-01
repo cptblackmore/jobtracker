@@ -27,7 +27,7 @@ export const fetchVacancies = async (
     if (result.status === 'rejected') {
       if (axios.isCancel(result.reason)) throw result.reason;
       if (result.reason instanceof AxiosError) {
-        const code = result.reason.code ?? null;
+        const code = result.reason.response?.data?.code ?? result.reason.code ?? null;
         if (code) errors.add(code);
       }
     }

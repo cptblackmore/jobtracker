@@ -13,4 +13,5 @@ export const errorMessages: Record<string, string> = {
   FAVORITES_NOT_FOUND: 'Некоторые вакансии были удалены из источников. Список избранного обновлён.',
   FAVORITES_NOT_AVAILABLE: 'Некоторые вакансии временно недоступны на своём источнике.',
   UNKNOWN_ERROR: 'Произошла непредвиденная ошибка.',
+  TOO_MANY_VACANCIES_REQUESTS: 'Вы превысили лимит запросов вакансий. Попробуйте позже.',
 }

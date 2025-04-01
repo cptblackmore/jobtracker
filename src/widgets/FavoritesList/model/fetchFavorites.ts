@@ -68,7 +68,7 @@ export const fetchFavorites = async (
       } catch (e) {
         if (axios.isCancel(e)) return Promise.reject(e);
         if (e instanceof AxiosError) {
-          const code = e.code ?? 'UNKNOWN_ERROR';
+          const code = e.response?.data?.code ?? e.code ?? 'UNKNOWN_ERROR';
           if (code) errorCodes.add(code);
         }
         return null;

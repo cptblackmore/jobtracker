@@ -7,15 +7,15 @@ export const getVacancies = async (params: VacancyParams, source: Sources, signa
   const adapterTrudvsem = sourcesRegistry.trudvsem.adapter;
 
   switch (source) {
-    case 'superjob':{
+    case 'superjob': {
       const response = await VacancyService.getSuperjob(adapterSuperjob.adaptParams(params), signal);
       return adapterSuperjob.adaptVacancies(response.data.objects);
     }
-    case 'hh':{
+    case 'hh': {
       const response = await VacancyService.getHH(adapterHH.adaptParams(params), signal);
       return adapterHH.adaptVacancies(response.data.items);
     }
-    case 'trudvsem':{
+    case 'trudvsem': {
       const response = await VacancyService.getTrudvsem(adapterTrudvsem.adaptParams(params), signal);
       const vacancies = response.data.results.vacancies.map(vacancyContainer => vacancyContainer.vacancy);
       return adapterTrudvsem.adaptVacancies(vacancies);
