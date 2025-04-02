@@ -1,6 +1,6 @@
 import { sourcesRegistry, Sources, VacancyParams } from '@entities/Vacancy';
-import { typedEntries } from '@shared/lib';
-import { useCallback, useMemo, useState } from 'react';
+import { isEqual, typedEntries } from '@shared/lib';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export interface SourceFilter {
   source: Sources;
@@ -10,27 +10,44 @@ export interface SourceFilter {
   incompatible: boolean
 }
 
-export const useSourcesFilter = (selectedFilters: Array<keyof VacancyParams['filters']>, resetFilters: () => void) => {
+export const useSourcesFilter = (
+  selectedFilters: Array<keyof VacancyParams['filters']>, 
+  resetFilters: (filters: Array<keyof VacancyParams['filters']>) => void
+) => {
   const [disabledSources, setDisabledSources] = useState<Sources[]>([]);
+  const [highlightedSources, setHighlightedSources] = useState<Sources[]>([]);
+  const sourcesRef = useRef<SourceFilter[]>([]);
 
   const sources: SourceFilter[] = useMemo(() => {
-    return typedEntries(sourcesRegistry).map(([source, config]) => (
+    const newSources = typedEntries(sourcesRegistry).map(([source, config]) => (
       {
         source,
         color: config.styles.color,
         incompatibleFilters: config.incompatibleFilters,
         checked: !disabledSources.includes(source),
-        incompatible: selectedFilters.some(filter =>
+        incompatible: selectedFilters.some(filter => (
           config.incompatibleFilters?.includes(filter)
-        )
+        ))
       }
-    ))
+    ));
+
+    if (!isEqual(sourcesRef.current, newSources)) {
+      sourcesRef.current = newSources;
+    }
+
+    return sourcesRef.current;
   }, [disabledSources, selectedFilters]);
+
+  useEffect(() => {
+    setHighlightedSources(
+      sources.filter(source => source.incompatible).map(source => source.source)
+    );
+  }, [sources]);
 
   const handleSourceChange = useCallback((source: SourceFilter) => {
     if (source.incompatible) {
-      resetFilters();
-      setDisabledSources([]);
+      resetFilters(source.incompatibleFilters ?? []);
+      setDisabledSources(prev => prev.filter(s => s !== source.source));
     } else {
       setDisabledSources(prev => {
         if (!prev.includes(source.source)) {
@@ -43,8 +60,8 @@ export const useSourcesFilter = (selectedFilters: Array<keyof VacancyParams['fil
   }, [resetFilters]);
 
   function resetSources() {
-    typedEntries(sourcesRegistry).map(([source]) => source)
+    setDisabledSources([]);
   }
 
-  return { sources, resetSources, setDisabledSources, handleSourceChange };
+  return { sources, resetSources, setDisabledSources, handleSourceChange, highlightedSources };
 };

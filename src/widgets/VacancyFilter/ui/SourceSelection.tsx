@@ -5,13 +5,16 @@ import { Fragment, useContext } from 'react';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { SourceFilter } from '../model/useSourcesFilter';
 import { ThemesContext } from '@shared/ui';
+import { Sources } from '@entities/Vacancy';
+import { getHightlightAnimation } from './highlightedFiltersStyles';
 
 interface Props {
   sources: SourceFilter[];
   handleSourceChange: (source: SourceFilter) => void;
+  highlightedSources: Sources[];
 }
 
-export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange }) => {
+export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange, highlightedSources }) => {
   const { themeMode } = useContext(ThemesContext);
 
   return (
@@ -28,8 +31,15 @@ export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange }
               sx={{
                 opacity: source.incompatible ? 0.5 : 1,
                 border: `1px solid ${themeMode === 'light' ? source.color : lighten(source.color, 0.4)}`,
+                ...getHightlightAnimation(highlightedSources, source.source),
                 borderRadius: 1,
-                backgroundColor: `${source.checked && !source.incompatible ? (themeMode === 'light' ? alpha(source.color, 0.1) : alpha(lighten(source.color, 0.4), 0.2)) : 'transparent'}`,
+                backgroundColor: `
+                  ${source.checked && !source.incompatible
+                  ? 
+                  (themeMode === 'light' ? alpha(source.color, 0.1) 
+                  : 
+                  alpha(lighten(source.color, 0.4), 0.2)) : 'transparent'}
+                `,
                 transition: 'background-color 0.2s',
                 m: 0
               }}

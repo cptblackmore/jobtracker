@@ -1,6 +1,7 @@
-import { SwitchableVacancyType, VacancyPeriod } from '@entities/Vacancy/api/types/VacancyParams';
+import { SwitchableVacancyType, VacancyParams, VacancyPeriod } from '@entities/Vacancy/api/types/VacancyParams';
 import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
 import { filterLabelsMap } from '../model/filterLabelsMap';
+import { getHighlightedBorderStyle, getHighlightedColorStyle } from './highlightedFiltersStyles';
 
 interface Props {
   period: VacancyPeriod;
@@ -9,6 +10,7 @@ interface Props {
   handleTypeChange: (e: SelectChangeEvent<SwitchableVacancyType>) => void;
   resetFiltersAndSources: () => void;
   handleInvalid: () => void;
+  highlightedFilters: Array<keyof VacancyParams['filters']>
 }
 
 export const BasicFilters: React.FC<Props> = ({ 
@@ -17,12 +19,15 @@ export const BasicFilters: React.FC<Props> = ({
   handlePeriodChange, 
   handleTypeChange, 
   resetFiltersAndSources,
-  handleInvalid
+  handleInvalid,
+  highlightedFilters
 }) => {
   return (
     <Stack spacing={2} >
       <FormControl>
-        <InputLabel htmlFor='period' >{filterLabelsMap.period}</InputLabel>
+        <InputLabel sx={{...getHighlightedColorStyle(highlightedFilters, 'period')}} htmlFor='period' >
+          {filterLabelsMap.period}
+        </InputLabel>
         <Select
           fullWidth
           label={filterLabelsMap.period}
@@ -32,6 +37,12 @@ export const BasicFilters: React.FC<Props> = ({
           size='small'
           onInvalid={handleInvalid}
           onChange={(e) => handlePeriodChange(e)}
+          sx={{
+            fieldset: {
+              transition: 'border-color 0.2s',
+              ...getHighlightedBorderStyle(highlightedFilters, 'period')
+            }
+          }}
         >
           <MenuItem value={1} >1 день</MenuItem>
           <MenuItem value={3} >3 дня</MenuItem>
@@ -40,7 +51,9 @@ export const BasicFilters: React.FC<Props> = ({
         </Select>
       </FormControl>
       <FormControl>
-        <InputLabel htmlFor='type'>{filterLabelsMap.type}</InputLabel>
+        <InputLabel sx={{...getHighlightedColorStyle(highlightedFilters, 'type')}} htmlFor='type' >
+          {filterLabelsMap.type}
+        </InputLabel>
         <Select
           fullWidth
           label={filterLabelsMap.type}
@@ -51,7 +64,10 @@ export const BasicFilters: React.FC<Props> = ({
           onInvalid={handleInvalid}
           onChange={(e) => handleTypeChange(e)}
           sx={{
-            '& .MuiSelect-select': {color: type === 'none' ? 'text.secondary' : 'text.primary'}
+            fieldset: {
+              transition: 'border-color 0.2s',
+              ...getHighlightedBorderStyle(highlightedFilters, 'type')
+            }
           }}
         >
           <MenuItem value={'none'} >Не выбрано</MenuItem>
