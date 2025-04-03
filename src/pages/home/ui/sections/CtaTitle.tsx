@@ -9,7 +9,16 @@ export const CtaTitle: React.FC<Props> = ({ title }) => {
     <T 
       component='h2' 
       variant='h5' 
-      mb={3} 
+      sx={(theme) => ({
+        fontSize: {
+          xs: '1.3rem',
+          sm: {fontSize: theme.typography.h5.fontSize}
+        },
+        mb: {
+          xs: 4,
+          sm: 3
+        }
+      })}
     >
       {title}
     </T>

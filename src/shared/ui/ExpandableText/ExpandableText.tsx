@@ -1,5 +1,5 @@
   import React, { useEffect, useRef, useState } from 'react';
-  import { Typography as T, Collapse, Box } from '@mui/material';
+  import { Typography as T, Collapse, Box, useTheme, useMediaQuery } from '@mui/material';
   import { ToggleIconButton } from '@shared/ui';
   import { ExpandLess, ExpandMore } from '@mui/icons-material';
   import { throttle } from '@shared/lib';
@@ -40,6 +40,8 @@
       setters: {setCollapsedHeight, setIsOverflowed}
     };
     const throttledUpdateDimensions = throttle(() => updateDimensions(dimensionsConfig), 500, 250);
+    const theme = useTheme();
+    const isSm = useMediaQuery(theme.breakpoints.down('sm'));
 
     useEffect(() => {
       updateDimensions(dimensionsConfig);
@@ -58,12 +60,25 @@
           collapsedSize={collapsedHeight}
           css={getFadedCollapseStyle(isFaded, isOverflowed, fadingColor)}
           onExited={handleExited}
+          onClick={isOverflowed && isSm ? toggleCollapse : undefined}
+          sx={{
+            cursor: isOverflowed && isSm ? 'pointer' : 'default'
+          }}
         >
-          <T variant='body1' ref={textRef} >
+          <T 
+            variant='body1' 
+            ref={textRef}
+            sx={{
+              fontSize: {
+                xs: '0.8rem',
+                sm: theme.typography.body1.fontSize
+              }
+            }}
+          >
             {text}
           </T>
         </Collapse>
-        {isOverflowed && (
+        {isOverflowed && !isSm && (
           <ToggleIconButton
             isToggled={isExpanded}
             onToggle={toggleCollapse}

@@ -1,15 +1,17 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, SxProps } from '@mui/material';
 import { SectionTitle } from './SectionTitle';
 import { SourcesStatusTable } from '@widgets/SourcesStatusTable';
 
-export const StatusSection: React.FC = () => {
+interface Props {
+  sectionStyle: SxProps
+}
+
+export const StatusSection: React.FC<Props> = ({ sectionStyle }) => {
   return (
-    <Box component='section' >
-      <Container maxWidth='md' >
-        <Box py={8} maxWidth='sm' m='auto' width='100%' >
-          <SectionTitle title='Статус источников вакансий' />
-          <SourcesStatusTable />
-        </Box>
+    <Box component='section' sx={sectionStyle} >
+      <Container maxWidth='sm' >
+        <SectionTitle title='Статус источников вакансий' />
+        <SourcesStatusTable />
       </Container>
     </Box>
   );

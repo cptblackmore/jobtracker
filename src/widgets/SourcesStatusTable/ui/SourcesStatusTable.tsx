@@ -1,5 +1,5 @@
 import { sourcesRegistry } from '@entities/Vacancy';
-import { Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, Zoom } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, useMediaQuery, useTheme, Zoom } from '@mui/material';
 import { typedEntries } from '@shared/lib';
 import { StatusIndicator } from '@shared/ui';
 import { VacancySource } from '@widgets/VacancySource';
@@ -22,6 +22,9 @@ export const SourcesStatusTable: React.FC = () => {
   //   const updatedStatuses = statuses.map((_, index) => checkStatus(index));
   //   setStatuses(updatedStatuses);
   // }, []);
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <TableContainer>
@@ -31,7 +34,7 @@ export const SourcesStatusTable: React.FC = () => {
             return (
               <Tooltip
                 key={index} 
-                title={`Перейти на ${config.url.frontendDomain}`}
+                title={isSm ? '' : `Перейти на ${config.url.frontendDomain}`}
                 followCursor
                 TransitionComponent={Zoom}
                 PopperProps={{
@@ -39,7 +42,7 @@ export const SourcesStatusTable: React.FC = () => {
                     {
                       name: 'offset',
                       options: {
-                        offset: [0, 20]
+                        offset: [0, 10]
                       }
                     }
                   ]
@@ -59,7 +62,7 @@ export const SourcesStatusTable: React.FC = () => {
                   }}
                 >
                   <TableCell component='th' scope='row' width='100%' >
-                    <VacancySource source={source} reverse size={1.3} gap={3} />
+                    <VacancySource source={source} reverse size={isSm ? 1.1 : 1.3} gap={isMd ? 2 : 3} />
                   </TableCell>
                   <TableCell>
                     <StatusIndicator success={true} />

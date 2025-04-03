@@ -21,7 +21,16 @@ export const FeatureItem: React.FC<Props> = ({ icon, text }) => {
       }}
     >
       {icon}
-      <T variant='body1' px={1} >
+      <T 
+        variant='body1' 
+        px={1} 
+        sx={(theme) => ({
+          fontSize: {
+            xs: '0.9rem',
+            sm: {fontSize: theme.typography.body1.fontSize}
+          }
+        })}
+      >
         {text}
       </T>
     </Box>

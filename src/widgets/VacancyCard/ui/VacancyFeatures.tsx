@@ -8,7 +8,12 @@ interface Props {
 
 export const VacancyFeatures: React.FC<Props> = ({ vacancy }) => {
   return (
-    <CardActions sx={{alignItems: 'start', pt: 2}} >
+    <CardActions 
+      sx={{
+        alignItems: 'start', 
+        pt: {xs: 1.5, sm: 2}
+      }}
+    >
       <FavoriteIconButton favorite={vacancy} />
     </CardActions>
   );

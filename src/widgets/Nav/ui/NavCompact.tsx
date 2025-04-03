@@ -28,7 +28,7 @@ export const NavCompact: React.FC = observer(() => {
         </Box>
       </Grid2>
       <Grid2 size={3} >
-        <Box display='flex' alignItems='center' justifyContent='flex-end' height='100%' >
+        <Box display='flex' alignItems='center' justifyContent='flex-end' height='100%' px={{xs: 1, lg: 0}} >
           <ToggleThemeButton />
         </Box>
       </Grid2>

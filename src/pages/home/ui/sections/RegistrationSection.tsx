@@ -1,25 +1,23 @@
-import { Box, Button, Container } from '@mui/material';
+import { Box, Button, Container, SxProps } from '@mui/material';
 import { AuthContext } from '@shared/model';
 import { useContext } from 'react';
 import { CtaTitle } from './CtaTitle';
 
-export const RegistrationSection: React.FC = () => {
+interface Props {
+  sectionStyle: SxProps
+}
+
+export const RegistrationSection: React.FC<Props> = ({ sectionStyle }) => {
   const { authStore } = useContext(AuthContext);
 
   return (
     <Box
       component='section'
-      sx={{
-        minHeight: '40vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
-      }}
+      sx={{minHeight: {xs: '90vh', md: '40vh'}, ...sectionStyle}}
     >
       <Container maxWidth='sm'>
         <CtaTitle 
-          title='Заведите аккаунт и избранные вакансии будут  доступны с любого устройства'
+          title='Заведите аккаунт и избранные вакансии будут доступны с любого устройства'
         />
         <Button 
           variant='contained' 

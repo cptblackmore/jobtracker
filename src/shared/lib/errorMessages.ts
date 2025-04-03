@@ -14,4 +14,5 @@ export const errorMessages: Record<string, string> = {
   FAVORITES_NOT_AVAILABLE: 'Некоторые вакансии временно недоступны на своём источнике.',
   UNKNOWN_ERROR: 'Произошла непредвиденная ошибка.',
   TOO_MANY_VACANCIES_REQUESTS: 'Вы превысили лимит запросов вакансий. Попробуйте позже.',
+  SOURCE_UNAVAILABLE: 'Некоторые источники временно недоступны. Попробуйте позже.',
 }

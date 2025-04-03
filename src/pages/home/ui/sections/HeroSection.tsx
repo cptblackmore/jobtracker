@@ -1,26 +1,37 @@
-import { Box, Button, Container } from '@mui/material';
+import { Box, Button, Container, SxProps } from '@mui/material';
 import { Typography as T } from '@mui/material';
 import { PagesContext } from '@shared/lib';
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router'
 import { CtaTitle } from './CtaTitle';
 
-export const HeroSection: React.FC = () => {
+interface Props {
+  sectionStyle: SxProps
+}
+
+export const HeroSection: React.FC<Props> = ({ sectionStyle }) => {
   const { pages } = useContext(PagesContext);
 
   return (
     <Box
       component='section'
-      sx={{
-        minHeight: '50vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center'
-      }}
+      sx={{minHeight: {xs: '80vh', md: '50vh'}, ...sectionStyle}}
     >
-      <Container maxWidth='md'>
-        <T component='h1' variant='h1' gutterBottom >
+      <Container maxWidth='md' >
+        <T 
+          component='h1' 
+          variant='h1' 
+          sx={(theme) => ({
+            fontSize: {
+              xs: '2.4rem',
+              sm: {fontSize: theme.typography.h1.fontSize}
+            },
+            mb: {
+              xs: 3,
+              sm: 2
+            }
+          })}
+        >
           Добро пожаловать в JobTracker
         </T>
         <CtaTitle 

@@ -10,7 +10,13 @@ export const SectionTitle: React.FC<Props> = ({ title }) => {
       component='h2' 
       variant='h4' 
       align='center' 
-      mb={4} 
+      mb={{xs: 2, sm: 4}} 
+      sx={(theme) => ({
+        fontSize: {
+          xs: '1.8rem',
+          sm: {fontSize: theme.typography.h4.fontSize}
+        }
+      })}
     >
       {title}
     </T>

@@ -43,11 +43,22 @@ export const getVacancyById = async (id: string, source: SourceId, signal: Abort
     }
     case 'tv': {
       const [companyId, vacancyId] = id.split('_');
-      const response = await VacancyService.getTrudvsemById(companyId, vacancyId, signal);
-      if (!response.data.results.vacancies) {
-        throw createVacancyNotFoundError(response, id);
+      try {
+        const response = await VacancyService.getTrudvsemById(companyId, vacancyId, signal);
+        if (!response.data.results.vacancies) {
+          throw createVacancyNotFoundError(response, id);
+        }
+        return adapterTrudvsem.adaptVacancy(response.data.results.vacancies[0].vacancy);
+      } catch (e) {
+        if (e instanceof AxiosError) {
+          if (e.status === 502) {
+            throw new AxiosError(e.message, 'SOURCE_UNAVAILABLE');
+          }
+          throw e;
+        } else {
+          throw e;
+        }
       }
-      return adapterTrudvsem.adaptVacancy(response.data.results.vacancies[0].vacancy);
     }
     default: {
       throw new Error(`Неизвестный источник: ${source}`);

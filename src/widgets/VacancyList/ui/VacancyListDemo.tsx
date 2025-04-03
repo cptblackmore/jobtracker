@@ -1,5 +1,5 @@
 import { VacancyCard } from '@widgets/VacancyCard';
-import { CircularProgress, Stack } from '@mui/material';
+import { Box, CircularProgress, Stack } from '@mui/material';
 import { useVacancyList } from '../model/useVacancyList';
 import { VacancyParams } from '@entities/Vacancy';
 
@@ -16,7 +16,14 @@ export const VacancyListDemo: React.FC<Props> = ({ initialFilters={} }) => {
         <VacancyCard key={vacancy.id} vacancy={vacancy} />
       ))}
       {isLoading && (
-        <CircularProgress size='5em' />
+        <Box 
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
+          p={4} 
+        >
+          <CircularProgress size='5em' />
+        </Box>
       )}
     </Stack>
   );

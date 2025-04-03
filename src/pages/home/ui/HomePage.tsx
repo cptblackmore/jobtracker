@@ -8,31 +8,40 @@ import { RegistrationSection } from './sections/RegistrationSection';
 import { AuthContext } from '@shared/model';
 import { observer } from 'mobx-react-lite';
 import { LoadingSection } from './sections/LoadingSection';
+import { SxProps } from '@mui/material';
 
 export const HomePage: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
+  const infoSectionStyle: SxProps = {py: {xs: 4, md: 8}};
+  const ctaSectionStyle: SxProps = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    px: {xs: 2, md: 0}
+  }
 
   return (
     <>
-      <HeroSection />
+      <HeroSection sectionStyle={ctaSectionStyle} />
       <RevealOnScroll >
-        <FeaturesSection />
+        <FeaturesSection sectionStyle={infoSectionStyle} />
       </RevealOnScroll>
       {authStore.isInit ? (
         !authStore.isAuth ? (
-          <RegistrationSection />
+          <RegistrationSection sectionStyle={ctaSectionStyle} />
         ) : (
-          <StatusSection />
+          <StatusSection sectionStyle={infoSectionStyle} />
         )
       ) : (
         <LoadingSection />
       )}
       <RevealOnScroll threshold={0.1} >
-        <DemoSection />
+        <DemoSection sectionStyle={infoSectionStyle} />
       </RevealOnScroll>
       {authStore.isInit ? (
         !authStore.isAuth && (
-          <StatusSection />
+          <StatusSection sectionStyle={infoSectionStyle} />
         )
       ) : null}
     </>

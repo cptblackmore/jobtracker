@@ -7,13 +7,13 @@ export const Footer: React.FC = () => {
       sx={{
         backgroundColor: (theme) => theme.palette.background.paper, 
         color: (theme) => theme.palette.text.secondary,
-        py: 3,
+        py: {xs: 2, sm: 3},
         mt: 'auto'
       }}
     >
       <Container maxWidth='md'>
-        <Grid2 container spacing={4} justifyContent='center' >
-          <Grid2 size={4} >
+        <Grid2 container spacing={{xs: 1, sm: 2}} justifyContent='center' >
+          <Grid2 size={{xs: 12, sm: 4}} >
             <T variant='subtitle1' >О проекте</T>
             <T variant='body2' >
               {'JobTracker - инструмент для удобного поиска вакансий одновременно с нескольких источников. '}
@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
               </Link>
             </T>
           </Grid2>
-          <Grid2 size={4} >
+          <Grid2 size={{xs: 12, sm: 4}} >
             <T variant='subtitle1' >Контакты</T>
             <Box display='flex' >
               <T component='p' variant='subtitle2' >
@@ -33,7 +33,7 @@ export const Footer: React.FC = () => {
               </T>
             </Box>
           </Grid2>
-          <Grid2 size={4} >
+          <Grid2 size={{xs: 12, sm: 4}} >
             <T variant='subtitle1' >Социальные сети</T>
             <Link variant='subtitle2' href='https://github.com/cptblackmore/jobtracker' color='inherit' >
               GitHub
