@@ -16,3 +16,4 @@ export { lightTheme } from './theme/lightTheme';
 export { darkTheme } from './theme/darkTheme';
 export { defineInitialTheme } from './theme/defineInitialTheme';
 export { ThemesContext } from './theme/ThemesContext';
+export { ConfirmationModal } from './ConfirmationModal';

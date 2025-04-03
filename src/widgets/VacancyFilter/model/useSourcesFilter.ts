@@ -12,7 +12,8 @@ export interface SourceFilter {
 
 export const useSourcesFilter = (
   selectedFilters: Array<keyof VacancyParams['filters']>, 
-  resetFilters: (filters: Array<keyof VacancyParams['filters']>) => void
+  resetFilters: (filters: Array<keyof VacancyParams['filters']>) => void,
+  openModal: (text: string, onReset: () => void, incompatibleFilters?: Array<keyof VacancyParams['filters']>) => void
 ) => {
   const [disabledSources, setDisabledSources] = useState<Sources[]>([]);
   const [highlightedSources, setHighlightedSources] = useState<Sources[]>([]);
@@ -46,8 +47,14 @@ export const useSourcesFilter = (
 
   const handleSourceChange = useCallback((source: SourceFilter) => {
     if (source.incompatible) {
-      resetFilters(source.incompatibleFilters ?? []);
-      setDisabledSources(prev => prev.filter(s => s !== source.source));
+      openModal(
+        'Вы сбросите следующие фильтры: ', 
+        () => {
+          resetFilters(source.incompatibleFilters ?? []);
+          setDisabledSources(prev => prev.filter(s => s !== source.source));
+        },
+        source.incompatibleFilters
+      );
     } else {
       setDisabledSources(prev => {
         if (!prev.includes(source.source)) {

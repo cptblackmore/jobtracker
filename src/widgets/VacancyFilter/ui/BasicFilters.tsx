@@ -10,7 +10,8 @@ interface Props {
   handleTypeChange: (e: SelectChangeEvent<SwitchableVacancyType>) => void;
   resetFiltersAndSources: () => void;
   handleInvalid: () => void;
-  highlightedFilters: Array<keyof VacancyParams['filters']>
+  highlightedFilters: Array<keyof VacancyParams['filters']>;
+  openModal: (text: string, onReset: () => void) => void
 }
 
 export const BasicFilters: React.FC<Props> = ({ 
@@ -20,7 +21,8 @@ export const BasicFilters: React.FC<Props> = ({
   handleTypeChange, 
   resetFiltersAndSources,
   handleInvalid,
-  highlightedFilters
+  highlightedFilters,
+  openModal
 }) => {
   return (
     <Stack spacing={2} >
@@ -76,7 +78,12 @@ export const BasicFilters: React.FC<Props> = ({
           <MenuItem value={'fifo'} >Вахтовый метод</MenuItem>
         </Select>
       </FormControl>
-      <Button color='warning' onClick={resetFiltersAndSources} >Сбросить фильтры</Button>
+      <Button 
+        color='warning' 
+        onClick={() => openModal('Вы уверены, что хотите сбросить фильтры?', resetFiltersAndSources)} 
+      >
+        Сбросить фильтры
+      </Button>
     </Stack>
   );
 };

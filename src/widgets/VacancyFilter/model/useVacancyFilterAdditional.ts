@@ -5,6 +5,7 @@ import { useTypeFilter } from './useTypeFilter';
 import { useSalaryFilter } from './useSalaryFitler';
 import { useSourcesFilter } from './useSourcesFilter';
 import { calculateSelectedFilters } from './calculateSelectedFilters';
+import { useResetModal } from './useResetModal';
 
 export const useVacancyFilterAdditional = (filters: VacancyParams['filters'], setShowAdditional: Dispatch<SetStateAction<boolean>>) => {
   const { period, resetPeriod, setPeriod, handlePeriodChange } = usePeriodFilter();
@@ -36,15 +37,25 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters'], se
       setTimeout(() => setHighlightedFilters([]), 2000);
     }
   }, [resetPeriod, resetType, resetSalaryFilter]);
-  
+
+  const { 
+    isModalOpen, 
+    setModalOpen,
+    modalText,
+    incompatibleFiltersRef,
+    onConfirm,
+    openModal
+  } = useResetModal();
+
   const selectedFilters = useMemo(() => calculateSelectedFilters(period, type, salaryFilter.enabled), [period, type, salaryFilter.enabled]);
+
   const { 
     sources, 
     resetSources, 
     setDisabledSources, 
     handleSourceChange,
     highlightedSources
-  } = useSourcesFilter(selectedFilters, resetFilters);
+  } = useSourcesFilter(selectedFilters, resetFilters, openModal);
 
   const resetFiltersAndSources = useCallback(() => {
     resetFilters();
@@ -77,6 +88,12 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters'], se
     resetFiltersAndSources,
     handleInvalid: () => setShowAdditional(true),
     highlightedFilters,
-    highlightedSources
+    highlightedSources,
+    isModalOpen, 
+    setModalOpen,
+    modalText,
+    incompatibleFiltersRef,
+    onConfirm,
+    openModal
   };
 };
