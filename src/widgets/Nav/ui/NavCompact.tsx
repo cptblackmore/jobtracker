@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Grid2 } from '@mui/material';
+import { Box, CircularProgress, Grid2, useMediaQuery, useTheme } from '@mui/material';
 import { Logo } from '@widgets/Logo';
 import { observer } from 'mobx-react-lite';
 import { NavMenu } from './NavMenu';
@@ -8,13 +8,15 @@ import { ToggleThemeButton } from './ToggleThemeButton';
 
 export const NavCompact: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
+  const theme = useTheme();
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Grid2 container >
       <Grid2 size={3} >
         <Box display='flex' alignItems='center' justifyContent='flex-start' height='100%' gap={1} >
           <NavMenu />
-          {authStore.isLoading && (
+          {authStore.isLoading && !isMd && (
             <CircularProgress 
               size={25} 
               sx={{mr: 2, color: (theme) => theme.palette.primary.contrastText}}

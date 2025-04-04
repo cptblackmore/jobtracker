@@ -7,12 +7,17 @@ import { FeatureIconFast } from '../icons/FeatureIconFast';
 import { FeatureIconDownload } from '../icons/FeatureIconDownload';
 import { FeatureIconEndless } from '../icons/FeatureIconEndless';
 import { FeatureIconExport } from '../icons/FeatureIconExport';
+import { useInView } from 'react-intersection-observer';
 
 interface Props {
   sectionStyle: SxProps
 }
 
 export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.4
+  });
   const theme = useTheme();
   const isSm = useMediaQuery(theme.breakpoints.down('sm'));
   const iconColor = theme.palette.primary.contrastText;
@@ -22,16 +27,19 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
   return (
     <Box 
       component='section'
+      ref={ref}
       sx={{
         backgroundColor: (theme) => theme.palette.primary.light, 
         color: (theme) => theme.palette.primary.contrastText,
+        overflow: 'hidden',
+        position: 'relative',
         ...sectionStyle
       }}
     >
       <Container maxWidth='md' >
         <SectionTitle title='Отличительные преимущества' />
         <Grid2 container spacing={{xs: 2, sm: 3}}>
-          <Slide in direction='right' timeout={600} >
+          <Slide in={inView} direction='right' timeout={600} >
             <Grid2 size={gridSize} >
               <FeatureItem 
                 icon={<FeatureIconFast color={iconColor} size={iconSize} />} 
@@ -39,7 +47,7 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
               />
             </Grid2>
           </Slide>
-          <Slide in direction='left' timeout={600} >
+          <Slide in={inView} direction='left' timeout={600} >
             <Grid2 size={gridSize} >
               <FeatureItem 
                 icon={<FeatureIconFavorite color={iconColor} size={iconSize} />} 
@@ -47,7 +55,7 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
               />
             </Grid2>
           </Slide>
-          <Slide in direction='right' timeout={650} >
+          <Slide in={inView} direction='right' timeout={650} >
             <Grid2 size={gridSize} >
               <FeatureItem 
                 icon={<FeatureIconFilter color={iconColor} size={iconSize} />} 
@@ -55,7 +63,7 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
               />
             </Grid2>
           </Slide>
-          <Slide in direction='left' timeout={650} >
+          <Slide in={inView} direction='left' timeout={650} >
             <Grid2 size={gridSize} >
               <FeatureItem 
                 icon={<FeatureIconDownload color={iconColor} size={iconSize} />} 
@@ -63,7 +71,7 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
               />
             </Grid2>
           </Slide>
-          <Slide in direction='right' timeout={700} >
+          <Slide in={inView} direction='right' timeout={700} >
             <Grid2 size={gridSize} >
               <FeatureItem 
                 icon={<FeatureIconEndless color={iconColor} size={iconSize} />} 
@@ -71,7 +79,7 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
               />
             </Grid2>
           </Slide>
-          <Slide in direction='left' timeout={700} >
+          <Slide in={inView} direction='left' timeout={700} >
             <Grid2 size={gridSize} >
               <FeatureItem 
                 icon={<FeatureIconExport color={iconColor} size={iconSize} />} 

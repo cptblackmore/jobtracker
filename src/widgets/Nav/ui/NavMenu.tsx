@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Menu, MenuItem } from '@mui/material';
+import { Box, CircularProgress, Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import { AccountMenuItems } from './AccountMenuItems';
 import MenuIcon from '@mui/icons-material/Menu';
 import { AuthContext } from '@shared/model';
@@ -21,7 +21,10 @@ export const NavMenu: React.FC = observer(() => {
       <IconButton
         size='large'
         onClick={handleOpenMenu}
-        sx={{color: (theme) => theme.palette.primary.contrastText}}
+        sx={{
+          color: (theme) => theme.palette.primary.contrastText,
+          transition: 'color 0.3s'
+        }}
       >
         <MenuIcon />
       </IconButton>
@@ -49,11 +52,17 @@ export const NavMenu: React.FC = observer(() => {
           )
         ))}
         <Divider />
-        {authStore.isAuth ? (
-          <AccountMenuItems handleCloseMenu={handleCloseMenu} />
+        {authStore.isInit ? (
+          authStore.isAuth ? (
+            <AccountMenuItems handleCloseMenu={handleCloseMenu} />
+          ) : (
+            <MenuItem key='login' onClick={() => {handleCloseMenu(); authStore.setModalOpen(true)}} >
+              Вход
+            </MenuItem>
+          )
         ) : (
-          <MenuItem key='login' onClick={() => {handleCloseMenu(); authStore.setModalOpen(true)}} >
-            Вход
+          <MenuItem sx={{justifyContent: 'center'}} >
+            <CircularProgress size={25} />
           </MenuItem>
         )}
       </Menu>
