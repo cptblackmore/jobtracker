@@ -1,5 +1,5 @@
 import { Info } from '@mui/icons-material';
-import { alpha, Checkbox, Fade, FormControl, FormControlLabel, FormGroup, IconButton, lighten, Stack, Tooltip } from '@mui/material';
+import { alpha, Checkbox, Fade, FormControl, FormControlLabel, FormGroup, IconButton, lighten, Stack, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import { VacancySource } from '@widgets/VacancySource/ui/VacancySource';
 import { Fragment, useContext } from 'react';
 import { filterLabelsMap } from '../model/filterLabelsMap';
@@ -16,6 +16,8 @@ interface Props {
 
 export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange, highlightedSources }) => {
   const { themeMode } = useContext(ThemesContext);
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <FormControl component='fieldset' fullWidth >
@@ -48,14 +50,19 @@ export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange, 
                   name='source'
                   size='small'
                   value={source.source}
-                  sx={{'& .MuiSvgIcon-root': {color: themeMode === 'light' ? source.color : lighten(source.color, 0.4)}}}
+                  sx={{
+                    '& .MuiSvgIcon-root': {
+                      color: themeMode === 'light' ? source.color : lighten(source.color, 0.4), 
+                      fontSize: isSmUp ? '1.25rem' : '1.1rem'
+                    }
+                  }}
                   checked={source.checked && !source.incompatible}
                   onChange={() => handleSourceChange(source)}
                 />
               }
               label={
                 <Stack sx={{display: 'flex', flexDirection: 'row', alignItems: 'center', pl: 0, pr: 1.5}}>
-                  <VacancySource source={source.source} />
+                  <VacancySource source={source.source} size={isSmUp ? 1 : 0.9} />
                   {source.incompatibleFilters && (
                     <Tooltip 
                       arrow
@@ -66,7 +73,7 @@ export const SourceSelection: React.FC<Props> = ({ sources, handleSourceChange, 
                         source.incompatibleFilters.map(filter => filterLabelsMap[filter]).join(', ')
                       }
                     >
-                      <IconButton sx={{p: 0, ml: 1}} >
+                      <IconButton sx={{p: 0, ml: 1}} size={isSmUp ? 'medium' : 'small'} >
                         <Info sx={{fontSize: '0.8em'}} />
                       </IconButton>
                     </Tooltip>

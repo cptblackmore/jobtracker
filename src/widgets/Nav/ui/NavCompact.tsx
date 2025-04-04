@@ -9,14 +9,14 @@ import { ToggleThemeButton } from './ToggleThemeButton';
 export const NavCompact: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
   const theme = useTheme();
-  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Grid2 container >
       <Grid2 size={3} >
         <Box display='flex' alignItems='center' justifyContent='flex-start' height='100%' gap={1} >
           <NavMenu />
-          {authStore.isLoading && !isMd && (
+          {authStore.isLoading && isMdUp && (
             <CircularProgress 
               size={25} 
               sx={{mr: 2, color: (theme) => theme.palette.primary.contrastText}}

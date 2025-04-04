@@ -1,6 +1,6 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { FilterList, FilterListOff } from '@mui/icons-material';
-import { Button, Collapse, FormControl, Paper, Stack, TextField } from '@mui/material';
+import { Button, Collapse, FormControl, Paper, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
 import { ToggleIconButton } from '@shared/ui';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
 import { useVacancyFilter } from '../model/useVacancyFilter';
@@ -19,14 +19,16 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
     setText,
     handleSubmit
   } = useVacancyFilter(filters, setFilters);
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Paper 
-      sx={{ p: 2, borderRadius: 2, boxShadow: 2, mb: 2 }} 
+      sx={{p: {xs: 1, sm: 2}, borderRadius: 2, boxShadow: 2, mb: 2}} 
       component='form'
       onSubmit={handleSubmit}
     >
-      <Stack direction='row' spacing={2} justifyContent='end' >
+      <Stack direction='row' spacing={{xs: 1, sm: 2}} justifyContent='end' alignItems='center' >
         <FormControl fullWidth >
           <TextField
             label={filterLabelsMap.text}
@@ -35,6 +37,10 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
             size='small'
             value={text}
             onChange={(e) => setText(e.target.value)}
+            sx={{
+              '& .MuiInputBase-root': {fontSize: {xs: '0.9rem', sm: theme.typography.body1.fontSize}},
+              '& .MuiInputLabel-root': {fontSize: {xs: '0.9rem', sm: theme.typography.body1.fontSize}}
+            }}
           />
         </FormControl>
         <ToggleIconButton 
@@ -45,13 +51,13 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
           defaultTooltip='Показать дополнительные фильтры'
           toggledTooltip='Скрыть дополнительные фильтры'
           options={{
-            size: 1.2,
-            wrapperSize: 1.5,
+            size: isSmUp ? 1.2 : 1,
+            wrapperSize: isSmUp ? 1.5 : 1.3,
             tooltipEnterDelay: 500,
             tooltipLeaveDelay: 300
           }}
         />
-        <Button variant='contained' color='primary' type='submit' >
+        <Button variant='contained' color='primary' type='submit' sx={{py: 1, fontSize: {xs: '0.8rem', sm: theme.typography.button.fontSize}}} >
           Искать
         </Button>
       </Stack>

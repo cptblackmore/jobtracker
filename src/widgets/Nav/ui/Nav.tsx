@@ -5,11 +5,11 @@ import { useHideNav } from '../model/useHideNav';
 
 export const Nav: React.FC = () => {
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const { isVisible } = useHideNav();
 
   return (
-    <Slide appear={false} direction="down" in={isSm ? isVisible : true} >
+    <Slide appear={false} direction="down" in={isSmUp ? true : isVisible} >
       <AppBar position='sticky' sx={{backgroundColor: (theme) => theme.palette.primary.main}} >
         <Container maxWidth='xl' sx={{px: 1}} >
           <Box flexGrow={1} display={{xs: 'grid', md: 'none'}} >

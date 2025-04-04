@@ -23,8 +23,8 @@ export const SourcesStatusTable: React.FC = () => {
   //   setStatuses(updatedStatuses);
   // }, []);
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <TableContainer>
@@ -34,7 +34,7 @@ export const SourcesStatusTable: React.FC = () => {
             return (
               <Tooltip
                 key={index} 
-                title={isSm ? '' : `Перейти на ${config.url.frontendDomain}`}
+                title={isSmUp ? `Перейти на ${config.url.frontendDomain}` : ''}
                 followCursor
                 TransitionComponent={Zoom}
                 PopperProps={{
@@ -62,7 +62,7 @@ export const SourcesStatusTable: React.FC = () => {
                   }}
                 >
                   <TableCell component='th' scope='row' width='100%' >
-                    <VacancySource source={source} reverse size={isSm ? 1.1 : 1.3} gap={isMd ? 2 : 3} />
+                    <VacancySource source={source} reverse size={isSmUp ? 1.3 : 1.1} gap={isMdUp ? 3 : 2} />
                   </TableCell>
                   <TableCell>
                     <StatusIndicator success={true} />

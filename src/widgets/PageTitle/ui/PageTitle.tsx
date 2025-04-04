@@ -11,7 +11,13 @@ export const PageTitle: React.FC<Props> = ({ title }) => {
       variant='h2' 
       align='left'
       gutterBottom
-      ml={2}
+      ml={{xs: 1, sm: 2}}
+      sx={(theme) => ({
+        fontSize: {
+          xs: '1.6rem',
+          sm: theme.typography.h2.fontSize
+        }
+      })}
     >
       {title}
     </T>

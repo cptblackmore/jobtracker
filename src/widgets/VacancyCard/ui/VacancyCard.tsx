@@ -11,26 +11,26 @@ interface Props {
 
 export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Fade in timeout={200} >
-      <Card sx={{display: isSm ? 'block' : 'flex', width: '100%'}} >
+      <Card sx={{display: isSmUp ? 'flex' : 'block', width: '100%'}} >
         <Box display='flex' flexGrow={1} >
-          {!isSm && <VacancyFeatures vacancy={vacancy} />}
-          {!isSm && <Divider orientation='vertical' flexItem variant='middle' />}
+          {isSmUp && <VacancyFeatures vacancy={vacancy} />}
+          {isSmUp && <Divider orientation='vertical' flexItem variant='middle' />}
           <VacancyDetails vacancy={vacancy} />
         </Box>
-        {!isSm && <Divider orientation='vertical' flexItem variant='middle' />}
-        {!isSm && <VacancyAdditional vacancy={vacancy} />}
-        {isSm && (
+        {isSmUp && <Divider orientation='vertical' flexItem variant='middle' />}
+        {isSmUp && <VacancyAdditional vacancy={vacancy} />}
+        {!isSmUp && (
           <>
             <Divider variant='middle' />
             <CardActions sx={{justifyContent: 'center', py: 0.5}} >
               <ExternalLinkButton 
                 text='Подробнее'
                 variant='text'
-                size={isSm ? 'small' : 'medium'}
+                size='small'
                 link={vacancy.link}
                 sx={{ width: '100%'}}
             />

@@ -10,7 +10,7 @@ interface Props {
 
 export const DemoSection: React.FC<Props> = ({ sectionStyle }) => {
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Box 
@@ -27,7 +27,7 @@ export const DemoSection: React.FC<Props> = ({ sectionStyle }) => {
         <Box pt={{xs: 2, md: 4}} display='flex' justifyContent='center' >
           <Button 
             variant='contained'
-            size={isSm ? 'medium' : 'large'}
+            size={isSmUp ? 'large' : 'medium'}
             color='secondary'
             component={RouterLink}
             to={pages.search.path}

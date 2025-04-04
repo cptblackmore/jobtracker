@@ -19,9 +19,9 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
     threshold: 0.4
   });
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const iconColor = theme.palette.primary.contrastText;
-  const iconSize = isSm ? '3em' : '3.5em';
+  const iconSize = isSmUp ? '3.5em' : '3em';
   const gridSize = {xs: 12, md: 6};
 
   return (

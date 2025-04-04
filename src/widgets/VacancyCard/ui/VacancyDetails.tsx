@@ -20,7 +20,7 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
   const howLongAgo = formatDistanceToNow(datePublished, { addSuffix: true, locale: ru });
   const { config } = useContext(ThemesContext);
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Box>
@@ -51,7 +51,7 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
           }
           subheader={
             <Box pl={1} >
-              {isSm && <VacancyPayment vacancy={vacancy} variant='row' />}
+              {!isSmUp && <VacancyPayment vacancy={vacancy} variant='row' />}
               <Box textAlign='start' display='flex' >
                 <T component='h4' sx={{fontSize: {xs: '0.7em', sm: theme.typography.body1.fontSize}}} >{vacancy.firmName}</T>
                 <Divider sx={{mx: {xs: 1, sm: 2}}} orientation='vertical' flexItem />
@@ -60,7 +60,7 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
             </Box>
           }
         />
-        {isSm && <VacancyFeatures vacancy={vacancy} />}
+        {!isSmUp && <VacancyFeatures vacancy={vacancy} />}
       </Box>
       <CardContent sx={{'&:last-child': {pb: 1}, pt: {xs: 1, sm: 2}}} >
         <ExpandableText 
@@ -76,7 +76,7 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
         />
         <T 
           display='flex' 
-          px={isSm ? 0 : 1} 
+          px={isSmUp ? 1 : 0} 
           pt={2} 
           gap='0.3em'
           sx={{

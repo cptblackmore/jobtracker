@@ -14,7 +14,7 @@ export const FavoriteIconButton: React.FC<Props> = observer(({ favorite }) => {
   const { favoritesStore } = useContext(FavoritesContext);
   const isFavorite = favoritesStore.isFavorite(favorite.id);
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   function handleToggle() {
     if (isFavorite) {
@@ -33,8 +33,8 @@ export const FavoriteIconButton: React.FC<Props> = observer(({ favorite }) => {
       defaultTooltip='Добавить в избранное'
       toggledTooltip='Удалить из избранного'
       options={{
-        size: isSm ? 1 : 1.2,
-        wrapperSize: isSm ? 1.3 : 1.5,
+        size: isSmUp ? 1.2 : 1,
+        wrapperSize: isSmUp ? 1.5 : 1.3,
         tooltipEnterDelay: 500,
         tooltipLeaveDelay: 300
       }}

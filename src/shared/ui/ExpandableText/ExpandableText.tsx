@@ -41,7 +41,7 @@
     };
     const throttledUpdateDimensions = throttle(() => updateDimensions(dimensionsConfig), 500, 250);
     const theme = useTheme();
-    const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     useEffect(() => {
       updateDimensions(dimensionsConfig);
@@ -60,9 +60,9 @@
           collapsedSize={collapsedHeight}
           css={getFadedCollapseStyle(isFaded, isOverflowed, fadingColor)}
           onExited={handleExited}
-          onClick={isOverflowed && isSm ? toggleCollapse : undefined}
+          onClick={isOverflowed && !isSmUp ? toggleCollapse : undefined}
           sx={{
-            cursor: isOverflowed && isSm ? 'pointer' : 'default'
+            cursor: isOverflowed && !isSmUp ? 'pointer' : 'default'
           }}
         >
           <T 
@@ -78,7 +78,7 @@
             {text}
           </T>
         </Collapse>
-        {isOverflowed && !isSm && (
+        {isOverflowed && isSmUp && (
           <ToggleIconButton
             isToggled={isExpanded}
             onToggle={toggleCollapse}

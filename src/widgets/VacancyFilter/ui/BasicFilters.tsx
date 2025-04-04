@@ -1,5 +1,5 @@
 import { SwitchableVacancyType, VacancyParams, VacancyPeriod } from '@entities/Vacancy/api/types/VacancyParams';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, useMediaQuery, useTheme } from '@mui/material';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { getHighlightedBorderStyle, getHighlightedColorStyle } from './highlightedFiltersStyles';
 
@@ -24,9 +24,19 @@ export const BasicFilters: React.FC<Props> = ({
   highlightedFilters,
   openModal
 }) => {
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const menuItemStyle = {
+    fontSize: {xs: '0.9rem', sm: theme.typography.body1.fontSize},
+    minHeight: {xs: 40, sm: 48}
+  };
+  const selectStyle = {
+    '& .MuiSelect-select': {fontSize: {xs: '0.9rem', sm: theme.typography.body1.fontSize}}
+  }
+
   return (
-    <Stack spacing={2} >
-      <FormControl>
+    <Stack direction={isSmUp ? 'column' : 'row'} spacing={{xs: 1, sm: 2}} >
+      <FormControl sx={{flexGrow: 1}} >
         <InputLabel sx={{...getHighlightedColorStyle(highlightedFilters, 'period')}} htmlFor='period' >
           {filterLabelsMap.period}
         </InputLabel>
@@ -40,19 +50,20 @@ export const BasicFilters: React.FC<Props> = ({
           onInvalid={handleInvalid}
           onChange={(e) => handlePeriodChange(e)}
           sx={{
+            ...selectStyle,
             fieldset: {
               transition: 'border-color 0.2s',
               ...getHighlightedBorderStyle(highlightedFilters, 'period')
             }
           }}
         >
-          <MenuItem value={1} >1 день</MenuItem>
-          <MenuItem value={3} >3 дня</MenuItem>
-          <MenuItem value={7} >7 дней</MenuItem>
-          <MenuItem value={0} >Без ограничения</MenuItem>
+          <MenuItem value={1} sx={menuItemStyle} >1 день</MenuItem>
+          <MenuItem value={3} sx={menuItemStyle} >3 дня</MenuItem>
+          <MenuItem value={7} sx={menuItemStyle} >7 дней</MenuItem>
+          <MenuItem value={0} sx={menuItemStyle} >Без ограничения</MenuItem>
         </Select>
       </FormControl>
-      <FormControl>
+      <FormControl sx={{flexGrow: 1}} >
         <InputLabel sx={{...getHighlightedColorStyle(highlightedFilters, 'type')}} htmlFor='type' >
           {filterLabelsMap.type}
         </InputLabel>
@@ -66,24 +77,27 @@ export const BasicFilters: React.FC<Props> = ({
           onInvalid={handleInvalid}
           onChange={(e) => handleTypeChange(e)}
           sx={{
+            ...selectStyle,
             fieldset: {
               transition: 'border-color 0.2s',
               ...getHighlightedBorderStyle(highlightedFilters, 'type')
             }
           }}
         >
-          <MenuItem value={'none'} >Не выбрано</MenuItem>
-          <MenuItem value={'full'} >Полный день</MenuItem>
-          <MenuItem value={'shift'} >Сменный график</MenuItem>
-          <MenuItem value={'fifo'} >Вахтовый метод</MenuItem>
+          <MenuItem value={'none'} sx={menuItemStyle} >Не выбрано</MenuItem>
+          <MenuItem value={'full'} sx={menuItemStyle} >Полный день</MenuItem>
+          <MenuItem value={'shift'} sx={menuItemStyle} >Сменный график</MenuItem>
+          <MenuItem value={'fifo'} sx={menuItemStyle} >Вахтовый метод</MenuItem>
         </Select>
       </FormControl>
-      <Button 
-        color='warning' 
-        onClick={() => openModal('Вы уверены, что хотите сбросить фильтры?', resetFiltersAndSources)} 
-      >
-        Сбросить фильтры
-      </Button>
+      {isSmUp && (
+        <Button 
+          color='warning' 
+          onClick={() => openModal('Вы уверены, что хотите сбросить фильтры?', resetFiltersAndSources)} 
+        >
+          Сбросить фильтры
+        </Button>
+      )}
     </Stack>
   );
 };

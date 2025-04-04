@@ -1,5 +1,5 @@
 import { VacancyParams } from '@entities/Vacancy';
-import { Divider, Grid2, Typography as T } from '@mui/material';
+import { Button, Divider, Grid2, Typography as T, useMediaQuery, useTheme } from '@mui/material';
 import { SalaryFilter } from './SalaryFilter';
 import { SourceSelection } from './SourceSelection';
 import { BasicFilters } from './BasicFilters';
@@ -34,6 +34,8 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
     onConfirm,
     openModal
   } = useVacancyFilterAdditional(filters, setShowAdditional);
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <>
@@ -54,7 +56,10 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
         </T>
       </ConfirmationModal>
       <Grid2 container mt={2} >
-        <Grid2 size={3} pr={2} >
+        <Grid2 size={12} mb={1} >
+          <Divider orientation='horizontal' sx={{mb: 1}} />
+        </Grid2>
+        <Grid2 size={{xs: 12, sm: 3}} pr={{xs: 0, sm: 2}} >
           <BasicFilters 
             period={period} 
             type={type} 
@@ -66,14 +71,27 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
             openModal={openModal}
           />
         </Grid2>
-        <Divider flexItem orientation='vertical' sx={{mr: '-1px'}} />  
-        <Grid2 size={9} pl={3} pr={1} >
+        {isSmUp && <Divider flexItem orientation='vertical' sx={{mr: '-1px'}} />}
+        <Grid2 size={{xs: 12, sm: 9}} pl={{xs: 0, sm: 3}} pr={{xs: 0, sm: 1}} pt={{xs: 1, sm: 0}} >
           <SalaryCheckbox salaryFilter={salaryFilter} handleSalaryChange={handleSalaryChange} highlightedFilters={highlightedFilters} />
           <SalaryFilter handleSalaryChange={handleSalaryChange} salaryFilter={salaryFilter} handleInvalid={handleInvalid} />
         </Grid2>
       </Grid2>
       <Divider sx={{my: 2}} />
       <SourceSelection sources={sources} handleSourceChange={handleSourceChange} highlightedSources={highlightedSources} />
+      {!isSmUp && (
+        <>
+          <Divider sx={{mt: 2, mb: 0.5}} />
+          <Button 
+            color='warning'
+            size='small'
+            onClick={() => openModal('Вы уверены, что хотите сбросить фильтры?', resetFiltersAndSources)} 
+            sx={{width: '100%'}}
+          >
+            Сбросить фильтры
+          </Button>
+        </>
+      )}
     </>
   );
 };
