@@ -5,7 +5,7 @@ export const LoadingPage: React.FC = () => {
   return (
     <Container maxWidth='lg' >
       <Box 
-        py={4}
+        py={{xs: 2, sm: 4}}
         gap={2}
         display='flex'
         flexDirection='column'

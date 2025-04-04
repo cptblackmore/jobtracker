@@ -20,6 +20,7 @@ export const AccountActivation: React.FC = observer(() => {
             title={
               <CardHeaderTitle title='Активация' />
             }
+            sx={{pb: {xs: 1, sm: 2}}}
           />
           <CardContent sx={{pb: 0}} >
             <Alert variant='outlined' severity='warning' >
@@ -35,6 +36,12 @@ export const AccountActivation: React.FC = observer(() => {
               }}
               cooldown={authStore.resendCooldown}
               onCooldownEnd={() => authStore.updateCurrentTime()}
+              sx={{
+                width: {
+                  xs: '100%',
+                  sm: 'auto'
+                }
+              }}
             >
               Отправить письмо повторно
             </CooldownButton>

@@ -65,7 +65,7 @@ export const SourcesStatusTable: React.FC = () => {
                     <VacancySource source={source} reverse size={isSmUp ? 1.3 : 1.1} gap={isMdUp ? 3 : 2} />
                   </TableCell>
                   <TableCell>
-                    <StatusIndicator success={true} />
+                    <StatusIndicator success={true} size={isSmUp ? 1 : 0.9} />
                   </TableCell>
                 </TableRow>
               </Tooltip>

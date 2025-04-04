@@ -9,18 +9,19 @@ const pulse = keyframes`
 
 interface Props {
   success: boolean;
+  size: number;
 }
 
-export const StatusCircle: React.FC<Props> = ({ success }) => (
+export const StatusCircle: React.FC<Props> = ({ success, size }) => (
   <Box
     component='span'
     sx={{
-      width: 16,
-      height: 16,
+      width: 16 * size,
+      height: 16 * size,
       borderRadius: '50%',
       backgroundColor: (theme) => theme.palette[success ? 'success' : 'error'].main,
       animation: `${pulse} 2s infinite ease-in-out`,
-      ml: 1,
+      ml: 1 * size,
       display: 'inline-block',
     }}
   />

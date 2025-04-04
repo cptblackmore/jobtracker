@@ -12,6 +12,7 @@ export const AccountActions: React.FC = () => {
         title={
           <CardHeaderTitle title='Действия' />
         }
+        sx={{pb: {xs: 1, sm: 2}}}
       />
       <CardActions sx={{p: 2, flexDirection: 'column', gap: 1, '& > :not(:first-of-type)': {ml: 0}}} >
         <Button variant='outlined' color='error' sx={{width: '100%'}} onClick={() => authStore.logout()} >Выход</Button>
