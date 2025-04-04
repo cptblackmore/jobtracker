@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { useFavoritesList } from '../model/useFavoritesList';
 import { VirtualizedVacancyList } from '@widgets/VacancyList';
 import { FavoritesActions } from '@widgets/FavoritesActions';
@@ -16,7 +15,7 @@ export const FavoritesList: React.FC = observer(() => {
   } = useFavoritesList();
 
   return (
-    <Box>
+    <>
       <FavoritesActions 
         clearDisplayedFavorites={clearDisplayedFavorites} 
         resetDisplayedFavorites={resetDisplayedFavorites} 
@@ -30,6 +29,6 @@ export const FavoritesList: React.FC = observer(() => {
       ) : (
         <EmptyFavoritesListMessage />
       )}
-    </Box>
+    </>
   );
 });

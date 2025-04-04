@@ -6,7 +6,7 @@ import { PageTitle } from '@widgets/PageTitle';
     return (
       <>
         <Container maxWidth='lg' >
-          <Box py={4} >
+          <Box py={{xs: 2, sm: 4}} >
             <PageTitle title='Избранные вакансии' />
             <FavoritesList />
           </Box>
