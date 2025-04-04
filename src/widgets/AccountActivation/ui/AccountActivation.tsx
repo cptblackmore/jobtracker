@@ -27,7 +27,7 @@ export const AccountActivation: React.FC = observer(() => {
               Ваш аккаунт не активирован и избранные вакансии не сохраняются удалённо!
             </Alert>
           </CardContent>
-          <CardActions sx={{justifyContent: 'center', p: 2}} >
+          <CardActions sx={{justifyContent: 'center', p: 2, pt: {xs: 1, sm: 2}}} >
             <CooldownButton
               variant='contained' 
               color='warning'

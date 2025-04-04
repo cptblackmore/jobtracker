@@ -23,7 +23,7 @@ export const ActivationMessageNotFound: React.FC<Props> = observer(({ authStore 
             <CooldownButton
               variant='outlined'
               color='warning'
-              sx={{mt: 1}}
+              sx={{mt: 1, width: {xs: '100%', sm: 'auto'}}}
               onClick={() => authStore.resend()}
               cooldown={authStore.resendCooldown}
               onCooldownEnd={() => authStore.updateCurrentTime()}
@@ -31,7 +31,7 @@ export const ActivationMessageNotFound: React.FC<Props> = observer(({ authStore 
               Отправить письмо повторно
             </CooldownButton>
           ) : (
-            <ActivationAlert severity='warning' title='Ошибка!' >
+            <ActivationAlert severity='warning' title='Внимание!' >
               Авторизуйтесь, чтобы повторная отправка письма стала доступна.
             </ActivationAlert>
           )}

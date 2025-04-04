@@ -10,7 +10,7 @@ export const ActivationMessageAlready: React.FC = () => {
         {errorMessages['USER_ALREADY_ACTIVATED']}
       </ActivationAlert>
       <Box mt={3} >
-        <T>Если у вас всё ещё есть проблемы, свяжитесь с поддержкой.</T>
+        <T>Если у вас всё ещё остались проблемы, свяжитесь с поддержкой.</T>
       </Box>
     </>
   );

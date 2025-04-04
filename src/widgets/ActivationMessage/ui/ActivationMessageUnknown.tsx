@@ -15,12 +15,18 @@ export const ActivationMessageUnknown: React.FC<Props> = ({ code }) => {
       </ActivationAlert>
       <Box mt={3} >
         <T>Обратитесь в поддержку.</T>
-        <T>Код:</T>
+        <T mb={1} >Код ошибки:</T>
         <T
           variant='body1'
           fontFamily='monospace'
           px={1}
-          sx={{backgroundColor: 'rgb(60, 60, 60)', color: 'rgb(255, 255, 255)'}}
+          sx={(theme) => ({
+            backgroundColor: theme.palette.grey[800], 
+            color: theme.palette.error.light,
+            wordBreak: 'break-word', 
+            overflowWrap: 'break-word',
+            whiteSpace: 'pre-wrap'
+          })}
         >
           {code}
         </T>
