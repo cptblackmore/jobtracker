@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router';
 
 export const NavToolbar: React.FC = observer(() => {
-  const { pages } = useContext(PagesContext);
+  const { currentPage, pages } = useContext(PagesContext);
   const { favoritesStore } = useContext(FavoritesContext);
 
   return (
@@ -28,7 +28,12 @@ export const NavToolbar: React.FC = observer(() => {
               key={page.id}
               component={RouterLink}
               to={page.path}
-              sx={{my: 1, display: 'block', color: (theme) => theme.palette.primary.contrastText}}
+              sx={{
+                my: 1, 
+                display: 'block', 
+                color: (theme) => theme.palette.primary.contrastText,
+                backgroundColor: (theme) => currentPage?.id === page.id ? theme.palette.primary.light : 'transparent'
+              }}
             >
               {page.name}
             </Button>

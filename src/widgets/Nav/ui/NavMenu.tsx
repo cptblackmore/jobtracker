@@ -14,7 +14,7 @@ export const NavMenu: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
   const { favoritesStore } = useContext(FavoritesContext);
   const navigate = useNavigate();
-  const { pages } = useContext(PagesContext);
+  const { currentPage, pages } = useContext(PagesContext);
 
   return (
     <Box>
@@ -45,7 +45,7 @@ export const NavMenu: React.FC = observer(() => {
       >
         {Object.values(pages).map((page) => (
           page.inNav && (
-            <MenuItem key={page.id} onClick={() => {handleCloseMenu(); navigate(page.path)}} >
+            <MenuItem selected={currentPage?.id === page.id} key={page.id} onClick={() => {handleCloseMenu(); navigate(page.path)}} >
               {page.name}
               {page.id === 2 && favoritesStore.ids.length > 0 ? ` (${favoritesStore.ids.length})` : ''}
             </MenuItem>

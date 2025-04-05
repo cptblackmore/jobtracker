@@ -11,11 +11,11 @@ interface Props {
 export const AccountMenuItems: React.FC<Props> = ({ handleCloseMenu }) => {
   const { authStore } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { pages } = useContext(PagesContext);
+  const { currentPage, pages } = useContext(PagesContext);
 
   return (
     [
-      <MenuItem key={pages.account.id} onClick={() => {handleCloseMenu(); navigate(pages.account.path)}} >
+      <MenuItem selected={currentPage?.id === pages.account.id} key={pages.account.id} onClick={() => {handleCloseMenu(); navigate(pages.account.path)}} >
         {pages.account.name}
       </MenuItem>,
       <MenuItem key='logout' onClick={() => {handleCloseMenu(); authStore.logout()}} >
