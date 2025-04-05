@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, useMedi
 import { typedEntries } from '@shared/lib';
 import { StatusIndicator } from '@shared/ui';
 import { VacancySource } from '@widgets/VacancySource';
+import { StatusTableCellLink } from './StatusTableCellLink';
 
 export const SourcesStatusTable: React.FC = () => {
   // const [statuses, setStatuses] = React.useState(new Array(typedKeys(sourcesRegistry).length).fill(false));
@@ -49,10 +50,6 @@ export const SourcesStatusTable: React.FC = () => {
                 }}
               >
                 <TableRow 
-                  component='a'
-                  href={config.url.frontendOrigin}
-                  rel='noopener noreferrer'
-                  target='_blank'
                   tabIndex={-1}
                   hover 
                   sx={{
@@ -61,11 +58,15 @@ export const SourcesStatusTable: React.FC = () => {
                     textDecoration: 'none'
                   }}
                 >
-                  <TableCell component='th' scope='row' width='100%' >
-                    <VacancySource source={source} reverse size={isSmUp ? 1.3 : 1.1} gap={isMdUp ? 3 : 2} />
+                  <TableCell component='th' scope='row' width='100%' sx={{p: 0}} >
+                    <StatusTableCellLink href={config.url.frontendOrigin} >
+                      <VacancySource source={source} reverse size={isSmUp ? 1.3 : 1.1} gap={isMdUp ? 3 : 2} />
+                    </StatusTableCellLink>
                   </TableCell>
-                  <TableCell>
-                    <StatusIndicator success={true} size={isSmUp ? 1 : 0.9} />
+                  <TableCell sx={{p: 0}} >
+                    <StatusTableCellLink href={config.url.frontendOrigin} >
+                      <StatusIndicator success={true} size={isSmUp ? 1 : 0.9} />
+                    </StatusTableCellLink>
                   </TableCell>
                 </TableRow>
               </Tooltip>
