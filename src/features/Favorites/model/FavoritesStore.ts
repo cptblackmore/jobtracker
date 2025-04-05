@@ -92,7 +92,7 @@ export class FavoritesStore {
       setFavoritesLS(response.data.favorites || []);
       this.setIds(response.data.favorites || []);
       this.setSynced(true);
-      this.alertsStore.addAlert(createAlert('Избранные вакансии синхронизированы', 'info', 2000));
+      this.alertsStore.addAlert(createAlert('Избранные вакансии синхронизированы', 'success', 2000));
     } catch (e) {
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));

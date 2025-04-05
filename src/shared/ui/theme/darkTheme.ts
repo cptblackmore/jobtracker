@@ -17,20 +17,20 @@ export const darkTheme = createTheme({
       contrastText: '#22272E',
     },
     info: {
-      main: '#5CACE2',
-      contrastText: '#E3F3FF',
+      main: '#4AA8DA',
+      contrastText: '#0D1117',
     },
     success: {
-      main: '#6CC799',
-      contrastText: '#D9F4E5',
+      main: '#4CAF88',
+      contrastText: '#081C15',
     },
     warning: {
-      main: '#E6B76C',
-      contrastText: '#FFF5E1',
+      main: '#D99C3A',
+      contrastText: '#1A120B',
     },
     error: {
-      main: '#E66A6A',
-      contrastText: '#FFDADA',
+      main: '#D9544F',
+      contrastText: '#160000',
     },
     text: {
       primary: '#E2E6EA',

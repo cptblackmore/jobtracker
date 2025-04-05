@@ -9,7 +9,7 @@ export const Alerts = observer(() => {
   return (
     alertsStore.currentAlert && (
       <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
         open={!!alertsStore.currentAlert}
         autoHideDuration={alertsStore.currentAlert.duration ?? 4000}
         onClose={() => alertsStore.closeAlert()}
@@ -19,7 +19,15 @@ export const Alerts = observer(() => {
         }}
       >
         {alertsStore.currentAlert && (
-          <Alert onClose={() => alertsStore.closeAlert()} severity={alertsStore.currentAlert.severity} variant='filled'>
+          <Alert 
+            onClose={() => alertsStore.closeAlert()} 
+            severity={alertsStore.currentAlert.severity}
+            variant='filled'
+            sx={(theme) => ({
+              backgroundColor: theme.palette[alertsStore.currentAlert?.severity ?? 'info'].main,
+              color: theme.palette[alertsStore.currentAlert?.severity ?? 'info'].contrastText
+            })}
+          >
             {alertsStore.currentAlert.message}
           </Alert>
         )}
