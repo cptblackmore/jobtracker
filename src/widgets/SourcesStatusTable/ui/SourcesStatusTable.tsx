@@ -1,28 +1,14 @@
 import { sourcesRegistry } from '@entities/Vacancy';
-import { Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, useMediaQuery, useTheme, Zoom } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableRow, Tooltip, useMediaQuery, useTheme, Zoom } from '@mui/material';
 import { typedEntries } from '@shared/lib';
 import { StatusIndicator } from '@shared/ui';
 import { VacancySource } from '@widgets/VacancySource';
 import { StatusTableCellLink } from './StatusTableCellLink';
+import { useSourcesStatus } from '../model/useSourcesStatus';
 
 export const SourcesStatusTable: React.FC = () => {
-  // const [statuses, setStatuses] = React.useState(new Array(typedKeys(sourcesRegistry).length).fill(false));
-  // const sourcesConfigs = Object.values(sourcesRegistry);
-  // async function checkStatus(index: number) {
-  //   const updatedStatuses = [];
-  //   try {
-  //     const response = await axios.get(sourcesConfigs[index].url.status);
-  //     if (response.status === 200) {
-  //       updatedStatuses.push(true);
-  //     }
-  //   } catch {
-  //     updatedStatuses.push(false);
-  //   }
-  // }
-  // useEffect(() => {
-  //   const updatedStatuses = statuses.map((_, index) => checkStatus(index));
-  //   setStatuses(updatedStatuses);
-  // }, []);
+  const { statuses } = useSourcesStatus();
+
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
@@ -65,7 +51,13 @@ export const SourcesStatusTable: React.FC = () => {
                   </TableCell>
                   <TableCell sx={{p: 0}} >
                     <StatusTableCellLink href={config.url.frontendOrigin} >
-                      <StatusIndicator success={true} size={isSmUp ? 1 : 0.9} />
+                      <Box display='flex' justifyContent='flex-end' >
+                        <StatusIndicator 
+                          success={statuses[source] === 'success'} 
+                          pending={statuses[source] === 'pending'} 
+                          size={isSmUp ? 1 : 0.9} 
+                        />
+                      </Box>
                     </StatusTableCellLink>
                   </TableCell>
                 </TableRow>

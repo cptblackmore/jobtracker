@@ -12,7 +12,7 @@ export const StatusIndicator: React.FC<Props> = ({ success, pending, size=1 }) =
   if (pending) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center' }} >
-        <CircularProgress size={16 * size} />
+        <CircularProgress size={16 * size} color='warning' />
       </Box>
     );
   }

@@ -5,3 +5,4 @@ export { sourcesRegistry } from './model/sourcesRegistry';
 export { getVacancies } from './api/getVacancies';
 export { vacanciesToText } from './lib/vacanciesToText';
 export { vacanciesToCsv } from './lib/vacanciesToCsv';
+export { getOnlineStatuses } from './api/getOnlineStatuses';

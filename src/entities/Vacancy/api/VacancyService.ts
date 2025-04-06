@@ -46,7 +46,19 @@ export class VacancyService {
           'X-Target-Url': sourcesRegistry.superjob.url.api + '/vacancies/?' + ids.map((el, i) => `ids[${i}]=${el}`).join('&')
         }
       }
-  );
+    );
+  }
+
+  static async getSuperjobOnlineStatus(signal: AbortSignal): Promise<AxiosResponse> {
+    return await axios.get(
+      this.baseURL, 
+      { 
+        signal,
+        headers: {
+          'X-Target-Url': sourcesRegistry.superjob.url.status
+        }
+      }
+    )
   }
   
   static async getHH(params: HHParams, signal: AbortSignal): Promise<AxiosResponse<VacancyHHMultipleResponse>> {
@@ -72,6 +84,18 @@ export class VacancyService {
         }
       }
     );
+  }
+
+  static async getHHOnlineStatus(signal: AbortSignal): Promise<AxiosResponse> {
+    return await axios.get(
+      this.baseURL, 
+      { 
+        signal,
+        headers: {
+          'X-Target-Url': sourcesRegistry.hh.url.status
+        }
+      }
+    )
   }
   
   static async getTrudvsem(params: TrudvsemParams, signal: AbortSignal): Promise<AxiosResponse<VacancyTrudvsemResponse>> {
