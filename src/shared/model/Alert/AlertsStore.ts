@@ -10,6 +10,8 @@ export class AlertsStore {
   }
 
   addAlert(alert: Alert) {
+    if (alert.dismissedKey && JSON.parse(localStorage.getItem('dismissedAlerts') || '[]').includes(alert.dismissedKey)) return;
+
     this.alerts.push(alert);
 
     if (!this.currentAlert) {

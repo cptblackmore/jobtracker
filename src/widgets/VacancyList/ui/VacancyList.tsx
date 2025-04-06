@@ -14,7 +14,13 @@ export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
   const { state, toNextPage, alertsStore, setFilters, isLoading } = useVacancyList({page: 0, count: VACANCIES_COUNT_PER_SOURCE, filters: initialFilters});
 
   useEffectOnceByCondition(() => {
-    alertsStore.addAlert(createAlert('Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 'info'));
+    alertsStore.addAlert(createAlert(
+      'Прокручивайте страницу вниз, чтобы загрузить больше вакансий', 
+      'info', 
+      4000,
+      'scroll-down-hint',
+      'scroll-down-hint'
+    ));
   }, [isLoading], !isLoading);
 
   return (
