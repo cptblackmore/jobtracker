@@ -11,6 +11,7 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
   const [modalOpen, setModalOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeAction, setActiveAction] = useState<string | null>(null);
   const { alertsStore } = useContext(AlertsContext);
   const { favoritesStore } = useContext(FavoritesContext);
   const controller = new AbortController();
@@ -24,6 +25,7 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
 
   const handleDownloadFavorites = async (format: 'txt' | 'csv') => {
     setIsLoading(true);
+    setActiveAction('download-' + format)
     try {
       const favorites = await fetchFavorites(favoritesStore.ids, signal, alertsStore, favoritesStore, setProgress);
       if (format === 'txt') {
@@ -34,9 +36,11 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
         downloadCsvFile(csv, 'favorites');
       }
       setIsLoading(false);
+      setActiveAction(null);
     } catch (e) {
       if (axios.isCancel(e)) return;
       setIsLoading(false);
+      setActiveAction(null);
     } finally {
       setProgress(0);
     }
@@ -61,6 +65,7 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
     setModalOpen, 
     progress, 
     isLoading,
+    activeAction,
     handleDeleteFavorites, 
     handleDownloadFavorites, 
     handleExportFavorites, 

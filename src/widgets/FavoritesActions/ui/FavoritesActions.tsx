@@ -14,6 +14,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
     setModalOpen, 
     progress, 
     isLoading,
+    activeAction,
     handleDeleteFavorites, 
     handleDownloadFavorites, 
     handleExportFavorites, 
@@ -24,10 +25,36 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   const buttons = [
-    {text: isLoading ? 'Загрузка...' : 'Скачать TXT', onClick: () => handleDownloadFavorites('txt'), disableOnLoading: true, disableOnEmpty: true},
-    {text: isLoading ? 'Загрузка...' : 'Скачать CSV', onClick: () => handleDownloadFavorites('csv'), disableOnLoading: true, disableOnEmpty: true},
-    {text: 'Экспорт', onClick: handleExportFavorites, disableOnLoading: false, disableOnEmpty: true},
-    {text: 'Импорт', onClick: handleImportFavorites, disableOnLoading: false, disableOnEmpty: false},
+    {
+      text: 'Скачать TXT', 
+      onClick: () => handleDownloadFavorites('txt'), 
+      action: 'download-txt',
+      disableOnLoading: true, 
+      disableOnEmpty: true
+    },
+    {
+      text:'Скачать CSV', 
+      onClick: () => handleDownloadFavorites('csv'), 
+      action: 'download-csv',
+      disableOnLoading: true, 
+      disableOnEmpty: true
+    },
+    {
+      text: 'Экспорт', 
+      onClick: handleExportFavorites, 
+      action: 'export',
+      disableOnLoading: false, 
+      disableOnEmpty: true
+
+    },
+    {
+      text: 'Импорт', 
+      onClick: handleImportFavorites, 
+      action: 'import',
+      disableOnLoading: false, 
+      disableOnEmpty: false
+
+    }
   ];
 
   return (
@@ -48,36 +75,42 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
               Удалить все
             </Button>
             <Divider orientation='vertical' flexItem />
-            {buttons.map((button, i) => (
-              <Button
+            {buttons.map((button, i) => {
+              const isActive = button.action === activeAction;
+              const disabled = isActive || (button.disableOnLoading && isLoading) || button.disableOnEmpty && favoritesStore.ids.length === 0;
+
+              return <Button
                 fullWidth
                 variant='contained'
                 key={i}
                 onClick={button.onClick}
-                disabled={button.disableOnLoading ? isLoading || (button.disableOnEmpty && favoritesStore.ids.length === 0) : (button.disableOnEmpty && favoritesStore.ids.length === 0)}
-                endIcon={button.disableOnLoading && isLoading && <CircularProgress size={15} color='inherit' />}
+                disabled={disabled}
+                endIcon={isActive && <CircularProgress size={15} color='inherit' />}
               >
-                {button.text}
+                {isActive ? 'Загрузка...' : button.text}
               </Button>
-            ))}
+            })}
           </Box>
         ) : (
           <Grid2 container spacing={1} >
-            {buttons.map((button, i) => (
-              <Grid2 size={6} key={i} >
+            {buttons.map((button, i) => {
+              const isActive = button.action === activeAction;
+              const disabled = isActive || (button.disableOnLoading && isLoading) || button.disableOnEmpty && favoritesStore.ids.length === 0;
+
+              return <Grid2 size={6} key={i} >
                 <Button
                   fullWidth
                   variant='contained'
                   size='small'
                   key={i}
                   onClick={button.onClick}
-                  disabled={button.disableOnLoading ? isLoading || (button.disableOnEmpty && favoritesStore.ids.length === 0) : (button.disableOnEmpty && favoritesStore.ids.length === 0)}
-                  endIcon={button.disableOnLoading && isLoading && <CircularProgress size={15} color='inherit' />}
+                  disabled={disabled}
+                  endIcon={isActive && <CircularProgress size={15} color='inherit' />}
                 >
-                  {button.text}
+                  {isActive ? 'Загрузка...' : button.text}
                 </Button>
               </Grid2>
-            ))}
+            })}
             <Grid2 size={12} >
               <Divider sx={{my: 1}} />
             </Grid2>
