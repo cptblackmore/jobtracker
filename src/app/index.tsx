@@ -1,15 +1,19 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './App.tsx'
-import { StoresProvider } from './context/StoresProvider.tsx';
-import { PagesProvider } from './context/PagesProvider.tsx';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <StoresProvider>
-      <PagesProvider>
+const root = document.getElementById('root')!;
+
+const renderApp = (isDevMode: boolean) => {
+  createRoot(root).render(
+    isDevMode ? (
+      <StrictMode>
         <App />
-      </PagesProvider>
-    </StoresProvider>
-  </StrictMode>,
-);
+      </StrictMode>
+    ) : (
+      <App />
+    )
+  );
+}
+
+renderApp(import.meta.env.VITE_MODE === 'development');
