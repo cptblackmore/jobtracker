@@ -29,6 +29,7 @@ export const setupAuthChannelListener = (authStore: AuthStore, alertsStore: Aler
 
     if (type === 'logout') {
       authStore.setUser({} as UserData);
+      authStore.setInit(true);
       if (event.data.payload.reason) {
         alertsStore.addAlert(createAlert(event.data.payload.reason, event.data.payload.severity || 'error'));
       }

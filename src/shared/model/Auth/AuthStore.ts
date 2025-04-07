@@ -149,6 +149,7 @@ export class AuthStore {
     try {
       localStorage.removeItem('token');
       this.setUser({} as UserData);
+      this.setInit(true);
       authChannel.postMessage({type: 'logout', payload: {reason, severity}});
       if (reason) this.alertsStore.addAlert(createAlert(reason, severity || 'error'));
     } catch (e) {
