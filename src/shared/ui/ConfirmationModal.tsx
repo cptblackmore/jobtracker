@@ -8,9 +8,10 @@ interface Props {
   handleConfirm: () => void;
   confirmButtonText?: string;
   severity?: 'warning' | 'error';
+  onExited?: () => void;
 }
 
-export const ConfirmationModal: React.FC<Props> = ({ open, setOpen, children, handleConfirm, confirmButtonText='ОК', severity='warning' }) => {
+export const ConfirmationModal: React.FC<Props> = ({ open, setOpen, children, handleConfirm, confirmButtonText='ОК', severity='warning', onExited }) => {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -19,6 +20,8 @@ export const ConfirmationModal: React.FC<Props> = ({ open, setOpen, children, ha
       open={open}
       onClose={() => setOpen(false)}
       fullScreen={!isSmUp}
+      closeAfterTransition={false}
+      onTransitionExited={onExited}
       sx={{
         '& .MuiDialog-paper': {
           px: isSmUp ? 0 : 2,

@@ -2,7 +2,7 @@ import { makeAutoObservable, reaction, toJS } from 'mobx';
 import { UserData, AlertsStore, createAlert, Alert } from '@shared/model';
 import { AuthService } from '@shared/api';
 import { authChannel, setupAuthChannelListener } from './AuthChannel';
-import { broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
+import { blurActiveElement, broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
 import { nanoid } from 'nanoid';
 import { startHeartbeatCheck } from './tabSynchronization/startHeartbeatCheck';
 import { electLeader } from './tabSynchronization/electLeader';
@@ -79,6 +79,11 @@ export class AuthStore {
     this.isModalOpen = bool;
   }
 
+  closeModalOnSuccess() {
+    blurActiveElement();
+    this.isModalOpen = false;
+  }
+
   setModalLoginForm(bool: boolean) {
     this.isModalLoginForm = bool;
   }
@@ -97,7 +102,7 @@ export class AuthStore {
       const response = await AuthService.login(email, password);
       localStorage.setItem('token', response.data.accessToken);
       this.setUser(response.data.userDto);
-      this.setModalOpen(false);
+      this.closeModalOnSuccess();
       authChannel.postMessage(
         {type: 'login', payload: toJS(this.user)}
       );
@@ -126,7 +131,7 @@ export class AuthStore {
       const response = await AuthService.registration(email, password);
       localStorage.setItem('token', response.data.accessToken);
       this.setUser(response.data.userDto);
-      this.setModalOpen(false);
+      this.closeModalOnSuccess();
       authChannel.postMessage(
         {type: 'login', payload: toJS(this.user)}
       );

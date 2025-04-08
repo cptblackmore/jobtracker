@@ -29,7 +29,6 @@ export const NavMenu: React.FC = observer(() => {
         <MenuIcon />
       </IconButton>
       <Menu
-        id='menu-appbar'
         anchorEl={anchorElMenu}
         anchorOrigin={{
           vertical: 'bottom',

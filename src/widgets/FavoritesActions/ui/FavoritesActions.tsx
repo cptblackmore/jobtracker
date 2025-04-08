@@ -2,6 +2,7 @@ import { Box, Button, CircularProgress, Divider, Grid2, LinearProgress, Paper, u
 import { DeleteFavoritesModal } from './DeleteFavoritesModal';
 import { useFavoritesActions } from '../model/useFavoritesActions';
 import { observer } from 'mobx-react-lite';
+import { favoritesActionsElementsIds } from '../lib/favoritesActionsElementsIds';
 
 interface Props {
   clearDisplayedFavorites: () => void;
@@ -52,14 +53,19 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
       onClick: handleImportFavorites, 
       action: 'import',
       disableOnLoading: false, 
-      disableOnEmpty: false
-
+      disableOnEmpty: false,
+      id: favoritesActionsElementsIds.importButton
     }
   ];
 
   return (
     <>
-      <DeleteFavoritesModal open={modalOpen} setOpen={setModalOpen} handleDeleteFavorites={handleDeleteFavorites} />
+      <DeleteFavoritesModal 
+        open={modalOpen} 
+        setOpen={setModalOpen} 
+        handleDeleteFavorites={handleDeleteFavorites} 
+        favoritesStore={favoritesStore}  
+      />
       <Paper 
         sx={{ p: isSmUp ? 2 : 1, borderRadius: 2, boxShadow: 2, mb: 2 }}
       >
@@ -83,6 +89,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
                 fullWidth
                 variant='contained'
                 key={i}
+                id={button.id}
                 onClick={button.onClick}
                 disabled={disabled}
                 endIcon={isActive && <CircularProgress size={15} color='inherit' />}
@@ -103,6 +110,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
                   variant='contained'
                   size='small'
                   key={i}
+                  id={button.id}
                   onClick={button.onClick}
                   disabled={disabled}
                   endIcon={isActive && <CircularProgress size={15} color='inherit' />}

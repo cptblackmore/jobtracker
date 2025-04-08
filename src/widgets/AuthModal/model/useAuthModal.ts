@@ -31,6 +31,7 @@ export const useAuthModal = () => {
     setOpen, 
     isLoginForm: authStore.isModalLoginForm, 
     toggleForm, 
-    handleSubmit 
+    handleSubmit,
+    authStore
   };
 } 

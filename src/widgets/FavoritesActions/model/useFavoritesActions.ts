@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { fetchFavorites } from '@widgets/FavoritesList';
 import { AlertsContext, createAlert } from '@shared/model';
 import axios from 'axios';
-import { downloadCsvFile, downloadTextFile, uploadJsonFile } from '@shared/lib';
+import { blurActiveElement, downloadCsvFile, downloadTextFile, uploadJsonFile } from '@shared/lib';
 import { downloadJsonFile } from '@shared/lib/downloadJsonFile';
 import { vacanciesToCsv, vacanciesToText } from '@entities/Vacancy';
 
@@ -18,6 +18,7 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
   const signal = controller.signal;
 
   const handleDeleteFavorites = () => {
+    blurActiveElement();
     setModalOpen(false);
     favoritesStore.clearFavorites();
     clearDisplayedFavorites();

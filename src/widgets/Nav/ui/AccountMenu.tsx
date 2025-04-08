@@ -6,6 +6,7 @@ import { useMenu } from '../model/useMenu';
 import { AccountMenuItems } from './AccountMenuItems';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { PagesContext } from '@shared/lib';
+import { navElementsIds } from '../lib/navElementsIds';
 
 export const AccountMenu: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -15,6 +16,7 @@ export const AccountMenu: React.FC = observer(() => {
   return (
     <Box display='flex' alignItems='center' >
       <Button 
+        id={navElementsIds.accountMenuButton}
         onClick={handleOpenMenu}
         endIcon={<Box display='flex' >{anchorElMenu ? <ArrowDropUp /> : <ArrowDropDown />}</Box>}
         sx={{
@@ -25,7 +27,6 @@ export const AccountMenu: React.FC = observer(() => {
         {authStore.user.email.split('@')[0]}
       </Button>
       <Menu
-        id='menu-appbar'
         anchorEl={anchorElMenu}
         anchorOrigin={{
           vertical: 'bottom',

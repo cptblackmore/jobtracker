@@ -1,10 +1,9 @@
 import { useFavoritesList } from '../model/useFavoritesList';
 import { VirtualizedVacancyList } from '@widgets/VacancyList';
 import { FavoritesActions } from '@widgets/FavoritesActions';
-import { observer } from 'mobx-react-lite';
 import { EmptyFavoritesListMessage } from './EmptyFavoritesListMessage';
 
-export const FavoritesList: React.FC = observer(() => {
+export const FavoritesList: React.FC = () => {
   const { 
     vacancies,
     isLoading, 
@@ -31,4 +30,4 @@ export const FavoritesList: React.FC = observer(() => {
       )}
     </>
   );
-});
+};

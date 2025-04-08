@@ -21,3 +21,5 @@ export { uploadJsonFile } from './uploadJsonFile';
 export { downloadCsvFile } from './downloadCsvFile';
 export { hexToRgb } from './hexToRgb';
 export { blendColors } from './blendColors';
+export { blurActiveElement } from './blurActiveElement';
+export { focusElementById } from './focusElementById';

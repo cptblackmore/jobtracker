@@ -1,9 +1,11 @@
 import { alpha, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useAuthModal } from '../model/useAuthModal';
+import { focusElementById } from '@shared/lib';
+import { navElementsIds } from '@widgets/Nav';
 
 export const AuthModal = observer(() => {
-  const { open, setOpen, isLoginForm, toggleForm, handleSubmit } = useAuthModal();
+  const { open, setOpen, isLoginForm, toggleForm, handleSubmit, authStore } = useAuthModal();
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -11,6 +13,7 @@ export const AuthModal = observer(() => {
     <Dialog
       open={open}
       onClose={() => setOpen(false)}
+      closeAfterTransition={false}
       PaperProps={{
         component: 'form',
         onSubmit: handleSubmit,
@@ -24,6 +27,7 @@ export const AuthModal = observer(() => {
         }
       }}
       fullScreen={!isSmUp}
+      onTransitionExited={() => authStore.isInit && authStore.isAuth && focusElementById(navElementsIds.accountMenuButton)}
     >
       <DialogTitle
         sx={{textAlign: 'center', mb: 1}}
