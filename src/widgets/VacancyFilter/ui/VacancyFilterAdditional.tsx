@@ -1,5 +1,5 @@
 import { VacancyParams } from '@entities/Vacancy';
-import { Button, Divider, Grid2, Typography as T, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Divider, Grid2, useMediaQuery, useTheme } from '@mui/material';
 import { SalaryFilter } from './SalaryFilter';
 import { SourceSelection } from './SourceSelection';
 import { BasicFilters } from './BasicFilters';
@@ -45,15 +45,15 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
         handleConfirm={onConfirm}
         confirmButtonText='Сбросить'
       >
-        <T>{modalText}</T>
-        <T>
+        <span style={{display: 'block'}} >{modalText}</span>
+        <span>
           {incompatibleFiltersRef.current?.map((filter, index, array) => (
             <span key={filter}>
               <b>{filter}</b>
               {index < array.length - 1 ? ', ' : ''}
             </span>
           ))}
-        </T>
+        </span>
       </ConfirmationModal>
       <Grid2 container mt={2} >
         <Grid2 size={12} mb={1} >
