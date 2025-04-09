@@ -8,7 +8,11 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { PagesContext } from '@shared/lib';
 import { navElementsIds } from '../lib/navElementsIds';
 
-export const AccountMenu: React.FC = observer(() => {
+interface Props {
+  onClose?: () => void;
+}
+
+export const AccountMenu: React.FC<Props> = observer(({ onClose }) => {
   const { authStore } = useContext(AuthContext);
   const { handleCloseMenu, handleOpenMenu, anchorElMenu } = useMenu();
   const { currentPage, pages } = useContext(PagesContext);
@@ -40,7 +44,7 @@ export const AccountMenu: React.FC = observer(() => {
         open={Boolean(anchorElMenu)}
         onClose={handleCloseMenu}
       >
-        {AccountMenuItems({ handleCloseMenu })}
+        {AccountMenuItems({ handleCloseMenu, onClose })}
       </Menu>
     </Box>
   );

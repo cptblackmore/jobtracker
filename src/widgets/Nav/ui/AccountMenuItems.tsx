@@ -6,21 +6,34 @@ import { useNavigate } from 'react-router';
 
 interface Props {
   handleCloseMenu: () => void;
+  onClose?: () => void
 }
 
-export const AccountMenuItems: React.FC<Props> = ({ handleCloseMenu }) => {
+export const AccountMenuItems: React.FC<Props> = ({ handleCloseMenu, onClose }) => {
   const { authStore } = useContext(AuthContext);
   const navigate = useNavigate();
   const { currentPage, pages } = useContext(PagesContext);
 
   return (
     [
-      <MenuItem selected={currentPage?.id === pages.account.id} key={pages.account.id} onClick={() => {handleCloseMenu(); navigate(pages.account.path)}} >
+      <MenuItem 
+        selected={currentPage?.id === pages.account.id} 
+        key={pages.account.id} 
+        onClick={() => {handleCloseMenu(); 
+        navigate(pages.account.path)}} 
+      >
         {pages.account.name}
       </MenuItem>,
-      <MenuItem key='logout' onClick={() => {handleCloseMenu(); authStore.logout()}} >
+      <MenuItem 
+        key='logout' 
+        onClick={() => {
+          handleCloseMenu(); 
+          authStore.logout(); 
+          if (onClose) onClose()
+        }} 
+      >
         Выход
       </MenuItem>
     ]
   )
-};
+}

@@ -2,6 +2,7 @@ import { Box, Button, CircularProgress } from '@mui/material';
 import { AuthContext } from '@shared/model';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
+import { navElementsIds } from '../lib/navElementsIds';
 
 export const LoginButton: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -16,6 +17,7 @@ export const LoginButton: React.FC = observer(() => {
       </Box>
     ) : (
       <Button
+        id={navElementsIds.loginMenuButton}
         sx={{color: (theme) => theme.palette.primary.contrastText}} 
         onClick={() => authStore.setModalOpen(true, 'login')} 
       >

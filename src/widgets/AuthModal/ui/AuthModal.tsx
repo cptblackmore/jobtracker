@@ -1,7 +1,7 @@
 import { alpha, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormHelperText, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useAuthModal } from '../model/useAuthModal';
-import { focusElementById, useTriggerAnimation } from '@shared/lib';
+import { blurActiveElement, focusElementById, useTriggerAnimation } from '@shared/lib';
 import { navElementsIds } from '@widgets/Nav';
 import { authModalElementsIds } from '../lib/authModalElementsIds';
 import { shakeKeyframes } from '@shared/ui';
@@ -25,7 +25,10 @@ export const AuthModal = observer(() => {
   return (
     <Dialog
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={() => {
+        blurActiveElement();
+        setOpen(false)
+      }}
       closeAfterTransition={false}
       PaperProps={{
         component: 'form',
@@ -41,7 +44,14 @@ export const AuthModal = observer(() => {
         noValidate: true
       }}
       fullScreen={!isSmUp}
-      onTransitionExited={() => authStore.isInit && authStore.isAuth && focusElementById(navElementsIds.accountMenuButton)}
+      onTransitionEnter={() => focusElementById(authModalElementsIds.emailInput)}
+      onTransitionExited={() => {
+        if (authStore.isInit && authStore.isAuth) {
+          focusElementById(navElementsIds.accountMenuButton);
+        } else {
+          focusElementById(navElementsIds.loginMenuButton);
+        }
+      }}
     >
       <DialogTitle
         sx={{textAlign: 'center', mb: 1}}
@@ -88,7 +98,14 @@ export const AuthModal = observer(() => {
           <DialogContentText component='span' >
             {isLoginForm ? 'Нет аккаунта?' : 'Уже есть аккаунт?'}
           </DialogContentText>
-          <Button size='small' type='button' onClick={toggleForm} >
+          <Button 
+            size='small' 
+            type='button' 
+            onClick={() => {
+              toggleForm();
+              focusElementById(authModalElementsIds.emailInput);
+            }}
+          >
             {isLoginForm ? 'Зарегистрироваться' : 'Войти'}
           </Button>
         </Box>

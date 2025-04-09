@@ -1,7 +1,7 @@
 export const focusElementById = (id: string) => {
-  const accountMenuElement = document.getElementById(id);
+  const element = document.getElementById(id);
 
-  if (accountMenuElement instanceof HTMLElement) {
-    accountMenuElement.focus();
+  if (element instanceof HTMLElement) {
+    element.focus();
   }
 }
