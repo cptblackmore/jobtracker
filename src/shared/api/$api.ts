@@ -1,6 +1,7 @@
 import { AuthResponse } from '@shared/model';
 import axios from 'axios';
 import { errorMessages } from '../lib/errorMessages';
+import { PassthroughError } from './PassthroughError';
 
 export const $api = axios.create({
   withCredentials: true,
@@ -26,6 +27,9 @@ $api.interceptors.response.use(config => {
   const { code, message } = error.response.data;
   const status = error.response.status;
 
+  if (code === 'INVALID_CREDENTIALS' || code === 'EMAIL_EXISTS') {
+    throw new PassthroughError(errorMessages[code], code, status);
+  }
 
   if (code === 'UNAUTHORIZED') {
     if (originalRequest && !originalRequest._isRetry) {

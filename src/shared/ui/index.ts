@@ -17,3 +17,6 @@ export { darkTheme } from './theme/darkTheme';
 export { defineInitialTheme } from './theme/defineInitialTheme';
 export { ThemesContext } from './theme/ThemesContext';
 export { ConfirmationModal } from './ConfirmationModal';
+export { disableKeyframes } from './animations/disableKeyframes';
+export { pulseKeyframes } from './animations/pulseKeyframes';
+export { shakeKeyframes } from './animations/shakeKeyframes';

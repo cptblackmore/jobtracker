@@ -23,3 +23,4 @@ export { hexToRgb } from './hexToRgb';
 export { blendColors } from './blendColors';
 export { blurActiveElement } from './blurActiveElement';
 export { focusElementById } from './focusElementById';
+export { useTriggerAnimation } from './useTriggerAnimation';

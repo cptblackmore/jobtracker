@@ -1,11 +1,24 @@
-import { alpha, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
+import { alpha, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormHelperText, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useAuthModal } from '../model/useAuthModal';
-import { focusElementById } from '@shared/lib';
+import { focusElementById, useTriggerAnimation } from '@shared/lib';
 import { navElementsIds } from '@widgets/Nav';
+import { authModalElementsIds } from '../lib/authModalElementsIds';
+import { shakeKeyframes } from '@shared/ui';
+import { getAuthInputAnim } from './getAuthInputAnim';
 
 export const AuthModal = observer(() => {
-  const { open, setOpen, isLoginForm, toggleForm, handleSubmit, authStore } = useAuthModal();
+  const [shakeAnim, triggerShakeAnim] = useTriggerAnimation(shakeKeyframes, '0.5s', 'ease');
+  const { 
+    open, 
+    setOpen, 
+    isLoginForm, 
+    toggleForm, 
+    handleSubmit, 
+    errors, 
+    setErrors,
+    authStore 
+  } = useAuthModal(triggerShakeAnim);
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -24,7 +37,8 @@ export const AuthModal = observer(() => {
             backgroundColor: alpha(theme.palette.background.default, 0.95),
             backdropFilter: 'blur(1px)'
           })
-        }
+        },
+        noValidate: true
       }}
       fullScreen={!isSmUp}
       onTransitionExited={() => authStore.isInit && authStore.isAuth && focusElementById(navElementsIds.accountMenuButton)}
@@ -44,7 +58,11 @@ export const AuthModal = observer(() => {
           <TextField
             autoFocus
             required
-            id='email'
+            error={!!errors.email || !!errors.serverValidation}
+            helperText={errors.email}
+            id={authModalElementsIds.emailInput}
+            onChange={() => setErrors((prev) => ({...prev, email: '', serverValidation: ''}))}
+            sx={getAuthInputAnim(errors, 'email', shakeAnim)}
             name='email'
             label='E-mail адрес'
             type='email'
@@ -53,13 +71,18 @@ export const AuthModal = observer(() => {
           />
           <TextField
             required
-            id='password'
+            error={!!errors.password || !!errors.serverValidation}
+            helperText={errors.password}
+            id={authModalElementsIds.passwordInput}
+            onChange={() => setErrors((prev) => ({...prev, password: '', serverValidation: ''}))}
+            sx={getAuthInputAnim(errors, 'password', shakeAnim)}
             name='password'
             label='Пароль'
             type='password'
             fullWidth
             variant='standard'
           />
+          <FormHelperText sx={{fontSize: '0.9rem'}} error={!!errors.serverValidation} >{errors.serverValidation}</FormHelperText>
         </Stack>
         <Box mt={2} textAlign='center' >
           <DialogContentText component='span' >

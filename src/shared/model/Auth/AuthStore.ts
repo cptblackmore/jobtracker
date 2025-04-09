@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx';
 import { UserData, AlertsStore, createAlert, Alert } from '@shared/model';
-import { AuthService } from '@shared/api';
+import { AuthService, PassthroughError } from '@shared/api';
 import { authChannel, setupAuthChannelListener } from './AuthChannel';
 import { blurActiveElement, broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
 import { nanoid } from 'nanoid';
@@ -117,6 +117,9 @@ export class AuthStore {
       );
       }
     } catch (e) {
+      if (e instanceof PassthroughError) {
+        throw e;
+      }
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));
       }
@@ -142,6 +145,9 @@ export class AuthStore {
         )
       );
     } catch (e) {
+      if (e instanceof PassthroughError) {
+        throw e;
+      }
       if (e instanceof Error) {
         this.alertsStore.addAlert(createAlert(e.message, 'error'));
       }
