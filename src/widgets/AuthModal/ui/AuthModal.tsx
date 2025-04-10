@@ -15,8 +15,8 @@ export const AuthModal = observer(() => {
     isLoginForm, 
     toggleForm, 
     handleSubmit, 
-    errors, 
-    setErrors,
+    errors,
+    handleOnChange,
     authStore 
   } = useAuthModal(triggerShakeAnim);
   const theme = useTheme();
@@ -71,7 +71,7 @@ export const AuthModal = observer(() => {
             error={!!errors.email || !!errors.serverValidation}
             helperText={errors.email}
             id={authModalElementsIds.emailInput}
-            onChange={() => setErrors((prev) => ({...prev, email: '', serverValidation: ''}))}
+            onChange={(e) => handleOnChange(e, 'email')}
             sx={getAuthInputAnim(errors, 'email', shakeAnim)}
             name='email'
             label='E-mail адрес'
@@ -84,7 +84,7 @@ export const AuthModal = observer(() => {
             error={!!errors.password || !!errors.serverValidation}
             helperText={errors.password}
             id={authModalElementsIds.passwordInput}
-            onChange={() => setErrors((prev) => ({...prev, password: '', serverValidation: ''}))}
+            onChange={(e) => handleOnChange(e, 'password')}
             sx={getAuthInputAnim(errors, 'password', shakeAnim)}
             name='password'
             label='Пароль'

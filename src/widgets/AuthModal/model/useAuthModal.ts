@@ -1,9 +1,10 @@
 import { focusElementById } from '@shared/lib';
 import { AuthContext } from '@shared/model';
-import { useContext, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useContext, useState } from 'react';
 import { authModalElementsIds } from '../lib/authModalElementsIds';
-import { validateAuthForm } from './validateAuthForm';
 import { PassthroughError } from '@shared/api';
+import { useValidateAuth } from './useValidateAuth';
+import { debounce } from '@mui/material';
 
 export const useAuthModal = (triggerShakeAnim: () => void) => {
   const { authStore } = useContext(AuthContext);
@@ -17,8 +18,23 @@ export const useAuthModal = (triggerShakeAnim: () => void) => {
     password: '',
     serverValidation: ''
   });
+  const { validateInput, validateForm } = useValidateAuth(setErrors);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const debouncedValidateInput = useCallback((debounce((input: 'email' | 'password', value: string) => {
+    validateInput(input, value);
+  }, 1000)), [validateInput]);
+
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, input: 'email' | 'password') => {
+    setErrors((prev) => ({...prev, [input]: '', serverValidation: ''}));
+    if (event.target.value === '') {
+      debouncedValidateInput.clear();
+      return;
+    }
+    
+    debouncedValidateInput(input, event.target.value);
+  }
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
@@ -26,14 +42,13 @@ export const useAuthModal = (triggerShakeAnim: () => void) => {
     const email = formJson.email as string;
     const password = formJson.password as string;
 
-    const newErrors = validateAuthForm(email, password);
-    if (newErrors) {
-      if (newErrors.email) {
+    const inputWithError = validateForm(email, password);
+    if (inputWithError) {
+      if (inputWithError === 'email') {
         focusElementById(authModalElementsIds.emailInput);
-      } else if (newErrors.password) {
+      } else if (inputWithError === 'password') {
         focusElementById(authModalElementsIds.passwordInput);
       }
-      setErrors((prev) => ({...prev, ...newErrors}));
       triggerShakeAnim();
       return;
     }
@@ -72,7 +87,7 @@ export const useAuthModal = (triggerShakeAnim: () => void) => {
     toggleForm, 
     handleSubmit,
     errors,
-    setErrors,
+    handleOnChange,
     authStore
   };
 } 
