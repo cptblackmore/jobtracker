@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { PagesContext } from '@shared/lib';
+import { PagesContext } from '@shared/config';
 import { Footer } from '@widgets/Footer';
 import { Nav } from '@widgets/Nav';
 import { useContext, useEffect } from 'react';

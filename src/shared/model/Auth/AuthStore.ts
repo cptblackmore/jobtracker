@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx';
-import { UserData, AlertsStore, createAlert, Alert } from '@shared/model';
+import { UserData } from '@shared/model';
+import { AlertsStore, createAlert, AlertType } from '@shared/ui';
 import { AuthService, PassthroughError } from '@shared/api';
 import { authChannel, setupAuthChannelListener } from './AuthChannel';
 import { blurActiveElement, broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
@@ -156,7 +157,7 @@ export class AuthStore {
     }
   }
 
-  async logout(reason?: string, severity?: Alert['severity']) {
+  async logout(reason?: string, severity?: AlertType['severity']) {
     try {
       localStorage.removeItem('token');
       this.setUser({} as UserData);

@@ -1,6 +1,6 @@
 import { FavoritesContext } from '@features/Favorites';
 import { Button, Fade, Toolbar, Tooltip } from '@mui/material';
-import { PagesContext } from '@shared/lib';
+import { PagesContext } from '@shared/config';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router';

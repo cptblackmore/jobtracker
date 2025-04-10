@@ -1,5 +1,5 @@
 import { getVacancies, sourcesRegistry, Vacancy, VacancyParams } from '@entities/Vacancy';
-import { AlertsStore } from '@shared/model';
+import { AlertsStore } from '@shared/ui';
 import axios, { AxiosError } from 'axios';
 import { handleErrors } from '../../FavoritesList/model/handleErrors';
 import { typedKeys } from '@shared/lib';

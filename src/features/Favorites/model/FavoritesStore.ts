@@ -1,6 +1,7 @@
 import { makeAutoObservable, reaction } from 'mobx';
 import { FavoritesService, FavoritesResponse, getFavoritesLS, deleteFavoritesLS, addFavoritesLS, setFavoritesLS } from '@features/Favorites';
-import { createAlert, AlertsStore, AuthStore } from '@shared/model';
+import { AuthStore } from '@shared/model';
+import { createAlert, AlertsStore } from '@shared/ui';
 
 export class FavoritesStore {
   ids: string[] = JSON.parse(window.localStorage.getItem('favorites') || '[]');

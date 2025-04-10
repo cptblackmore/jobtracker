@@ -1,9 +1,9 @@
 import { waitForCondition } from '@shared/lib';
-import { UserData } from '../types/UserData';
+import { UserData } from '../UserData';
 import { AuthStore } from './AuthStore';
 import { toJS } from 'mobx';
 import { electLeader } from './tabSynchronization/electLeader';
-import { AlertsStore, createAlert } from '../Alert';
+import { AlertsStore, createAlert } from '@shared/ui';
 
 export const authChannel = new BroadcastChannel('auth');
 

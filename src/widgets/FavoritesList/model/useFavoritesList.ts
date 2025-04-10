@@ -1,6 +1,6 @@
 import { Vacancy } from '@entities/Vacancy';
 import { FavoritesContext } from '@features/Favorites';
-import { AlertsContext } from '@shared/model';
+import { AlertsContext } from '@shared/ui';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { chunkerize } from '@shared/lib';

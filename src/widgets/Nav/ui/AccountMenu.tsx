@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { useMenu } from '../model/useMenu';
 import { AccountMenuItems } from './AccountMenuItems';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
-import { PagesContext } from '@shared/lib';
+import { PagesContext } from '@shared/config';
 import { navElementsIds } from '../lib/navElementsIds';
 
 interface Props {

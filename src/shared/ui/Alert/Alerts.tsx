@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Alert, Box, Button, IconButton, Snackbar } from '@mui/material';
-import { AlertsContext } from '@shared/model';
+import { AlertsContext } from '@shared/ui';
 import { useContext } from 'react';
 import { Close } from '@mui/icons-material';
 

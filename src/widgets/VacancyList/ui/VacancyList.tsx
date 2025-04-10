@@ -4,7 +4,7 @@ import { VacancyParams } from '@entities/Vacancy';
 import { VirtualizedVacancyList } from './VirtualizedVacancyList';
 import { VACANCIES_COUNT_PER_SOURCE } from '@shared/config';
 import { useEffectOnceByCondition } from '@shared/lib';
-import { createAlert } from '@shared/model';
+import { createAlert } from '@shared/ui';
 
 interface Props {
   initialFilters?: VacancyParams['filters'];

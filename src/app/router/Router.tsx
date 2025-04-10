@@ -3,7 +3,7 @@ import { SearchPage } from '@pages/search';
 import { HomePage } from '@pages/home';
 import { useContext } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
-import { PagesContext } from '@shared/lib';
+import { PagesContext } from '@shared/config';
 import { ActivationPage } from '@pages/activation';
 import { AccountPage } from '@pages/account';
 import { ProtectedRoute } from './ProtectedRoute';

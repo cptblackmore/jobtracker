@@ -1,7 +1,7 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import { ActionVacancies, vacancyListReducer } from './vacancyListReducer';
-import { AlertsContext } from '@shared/model';
+import { AlertsContext } from '@shared/ui';
 import { useLocation } from 'react-router';
 import { isEqual } from '@shared/lib';
 import { parseUrlSearch } from '@widgets/VacancyFilter';

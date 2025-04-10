@@ -1,6 +1,6 @@
 import { Vacancy } from '@entities/Vacancy';
 import { getVacancyById } from '@entities/Vacancy/api/getVacancyById';
-import { AlertsStore } from '@shared/model';
+import { AlertsStore } from '@shared/ui';
 import { FavoritesStore } from '@features/Favorites';
 import { typedEntries } from '@shared/lib';
 import { getVacanciesByIds } from '@entities/Vacancy/api/getVacanciesByIds';

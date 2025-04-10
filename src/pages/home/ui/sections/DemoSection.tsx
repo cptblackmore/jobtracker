@@ -1,5 +1,5 @@
 import { Box, Button, Container, SxProps, useMediaQuery, useTheme } from '@mui/material';
-import { pages } from '@shared/lib';
+import { pages } from '@shared/config';
 import { VacancyListDemo } from '@widgets/VacancyList';
 import { Link as RouterLink } from 'react-router';
 import { SectionTitle } from './SectionTitle';

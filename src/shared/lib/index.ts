@@ -1,11 +1,9 @@
 export type { Entries } from './types/Entries';
-export type { Page, Pages, PagesState } from './state/PagesContext';
 export { toUpperCaseFirstLetter } from './text/toUpperCaseFirstLetter';
 export { formatNumberByCurrency } from './text/formatNumberByCurrency';
 export { toRightCurrencyCode } from './text/toRightCurrencyCode';
 export { throttle } from './async/throttle';
 export { debounce } from './async/debounce';
-export { PagesContext, pages } from './state/PagesContext';
 export { broadcastRequestWithFallback} from './event/broadcastRequestWithFallback';
 export { waitForCondition } from './async/waitForCondition';
 export { typedEntries } from './types/typedEntries';

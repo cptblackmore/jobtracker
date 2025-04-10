@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import { Fade, IconButton, Tooltip } from '@mui/material';
 import { getIconStyle, transitionStyles, getWrapperStyle } from './styles';
-import { ToggleIconButtonProps } from '@shared/model';
+import { ToggleIconButtonProps } from '@shared/ui/ToggleIconButton/ToggledIconButtonProps';
 
 export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({ 
   isToggled, 

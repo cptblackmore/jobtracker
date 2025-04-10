@@ -1,4 +1,4 @@
-import { Page, pages, PagesContext } from '@shared/lib';
+import { Page, pages, PagesContext } from '@shared/config';
 import { useState } from 'react';
 
 interface Props {

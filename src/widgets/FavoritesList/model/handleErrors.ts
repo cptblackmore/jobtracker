@@ -1,4 +1,4 @@
-import { AlertsStore, createAlert } from '@shared/model';
+import { AlertsStore, createAlert } from '@shared/ui';
 import { errorMessages } from '@shared/lib/error/errorMessages';
 
 export const handleErrors = (

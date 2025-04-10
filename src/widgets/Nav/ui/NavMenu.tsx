@@ -4,7 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { AuthContext } from '@shared/model';
 import { useContext } from 'react';
 import { useMenu } from '../model/useMenu';
-import { PagesContext } from '@shared/lib';
+import { PagesContext } from '@shared/config';
 import { useNavigate } from 'react-router';
 import { FavoritesContext } from '@features/Favorites';
 import { observer } from 'mobx-react-lite';

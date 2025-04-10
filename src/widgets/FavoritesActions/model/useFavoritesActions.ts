@@ -1,7 +1,7 @@
 import { FavoritesContext } from '@features/Favorites';
 import { useContext, useState } from 'react';
 import { fetchFavorites } from '@widgets/FavoritesList';
-import { AlertsContext, createAlert } from '@shared/model';
+import { AlertsContext, createAlert } from '@shared/ui';
 import axios from 'axios';
 import { blurActiveElement, downloadCsvFile, downloadTextFile, uploadJsonFile } from '@shared/lib';
 import { downloadJsonFile } from '@shared/lib';

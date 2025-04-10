@@ -1,6 +1,6 @@
 import { Box, Button, Container, SxProps } from '@mui/material';
 import { Typography as T } from '@mui/material';
-import { PagesContext } from '@shared/lib';
+import { PagesContext } from '@shared/config';
 import { useContext } from 'react';
 import { Link as RouterLink } from 'react-router'
 import { CtaTitle } from './CtaTitle';
