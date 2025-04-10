@@ -1,6 +1,6 @@
 import { AuthResponse } from '@shared/model';
 import axios from 'axios';
-import { errorMessages } from '../lib/errorMessages';
+import { errorMessages } from '../lib/error/errorMessages';
 import { PassthroughError } from './PassthroughError';
 
 export const $api = axios.create({

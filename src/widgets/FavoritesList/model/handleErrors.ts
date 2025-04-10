@@ -1,5 +1,5 @@
 import { AlertsStore, createAlert } from '@shared/model';
-import { errorMessages } from '@shared/lib/errorMessages';
+import { errorMessages } from '@shared/lib/error/errorMessages';
 
 export const handleErrors = (
   errorCodes: Set<string>, 

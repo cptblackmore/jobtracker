@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { ActivationAlert } from './ActivationAlert';
-import { errorMessages } from '@shared/lib/errorMessages';
+import { errorMessages } from '@shared/lib/error/errorMessages';
 import { Typography as T } from '@mui/material';
 
 interface Props {

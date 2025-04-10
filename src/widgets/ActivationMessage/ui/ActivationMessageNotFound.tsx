@@ -3,7 +3,7 @@ import { ActivationAlert } from './ActivationAlert';
 import { Typography as T } from '@mui/material';
 import { CooldownButton } from '@shared/ui';
 import { AuthStore } from '@shared/model';
-import { errorMessages } from '@shared/lib/errorMessages';
+import { errorMessages } from '@shared/lib/error/errorMessages';
 import { observer } from 'mobx-react-lite';
 
 interface Props {
