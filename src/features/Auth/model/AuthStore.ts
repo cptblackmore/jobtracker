@@ -1,13 +1,14 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx';
-import { UserData } from '@shared/model';
+import { UserData } from './types/UserData';
 import { AlertsStore, createAlert, AlertType } from '@shared/ui';
-import { AuthService, PassthroughError } from '@shared/api';
+import { PassthroughError } from '@shared/api';
 import { authChannel, setupAuthChannelListener } from './AuthChannel';
 import { blurActiveElement, broadcastRequestWithFallback, waitForCondition } from '@shared/lib';
 import { nanoid } from 'nanoid';
-import { startHeartbeatCheck } from './tabSynchronization/startHeartbeatCheck';
-import { electLeader } from './tabSynchronization/electLeader';
-import { isTabLeader } from './tabSynchronization/isThisTabLeader';
+import { startHeartbeatCheck } from './tabSync/startHeartbeatCheck';
+import { electLeader } from './tabSync/electLeader';
+import { isTabLeader } from './tabSync/isThisTabLeader';
+import { AuthService } from '../api/AuthService';
 
 export class AuthStore {
   isInit = false;

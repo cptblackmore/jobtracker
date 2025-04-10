@@ -5,7 +5,7 @@ import { StatusSection } from './sections/StatusSection';
 import { DemoSection } from './sections/DemoSection';
 import { RevealOnScroll } from '@shared/ui';
 import { RegistrationSection } from './sections/RegistrationSection';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { observer } from 'mobx-react-lite';
 import { LoadingSection } from './sections/LoadingSection';
 import { SxProps } from '@mui/material';

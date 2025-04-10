@@ -1,5 +1,5 @@
 import { waitForCondition } from '@shared/lib';
-import { AuthStore } from '../AuthStore';
+import { AuthStore } from '@features/Auth';
 import { isLeaderAlive } from './isLeaderAlive';
 import { isTabLeader } from './isThisTabLeader';
 import { startHeartbeat } from './startHeartbeat';

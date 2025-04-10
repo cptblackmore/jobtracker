@@ -1,4 +1,4 @@
-import { AuthStore } from '../AuthStore';
+import { AuthStore } from '@features/Auth';
 import { isTabLeader } from './isThisTabLeader';
 import { startHeartbeatCheck } from './startHeartbeatCheck';
 

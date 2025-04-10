@@ -1,7 +1,7 @@
 import { Box, CardContent, CardHeader, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, useMediaQuery, useTheme } from '@mui/material';
 import { useContext } from 'react';
 import { FavoritesContext } from '@features/Favorites';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { observer } from 'mobx-react-lite';
 import { CardHeaderTitle, StatusIndicator } from '@shared/ui';
 import { AccountTableCellHeader } from './AccountTableCellHeader';

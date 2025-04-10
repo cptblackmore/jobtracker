@@ -1,5 +1,5 @@
 import { FavoritesContext, favoritesStore } from '@features/Favorites';
-import { AuthContext, authStore } from '@shared/model';
+import { AuthContext, authStore } from '@features/Auth';
 import { AlertsContext, alertsStore } from '@shared/ui';
 import { useEffect } from 'react';
 

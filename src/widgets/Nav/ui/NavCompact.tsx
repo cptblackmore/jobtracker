@@ -3,7 +3,7 @@ import { Logo } from '@widgets/Logo';
 import { observer } from 'mobx-react-lite';
 import { NavMenu } from './NavMenu';
 import { useContext } from 'react';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { ToggleThemeButton } from './ToggleThemeButton';
 
 export const NavCompact: React.FC = observer(() => {

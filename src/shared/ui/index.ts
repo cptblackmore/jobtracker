@@ -25,3 +25,6 @@ export { AlertsContext, alertsStore } from './Alert/AlertsContext';
 export { Alerts } from './Alert/Alerts';
 export { createAlert } from './Alert/Alert';
 export type { Alert as AlertType } from './Alert/Alert';
+export { authModalElementsIds } from './ids/authModalElementsIds';
+export { navElementsIds } from './ids/navElementsIds';
+export { favoritesActionsElementsIds } from './ids/favoritesActionsElementsIds';

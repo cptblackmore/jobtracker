@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { Logo } from '@widgets/Logo';
 import { observer } from 'mobx-react-lite';
 import { AccountMenu } from './AccountMenu';
@@ -8,7 +8,7 @@ import { NavToolbar } from './NavToolbar';
 import { LoginButton } from './LoginButton';
 import { ToggleThemeButton } from './ToggleThemeButton';
 import { focusElementById } from '@shared/lib';
-import { navElementsIds } from '../lib/navElementsIds';
+import { navElementsIds } from '@shared/ui';
 
 export const NavFull: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);

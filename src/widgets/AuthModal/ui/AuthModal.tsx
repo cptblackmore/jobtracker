@@ -2,9 +2,7 @@ import { alpha, Box, Button, Dialog, DialogActions, DialogContent, DialogContent
 import { observer } from 'mobx-react-lite';
 import { useAuthModal } from '../model/useAuthModal';
 import { blurActiveElement, focusElementById, useTriggerAnimation } from '@shared/lib';
-import { navElementsIds } from '@widgets/Nav';
-import { authModalElementsIds } from '../lib/authModalElementsIds';
-import { shakeKeyframes } from '@shared/ui';
+import { shakeKeyframes, authModalElementsIds, navElementsIds } from '@shared/ui';
 import { getAuthInputAnim } from './getAuthInputAnim';
 
 export const AuthModal = observer(() => {

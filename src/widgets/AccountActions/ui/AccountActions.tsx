@@ -1,5 +1,5 @@
 import { Box, Button, CardActions, CardHeader } from '@mui/material';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { CardHeaderTitle } from '@shared/ui';
 import { useContext } from 'react';
 

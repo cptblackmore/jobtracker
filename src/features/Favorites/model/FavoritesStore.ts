@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction } from 'mobx';
 import { FavoritesService, FavoritesResponse, getFavoritesLS, deleteFavoritesLS, addFavoritesLS, setFavoritesLS } from '@features/Favorites';
-import { AuthStore } from '@shared/model';
+import { AuthStore } from '@features/Auth';
 import { createAlert, AlertsStore } from '@shared/ui';
 
 export class FavoritesStore {

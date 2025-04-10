@@ -1,6 +1,6 @@
 import { MenuItem } from '@mui/material';
 import { PagesContext } from '@shared/config';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router';
 

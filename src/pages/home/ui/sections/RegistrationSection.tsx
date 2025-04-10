@@ -1,5 +1,5 @@
 import { Box, Button, Container, SxProps } from '@mui/material';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { useContext } from 'react';
 import { CtaTitle } from './CtaTitle';
 

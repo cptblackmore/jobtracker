@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { AuthStore } from '@shared/model';
+import { AuthStore } from '@features/Auth';
 import { alertsStore } from '@shared/ui';
 
 interface State {

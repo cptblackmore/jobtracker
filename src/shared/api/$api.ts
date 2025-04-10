@@ -1,4 +1,4 @@
-import { AuthResponse } from '@shared/model';
+import { AuthResponse } from '@shared/api';
 import axios from 'axios';
 import { errorMessages } from '../lib/error/errorMessages';
 import { PassthroughError } from './PassthroughError';

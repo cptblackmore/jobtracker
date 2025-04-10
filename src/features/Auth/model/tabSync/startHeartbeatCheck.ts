@@ -1,4 +1,4 @@
-import { AuthStore } from '../AuthStore';
+import { AuthStore } from '@features/Auth';
 import { electLeader } from './electLeader';
 import { isLeaderAlive } from './isLeaderAlive';
 

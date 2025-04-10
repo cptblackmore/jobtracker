@@ -1,7 +1,7 @@
 import { focusElementById } from '@shared/lib';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { ChangeEvent, FormEvent, useCallback, useContext, useState } from 'react';
-import { authModalElementsIds } from '../lib/authModalElementsIds';
+import { authModalElementsIds } from '@shared/ui';
 import { PassthroughError } from '@shared/api';
 import { useValidateAuth } from './useValidateAuth';
 import { debounce } from '@mui/material';

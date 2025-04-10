@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { FavoritesStore } from '@features/Favorites';
-import { authStore } from '@shared/model';
+import { authStore } from '@features/Auth';
 import { alertsStore } from '@shared/ui';
 
 interface State {

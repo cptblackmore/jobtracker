@@ -1,8 +1,7 @@
 import { FavoritesStore } from '@features/Favorites';
 import { focusElementById } from '@shared/lib';
-import { ConfirmationModal } from '@shared/ui';
+import { ConfirmationModal, favoritesActionsElementsIds } from '@shared/ui';
 import { Dispatch, SetStateAction } from 'react';
-import { favoritesActionsElementsIds } from '../lib/favoritesActionsElementsIds';
 import { observer } from 'mobx-react-lite';
 
 interface Props {

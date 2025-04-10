@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Divider, IconButton, Menu, MenuItem } from '@mui/material';
 import { AccountMenuItems } from './AccountMenuItems';
 import MenuIcon from '@mui/icons-material/Menu';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { useContext } from 'react';
 import { useMenu } from '../model/useMenu';
 import { PagesContext } from '@shared/config';

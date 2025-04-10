@@ -1,8 +1,8 @@
 import { Box, Button, CircularProgress } from '@mui/material';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
-import { navElementsIds } from '../lib/navElementsIds';
+import { navElementsIds } from '@shared/ui';
 
 export const LoginButton: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);

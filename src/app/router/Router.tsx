@@ -7,7 +7,7 @@ import { PagesContext } from '@shared/config';
 import { ActivationPage } from '@pages/activation';
 import { AccountPage } from '@pages/account';
 import { ProtectedRoute } from './ProtectedRoute';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { observer } from 'mobx-react-lite';
 import { PageLayout } from './PageLayout';
 

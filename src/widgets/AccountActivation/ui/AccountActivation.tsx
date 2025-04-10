@@ -1,5 +1,5 @@
 import { Alert, Box, CardActions, CardContent, CardHeader, Divider } from '@mui/material';
-import { AuthContext } from '@shared/model';
+import { AuthContext } from '@features/Auth';
 import { CardHeaderTitle, CooldownButton } from '@shared/ui';
 import { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';

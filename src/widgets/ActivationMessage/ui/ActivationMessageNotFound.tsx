@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { ActivationAlert } from './ActivationAlert';
 import { Typography as T } from '@mui/material';
 import { CooldownButton } from '@shared/ui';
-import { AuthStore } from '@shared/model';
+import { AuthStore } from '@features/Auth';
 import { errorMessages } from '@shared/lib/error/errorMessages';
 import { observer } from 'mobx-react-lite';
 

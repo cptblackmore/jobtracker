@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Divider, Grid2, LinearProgress, Paper, u
 import { DeleteFavoritesModal } from './DeleteFavoritesModal';
 import { useFavoritesActions } from '../model/useFavoritesActions';
 import { observer } from 'mobx-react-lite';
-import { favoritesActionsElementsIds } from '../lib/favoritesActionsElementsIds';
+import { favoritesActionsElementsIds } from '@shared/ui';
 
 interface Props {
   clearDisplayedFavorites: () => void;
