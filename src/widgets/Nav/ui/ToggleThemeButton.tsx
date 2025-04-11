@@ -16,7 +16,8 @@ export const ToggleThemeButton: React.FC = () => {
       toggledTooltip='Включить светлую тему'
       options={{
         tooltipEnterDelay: 300,
-        tooltipLeaveDelay: 100
+        tooltipLeaveDelay: 100,
+        ariaLabel: 'Переключение темы'
       }}
     />
   );

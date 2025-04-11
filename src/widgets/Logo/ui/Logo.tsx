@@ -1,6 +1,8 @@
 import { Link, Typography as T, useTheme } from '@mui/material';
 import { Link as RouterLink } from 'react-router';
 import { LogoIcon } from '@shared/ui';
+import { useContext } from 'react';
+import { PagesContext } from '@shared/config';
 
 interface Props {
   iconSize?: string;
@@ -9,12 +11,16 @@ interface Props {
 
 export const Logo: React.FC<Props> = ({ iconSize='1.3em', titleSize='h6' }) => {
   const theme = useTheme();
+  const { currentPage, pages } = useContext(PagesContext);
 
   return (
     <Link 
       component={RouterLink}
-      to='/home'
-      sx={{display: 'flex', alignItems: 'center', gap: 1}} 
+      to={pages.home.path}
+      sx={{display: 'flex', alignItems: 'center', gap: 1}}
+      aria-label='Перейти на главную страницу'
+      aria-current={currentPage === pages.home ? 'page' : undefined}
+      title='Логотип JobTracker'
     >
       <LogoIcon size={iconSize} color={theme.palette.primary.contrastText} />
       <T

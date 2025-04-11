@@ -13,5 +13,7 @@ export interface ToggleIconButtonProps {
     wrapperSize?: number;
     tooltipEnterDelay?: number;
     tooltipLeaveDelay?: number;
+    ariaLabel?: string;
+    ariaPressable?: boolean;
   }
 }

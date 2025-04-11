@@ -21,6 +21,8 @@ export const AccountMenuItems: React.FC<Props> = ({ handleCloseMenu, onClose }) 
         key={pages.account.id} 
         onClick={() => {handleCloseMenu(); 
         navigate(pages.account.path)}} 
+        aria-label={pages.account.name}
+        aria-current={currentPage === pages.account ? 'page' : undefined}
       >
         {pages.account.name}
       </MenuItem>,
@@ -31,6 +33,7 @@ export const AccountMenuItems: React.FC<Props> = ({ handleCloseMenu, onClose }) 
           authStore.logout(); 
           if (onClose) onClose()
         }} 
+        aria-label='Выйти из аккаунта'
       >
         Выход
       </MenuItem>

@@ -27,10 +27,15 @@ export const AccountMenu: React.FC<Props> = observer(({ onClose }) => {
           color: (theme) => theme.palette.primary.contrastText,
           backgroundColor: (theme) => currentPage?.id === pages.account.id ? theme.palette.primary.light : 'transparent'
         }} 
+        aria-label='Открыть меню пользователя'
+        aria-haspopup='menu'
+        aria-expanded={!!anchorElMenu}
+        aria-controls={navElementsIds.accountMenu}
       >
         {authStore.user.email.split('@')[0]}
       </Button>
       <Menu
+        id={navElementsIds.accountMenu}
         anchorEl={anchorElMenu}
         anchorOrigin={{
           vertical: 'bottom',

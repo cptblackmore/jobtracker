@@ -9,17 +9,20 @@ import { ToggleThemeButton } from './ToggleThemeButton';
 export const NavCompact: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
   const theme = useTheme();
-  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <Grid2 container >
       <Grid2 size={3} >
         <Box display='flex' alignItems='center' justifyContent='flex-start' height='100%' gap={1} >
           <NavMenu />
-          {authStore.isLoading && isMdUp && (
+          {authStore.isLoading && isSmUp && (
             <CircularProgress 
               size={25} 
               sx={{mr: 2, color: (theme) => theme.palette.primary.contrastText}}
+              role='status' 
+              aria-live='polite' 
+              aria-label='Загрузка аккаунта. Пожалуйста, подождите' 
             />
           )}
         </Box>

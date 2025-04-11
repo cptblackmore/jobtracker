@@ -10,7 +10,7 @@ export const NavToolbar: React.FC = observer(() => {
   const { favoritesStore } = useContext(FavoritesContext);
 
   return (
-    <Toolbar variant='dense' >
+    <Toolbar variant='dense' aria-label='Переход по страницам' >
       {Object.values(pages).map((page) => (
         page.inNav && (
           <Tooltip 
@@ -34,6 +34,8 @@ export const NavToolbar: React.FC = observer(() => {
                 color: (theme) => theme.palette.primary.contrastText,
                 backgroundColor: (theme) => currentPage?.id === page.id ? theme.palette.primary.light : 'transparent'
               }}
+              aria-label={page.id === 2 ? `Избранное: Вакансий в избранном: ${favoritesStore.ids.length}` : page.name}
+              aria-current={currentPage === page ? 'page' : undefined}
             >
               {page.name}
             </Button>

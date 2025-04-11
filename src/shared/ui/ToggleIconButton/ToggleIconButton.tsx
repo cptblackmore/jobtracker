@@ -16,7 +16,9 @@ export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({
     size = 1,
     wrapperSize,
     tooltipEnterDelay = 0,
-    tooltipLeaveDelay = 0
+    tooltipLeaveDelay = 0,
+    ariaLabel,
+    ariaPressable = false
   } = {}
 }) => {
   const firstIconRef = useRef(null);
@@ -30,7 +32,12 @@ export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({
       leaveDelay={tooltipLeaveDelay}
       arrow
     >
-      <IconButton css={getWrapperStyle(size, wrapperSize)} onClick={() => onToggle()} >
+      <IconButton 
+        css={getWrapperStyle(size, wrapperSize)} 
+        onClick={() => onToggle()} 
+        aria-label={ariaLabel ? `${ariaLabel}: ${isToggled ? toggledTooltip : defaultTooltip}` : (isToggled ? toggledTooltip : defaultTooltip)}
+        aria-pressed={ariaPressable ? isToggled : undefined} 
+      >
         <Transition nodeRef={firstIconRef} in={!isToggled} timeout={duration} >
           {state => (
             <div ref={firstIconRef} css={[getIconStyle(duration, size, !isToggled), transitionStyles[state]]} >
