@@ -19,6 +19,11 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
     handlePeriodChange, 
     type, 
     handleTypeChange, 
+    place,
+    handlePlaceInputChange,
+    handlePlaceChange,
+    suggestedPlaces,
+    formattedPlace,
     salaryFilter, 
     handleSalaryChange,
     sources, 
@@ -63,8 +68,13 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
           <BasicFilters 
             period={period} 
             type={type} 
+            place={place}
             handlePeriodChange={handlePeriodChange} 
             handleTypeChange={handleTypeChange} 
+            handlePlaceInputChange={handlePlaceInputChange}
+            handlePlaceChange={handlePlaceChange}
+            suggestedPlaces={suggestedPlaces}
+            formattedPlace={formattedPlace}
             resetFiltersAndSources={resetFiltersAndSources}
             handleInvalid={handleInvalid}
             highlightedFilters={highlightedFilters}

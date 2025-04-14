@@ -23,6 +23,7 @@ export interface VacancyParams {
     period?: VacancyPeriod;
     salary?: VacancySalary;
     type?: VacancyType;
+    place?: string;
     excludedSources?: Sources[];
   }
 }

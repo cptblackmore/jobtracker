@@ -6,7 +6,7 @@ import { filterLabelsMap } from '../model/filterLabelsMap';
 import { SourceFilter } from '../model/useSourcesFilter';
 import { ThemesContext } from '@shared/ui';
 import { Sources } from '@entities/Vacancy';
-import { getHightlightAnimation } from './highlightedFiltersStyles';
+import { getHightlightAnimation } from './styles';
 
 interface Props {
   sources: SourceFilter[];

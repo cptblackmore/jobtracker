@@ -1,6 +1,6 @@
 import { toRightCurrencyCode } from '@shared/lib';
 import { combineDutyAndReqToDesc } from './combineDutyAndReqToDesc';
-import { Vacancy, VacancyParams, VacancyType } from '@entities/Vacancy';
+import { parseFormattedPlace, Vacancy, VacancyParams, VacancyType } from '@entities/Vacancy';
 import { VacancyHH, VacancyHHById } from '../../api/types/VacancyHH';
 import { HHParams } from '../../api/types/Params';
 import { convert } from 'html-to-text';
@@ -13,6 +13,7 @@ export const adapterHH: Adapter<'hh'> = {
       shift: 'shift',
       fifo: 'flyInFlyOut'
     };
+    const parsedPlace = parseFormattedPlace(params.filters?.place);
 
     return {
       page: params.page,
@@ -21,7 +22,8 @@ export const adapterHH: Adapter<'hh'> = {
       salary: Math.floor((((params.filters.salary?.from ?? 0) + (params.filters.salary?.to ?? 0)) / 2)) || null,
       only_with_salary: (params.filters?.salary?.from || params.filters?.salary?.to) ? true : false,
       period: (params.filters?.period === 0 ? 99 : params.filters?.period) ?? 99,
-      schedule: params.filters?.type ? typeMap[params.filters?.type] : null
+      schedule: params.filters?.type ? typeMap[params.filters?.type] : null,
+      area: params.filters?.place ? `place~${parsedPlace.id ? `id~~${parsedPlace.id}` : `name~~${parsedPlace.name}`}` : null
     }
   },
 

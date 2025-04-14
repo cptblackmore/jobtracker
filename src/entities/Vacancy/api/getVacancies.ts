@@ -1,4 +1,4 @@
-import { Sources, Vacancy, VacancyParams, sourcesRegistry } from '@entities/Vacancy';
+import { Sources, Vacancy, VacancyParams, parseFormattedPlace, sourcesRegistry } from '@entities/Vacancy';
 import { VacancyService } from './VacancyService';
 import { AxiosError } from 'axios';
 
@@ -18,7 +18,11 @@ export const getVacancies = async (params: VacancyParams, source: Sources, signa
     }
     case 'trudvsem': {
       try {
-        const response = await VacancyService.getTrudvsem(adapterTrudvsem.adaptParams(params), signal);
+        const parsedPlace = parseFormattedPlace(params.filters?.place);
+        const regionEndpoint = params.filters?.place
+          ? `region/place~${parsedPlace.id ? `id~~${parsedPlace.id}` : `name~~${encodeURIComponent(parsedPlace.name || '')}`}`
+          : undefined;
+        const response = await VacancyService.getTrudvsem(adapterTrudvsem.adaptParams(params), signal, regionEndpoint);
         const vacancies = response.data.results.vacancies.map(vacancyContainer => vacancyContainer.vacancy);
         return adapterTrudvsem.adaptVacancies(vacancies);
       } catch (e) {

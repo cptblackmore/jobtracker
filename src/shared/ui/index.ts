@@ -28,3 +28,4 @@ export type { Alert as AlertType } from './Alert/Alert';
 export { authModalElementsIds } from './ids/authModalElementsIds';
 export { navElementsIds } from './ids/navElementsIds';
 export { favoritesActionsElementsIds } from './ids/favoritesActionsElementsIds';
+export { ClearAdornment } from './ClearAdornment';

@@ -20,6 +20,7 @@ export const useVacancyFilter = (
       period: Number(formData.get('period')) as VacancyPeriod,
       salary: formData.get('salary') === 'on' ? {from: Number(formData.get('salaryFrom')), to: Number(formData.get('salaryTo'))} : undefined,
       type: formData.get('type') !== 'none' ? formData.get('type') as VacancyType : undefined,
+      place: formData.get('place') as string,
       excludedSources: formData.getAll('excludedSource').map((source) => source as Sources)
     };
 

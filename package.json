@@ -16,6 +16,7 @@
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^6.1.6",
     "@types/axios": "^0.14.4",
+    "autosuggest-highlight": "^3.3.4",
     "axios": "^1.7.7",
     "currency-symbol-map": "^5.1.0",
     "date-fns": "^4.1.0",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
+    "@types/autosuggest-highlight": "^3.2.3",
     "@types/html-to-text": "^9.0.4",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

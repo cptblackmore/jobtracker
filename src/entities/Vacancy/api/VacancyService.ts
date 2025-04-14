@@ -4,6 +4,7 @@ import { VacancySuperjob, VacancySuperjobMultipleResponse } from './types/Vacanc
 import { VacancyHHById, VacancyHHMultipleResponse } from './types/VacancyHH';
 import { VacancyTrudvsemResponse } from './types/VacancyTrudvsem';
 import { sourcesRegistry } from '../model/sourcesRegistry';
+import { sourcesIdsMapping } from '../model/Sources';
 
 export class VacancyService {
   private static baseURL = import.meta.env.VITE_API_URL + '/vacanciesProxy';
@@ -17,6 +18,7 @@ export class VacancyService {
         signal,
         headers: {
           'X-Api-App-Id': this.SUPERJOB_API_APP_ID,
+          'X-Target-Source': sourcesIdsMapping.superjob,
           'X-Target-Url': sourcesRegistry.superjob.url.api + '/vacancies/'
         }
       }
@@ -68,6 +70,7 @@ export class VacancyService {
         params,
         signal,
         headers: {
+          'X-Target-Source': sourcesIdsMapping.hh,
           'X-Target-Url': sourcesRegistry.hh.url.api + '/vacancies/'
         }
       }
@@ -98,14 +101,14 @@ export class VacancyService {
     )
   }
   
-  static async getTrudvsem(params: TrudvsemParams, signal: AbortSignal): Promise<AxiosResponse<VacancyTrudvsemResponse>> {
-    return await axios.get(
+  static async getTrudvsem(params: TrudvsemParams, signal: AbortSignal, additionalEndpoint?: string): Promise<AxiosResponse<VacancyTrudvsemResponse>> {    return await axios.get(
       this.baseURL, 
       {
         params,
         signal,
         headers: {
-          'X-Target-Url': sourcesRegistry.trudvsem.url.api + '/vacancies/'
+          'X-Target-Source': sourcesIdsMapping.trudvsem,
+          'X-Target-Url': sourcesRegistry.trudvsem.url.api + '/vacancies/' + (additionalEndpoint || '')
         }
       }
     );

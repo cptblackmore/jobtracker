@@ -1,7 +1,7 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { FilterList, FilterListOff } from '@mui/icons-material';
 import { Button, Collapse, FormControl, Paper, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
-import { ToggleIconButton } from '@shared/ui';
+import { ClearAdornment, ToggleIconButton } from '@shared/ui';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
 import { useVacancyFilter } from '../model/useVacancyFilter';
 import { filterLabelsMap } from '../model/filterLabelsMap';
@@ -40,6 +40,11 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
             sx={{
               '& .MuiInputBase-root': {fontSize: {xs: '0.9rem', sm: theme.typography.body1.fontSize}},
               '& .MuiInputLabel-root': {fontSize: {xs: '0.9rem', sm: theme.typography.body1.fontSize}}
+            }}
+            slotProps={{
+              input: {
+                endAdornment: <ClearAdornment onClear={() => setText('')} visible={!!text} />
+              }
             }}
           />
         </FormControl>

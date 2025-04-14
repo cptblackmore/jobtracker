@@ -6,5 +6,6 @@ export const filterLabelsMap: Record<string, string> = {
   sources: 'Источники вакансий',
   enableSalary: 'Учитывать зарплату',
   salaryFrom: 'Мин. зарплата',
-  salaryTo: 'Макс. зарплата'
+  salaryTo: 'Макс. зарплата',
+  place: 'Местоположение'
 }

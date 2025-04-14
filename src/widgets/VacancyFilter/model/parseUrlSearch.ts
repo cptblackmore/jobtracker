@@ -9,6 +9,7 @@ export const parseUrlSearch = (search?: string): VacancyParams['filters'] | unde
 
   const text = params.get('text') ?? undefined;
   const period = validateValue(params.get('period'), [0, 1, 3, 7] as VacancyPeriod[], (v) => Number(v) as VacancyPeriod);
+  const place = params.get('place') ?? undefined;
   const type = validateValue(params.get('type'), ['full', 'shift', 'fifo'] as VacancyType[]);
   const salaryFrom = validateValue(params.get('from'), [], Number, {range: {min: SALARY_MIN, max: SALARY_MAX}});
   const salaryTo = validateValue(params.get('to'), [], Number, {range: {min: SALARY_MIN, max: SALARY_MAX}});
@@ -19,6 +20,7 @@ export const parseUrlSearch = (search?: string): VacancyParams['filters'] | unde
   const selectedFilters = calculateSelectedFilters(
     period ?? 0, 
     type ?? 'none', 
+    place ?? '',
     !!((salaryFrom ?? null) || (salaryTo ?? null))
   );
   for (const [source, config] of typedEntries(sourcesRegistry)) {
@@ -31,6 +33,7 @@ export const parseUrlSearch = (search?: string): VacancyParams['filters'] | unde
     text,
     period,
     type,
+    place,
     salary: {
       from: salaryFrom,
       to: Number(salaryTo) < Number(salaryFrom) ? salaryFrom : salaryTo

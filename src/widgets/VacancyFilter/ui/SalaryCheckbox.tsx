@@ -3,7 +3,7 @@ import { Info } from '@mui/icons-material';
 import { Box, Checkbox, Fade, FormControlLabel, IconButton, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { SalaryFilterAction } from '../model/useSalaryFitler';
-import { getHighlightedColorStyle } from './highlightedFiltersStyles';
+import { getHighlightedColorStyle } from './styles';
 
 interface Props {
   salaryFilter: SwitchableVacancySalary;
