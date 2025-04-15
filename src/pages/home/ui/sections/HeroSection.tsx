@@ -16,7 +16,7 @@ export const HeroSection: React.FC<Props> = ({ sectionStyle }) => {
   return (
     <Box
       component='section'
-      sx={{minHeight: {xs: '80vh', md: '50vh'}, ...sectionStyle}}
+      sx={{minHeight: {xs: '90vh', md: '50vh'}, ...sectionStyle}}
       role='region'
       aria-labelledby={homePageElementsIds.heroHeading}
       aria-describedby={homePageElementsIds.heroDescription}
