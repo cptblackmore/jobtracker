@@ -29,3 +29,4 @@ export { authModalElementsIds } from './ids/authModalElementsIds';
 export { navElementsIds } from './ids/navElementsIds';
 export { favoritesActionsElementsIds } from './ids/favoritesActionsElementsIds';
 export { ClearAdornment } from './ClearAdornment';
+export { homePageElementsIds } from './ids/homePageElementsIds';

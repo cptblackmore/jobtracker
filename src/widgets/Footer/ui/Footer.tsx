@@ -10,11 +10,13 @@ export const Footer: React.FC = () => {
         py: {xs: 2, sm: 3},
         mt: 'auto'
       }}
+      role='contentinfo'
+      aria-label='Футер'
     >
       <Container maxWidth='md'>
         <Grid2 container spacing={{xs: 1, sm: 2}} justifyContent='center' >
           <Grid2 size={{xs: 12, sm: 4}} >
-            <T variant='subtitle1' >О проекте</T>
+            <T component='h5' variant='subtitle1' >О проекте</T>
             <T variant='body2' >
               {'JobTracker - инструмент для удобного поиска вакансий одновременно с нескольких источников. '}
               <Link href='https://github.com/cptblackmore/jobtracker/blob/main/README.md' color='inherit' >
@@ -23,18 +25,18 @@ export const Footer: React.FC = () => {
             </T>
           </Grid2>
           <Grid2 size={{xs: 12, sm: 4}} >
-            <T variant='subtitle1' >Контакты</T>
+            <T component='h5' variant='subtitle1' >Контакты</T>
             <Box display='flex' >
               <T component='p' variant='subtitle2' >
                 {'Почта: '}
-                <Link variant='body2' href='redshatterr@gmail.com' color='inherit' >
+                <Link variant='body2' href='mailto:redshatterr@gmail.com' color='inherit' >
                   redshatterr@gmail.com
                 </Link>
               </T>
             </Box>
           </Grid2>
           <Grid2 size={{xs: 12, sm: 4}} >
-            <T variant='subtitle1' >Социальные сети</T>
+            <T component='h5' variant='subtitle1' >Социальные сети</T>
             <Link variant='subtitle2' href='https://github.com/cptblackmore/jobtracker' color='inherit' >
               GitHub
             </Link>
@@ -43,8 +45,8 @@ export const Footer: React.FC = () => {
         <Divider sx={{my: 2}} />
         <T variant='body2' align='center' >
           <Link 
-            href="https://opensource.org/licenses/MIT" 
-            color="inherit"
+            href='https://opensource.org/licenses/MIT' 
+            color='inherit'
           >
             MIT License
           </Link>

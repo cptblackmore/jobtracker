@@ -14,6 +14,9 @@ export const LoadingSection: React.FC<Props> = ({ variant='light' }) => {
           color: (theme) => theme.palette.primary.contrastText
         }
       ) : null}
+      role='region'
+      aria-busy='true'
+      aria-label='Загрузка секции'
     >
       <Container maxWidth='sm' >
         <Box 
@@ -21,6 +24,8 @@ export const LoadingSection: React.FC<Props> = ({ variant='light' }) => {
           justifyContent='center'
           alignItems='center'
           p={8} 
+          role='status'
+          aria-label='Пожалуйста, подождите'
         >
           <CircularProgress size='5em' />
         </Box>

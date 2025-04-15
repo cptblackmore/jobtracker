@@ -20,7 +20,7 @@ export const PageLayout: React.FC = () => {
       minHeight='100vh'
     >
       <Nav />
-        <Outlet />
+      <Outlet />
       {!currentPage?.withoutFooter && (
         <Footer />
       )}

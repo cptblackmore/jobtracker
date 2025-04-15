@@ -15,46 +15,51 @@ export const SourcesStatusTable: React.FC = () => {
 
   return (
     <TableContainer>
-      <Table>
+      <Table aria-label='Таблица статуса источников вакансий' >
         <TableBody sx={{'& > :last-child td, & > :last-child th': {borderBottom: 0}}} >
           {typedEntries(sourcesRegistry).map(([source, config], index) => {
+            const status = statuses[source];
+            const statusLabel = 
+              status === 'success' ? 'Источник работает' :
+              status === 'pending' ? 'Источник проверяется' : 'Источник недоступен';
+
             return (
               <Tooltip
-                key={index} 
+                key={index}
                 title={isSmUp ? `Перейти на ${config.url.frontendDomain}` : ''}
                 followCursor
                 TransitionComponent={Zoom}
                 PopperProps={{
-                  modifiers: [
-                    {
-                      name: 'offset',
-                      options: {
-                        offset: [0, 10]
-                      }
-                    }
-                  ]
+                  modifiers: [{name: 'offset', options: {offset: [0, 10]}}]
                 }}
               >
                 <TableRow 
+                  hover
                   tabIndex={-1}
-                  hover 
                   sx={{
                     transition: 'background 0.2s',
                     cursor: 'pointer',
-                    textDecoration: 'none'
+                    '&:has(a:focus)': {
+                      bgcolor: (theme) => theme.palette.action.focus,
+                    }
                   }}
+                  onClick={() => window.open(config.url.frontendOrigin, '_blank', 'noopener,noreferrer')}
                 >
                   <TableCell component='th' scope='row' width='100%' sx={{p: 0}} >
-                    <StatusTableCellLink href={config.url.frontendOrigin} >
+                    <StatusTableCellLink 
+                      href={config.url.frontendOrigin}
+                      role='link'
+                      ariaLabel={`Перейти на источник ${config.url.frontendDomain}, Статус: ${statusLabel}`}
+                    >
                       <VacancySource source={source} reverse size={isSmUp ? 1.3 : 1.1} gap={isMdUp ? 3 : 2} />
                     </StatusTableCellLink>
                   </TableCell>
                   <TableCell sx={{p: 0}} >
-                    <StatusTableCellLink href={config.url.frontendOrigin} >
+                    <StatusTableCellLink tabIndex={-1} href={config.url.frontendOrigin} >
                       <Box display='flex' justifyContent='flex-end' >
                         <StatusIndicator 
-                          success={statuses[source] === 'success'} 
-                          pending={statuses[source] === 'pending'} 
+                          success={status === 'success'} 
+                          pending={status === 'pending'} 
                           size={isSmUp ? 1 : 0.9} 
                         />
                       </Box>
@@ -62,10 +67,10 @@ export const SourcesStatusTable: React.FC = () => {
                   </TableCell>
                 </TableRow>
               </Tooltip>
-            )
+            );
           })}
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
+};

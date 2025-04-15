@@ -17,8 +17,17 @@ export const FeatureItem: React.FC<Props> = ({ icon, text }) => {
         borderBottom: (theme) => `1px solid ${theme.palette.primary.contrastText}`, 
         p: 1,
         transition: 'background 0.5s',
-        '&:hover': {bgcolor: (theme)  => theme.palette.primary.main},
+        '&:hover': {
+          bgcolor: (theme) => theme.palette.primary.main
+        },
+        '&:focus': {
+          bgcolor: (theme) => theme.palette.primary.main,
+          outline: 'none'
+        }
       }}
+      tabIndex={0}
+      role='listitem'
+      aria-label={text}
     >
       {icon}
       <T 

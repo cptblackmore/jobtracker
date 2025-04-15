@@ -6,12 +6,13 @@ interface Props {
   success: boolean;
   pending?: boolean;
   size?: number;
+  ariaLabel?: string;
 }
 
-export const StatusIndicator: React.FC<Props> = ({ success, pending, size=1 }) => {
+export const StatusIndicator: React.FC<Props> = ({ success, pending, size=1, ariaLabel }) => {
   if (pending) {
     return (
-      <Box sx={{ display: 'flex', alignItems: 'center' }} >
+      <Box sx={{ display: 'flex', alignItems: 'center' }} role='status' aria-label={ariaLabel} >
         <CircularProgress size={16 * size} color='warning' />
       </Box>
     );

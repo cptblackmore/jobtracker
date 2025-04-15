@@ -8,6 +8,7 @@ import { FeatureIconDownload } from '../icons/FeatureIconDownload';
 import { FeatureIconEndless } from '../icons/FeatureIconEndless';
 import { FeatureIconExport } from '../icons/FeatureIconExport';
 import { useInView } from 'react-intersection-observer';
+import { homePageElementsIds } from '@shared/ui';
 
 interface Props {
   sectionStyle: SxProps
@@ -35,10 +36,12 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
         position: 'relative',
         ...sectionStyle
       }}
+      role='region'
+      aria-labelledby={homePageElementsIds.featuresHeading}
     >
       <Container maxWidth='md' >
-        <SectionTitle title='Отличительные преимущества' />
-        <Grid2 container spacing={{xs: 2, sm: 3}}>
+        <SectionTitle id={homePageElementsIds.featuresHeading} title='Отличительные преимущества' />
+        <Grid2 container spacing={{xs: 2, sm: 3}} role='list' >
           <Slide in={inView} direction='right' timeout={600} >
             <Grid2 size={gridSize} >
               <FeatureItem 
@@ -72,7 +75,7 @@ export const FeaturesSection: React.FC<Props> = ({ sectionStyle }) => {
             </Grid2>
           </Slide>
           <Slide in={inView} direction='right' timeout={700} >
-            <Grid2 size={gridSize} >
+            <Grid2 size={gridSize}>
               <FeatureItem 
                 icon={<FeatureIconEndless color={iconColor} size={iconSize} />} 
                 text='Бесконечная лента вакансий, не нагружающая ваш браузер' 
