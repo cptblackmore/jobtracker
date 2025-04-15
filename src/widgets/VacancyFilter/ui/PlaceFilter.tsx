@@ -5,7 +5,7 @@ import { ChangeEvent } from 'react';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { Places, VacancyParams } from '@entities/Vacancy';
 import { ClearAdornment } from '@shared/ui';
-import { getInputTypographyStyles, getHighlightedBorderStyle } from './styles';
+import { getInputTypographyStyles, getHighlightedBorderStyle, getMenuItemStyle } from './styles';
 
 interface Props {
   place: string;
@@ -70,6 +70,13 @@ export const PlaceFilter: React.FC<Props> = ({
               ))}
             </li>
           );
+        }}
+        slotProps={{
+          listbox: {
+            sx: {
+              '& .MuiAutocomplete-option': getMenuItemStyle(theme)
+            }
+          }
         }}
         renderInput={(params) => (
           <>
