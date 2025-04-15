@@ -1,4 +1,4 @@
-import { Button, Link, SxProps } from '@mui/material';
+import { Button, SxProps } from '@mui/material';
 
 interface Props {
   text: string;
@@ -10,8 +10,16 @@ interface Props {
 
 export const ExternalLinkButton: React.FC<Props> = ({ text, link, variant, sx, size='medium' }) => {
   return (
-    <Link href={link} target='_blank' rel='noopener' sx={sx} >
-      <Button variant={variant} size={size} sx={{width: '100%'}} >{text}</Button>
-    </Link>
+    <Button 
+      variant={variant} 
+      size={size} 
+      sx={{width: '100%', ...sx}} 
+      component='a'
+      target='_blank'
+      rel='noopener'
+      href={link}
+    >
+      {text}
+    </Button>
   );
 }
