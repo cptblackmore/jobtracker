@@ -30,3 +30,6 @@ export { navElementsIds } from './ids/navElementsIds';
 export { favoritesActionsElementsIds } from './ids/favoritesActionsElementsIds';
 export { ClearAdornment } from './ClearAdornment';
 export { homePageElementsIds } from './ids/homePageElementsIds';
+export { AriaInformer } from './AriaInformer';
+export { VisuallyHiddenTitle } from './VisuallyHiddenTitle';
+export { vacancyFilterElementsIds } from './ids/vacancyFilterElementsIds';

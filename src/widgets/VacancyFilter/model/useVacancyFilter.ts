@@ -2,6 +2,8 @@ import { VacancyParams, VacancyPeriod, VacancyType, Sources } from '@entities/Va
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { updateUrlFilters } from './updateUrlFitlers';
+import { vacancyFilterElementsIds } from '@shared/ui';
+import { focusElementById } from '@shared/lib';
 
 export const useVacancyFilter = (
   filters: VacancyParams['filters'], 
@@ -10,6 +12,14 @@ export const useVacancyFilter = (
   const [showAdditional, setShowAdditional] = useState(false);
   const [text, setText] = useState(filters?.text ?? '');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (showAdditional) {
+      focusElementById(vacancyFilterElementsIds.period);
+    } else {
+      focusElementById(vacancyFilterElementsIds.text);
+    }
+  }, [showAdditional]);
   
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

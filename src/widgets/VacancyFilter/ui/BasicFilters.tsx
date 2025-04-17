@@ -5,6 +5,7 @@ import { ChangeEvent } from 'react';
 import { PlaceFilter } from './PlaceFilter';
 import { getHighlightedBorderStyle, getHighlightedColorStyle, getMenuItemStyle, getSelectTypographyStyle } from './styles';
 import { Places } from '@entities/Vacancy';
+import { vacancyFilterElementsIds } from '@shared/ui';
 
 interface Props {
   period: VacancyPeriod;
@@ -44,13 +45,17 @@ export const BasicFilters: React.FC<Props> = ({
     <>
       <Stack direction={isSmUp ? 'column' : 'row'} spacing={{xs: 1, sm: 2}} >
         <FormControl sx={{flexGrow: 1}} >
-          <InputLabel sx={{...getHighlightedColorStyle(highlightedFilters, 'period')}} htmlFor='period' >
+          <InputLabel 
+            id={vacancyFilterElementsIds.periodLabel}
+            sx={{...getHighlightedColorStyle(highlightedFilters, 'period')}} 
+          >
             {filterLabelsMap.period}
           </InputLabel>
           <Select
+            id={vacancyFilterElementsIds.period}
             fullWidth
+            labelId={vacancyFilterElementsIds.periodLabel}
             label={filterLabelsMap.period}
-            inputProps={{id: 'period'}}
             name='period'
             value={period} 
             size='small'
@@ -64,21 +69,24 @@ export const BasicFilters: React.FC<Props> = ({
               }
             }}
           >
-            <MenuItem value={1} sx={getMenuItemStyle(theme)} >1 день</MenuItem>
-            <MenuItem value={3} sx={getMenuItemStyle(theme)} >3 дня</MenuItem>
-            <MenuItem value={7} sx={getMenuItemStyle(theme)} >7 дней</MenuItem>
-            <MenuItem value={0} sx={getMenuItemStyle(theme)} >Без ограничения</MenuItem>
+            <MenuItem value={1} sx={getMenuItemStyle(theme)} aria-selected={period === 1} >1 день</MenuItem>
+            <MenuItem value={3} sx={getMenuItemStyle(theme)} aria-selected={period === 3} >3 дня</MenuItem>
+            <MenuItem value={7} sx={getMenuItemStyle(theme)} aria-selected={period === 7} >7 дней</MenuItem>
+            <MenuItem value={0} sx={getMenuItemStyle(theme)} aria-selected={period === 0} >Без ограничения</MenuItem>
           </Select>
         </FormControl>
         <FormControl sx={{flexGrow: 1}} >
-          <InputLabel sx={{...getHighlightedColorStyle(highlightedFilters, 'type')}} htmlFor='type' >
+          <InputLabel 
+            id={vacancyFilterElementsIds.typeLabel}
+            sx={{...getHighlightedColorStyle(highlightedFilters, 'type')}}
+          >
             {filterLabelsMap.type}
           </InputLabel>
           <Select
             fullWidth
+            labelId={vacancyFilterElementsIds.typeLabel}
             label={filterLabelsMap.type}
             name='type'
-            inputProps={{id: 'type'}}
             value={type} 
             size='small'
             onInvalid={handleInvalid}
@@ -91,10 +99,10 @@ export const BasicFilters: React.FC<Props> = ({
               }
             }}
           >
-            <MenuItem value={'none'} sx={getMenuItemStyle(theme)} >Не выбрано</MenuItem>
-            <MenuItem value={'full'} sx={getMenuItemStyle(theme)} >Полный день</MenuItem>
-            <MenuItem value={'shift'} sx={getMenuItemStyle(theme)} >Сменный график</MenuItem>
-            <MenuItem value={'fifo'} sx={getMenuItemStyle(theme)} >Вахтовый метод</MenuItem>
+            <MenuItem value={'none'} sx={getMenuItemStyle(theme)} aria-selected={type === 'none'} >Не выбрано</MenuItem>
+            <MenuItem value={'full'} sx={getMenuItemStyle(theme)} aria-selected={type === 'full'} >Полный день</MenuItem>
+            <MenuItem value={'shift'} sx={getMenuItemStyle(theme)} aria-selected={type === 'shift'} >Сменный график</MenuItem>
+            <MenuItem value={'fifo'} sx={getMenuItemStyle(theme)} aria-selected={type === 'fifo'} >Вахтовый метод</MenuItem>
           </Select>
         </FormControl>
         {isSmUp && (
@@ -111,6 +119,7 @@ export const BasicFilters: React.FC<Props> = ({
             <Button 
               color='warning' 
               onClick={() => openModal('Вы уверены, что хотите сбросить фильтры?', resetFiltersAndSources)} 
+              aria-label='Сбросить фильтры'
             >
               Сбросить фильтры
             </Button>

@@ -1,7 +1,7 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { FilterList, FilterListOff } from '@mui/icons-material';
 import { Button, Collapse, FormControl, Paper, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
-import { ClearAdornment, ToggleIconButton } from '@shared/ui';
+import { AriaInformer, ClearAdornment, ToggleIconButton, vacancyFilterElementsIds, VisuallyHiddenTitle } from '@shared/ui';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
 import { useVacancyFilter } from '../model/useVacancyFilter';
 import { filterLabelsMap } from '../model/filterLabelsMap';
@@ -27,10 +27,13 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
       sx={{p: {xs: 1, sm: 2}, borderRadius: 2, boxShadow: 2, mb: 2}} 
       component='form'
       onSubmit={handleSubmit}
+      aria-labelledby={vacancyFilterElementsIds.vacancyFitlerTitle}
     >
+      <VisuallyHiddenTitle id={vacancyFilterElementsIds.vacancyFitlerTitle} >Фильтр вакансий</VisuallyHiddenTitle>
       <Stack direction='row' spacing={{xs: 1, sm: 2}} justifyContent='end' alignItems='center' >
         <FormControl fullWidth >
           <TextField
+            id={vacancyFilterElementsIds.text}
             label={filterLabelsMap.text}
             name='text'
             variant='outlined'
@@ -47,6 +50,7 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
               }
             }}
           />
+          <AriaInformer>{text ? 'Появилась кнопка "Очистить поле"' : '-'}</AriaInformer>
         </FormControl>
         <ToggleIconButton 
           isToggled={showAdditional} 
@@ -62,13 +66,20 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
             tooltipLeaveDelay: 300
           }}
         />
-        <Button variant='contained' color='primary' type='submit' sx={{py: 1, fontSize: {xs: '0.8rem', sm: theme.typography.button.fontSize}}} >
+        <Button 
+          variant='contained' 
+          color='primary' 
+          type='submit' 
+          sx={{py: 1, fontSize: {xs: '0.8rem', sm: theme.typography.button.fontSize}}} 
+          aria-label='Применить фильтры и найти вакансии'
+        >
           Искать
         </Button>
       </Stack>
       <Collapse in={showAdditional} >
         <VacancyFilterAdditional filters={filters} setShowAdditional={setShowAdditional} />
       </Collapse>
+      <AriaInformer>{showAdditional ? 'Дополнительные фильтры открыты' : 'Дополнительные фильтры закрыты'}</AriaInformer>
     </Paper>
   );
 };

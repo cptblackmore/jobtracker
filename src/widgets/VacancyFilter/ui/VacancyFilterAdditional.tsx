@@ -97,6 +97,7 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
             size='small'
             onClick={() => openModal('Вы уверены, что хотите сбросить фильтры?', resetFiltersAndSources)} 
             sx={{width: '100%'}}
+            aria-label='Сбросить все фильтры'
           >
             Сбросить фильтры
           </Button>

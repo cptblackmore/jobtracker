@@ -4,7 +4,7 @@ import parse from 'autosuggest-highlight/parse';
 import { ChangeEvent } from 'react';
 import { filterLabelsMap } from '../model/filterLabelsMap';
 import { Places, VacancyParams } from '@entities/Vacancy';
-import { ClearAdornment } from '@shared/ui';
+import { AriaInformer, ClearAdornment } from '@shared/ui';
 import { getInputTypographyStyles, getHighlightedBorderStyle, getMenuItemStyle } from './styles';
 
 interface Props {
@@ -106,6 +106,13 @@ export const PlaceFilter: React.FC<Props> = ({
               }}
             />
             <input type='hidden' name='place' value={formattedPlace} />
+            <AriaInformer>
+              {place.length >= 3
+                  ? suggestedPlaces.length === 1 && suggestedPlaces[0].isMeta
+                    ? 'Мест не найдено'
+                    : `Мест найдено: ${suggestedPlaces.length}`
+                  : 'Введите от 3 символов для поиска мест'}
+            </AriaInformer>
           </>
         )}
         sx={{
