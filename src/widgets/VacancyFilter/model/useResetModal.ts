@@ -6,6 +6,7 @@ export const useResetModal = () => {
   const [modalText, setModalText] = useState<string>('');
   const onResetRef = useRef<(() => void) | null>(null);
   const incompatibleFiltersRef = useRef<string[]>([]);
+  const informerRef = useRef<HTMLDivElement>(null);
 
   const openModal = (text: string, onReset: () => void, incompatibleFilters?: string[]) => {
     setModalText(text);
@@ -21,12 +22,20 @@ export const useResetModal = () => {
   const onConfirm = () => {
     onResetRef.current?.();
     setModalOpen(false);
+
+    if (informerRef?.current && incompatibleFiltersRef.current.length) {
+      setTimeout(() => {
+        informerRef.current!.innerText =
+          `Сброшенные фильтры: ${incompatibleFiltersRef.current.join(', ')}`;
+      }, 500);
+    }
   }
 
   return { 
     isModalOpen, 
     setModalOpen,
     modalText,
+    informerRef,
     incompatibleFiltersRef,
     onConfirm,
     openModal,

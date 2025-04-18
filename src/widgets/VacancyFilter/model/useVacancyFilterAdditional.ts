@@ -49,6 +49,7 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters'], se
     isModalOpen, 
     setModalOpen,
     modalText,
+    informerRef,
     incompatibleFiltersRef,
     onConfirm,
     openModal
@@ -106,6 +107,7 @@ export const useVacancyFilterAdditional = (filters: VacancyParams['filters'], se
     isModalOpen, 
     setModalOpen,
     modalText,
+    informerRef,
     incompatibleFiltersRef,
     onConfirm,
     openModal

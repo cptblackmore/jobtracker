@@ -1,7 +1,7 @@
 import { VacancyParams } from '@entities/Vacancy';
 import { FilterList, FilterListOff } from '@mui/icons-material';
 import { Button, Collapse, FormControl, Paper, Stack, TextField, useMediaQuery, useTheme } from '@mui/material';
-import { AriaInformer, ClearAdornment, ToggleIconButton, vacancyFilterElementsIds, VisuallyHiddenTitle } from '@shared/ui';
+import { AriaInformer, ClearAdornment, ToggleIconButton, vacancyFilterElementsIds, VisuallyHiddenTypography } from '@shared/ui';
 import { VacancyFilterAdditional } from './VacancyFilterAdditional';
 import { useVacancyFilter } from '../model/useVacancyFilter';
 import { filterLabelsMap } from '../model/filterLabelsMap';
@@ -29,7 +29,7 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
       onSubmit={handleSubmit}
       aria-labelledby={vacancyFilterElementsIds.vacancyFitlerTitle}
     >
-      <VisuallyHiddenTitle id={vacancyFilterElementsIds.vacancyFitlerTitle} >Фильтр вакансий</VisuallyHiddenTitle>
+      <VisuallyHiddenTypography id={vacancyFilterElementsIds.vacancyFitlerTitle} >Фильтр вакансий</VisuallyHiddenTypography>
       <Stack direction='row' spacing={{xs: 1, sm: 2}} justifyContent='end' alignItems='center' >
         <FormControl fullWidth >
           <TextField

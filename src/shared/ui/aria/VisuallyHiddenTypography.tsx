@@ -2,20 +2,20 @@ import { Typography as T } from '@mui/material';
 import React, { ReactNode } from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLHeadingElement> {
-  variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  variant?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   id?: string;
   children: ReactNode;
 }
 
-export const VisuallyHiddenTitle: React.FC<Props> = ({
+export const VisuallyHiddenTypography: React.FC<Props> = ({
   variant='h2',
   id,
   children,
 }) => { 
   return (
     <T
+      component={variant}
       id={id}
-      variant={variant}
       sx={{
         position: 'absolute',
         width: '1px',

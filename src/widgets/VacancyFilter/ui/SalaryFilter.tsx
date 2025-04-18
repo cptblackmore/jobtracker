@@ -19,7 +19,8 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
   }
   
   return (
-    <Box sx={{opacity: salaryFilter.enabled ? 1 : 0.5}} >
+    <Box component='fieldset' sx={{opacity: salaryFilter.enabled ? 1 : 0.5, border: 'none'}} >
+      <legend style={{fontSize: 0}} >{filterLabelsMap.salaryRange}</legend>
       <Box px={{xs: 1.5, sm: 1}} >
         <Slider
           value={[salaryFilter?.from ?? SALARY_MIN, salaryFilter?.to ?? SALARY_MAX]}
@@ -42,6 +43,13 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
               }
             }
           }}
+          aria-labelledby={filterLabelsMap.salaryRange}
+          getAriaLabel={(index) => index === 0 ? 'Минимальная зарплата' : 'Максимальная зарплата'}
+          getAriaValueText={(value, index) =>
+            index === 0
+              ? `${value} рублей`
+              : `${value} рублей`
+          }
         />
       </Box>
       <Stack direction='row' spacing={{xs: 1, sm: 2}} mt={{xs: 0, sm: 2}} >
@@ -50,7 +58,11 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
           name='salaryFrom'
           type='number'
           size='small'
-          slotProps={{htmlInput: {step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX}}}
+          slotProps={{
+            htmlInput: {
+              inputMode: 'numeric', step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX, 'aria-label': 'Минимальная зарплата'
+            }
+          }}
           fullWidth
           value={salaryFilter?.from !== 0 ? salaryFilter?.from : ''}
           onInvalid={handleInvalid}
@@ -65,7 +77,11 @@ export const SalaryFilter: React.FC<Props> = ({ handleSalaryChange, salaryFilter
           name='salaryTo'
           type='number'
           size='small'
-          slotProps={{htmlInput: {step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX}}}
+          slotProps={{
+            htmlInput: {
+              inputMode: 'numeric', step: SALARY_STEP, min: SALARY_MIN, max: SALARY_MAX, 'aria-label': 'Максимальная зарплата'
+            }
+          }}
           fullWidth
           value={salaryFilter?.to !== 0 ? salaryFilter?.to : ''}
           onInvalid={handleInvalid}

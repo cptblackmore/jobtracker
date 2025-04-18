@@ -3,6 +3,7 @@ export const filterLabelsMap: Record<string, string> = {
   period: 'Период размещения',
   type: 'Тип занятости',
   salary: 'Заработная плата',
+  salaryRange: 'Диапазон зарплат',
   sources: 'Источники вакансий',
   enableSalary: 'Учитывать зарплату',
   salaryFrom: 'Мин. зарплата',

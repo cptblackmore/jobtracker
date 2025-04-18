@@ -25,6 +25,7 @@ export const VacancySource: React.FC<Props> = ({ source, reverse, size=1, gap=1 
         color: themeMode === 'light' ? styles.color : lighten(styles.color, 0.5),
         fontSize: `${size}em`,
       }}
+      aria-label={`Источник ${styles.name}`}
     >
     {styles.name}
       <img src={styles.icon} css={{width: '1.1em', height: '1.1em', filter: 'brightness(1.2)'}} />

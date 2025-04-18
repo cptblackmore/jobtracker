@@ -1,19 +1,22 @@
-import React from 'react'
+import React, { Ref } from 'react'
 import { Box } from '@mui/material'
 
 interface Props {
   id?: string;
   children?: string;
   'aria-live'?: 'off' | 'polite' | 'assertive';
+  forwardRef?: Ref<HTMLDivElement>;
 }
 
 export const AriaInformer: React.FC<Props> = ({
   id,
   children = '',
-  'aria-live': ariaLive='polite'
+  'aria-live': ariaLive='polite',
+  forwardRef
 }) => {
   return (
     <Box
+      ref={forwardRef}
       id={id}
       sx={{
         position: 'absolute',

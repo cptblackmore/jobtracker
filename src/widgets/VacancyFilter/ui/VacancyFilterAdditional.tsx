@@ -6,7 +6,7 @@ import { BasicFilters } from './BasicFilters';
 import { SalaryCheckbox } from './SalaryCheckbox';
 import { useVacancyFilterAdditional } from '../model/useVacancyFilterAdditional';
 import { Dispatch, SetStateAction } from 'react';
-import { ConfirmationModal } from '@shared/ui';
+import { AriaInformer, ConfirmationModal } from '@shared/ui';
 
 interface Props {
   filters: VacancyParams['filters'];
@@ -35,6 +35,7 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
     isModalOpen, 
     setModalOpen,
     modalText,
+    informerRef,
     incompatibleFiltersRef,
     onConfirm,
     openModal
@@ -60,6 +61,7 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
           ))}
         </span>
       </ConfirmationModal>
+      <AriaInformer aria-live='assertive' forwardRef={informerRef} ></AriaInformer>
       <Grid2 container mt={2} >
         <Grid2 size={12} mb={1} >
           <Divider orientation='horizontal' sx={{mb: 1}} />
@@ -105,4 +107,4 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
       )}
     </>
   );
-};
+}
