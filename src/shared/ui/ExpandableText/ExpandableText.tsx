@@ -72,8 +72,8 @@
         aria-expanded={isExpanded} 
         aria-labelledby='test'
       >
-        <VisuallyHiddenTypography variant='p' >{isExpanded ? ariaLabel + 'Свернуть' : ariaLabel + 'Развернуть'}</VisuallyHiddenTypography>
-        <AriaInformer id='test' >{isExpanded ? ariaLabel + text : 'Описание свернуто'}</AriaInformer>
+        <VisuallyHiddenTypography variant='p' >{isOverflowed ? isExpanded ? ariaLabel + 'Свернуть' : ariaLabel + 'Развернуть' : ''}</VisuallyHiddenTypography>
+        <AriaInformer id='test' >{isOverflowed ? isExpanded ? ariaLabel + text : 'Описание свернуто' : ariaLabel + text}</AriaInformer>
         <Collapse
           in={isExpanded}
           timeout={timeout ?? 'auto'}

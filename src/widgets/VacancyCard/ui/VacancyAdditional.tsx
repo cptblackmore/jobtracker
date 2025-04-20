@@ -18,7 +18,7 @@ export const VacancyAdditional: React.FC<Props> = ({ vacancy }) => {
           text={'Подробнее'} 
           variant='text'
           link={vacancy.link} 
-          ariaLabel={'Переход на страницу вакансии ' + sourcesRegistry[vacancy.source].url.frontendDomain}
+          ariaLabel={'Переход на страницу вакансии ' + sourcesRegistry[vacancy.source].styles.name}
         />
       </CardActions>
     </Box>
