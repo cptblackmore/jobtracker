@@ -1,5 +1,5 @@
 import { Box, Card, CardActions, Divider, Fade, useMediaQuery, useTheme } from '@mui/material';
-import { Vacancy } from '@entities/Vacancy';
+import { sourcesRegistry, Vacancy } from '@entities/Vacancy';
 import { VacancyFeatures } from './VacancyFeatures';
 import { VacancyDetails } from './VacancyDetails';
 import { VacancyAdditional } from './VacancyAdditional';
@@ -15,7 +15,7 @@ export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
 
   return (
     <Fade in timeout={200} >
-      <Card sx={{display: isSmUp ? 'flex' : 'block', width: '100%'}} >
+      <Card component='article' sx={{display: isSmUp ? 'flex' : 'block', width: '100%'}} >
         <Box display='flex' flexGrow={1} >
           {isSmUp && <VacancyFeatures vacancy={vacancy} />}
           {isSmUp && <Divider orientation='vertical' flexItem variant='middle' />}
@@ -33,6 +33,7 @@ export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
                 size='small'
                 link={vacancy.link}
                 sx={{ width: '100%'}}
+                ariaLabel={`Переход на страницу вакансии ${sourcesRegistry[vacancy.source].url.frontendDomain}`}
             />
             </CardActions>
           </>

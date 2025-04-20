@@ -15,5 +15,7 @@ export interface ToggleIconButtonProps {
     tooltipLeaveDelay?: number;
     ariaLabel?: string;
     ariaPressable?: boolean;
+    tabIndex?: number;
+    ariaHidden?: boolean;
   }
 }

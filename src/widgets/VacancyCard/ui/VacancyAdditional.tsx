@@ -1,5 +1,5 @@
 import { Box, CardActions, CardContent } from '@mui/material';
-import { Vacancy } from '@entities/Vacancy';
+import { sourcesRegistry, Vacancy } from '@entities/Vacancy';
 import { VacancyPayment } from './VacancyPayment';
 import { ExternalLinkButton } from '@shared/ui';
 
@@ -18,6 +18,7 @@ export const VacancyAdditional: React.FC<Props> = ({ vacancy }) => {
           text={'Подробнее'} 
           variant='text'
           link={vacancy.link} 
+          ariaLabel={'Переход на страницу вакансии ' + sourcesRegistry[vacancy.source].url.frontendDomain}
         />
       </CardActions>
     </Box>

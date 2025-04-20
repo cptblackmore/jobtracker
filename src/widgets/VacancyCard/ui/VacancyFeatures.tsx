@@ -14,7 +14,11 @@ export const VacancyFeatures: React.FC<Props> = ({ vacancy }) => {
         pt: {xs: 1.5, sm: 2}
       }}
     >
-      <FavoriteIconButton favorite={vacancy} />
+      <FavoriteIconButton 
+        favorite={vacancy} 
+        ariaLabelOnFavorite={`Удаление из избранного ${vacancy.profession}`} 
+        ariaLabelOnNotFavorite={`Добавление в избранное ${vacancy.profession}`}
+      />
     </CardActions>
   );
 }

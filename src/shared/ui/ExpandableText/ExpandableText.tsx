@@ -1,6 +1,6 @@
   import React, { useEffect, useRef, useState } from 'react';
   import { Typography as T, Collapse, Box, useTheme, useMediaQuery } from '@mui/material';
-  import { ToggleIconButton } from '@shared/ui';
+  import { AriaInformer, ToggleIconButton, VisuallyHiddenTypography } from '@shared/ui';
   import { ExpandLess, ExpandMore } from '@mui/icons-material';
   import { throttle } from '@shared/lib';
   import { getFadedCollapseStyle } from './styles';
@@ -15,6 +15,7 @@
       rowHeight?: number;
       fadingColor?: string;
       timeout?: number | 'auto' | { enter?: number; exit?: number };
+      ariaLabel?: string;
     };
   }
 
@@ -25,7 +26,8 @@
       minRows=1, 
       rowHeight=24, 
       fadingColor='#fff',
-      timeout
+      timeout,
+      ariaLabel
     } = {}
   }) => {
     const maxHeight = rowHeight * maxRows;
@@ -53,17 +55,32 @@
     }, [])
 
     return (
-      <Box sx={{display: 'flex'}} >
+      <Box 
+        tabIndex={0}
+        sx={{
+          display: 'flex',
+          outline: `2px solid transparent`,
+          '&:focus-visible': {
+            outline: `2px solid ${theme.palette.primary.main}`,
+            borderRadius: 0.1,  
+            outlineOffset: 4,
+            transition: 'outline 0.2s'
+          },
+          cursor: isOverflowed ? 'pointer' : 'default'
+        }} 
+        onClick={isOverflowed ? toggleCollapse : undefined}
+        aria-expanded={isExpanded} 
+        aria-labelledby='test'
+      >
+        <VisuallyHiddenTypography variant='p' >{isExpanded ? ariaLabel + 'Свернуть' : ariaLabel + 'Развернуть'}</VisuallyHiddenTypography>
+        <AriaInformer id='test' >{isExpanded ? ariaLabel + text : 'Описание свернуто'}</AriaInformer>
         <Collapse
           in={isExpanded}
           timeout={timeout ?? 'auto'}
           collapsedSize={collapsedHeight}
           css={getFadedCollapseStyle(isFaded, isOverflowed, fadingColor)}
           onExited={handleExited}
-          onClick={isOverflowed && !isSmUp ? toggleCollapse : undefined}
-          sx={{
-            cursor: isOverflowed && !isSmUp ? 'pointer' : 'default'
-          }}
+          aria-hidden={!isExpanded}
         >
           <T 
             variant='body1' 
@@ -81,7 +98,7 @@
         {isOverflowed && isSmUp && (
           <ToggleIconButton
             isToggled={isExpanded}
-            onToggle={toggleCollapse}
+            onToggle={() => {}}
             defaultIcon={<ExpandMore color='primary' />}
             toggledIcon={<ExpandLess color='primary' />}
             defaultTooltip='Развернуть'
@@ -90,7 +107,9 @@
               size: 1.2,
               wrapperSize: 1.5,
               tooltipEnterDelay: 500,
-              tooltipLeaveDelay: 300
+              tooltipLeaveDelay: 300,
+              tabIndex: -1,
+              ariaHidden: true
             }}
           />
         )}

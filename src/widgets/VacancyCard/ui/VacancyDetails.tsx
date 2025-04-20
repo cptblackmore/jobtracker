@@ -1,6 +1,6 @@
 import { Box, CardContent, CardHeader, Divider, Typography as T, useMediaQuery } from '@mui/material';
 import { Vacancy } from '@entities/Vacancy';
-import { ExpandableText } from '@shared/ui';
+import { ExpandableText, VisuallyHiddenTypography } from '@shared/ui';
 import { VacancySource } from '../../VacancySource/ui/VacancySource';
 import { formatDistanceToNow } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -10,6 +10,7 @@ import { ThemesContext } from '@shared/ui';
 import { useContext } from 'react';
 import { VacancyFeatures } from './VacancyFeatures';
 import { VacancyPayment } from './VacancyPayment';
+import { getDetailsLabel } from './getDetailsLabel';
 
 interface Props {
   vacancy: Vacancy;
@@ -25,13 +26,20 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
   return (
     <Box>
       <Box display='flex' >
+        <VisuallyHiddenTypography variant='h3' >{vacancy.profession}</VisuallyHiddenTypography>
         <CardHeader
+          tabIndex={0}
           sx={{
             pb: 0,
             pt: {xs: 1.5, sm: 2},
             pl: {xs: 1, sm: 2},
             pr: {xs: 0, sm: 2},
-            flexGrow: 1
+            flexGrow: 1,
+            '&:focus-visible': {
+              outline: `none`,
+              backgroundColor: theme.palette.action.focus
+            },
+            transition: 'background 0.2s'
           }}
           title={
             <T 
@@ -45,20 +53,22 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
                   sm: {fontSize: theme.typography.h5.fontSize}
                 }
               }}
+              aria-hidden='true'
             >
               {vacancy.profession}
             </T>
           }
           subheader={
-            <Box pl={1} >
+            <Box pl={1} aria-hidden='true' >
               {!isSmUp && <VacancyPayment vacancy={vacancy} variant='row' />}
               <Box textAlign='start' display='flex' >
-                <T component='h4' sx={{fontSize: {xs: '0.7em', sm: theme.typography.body1.fontSize}}} >{vacancy.firmName}</T>
+                <T sx={{fontSize: {xs: '0.7em', sm: theme.typography.body1.fontSize}}} aria-hidden='true' >{vacancy.firmName}</T>
                 <Divider sx={{mx: {xs: 1, sm: 2}}} orientation='vertical' flexItem />
-                <T component='h4' sx={{fontSize: {xs: '0.7em', sm: theme.typography.body1.fontSize}}} >{vacancy.town}</T>
+                <T sx={{fontSize: {xs: '0.7em', sm: theme.typography.body1.fontSize}}} aria-hidden='true' >{vacancy.town}</T>
               </Box>
             </Box>
           }
+          aria-label={getDetailsLabel(vacancy, howLongAgo)}
         />
         {!isSmUp && <VacancyFeatures vacancy={vacancy} />}
       </Box>
@@ -71,7 +81,8 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
               theme.palette.background.paper, 
               config.muiPaperOverlay.bgcolor, 
               config.muiPaperOverlay.opacity
-            )
+            ),
+            ariaLabel: 'Описание вакансии'
           }} 
         />
         <T 

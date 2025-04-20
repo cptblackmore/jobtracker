@@ -5,10 +5,11 @@ interface Props {
   link: string;
   variant?: 'text' | 'contained' | 'outlined';
   size?: 'small' | 'medium' | 'large';
+  ariaLabel?: string;
   sx?: SxProps
 }
 
-export const ExternalLinkButton: React.FC<Props> = ({ text, link, variant, sx, size='medium' }) => {
+export const ExternalLinkButton: React.FC<Props> = ({ text, link, variant, sx, size='medium', ariaLabel }) => {
   return (
     <Button 
       variant={variant} 
@@ -18,6 +19,7 @@ export const ExternalLinkButton: React.FC<Props> = ({ text, link, variant, sx, s
       target='_blank'
       rel='noopener'
       href={link}
+      aria-label={ariaLabel}
     >
       {text}
     </Button>

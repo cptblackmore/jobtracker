@@ -20,11 +20,17 @@ export const VacancyPayment: React.FC<Props> = ({ vacancy, variant='column' }) =
   });
 
   return (
-    <Box component='strong' display={variant === 'column' ? 'block' : 'flex'} alignItems={'center'} >
-      {!paymentFrom && !paymentTo && <T textAlign='end' sx={textStyle} >Зарплата не указана</T>}
-      {paymentFrom ? <T whiteSpace='nowrap' textAlign='end' sx={textStyle} >от <b>{paymentFrom}</b></T> : ''}
-      {showDash && <T whiteSpace="nowrap" mx={1}>–</T>}
-      {paymentTo ? <T whiteSpace='nowrap' textAlign='end' sx={textStyle} >до <b>{paymentTo}</b></T> : ''}
-    </Box>
+    <>
+      <Box 
+        component='strong' 
+        display={variant === 'column' ? 'block' : 'flex'} 
+        alignItems={'center'} 
+      >
+        {!paymentFrom && !paymentTo && <T textAlign='end' sx={textStyle} >Зарплата не указана</T>}
+        {paymentFrom ? <T whiteSpace='nowrap' textAlign='end' sx={textStyle} >от <b>{paymentFrom}</b></T> : ''}
+        {showDash && <T whiteSpace="nowrap" mx={1} >–</T>}
+        {paymentTo ? <T whiteSpace='nowrap' textAlign='end' sx={textStyle} >до <b>{paymentTo}</b></T> : ''}
+      </Box>
+    </>
   );
 }
