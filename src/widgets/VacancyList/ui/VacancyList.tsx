@@ -4,7 +4,7 @@ import { VacancyParams } from '@entities/Vacancy';
 import { VirtualizedVacancyList } from './VirtualizedVacancyList';
 import { VACANCIES_COUNT_PER_SOURCE } from '@shared/config';
 import { useEffectOnceByCondition } from '@shared/lib';
-import { createAlert } from '@shared/ui';
+import { createAlert, VisuallyHiddenTypography } from '@shared/ui';
 
 interface Props {
   initialFilters?: VacancyParams['filters'];
@@ -26,6 +26,7 @@ export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
   return (
     <>
       <VacancyFilter filters={state.params.filters} setFilters={setFilters} />
+      <VisuallyHiddenTypography>Список вакансий</VisuallyHiddenTypography>
       <VirtualizedVacancyList 
         vacancies={state.vacancies}
         isLoading={isLoading}
