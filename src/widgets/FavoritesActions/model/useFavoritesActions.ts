@@ -1,5 +1,5 @@
 import { FavoritesContext } from '@features/Favorites';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { fetchFavorites } from '@widgets/FavoritesList';
 import { AlertsContext, createAlert } from '@shared/ui';
 import axios from 'axios';
@@ -11,6 +11,7 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
   const [modalOpen, setModalOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const ariaInformerTextRef = useRef<HTMLParagraphElement>(null); 
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const { alertsStore } = useContext(AlertsContext);
   const { favoritesStore } = useContext(FavoritesContext);
@@ -23,6 +24,16 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
     favoritesStore.clearFavorites();
     clearDisplayedFavorites();
   }
+
+  useEffect(() => {
+    if (ariaInformerTextRef.current) {
+      if (isLoading) {
+        ariaInformerTextRef.current.textContent = 'Идёт загрузка';
+      } else {
+        ariaInformerTextRef.current.textContent = 'Загрузка завершена';
+      }
+    }
+  }, [isLoading]);
 
   const handleDownloadFavorites = async (format: 'txt' | 'csv') => {
     setIsLoading(true);
@@ -66,6 +77,7 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
     setModalOpen, 
     progress, 
     isLoading,
+    ariaInformerTextRef,
     activeAction,
     handleDeleteFavorites, 
     handleDownloadFavorites, 

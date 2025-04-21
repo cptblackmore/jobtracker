@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Divider, Grid2, LinearProgress, Paper, u
 import { DeleteFavoritesModal } from './DeleteFavoritesModal';
 import { useFavoritesActions } from '../model/useFavoritesActions';
 import { observer } from 'mobx-react-lite';
-import { favoritesActionsElementsIds } from '@shared/ui';
+import { AriaInformer, favoritesActionsElementsIds, VisuallyHiddenTypography } from '@shared/ui';
 
 interface Props {
   clearDisplayedFavorites: () => void;
@@ -15,6 +15,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
     setModalOpen, 
     progress, 
     isLoading,
+    ariaInformerTextRef,
     activeAction,
     handleDeleteFavorites, 
     handleDownloadFavorites, 
@@ -31,22 +32,24 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
       onClick: () => handleDownloadFavorites('txt'), 
       action: 'download-txt',
       disableOnLoading: true, 
-      disableOnEmpty: true
+      disableOnEmpty: true,
+      ariaLabel: 'Скачать список избранных вакансий в формате TXT'
     },
     {
       text:'Скачать CSV', 
       onClick: () => handleDownloadFavorites('csv'), 
       action: 'download-csv',
       disableOnLoading: true, 
-      disableOnEmpty: true
+      disableOnEmpty: true,
+      ariaLabel: 'Скачать список избранных вакансий в формате CSV'
     },
     {
       text: 'Экспорт', 
       onClick: handleExportFavorites, 
       action: 'export',
       disableOnLoading: false, 
-      disableOnEmpty: true
-
+      disableOnEmpty: true,
+      ariaLabel: 'Экспортировать список избранных вакансий в JSON файле'
     },
     {
       text: 'Импорт', 
@@ -54,6 +57,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
       action: 'import',
       disableOnLoading: false, 
       disableOnEmpty: false,
+      ariaLabel: 'Импортировать список избранных вакансий из JSON файла',
       id: favoritesActionsElementsIds.importButton
     }
   ];
@@ -66,6 +70,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
         handleDeleteFavorites={handleDeleteFavorites} 
         favoritesStore={favoritesStore}  
       />
+      <VisuallyHiddenTypography>{`Панель действий с избранными вакансиями, вакансий в избранном: ${favoritesStore.ids.length}`}</VisuallyHiddenTypography>
       <Paper 
         sx={{ p: isSmUp ? 2 : 1, borderRadius: 2, boxShadow: 2, mb: 2 }}
       >
@@ -77,6 +82,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
               variant='outlined' 
               color='error' 
               onClick={() => setModalOpen(true)} 
+              aria-label='Удалить все избранные вакансии'
             >
               Удалить все
             </Button>
@@ -93,6 +99,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
                 onClick={button.onClick}
                 disabled={disabled}
                 endIcon={isActive && <CircularProgress size={15} color='inherit' />}
+                aria-label={button.ariaLabel}
               >
                 {isActive ? 'Загрузка...' : button.text}
               </Button>
@@ -114,6 +121,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
                   onClick={button.onClick}
                   disabled={disabled}
                   endIcon={isActive && <CircularProgress size={15} color='inherit' />}
+                  aria-label={button.ariaLabel}
                 >
                   {isActive ? 'Загрузка...' : button.text}
                 </Button>
@@ -130,6 +138,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
                 size='small'
                 color='error' 
                 onClick={() => setModalOpen(true)} 
+                aria-label='Удалить все избранные вакансии'
               >
                 Удалить все
               </Button>
@@ -144,6 +153,7 @@ export const FavoritesActions: React.FC<Props> = observer(({ clearDisplayedFavor
           </Box>
         )}
       </Paper>
+      <AriaInformer forwardRef={ariaInformerTextRef} />
     </>
   );
 });
