@@ -2,6 +2,7 @@ import { useFavoritesList } from '../model/useFavoritesList';
 import { VirtualizedVacancyList } from '@widgets/VacancyList';
 import { FavoritesActions } from '@widgets/FavoritesActions';
 import { EmptyFavoritesListMessage } from './EmptyFavoritesListMessage';
+import { VisuallyHiddenTypography } from '@shared/ui';
 
 export const FavoritesList: React.FC = () => {
   const { 
@@ -20,11 +21,14 @@ export const FavoritesList: React.FC = () => {
         resetDisplayedFavorites={resetDisplayedFavorites} 
       />
       {displayedIdsLength > 0 ? (
-        <VirtualizedVacancyList 
-          vacancies={vacancies}
-          isLoading={isLoading}
-          toNextPage={toNextPage}
-        />
+        <>
+          <VisuallyHiddenTypography>Список избранных вакансий</VisuallyHiddenTypography>
+          <VirtualizedVacancyList 
+            vacancies={vacancies}
+            isLoading={isLoading}
+            toNextPage={toNextPage}
+          />
+        </>
       ) : (
         <EmptyFavoritesListMessage />
       )}

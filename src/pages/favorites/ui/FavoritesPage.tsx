@@ -17,6 +17,7 @@ export const FavoritesPage: React.FC = observer(() => {
         <Box py={{xs: 2, sm: 4}} >
           <PageTitle 
             title={`Избранные вакансии${!isSmUp || favoritesStore.ids.length === 0 ? '' : `  – ${favoritesStore.ids.length}`}`} 
+            aria-label={`Избранные вакансии, вакансий в избранном ${favoritesStore.ids.length}`}
           />
           {!isSmUp && <FavoritesQuantity />}
           <FavoritesList />

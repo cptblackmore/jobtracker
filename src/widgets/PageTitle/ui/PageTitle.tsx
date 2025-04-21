@@ -2,9 +2,10 @@ import { Typography as T } from '@mui/material';
 
 interface Props {
   title: string;
+  'aria-label'?: string;
 }
 
-export const PageTitle: React.FC<Props> = ({ title }) => {
+export const PageTitle: React.FC<Props> = ({ title, 'aria-label': ariaLabel }) => {
   return (
     <T
       component='h1'
@@ -18,6 +19,7 @@ export const PageTitle: React.FC<Props> = ({ title }) => {
           sm: theme.typography.h2.fontSize
         }
       })}
+      aria-label={ariaLabel}
     >
       {title}
     </T>
