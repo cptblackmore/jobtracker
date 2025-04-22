@@ -33,3 +33,5 @@ export { homePageElementsIds } from './ids/homePageElementsIds';
 export { AriaInformer } from './aria/AriaInformer';
 export { VisuallyHiddenTypography } from './aria/VisuallyHiddenTypography';
 export { vacancyFilterElementsIds } from './ids/vacancyFilterElementsIds';
+export { globalElementsIds } from './ids/globalElementsIds';
+export { confirmationModalElementsIds } from './ids/confirmationModalElementsIds';

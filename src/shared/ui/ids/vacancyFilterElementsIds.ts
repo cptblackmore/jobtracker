@@ -7,4 +7,5 @@ export const vacancyFilterElementsIds = {
   typeLabel: 'vacancy-filter-type-select-label',
   placeLabel: 'vacancy-filter-place-input-label',
   salaryTooltip: 'vacancy-filter-salary-tooltip',
+  modalDescription: 'vacancy-filter-modal-description'
 }

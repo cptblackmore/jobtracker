@@ -2,7 +2,7 @@ import { CssBaseline, GlobalStyles } from '@mui/material';
 import { Router } from './router/Router';
 import { Alerts } from '@shared/ui/Alert/Alerts';
 import { AuthModal } from '@widgets/AuthModal';
-import { fonts } from '@shared/ui';
+import { AriaInformer, fonts, globalElementsIds } from '@shared/ui';
 import { Providers } from './context/Providers';
   
 export const App = () => {
@@ -14,6 +14,7 @@ export const App = () => {
         <Router />
         <Alerts />
         <AuthModal />
+        <AriaInformer id={globalElementsIds.ariaInformer} />
       </Providers>
     </>
   );

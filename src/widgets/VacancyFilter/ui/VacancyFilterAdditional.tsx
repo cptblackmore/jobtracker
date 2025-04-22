@@ -6,7 +6,7 @@ import { BasicFilters } from './BasicFilters';
 import { SalaryCheckbox } from './SalaryCheckbox';
 import { useVacancyFilterAdditional } from '../model/useVacancyFilterAdditional';
 import { Dispatch, SetStateAction } from 'react';
-import { AriaInformer, ConfirmationModal } from '@shared/ui';
+import { AriaInformer, ConfirmationModal, vacancyFilterElementsIds } from '@shared/ui';
 
 interface Props {
   filters: VacancyParams['filters'];
@@ -50,6 +50,7 @@ export const VacancyFilterAdditional: React.FC<Props> = ({ filters, setShowAddit
         setOpen={setModalOpen}
         handleConfirm={onConfirm}
         confirmButtonText='Сбросить'
+        ariaDescribedById={vacancyFilterElementsIds.modalDescription}
       >
         <span style={{display: 'block'}} >{modalText}</span>
         <span>

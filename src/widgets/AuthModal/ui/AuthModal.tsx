@@ -2,7 +2,7 @@ import { alpha, Box, Button, Dialog, DialogActions, DialogContent, DialogContent
 import { observer } from 'mobx-react-lite';
 import { useAuthModal } from '../model/useAuthModal';
 import { blurActiveElement, focusElementById, useTriggerAnimation } from '@shared/lib';
-import { shakeKeyframes, authModalElementsIds, navElementsIds } from '@shared/ui';
+import { shakeKeyframes, authModalElementsIds, navElementsIds, AriaInformer } from '@shared/ui';
 import { getAuthInputAnim } from './getAuthInputAnim';
 
 export const AuthModal = observer(() => {
@@ -14,6 +14,7 @@ export const AuthModal = observer(() => {
     toggleForm, 
     handleSubmit, 
     errors,
+    ariaInformerTextRef,
     handleOnChange,
     authStore 
   } = useAuthModal(triggerShakeAnim);
@@ -50,6 +51,7 @@ export const AuthModal = observer(() => {
           focusElementById(navElementsIds.loginMenuButton);
         }
       }}
+      aria-describedby={authModalElementsIds.description}
     >
       <DialogTitle
         sx={{textAlign: 'center', mb: 1}}
@@ -57,7 +59,7 @@ export const AuthModal = observer(() => {
         {isLoginForm ? 'Вход' : 'Регистрация'}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText sx={{ mb: 2, textAlign: 'center' }} >
+        <DialogContentText id={authModalElementsIds.description} sx={{ mb: 2, textAlign: 'center' }} >
           {isLoginForm 
             ? 'Введите свой email и пароль для входа:' 
             : 'Создайте аккаунт, введя email и пароль:'}
@@ -91,6 +93,7 @@ export const AuthModal = observer(() => {
             variant='standard'
           />
           <FormHelperText sx={{fontSize: '0.9rem'}} error={!!errors.serverValidation} >{errors.serverValidation}</FormHelperText>
+          <AriaInformer forwardRef={ariaInformerTextRef} />
         </Stack>
         <Box mt={2} textAlign='center' >
           <DialogContentText component='span' >
@@ -103,6 +106,7 @@ export const AuthModal = observer(() => {
               toggleForm();
               focusElementById(authModalElementsIds.emailInput);
             }}
+            aria-label={isLoginForm ? 'Переключить на форму регистрации' : 'Переключить на форму входа'}
           >
             {isLoginForm ? 'Зарегистрироваться' : 'Войти'}
           </Button>

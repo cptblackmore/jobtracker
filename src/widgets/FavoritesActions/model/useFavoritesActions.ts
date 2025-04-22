@@ -11,7 +11,7 @@ export const useFavoritesActions = (clearDisplayedFavorites: () => void, resetDi
   const [modalOpen, setModalOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const ariaInformerTextRef = useRef<HTMLParagraphElement>(null); 
+  const ariaInformerTextRef = useRef<HTMLDivElement>(null); 
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const { alertsStore } = useContext(AlertsContext);
   const { favoritesStore } = useContext(FavoritesContext);

@@ -20,6 +20,7 @@ export const DeleteFavoritesModal: React.FC<Props> = observer(({ open, setOpen, 
       handleConfirm={handleDeleteFavorites}
       severity='error'
       onExited={() => favoritesStore.ids.length === 0 && focusElementById(favoritesActionsElementsIds.importButton)}
+      ariaDescribedById={favoritesActionsElementsIds.deleteModalDescription}
     >
       Вы уверены, что хотите удалить <b>все</b> избранные вакансии?
     </ConfirmationModal>

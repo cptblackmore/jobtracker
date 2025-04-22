@@ -1,5 +1,7 @@
 import { alpha, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, useMediaQuery, useTheme } from '@mui/material';
+import { focusElementById } from '@shared/lib';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { confirmationModalElementsIds } from './ids/confirmationModalElementsIds';
 
 interface Props {
   open: boolean;
@@ -9,9 +11,19 @@ interface Props {
   confirmButtonText?: string;
   severity?: 'warning' | 'error';
   onExited?: () => void;
+  ariaDescribedById?: string;
 }
 
-export const ConfirmationModal: React.FC<Props> = ({ open, setOpen, children, handleConfirm, confirmButtonText='ОК', severity='warning', onExited }) => {
+export const ConfirmationModal: React.FC<Props> = ({ 
+  open, 
+  setOpen, 
+  children, 
+  handleConfirm, 
+  confirmButtonText='ОК', 
+  severity='warning', 
+  onExited, 
+  ariaDescribedById 
+}) => {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
@@ -32,10 +44,12 @@ export const ConfirmationModal: React.FC<Props> = ({ open, setOpen, children, ha
           })
         }
       }}
+      onTransitionEnter={() => focusElementById(confirmationModalElementsIds.cancelButton)}
+      aria-describedby={ariaDescribedById}
     >
       <DialogTitle>Внимание!</DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText id={ariaDescribedById} >
           {children}
         </DialogContentText>
       </DialogContent>
@@ -47,7 +61,7 @@ export const ConfirmationModal: React.FC<Props> = ({ open, setOpen, children, ha
           '& > :not(:first-of-type)': {ml: 0}
         }}
       >
-        <Button fullWidth={!isSmUp} variant='contained' onClick={() => setOpen(false)}>Отмена</Button>
+        <Button id={confirmationModalElementsIds.cancelButton} fullWidth={!isSmUp} variant='contained' onClick={() => setOpen(false)}>Отмена</Button>
         <Button fullWidth={!isSmUp} variant='outlined' color={severity} onClick={handleConfirm} >{confirmButtonText}</Button>
       </DialogActions>
     </Dialog>

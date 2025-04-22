@@ -1,7 +1,7 @@
-import { focusElementById } from '@shared/lib';
+import { changeTextContentById, focusElementById } from '@shared/lib';
 import { AuthContext } from '@features/Auth';
-import { ChangeEvent, FormEvent, useCallback, useContext, useState } from 'react';
-import { authModalElementsIds } from '@shared/ui';
+import { ChangeEvent, FormEvent, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { authModalElementsIds, globalElementsIds } from '@shared/ui';
 import { PassthroughError } from '@shared/api';
 import { useValidateAuth } from './useValidateAuth';
 import { debounce } from '@mui/material';
@@ -18,11 +18,23 @@ export const useAuthModal = (triggerShakeAnim: () => void) => {
     password: '',
     serverValidation: ''
   });
+  const ariaInformerTextRef = useRef<HTMLDivElement>(null);
   const { validateInput, validateForm } = useValidateAuth(setErrors);
 
   const debouncedValidateInput = useCallback((debounce((input: 'email' | 'password', value: string) => {
     validateInput(input, value);
   }, 1000)), [validateInput]);
+
+  useEffect(() => {
+    if (ariaInformerTextRef.current) {
+      ariaInformerTextRef.current.textContent = '';
+    }
+    setTimeout(() => {
+      if (ariaInformerTextRef.current) {
+        ariaInformerTextRef.current.textContent = `Ошибка: ${errors.email}${errors.password && ', ' + errors.password}${errors.serverValidation && ', ' + errors.serverValidation}`;
+      }
+    });
+  }, [errors])
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, input: 'email' | 'password') => {
     setErrors((prev) => ({...prev, [input]: '', serverValidation: ''}));
@@ -59,6 +71,8 @@ export const useAuthModal = (triggerShakeAnim: () => void) => {
       } else {
         await authStore.registration(email, password);
       }
+      changeTextContentById(globalElementsIds.ariaInformer, '');
+      setTimeout(() => changeTextContentById(globalElementsIds.ariaInformer, 'Авторизация прошла успешно'), 500);
     } catch (e) {
       if (e instanceof PassthroughError) {
         focusElementById(authModalElementsIds.emailInput);
@@ -87,6 +101,7 @@ export const useAuthModal = (triggerShakeAnim: () => void) => {
     toggleForm, 
     handleSubmit,
     errors,
+    ariaInformerTextRef,
     handleOnChange,
     authStore
   };
