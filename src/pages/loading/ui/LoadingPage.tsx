@@ -11,9 +11,12 @@ export const LoadingPage: React.FC = () => {
         flexDirection='column'
         justifyContent='center'
         alignItems='center'
+        role='status'
+        aria-busy='true'
+        aria-label='Пожалуйста, подождите'
       >
         <PageTitle title='Идёт загрузка...' />
-        <CircularProgress size={50} />
+        <CircularProgress size={50} aria-hidden='true' />
       </Box>
     </Container>
   );

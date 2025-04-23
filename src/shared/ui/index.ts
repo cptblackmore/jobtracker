@@ -35,3 +35,4 @@ export { VisuallyHiddenTypography } from './aria/VisuallyHiddenTypography';
 export { vacancyFilterElementsIds } from './ids/vacancyFilterElementsIds';
 export { globalElementsIds } from './ids/globalElementsIds';
 export { confirmationModalElementsIds } from './ids/confirmationModalElementsIds';
+export { accountPageElementsIds } from './ids/accountPageElementsIds';

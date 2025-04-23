@@ -1,16 +1,24 @@
 import { Box, Button, CardActions, CardHeader } from '@mui/material';
 import { AuthContext } from '@features/Auth';
-import { CardHeaderTitle } from '@shared/ui';
+import { accountPageElementsIds, CardHeaderTitle } from '@shared/ui';
 import { useContext } from 'react';
 
 export const AccountActions: React.FC = () => {
   const { authStore } = useContext(AuthContext);
 
   return (
-    <Box flexGrow={1} display='flex' flexDirection='column' justifyContent='space-between' >
+    <Box 
+      component='section'
+      flexGrow={1} 
+      display='flex' 
+      flexDirection='column' 
+      justifyContent='space-between' 
+      role='region'
+      aria-labelledby={accountPageElementsIds.actionsSectionTitle}
+    >
       <CardHeader 
         title={
-          <CardHeaderTitle title='Действия' />
+          <CardHeaderTitle id={accountPageElementsIds.actionsSectionTitle} title='Действия' />
         }
         sx={{pb: {xs: 1, sm: 2}}}
       />

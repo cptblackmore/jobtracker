@@ -1,6 +1,6 @@
 import { Alert, Box, CardActions, CardContent, CardHeader, Divider } from '@mui/material';
 import { AuthContext } from '@features/Auth';
-import { CardHeaderTitle, CooldownButton } from '@shared/ui';
+import { accountPageElementsIds, CardHeaderTitle, CooldownButton } from '@shared/ui';
 import { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 
@@ -15,15 +15,21 @@ export const AccountActivation: React.FC = observer(() => {
     !authStore.user.isActivated ? (
       <>
         <Divider />
-        <Box display='flex' flexDirection='column' >
+        <Box 
+          component='section' 
+          display='flex' 
+          flexDirection='column' 
+          role='region' 
+          aria-labelledby={accountPageElementsIds.activationSectionTitle}
+        >
           <CardHeader 
             title={
-              <CardHeaderTitle title='Активация' />
+              <CardHeaderTitle id={accountPageElementsIds.activationSectionTitle} title='Активация' />
             }
             sx={{pb: {xs: 1, sm: 2}}}
           />
           <CardContent sx={{pb: 0}} >
-            <Alert variant='outlined' severity='warning' >
+            <Alert id={accountPageElementsIds.activationSectionMessage} variant='outlined' severity='warning' >
               Ваш аккаунт не активирован и избранные вакансии не сохраняются удалённо!
             </Alert>
           </CardContent>
@@ -42,6 +48,7 @@ export const AccountActivation: React.FC = observer(() => {
                   sm: 'auto'
                 }
               }}
+              aria-describedby={accountPageElementsIds.activationSectionMessage}
             >
               Отправить письмо повторно
             </CooldownButton>

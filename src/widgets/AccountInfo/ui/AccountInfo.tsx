@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { FavoritesContext } from '@features/Favorites';
 import { AuthContext } from '@features/Auth';
 import { observer } from 'mobx-react-lite';
-import { CardHeaderTitle, StatusIndicator } from '@shared/ui';
+import { accountPageElementsIds, CardHeaderTitle, StatusIndicator } from '@shared/ui';
 import { AccountTableCellHeader } from './AccountTableCellHeader';
 
 export const AccountInfo: React.FC = observer(() => {
@@ -13,10 +13,10 @@ export const AccountInfo: React.FC = observer(() => {
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Box flexGrow={2} >
+    <Box component='section' flexGrow={2} role='region' aria-labelledby={accountPageElementsIds.infoSectionTitle} >
       <CardHeader 
         title={
-          <CardHeaderTitle title='Общая информация' />
+          <CardHeaderTitle id={accountPageElementsIds.infoSectionTitle} title='Общая информация' />
         }
         sx={{pb: {xs: 1, sm: 2}}}
       />
