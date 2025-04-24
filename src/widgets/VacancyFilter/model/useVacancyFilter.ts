@@ -15,7 +15,9 @@ export const useVacancyFilter = (
 
   useEffect(() => {
     if (showAdditional) {
-      focusElementById(vacancyFilterElementsIds.period);
+      setTimeout(() => {
+        focusElementById(vacancyFilterElementsIds.period);
+      }, 100);
     } else {
       focusElementById(vacancyFilterElementsIds.text);
     }
