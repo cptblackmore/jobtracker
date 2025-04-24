@@ -38,14 +38,7 @@ export const PlaceFilter: React.FC<Props> = ({
         getOptionDisabled={option => !!option.isMeta}
         isOptionEqualToValue={(option, value) => typeof option === 'object' && typeof value === 'object' && option.name === value.name}
         inputValue={place}
-        filterOptions={(options, state) => {
-          const filtered = options.filter(option => {
-            if (option.isMeta) return true;
-            const label = typeof option === 'string' ? option : option.name;
-            return label.toLowerCase().includes(state.inputValue.toLowerCase());
-          });
-          return filtered;
-        }}
+        filterOptions={option => option}
         onChange={(_, value) => {
           handlePlaceChange({target: { value }} as ChangeEvent<HTMLInputElement>)
         }}
@@ -57,17 +50,18 @@ export const PlaceFilter: React.FC<Props> = ({
         
           return (
             <li key={key} {...rest} >
-              {parts.map((part, index) => (
-                <span
-                  key={index}
-                  style={{
-                    fontWeight: part.highlight ? 600 : 400,
-                    whiteSpace: 'pre'
-                  }}
-                >
-                  {part.text}
-                </span>
-              ))}
+              <div style={{whiteSpace: 'wrap'}} >
+                {parts.map((part, index) => (
+                  <span
+                    key={index}
+                    style={{
+                      fontWeight: part.highlight ? 600 : 400
+                    }}
+                  >
+                    {part.text}
+                  </span>
+                ))}
+              </div>
             </li>
           );
         }}
