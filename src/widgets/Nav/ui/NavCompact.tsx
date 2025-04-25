@@ -5,6 +5,7 @@ import { NavMenu } from './NavMenu';
 import { useContext } from 'react';
 import { AuthContext } from '@features/Auth';
 import { ToggleThemeButton } from './ToggleThemeButton';
+import { navElementsIds } from '@shared/ui';
 
 export const NavCompact: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
@@ -15,7 +16,7 @@ export const NavCompact: React.FC = observer(() => {
     <Grid2 container >
       <Grid2 size={3} >
         <Box display='flex' alignItems='center' justifyContent='flex-start' height='100%' gap={1} >
-          <NavMenu />
+          <NavMenu id={navElementsIds.firstElement} />
           {authStore.isLoading && isSmUp && (
             <CircularProgress 
               size={25} 

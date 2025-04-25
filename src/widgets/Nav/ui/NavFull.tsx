@@ -20,7 +20,7 @@ export const NavFull: React.FC = observer(() => {
   return (
     <Box flexGrow={1} display='flex' justifyContent='space-between' >
       <Box display='flex' >
-        <Logo />
+        <Logo id={navElementsIds.firstElement} />
         <NavToolbar />
       </Box>
       <Box display='flex' alignItems='center' gap={2} >

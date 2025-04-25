@@ -10,7 +10,11 @@ import { FavoritesContext } from '@features/Favorites';
 import { observer } from 'mobx-react-lite';
 import { navElementsIds } from '@shared/ui';
 
-export const NavMenu: React.FC = observer(() => {
+interface Props {
+  id?: string;
+}
+
+export const NavMenu: React.FC<Props> = observer(({ id }) => {
   const { handleCloseMenu, handleOpenMenu, anchorElMenu } = useMenu();
   const { authStore } = useContext(AuthContext);
   const { favoritesStore } = useContext(FavoritesContext);
@@ -20,6 +24,7 @@ export const NavMenu: React.FC = observer(() => {
   return (
     <Box>
       <IconButton
+        id={id}
         size='large'
         onClick={handleOpenMenu}
         sx={{

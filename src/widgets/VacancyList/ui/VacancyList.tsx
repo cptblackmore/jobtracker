@@ -5,6 +5,7 @@ import { VirtualizedVacancyList } from './VirtualizedVacancyList';
 import { VACANCIES_COUNT_PER_SOURCE } from '@shared/config';
 import { useEffectOnceByCondition } from '@shared/lib';
 import { createAlert, VisuallyHiddenTypography } from '@shared/ui';
+import { useTriggerByScroll } from '../lib/useTriggerByScroll';
 
 interface Props {
   initialFilters?: VacancyParams['filters'];
@@ -12,6 +13,8 @@ interface Props {
 
 export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
   const { state, toNextPage, alertsStore, setFilters, isLoading } = useVacancyList({page: 0, count: VACANCIES_COUNT_PER_SOURCE, filters: initialFilters});
+  const scrolledEnough = useTriggerByScroll();
+
 
   useEffectOnceByCondition(() => {
     alertsStore.addAlert(createAlert(
@@ -22,6 +25,16 @@ export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
       'scroll-down-hint'
     ));
   }, [isLoading], !isLoading);
+
+  useEffectOnceByCondition(() => {
+    alertsStore.addAlert(createAlert(
+      'Для прокрутки наверх вы можете использовать сочетание клавиш "Alt+T", а для фокуса на панель навигации - "Alt+N"', 
+      'info', 
+      10000,
+      'shortcuts-hint',
+      'shortcuts-hint'
+    ));
+  }, [scrolledEnough], scrolledEnough);
 
   return (
     <>

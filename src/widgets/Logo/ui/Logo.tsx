@@ -5,16 +5,18 @@ import { useContext } from 'react';
 import { PagesContext } from '@shared/config';
 
 interface Props {
+  id?: string;
   iconSize?: string;
   titleSize?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }
 
-export const Logo: React.FC<Props> = ({ iconSize='1.3em', titleSize='h6' }) => {
+export const Logo: React.FC<Props> = ({ id, iconSize='1.3em', titleSize='h6' }) => {
   const theme = useTheme();
   const { currentPage, pages } = useContext(PagesContext);
 
   return (
     <Link 
+      id={id}
       component={RouterLink}
       to={pages.home.path}
       sx={{display: 'flex', alignItems: 'center', gap: 1}}
