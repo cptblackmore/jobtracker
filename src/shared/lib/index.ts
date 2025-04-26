@@ -25,3 +25,4 @@ export { focusElementById } from './elements/focusElementById';
 export { useTriggerAnimation } from './animation/useTriggerAnimation';
 export { changeTextContentById } from './elements/changeTextContentById';
 export { useShortcut } from './event/useShortcut';
+export { useIsTouchDevice } from './mq/useIsTouchDevice';

@@ -3,7 +3,7 @@ import { useTriggerByScroll, VirtualizedVacancyList } from '@widgets/VacancyList
 import { FavoritesActions } from '@widgets/FavoritesActions';
 import { EmptyFavoritesListMessage } from './EmptyFavoritesListMessage';
 import { AlertsContext, createAlert, VisuallyHiddenTypography } from '@shared/ui';
-import { useEffectOnceByCondition } from '@shared/lib';
+import { useEffectOnceByCondition, useIsTouchDevice } from '@shared/lib';
 import { useContext } from 'react';
 
 export const FavoritesList: React.FC = () => {
@@ -16,17 +16,18 @@ export const FavoritesList: React.FC = () => {
     resetDisplayedFavorites,
     displayedIdsLength
   } = useFavoritesList();
-    const scrolledEnough = useTriggerByScroll(2000);
+  const scrolledEnough = useTriggerByScroll(2000);
+  const isTouch = useIsTouchDevice();
 
-    useEffectOnceByCondition(() => {
-      alertsStore.addAlert(createAlert(
-        'Для прокрутки наверх вы можете использовать сочетание клавиш "Alt+T", а для фокуса на панель навигации - "Alt+N"', 
-        'info', 
-        10000,
-        'shortcuts-hint',
-        'shortcuts-hint'
-      ));
-    }, [scrolledEnough], scrolledEnough);
+  useEffectOnceByCondition(() => {
+    alertsStore.addAlert(createAlert(
+      'Для прокрутки наверх вы можете использовать сочетание клавиш "Alt+T", а для фокуса на панель навигации - "Alt+N"', 
+      'info', 
+      10000,
+      'shortcuts-hint',
+      'shortcuts-hint'
+    ));
+  }, [scrolledEnough], !isTouch && scrolledEnough);
 
   return (
     <>

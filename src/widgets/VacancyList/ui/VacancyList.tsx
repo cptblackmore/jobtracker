@@ -3,7 +3,7 @@ import { VacancyFilter } from '@widgets/VacancyFilter';
 import { VacancyParams } from '@entities/Vacancy';
 import { VirtualizedVacancyList } from './VirtualizedVacancyList';
 import { VACANCIES_COUNT_PER_SOURCE } from '@shared/config';
-import { useEffectOnceByCondition } from '@shared/lib';
+import { useEffectOnceByCondition, useIsTouchDevice } from '@shared/lib';
 import { createAlert, VisuallyHiddenTypography } from '@shared/ui';
 import { useTriggerByScroll } from '../lib/useTriggerByScroll';
 
@@ -14,7 +14,7 @@ interface Props {
 export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
   const { state, toNextPage, alertsStore, setFilters, isLoading } = useVacancyList({page: 0, count: VACANCIES_COUNT_PER_SOURCE, filters: initialFilters});
   const scrolledEnough = useTriggerByScroll();
-
+  const isTouch = useIsTouchDevice();
 
   useEffectOnceByCondition(() => {
     alertsStore.addAlert(createAlert(
@@ -34,7 +34,7 @@ export const VacancyList: React.FC<Props> = ({ initialFilters={} }) => {
       'shortcuts-hint',
       'shortcuts-hint'
     ));
-  }, [scrolledEnough], scrolledEnough);
+  }, [scrolledEnough], !isTouch && scrolledEnough);
 
   return (
     <>

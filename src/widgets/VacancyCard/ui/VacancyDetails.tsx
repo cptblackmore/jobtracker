@@ -24,7 +24,7 @@ export const VacancyDetails: React.FC<Props> = ({ vacancy }) => {
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
-    <Box>
+    <Box display='flex' flexDirection='column' flexGrow={1} >
       <Box display='flex' >
         <VisuallyHiddenTypography variant='h3' >{vacancy.profession}</VisuallyHiddenTypography>
         <CardHeader
