@@ -1,5 +1,5 @@
 import { Sources, Vacancy, VacancyParams, parseFormattedPlace, sourcesRegistry } from '@entities/Vacancy';
-import { VacancyService } from './VacancyService';
+import { VacancyService } from '../api/VacancyService';
 import { AxiosError } from 'axios';
 
 export const getVacancies = async (params: VacancyParams, source: Sources, signal: AbortSignal): Promise<Vacancy[]> => {

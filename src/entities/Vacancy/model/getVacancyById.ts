@@ -1,8 +1,8 @@
 import { sourcesRegistry, Vacancy } from '@entities/Vacancy';
-import { VacancyService } from './VacancyService';
+import { VacancyService } from '../api/VacancyService';
 import { SourceId } from '../model/Sources';
 import { AxiosError } from 'axios';
-import { createVacancyNotFoundError } from './createVacancyNotFoundError';
+import { createVacancyNotFoundError } from '../api/createVacancyNotFoundError';
 
 export const getVacancyById = async (id: string, source: SourceId, signal: AbortSignal): Promise<Vacancy> => {
   const adapterSuperjob = sourcesRegistry.superjob.adapter;

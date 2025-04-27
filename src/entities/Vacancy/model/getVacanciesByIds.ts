@@ -1,7 +1,7 @@
 import { sourcesRegistry } from '@entities/Vacancy';
-import { VacancyService } from './VacancyService';
+import { VacancyService } from '../api/VacancyService';
 import { SourceId } from '../model/Sources';
-import { VacanciesWithMissingIds } from './types/VacanciesWithMissingIds';
+import { VacanciesWithMissingIds } from '../api/types/VacanciesWithMissingIds';
 
 export const getVacanciesByIds = async (ids: string[], source: SourceId, signal: AbortSignal): Promise<VacanciesWithMissingIds> => {
   const adapterSuperjob = sourcesRegistry.superjob.adapter;

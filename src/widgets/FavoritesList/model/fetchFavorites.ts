@@ -1,9 +1,9 @@
 import { Vacancy } from '@entities/Vacancy';
-import { getVacancyById } from '@entities/Vacancy/api/getVacancyById';
+import { getVacancyById } from '@entities/Vacancy/model/getVacancyById';
 import { AlertsStore } from '@shared/ui';
 import { FavoritesStore } from '@features/Favorites';
 import { typedEntries } from '@shared/lib';
-import { getVacanciesByIds } from '@entities/Vacancy/api/getVacanciesByIds';
+import { getVacanciesByIds } from '@entities/Vacancy/model/getVacanciesByIds';
 import axios, { AxiosError } from 'axios';
 import { getSourceBatches } from './getSourceBatches';
 import { handleErrors } from './handleErrors';
