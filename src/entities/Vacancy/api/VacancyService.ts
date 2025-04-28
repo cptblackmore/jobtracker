@@ -8,7 +8,7 @@ import { sourcesIdsMapping } from '../model/Sources';
 
 export class VacancyService {
   private static baseURL = import.meta.env.VITE_API_URL + '/vacanciesProxy';
-  private static SUPERJOB_API_APP_ID = import.meta.env.VITE_SUPERJOB_API_APP_ID;
+  private static SUPERJOB_API_APP_KEY = import.meta.env.VITE_SUPERJOB_API_APP_KEY;
 
   static async getSuperjob(params: SuperjobParams, signal: AbortSignal): Promise<AxiosResponse<VacancySuperjobMultipleResponse>> {
     return await axios.get(
@@ -17,7 +17,7 @@ export class VacancyService {
         params,
         signal,
         headers: {
-          'X-Api-App-Id': this.SUPERJOB_API_APP_ID,
+          'X-Api-App-Id': this.SUPERJOB_API_APP_KEY,
           'X-Target-Source': sourcesIdsMapping.superjob,
           'X-Target-Url': sourcesRegistry.superjob.url.api + '/vacancies/'
         }
@@ -31,7 +31,7 @@ export class VacancyService {
       { 
         signal,
         headers: {
-          'X-Api-App-Id': this.SUPERJOB_API_APP_ID,
+          'X-Api-App-Id': this.SUPERJOB_API_APP_KEY,
           'X-Target-Url': sourcesRegistry.superjob.url.api + '/vacancies/' + id
         }
       }
@@ -44,7 +44,7 @@ export class VacancyService {
       { 
         signal,
         headers: {
-          'X-Api-App-Id': this.SUPERJOB_API_APP_ID,
+          'X-Api-App-Id': this.SUPERJOB_API_APP_KEY,
           'X-Target-Url': sourcesRegistry.superjob.url.api + '/vacancies/?' + ids.map((el, i) => `ids[${i}]=${el}`).join('&')
         }
       }
