@@ -276,12 +276,12 @@ JobTracker предлагает возможность авторизации и
 
 ## Установка и запуск
 
-1. Убедитесь, что у вас установлены актуальные версии Node.js и Git.
-2. Клонируйте репозиторий: `git clone https://github.com/cptblackmore/jobtracker`
-3. Перейдите в него: `cd jobtracker`
-4. Установите зависимости: `npm i`
-5. Создайте файл переменных окружения `.env` со следующими свойствами:
-	- `VITE_API_URL=`<Адрес API сервера. Если не хостили свой, используйте демо: https://jobtracker-server.onrender.com/api>
+0. Убедитесь, что у вас установлены актуальные версии Node.js и Git.
+1. Клонируйте репозиторий: `git clone https://github.com/cptblackmore/jobtracker`
+2. Перейдите в него: `cd jobtracker`
+3. Установите зависимости: `npm i`
+4. Создайте файл переменных окружения `.env` со следующими свойствами:
+	- `VITE_API_URL=`<Адрес API сервера. Если не хостили свой, используйте демо: https://jobtracker-server.onrender.com/api >
 	- `VITE_SUPERJOB_API_APP_KEY=`<API Superjob требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.>
 	- Если собираетесь разрабатывать и тестировать хуки/компоненты, добавьте `VITE_MODE=development`
 	
@@ -291,7 +291,7 @@ JobTracker предлагает возможность авторизации и
     VITE_SUPERJOB_API_APP_KEY=v3.r.123820349.b68cc10ac962d5436d1f0f980e84fc6c604d5dsd.c1c4d5a9f2ba2dc80ce328f4802fbe72d97346dd
     VITE_MODE=development
     ```
-6. Запустите: `npm run dev` (или `npm run dev -- --host`, чтобы получить адреса для локальной сети)
+5. Запустите: `npm run dev` (или `npm run dev -- --host`, чтобы получить адреса для локальной сети)
 
 ### Регистрация приложения в API Superjob
 
