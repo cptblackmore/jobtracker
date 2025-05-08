@@ -1,8 +1,8 @@
-# **JobTracker – агрегатор вакансий**
+# **JobTracker — агрегатор вакансий**
 
 [![React](https://img.shields.io/badge/React-18-blue?style=flat&logo=react)](https://react.dev/) [![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/) [![Vite](https://img.shields.io/badge/Built%20with-Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vite.dev/) <br/> [![MobX](https://img.shields.io/badge/State-MobX-orange?style=flat&logo=mobx&logoColor=white)](https://mobx.js.org/) [![UI: MUI](https://img.shields.io/badge/UI-Material-007FFF?style=flat&logo=mui&logoColor=white)](https://mui.com/) <br/> [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/cptblackmore/jobtracker/blob/main/LICENSE) [![Netlify Status](https://api.netlify.com/api/v1/badges/40d12425-12d1-4d54-ad0e-9c472446b4a7/deploy-status)](https://app.netlify.com/sites/cptblackmore-jobtracker/deploys)
 
-JobTracker - веб-приложение для поиска вакансий с разных источников в одном месте.
+JobTracker — веб-приложение для поиска вакансий с разных источников в одном месте.
 
 > [Ссылка на демо](https://cptblackmore-jobtracker.netlify.app/home)
 
@@ -103,7 +103,7 @@ JobTracker предлагает возможность авторизации и
 
 Проект организован на основе методологии Feature-Sliced Design (FSD), что упрощает масштабирование, ускоряет добавление новых фич и поддерживает высокую читаемость кода на протяжении всего цикла разработки.
 
-Весь код строго разделён на слои (`app`, `pages`, `widgets`, `features`, `entities`, `shared`), а внутри них - на слайсы и сегменты, что облегчает навигацию для разработчиков, знакомых с FSD.  
+Весь код строго разделён на слои (`app`, `pages`, `widgets`, `features`, `entities`, `shared`), а внутри них — на слайсы и сегменты, что облегчает навигацию для разработчиков, знакомых с FSD.  
 
 Подробнее о принципах методологии можно прочитать в [официальной документации](https://feature-sliced.github.io/documentation/ru/docs/get-started/overview).
 
@@ -187,9 +187,9 @@ JobTracker предлагает возможность авторизации и
 
 ### Интегрированные API вакансий
 
-  - [SuperJob API](https://api.superjob.ru/) - требуется "Secret key" (см. [инструкцию](#регистрация-приложения-в-api-superjob))
-  - [HeadHunter API](https://dev.hh.ru/) - открытое API, работает без ключа
-  - [«Работа России» API](https://trudvsem.ru/opendata/api) - государственный источник; не поддерживает большинство фильтров (тип занятости, зарплата, период)
+  - [SuperJob API](https://api.superjob.ru/) — требуется "Secret key" (см. [инструкцию](#регистрация-приложения-в-api-superjob)).
+  - [HeadHunter API](https://dev.hh.ru/) — открытое API, работает без ключа.
+  - [«Работа России» API](https://trudvsem.ru/opendata/api) — государственный источник; не поддерживает большинство фильтров (тип занятости, зарплата, период).
 
 ### Работа с API
 
@@ -276,32 +276,36 @@ JobTracker предлагает возможность авторизации и
 
 ## Установка и запуск
 
-0. Убедитесь, что у вас установлены актуальные версии Node.js и Git.
-1. Клонируйте репозиторий: `git clone https://github.com/cptblackmore/jobtracker`
-2. Перейдите в него: `cd jobtracker`
-3. Установите зависимости: `npm i`
-4. Создайте файл переменных окружения `.env` со следующими свойствами:
-	- `VITE_API_URL=`<Адрес API сервера. Если не хостили свой, используйте демо: https://jobtracker-server.onrender.com/api >
-	- `VITE_SUPERJOB_API_APP_KEY=`<API Superjob требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.>
-	- Если собираетесь разрабатывать и тестировать хуки/компоненты, добавьте `VITE_MODE=development`
-	
-	Содержимое файла будет выглядеть примерно так:
+0. Перед началом убедитесь, что у вас есть:
+    - Node.js версии **18 и выше** — [скачать с nodejs.org](https://nodejs.org/)
+    - Git — [скачать с git-scm.com](https://git-scm.com/)
+1. Клонируйте репозиторий: `git clone https://github.com/cptblackmore/jobtracker`.
+2. Перейдите в него: `cd jobtracker`.
+3. Установите зависимости: `npm install`.
+4. Создайте файл с переменными окружения: `cp .env.example .env`.
+5. Откройте `.env` и заполните поля:
+	- `VITE_API_URL` — адрес API jobtracker-server. Если не хостили свой, используйте демо: `https://jobtracker-server.onrender.com/api` (указан по умолчанию).
+	- `VITE_SUPERJOB_API_APP_KEY` — ключ для API Superjob. Требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.
+	- `VITE_MODE` — если собираетесь разрабатывать и тестировать хуки/компоненты, укажите `development`. 
+
+	**Пример готового `.env`:**
     ```dotenv
     VITE_API_URL=https://jobtracker-server.onrender.com/api
     VITE_SUPERJOB_API_APP_KEY=v3.r.123820349.b68cc10ac962d5436d1f0f980e84fc6c604d5dsd.c1c4d5a9f2ba2dc80ce328f4802fbe72d97346dd
     VITE_MODE=development
     ```
-5. Запустите: `npm run dev` (или `npm run dev -- --host`, чтобы получить адреса для локальной сети)
+
+6. Запустите: `npm run dev` (или `npm run dev -- --host`, чтобы получить адреса для локальной сети).
 
 ### Регистрация приложения в API Superjob
 
  > ⚠️ Это необязательно! Если вы не хотите использовать SuperJob, просто оставьте переменную `VITE_SUPERJOB_API_APP_KEY` пустой. Всё остальное будет работать.
 
-1. Перейдите на [страницу API](https://api.superjob.ru/)
-2. Зарегистрируйте приложение (потребуется аккаунт соискателя)
-3. Дождитесь рассмотрения
-4. Найдите ключ: "Информация о приложении" → "Secret key"
-5. Укажите его в свойстве `VITE_SUPERJOB_API_APP_KEY` в файле `.env`
+1. Перейдите на [страницу API](https://api.superjob.ru/).
+2. Зарегистрируйте приложение (потребуется аккаунт соискателя).
+3. Дождитесь рассмотрения.
+4. Найдите ключ: "Информация о приложении" → "Secret key".
+5. Укажите его в свойстве `VITE_SUPERJOB_API_APP_KEY` в файле `.env`.
 
 ## Roadmap
 
