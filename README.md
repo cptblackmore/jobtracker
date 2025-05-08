@@ -287,14 +287,12 @@ JobTracker предлагает возможность авторизации и
 	- `VITE_API_URL` — адрес API jobtracker-server. Если не хостили свой, используйте демо: `https://jobtracker-server.onrender.com/api` (указан по умолчанию).
 	- `VITE_SUPERJOB_API_APP_KEY` — ключ для API Superjob. Требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.
 	- `VITE_MODE` — если собираетесь разрабатывать и тестировать хуки/компоненты, укажите `development`. 
-
-	**Пример готового `.env`:**
-    ```dotenv
-    VITE_API_URL=https://jobtracker-server.onrender.com/api
-    VITE_SUPERJOB_API_APP_KEY=v3.r.123820349.b68cc10ac962d5436d1f0f980e84fc6c604d5dsd.c1c4d5a9f2ba2dc80ce328f4802fbe72d97346dd
-    VITE_MODE=development
-    ```
-
+	- **Пример готового `.env`:**
+	    ```dotenv
+	    VITE_API_URL=https://jobtracker-server.onrender.com/api
+	    VITE_SUPERJOB_API_APP_KEY=v3.r.123820349.b68cc10ac962d5436d1f0f980e84fc6c604d5dsd.c1c4d5a9f2ba2dc80ce328f4802fbe72d97346dd
+	    VITE_MODE=development
+	    ```
 6. Запустите: `npm run dev` (или `npm run dev -- --host`, чтобы получить адреса для локальной сети).
 
 ### Регистрация приложения в API Superjob
