@@ -279,21 +279,24 @@ JobTracker предлагает возможность авторизации и
 0. Перед началом убедитесь, что у вас есть:
     - Node.js версии **18 и выше** — [скачать с nodejs.org](https://nodejs.org/)
     - Git — [скачать с git-scm.com](https://git-scm.com/)
-1. Клонируйте репозиторий: `git clone https://github.com/cptblackmore/jobtracker`.
-2. Перейдите в него: `cd jobtracker`.
-3. Установите зависимости: `npm install`.
-4. Создайте файл с переменными окружения: `cp .env.example .env`.
+1. Клонируйте репозиторий: `git clone https://github.com/cptblackmore/jobtracker`
+2. Перейдите в него: `cd jobtracker`
+3. Установите зависимости: `npm install`
+4. Создайте файл с переменными окружения: `cp .env.example .env`
 5. Откройте `.env` и заполните поля:
-	- `VITE_API_URL` — адрес API jobtracker-server. Если не хостили свой, используйте демо: `https://jobtracker-server.onrender.com/api` (указан по умолчанию).
-	- `VITE_SUPERJOB_API_APP_KEY` — ключ для API Superjob. Требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.
-	- `VITE_MODE` — если собираетесь разрабатывать и тестировать хуки/компоненты, укажите `development`. 
-	- **Пример готового `.env`:**
-	    ```dotenv
-	    VITE_API_URL=https://jobtracker-server.onrender.com/api
-	    VITE_SUPERJOB_API_APP_KEY=v3.r.123820349.b68cc10ac962d5436d1f0f980e84fc6c604d5dsd.c1c4d5a9f2ba2dc80ce328f4802fbe72d97346dd
-	    VITE_MODE=development
-	    ```
-6. Запустите: `npm run dev` (или `npm run dev -- --host`, чтобы получить адреса для локальной сети).
+  - `VITE_API_URL` — адрес API jobtracker-server. Если не хостили свой, используйте демо: `https://jobtracker-server.onrender.com/api` (указан по умолчанию).
+  - `VITE_SUPERJOB_API_APP_KEY` — ключ для API Superjob. Требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.
+  - `VITE_MODE` — если собираетесь разрабатывать и тестировать хуки/компоненты, укажите `development`
+  - **Пример готового `.env`:**
+      ```dotenv
+      VITE_API_URL=https://jobtracker-server.onrender.com/api
+      VITE_SUPERJOB_API_APP_KEY=v3.r.123820349.b68cc10ac962d5436d1f0f980e84fc6c604d5dsd.c1c4d5a9f2ba2dc80ce328f4802fbe72d97346dd
+      VITE_MODE=development
+      ```
+6. Запустите: `npm run dev -- --host`
+7. После запуска Vite в терминале появятся адреса для доступа к проекту:
+    - `http://localhost:5173` — для текущего устройства
+    - `http://<Network-IP>:5173` — для других устройств в вашей локальной сети (например, для проверки с телефона)
 
 ### Регистрация приложения в API Superjob
 
@@ -303,9 +306,9 @@ JobTracker предлагает возможность авторизации и
 2. Зарегистрируйте приложение (потребуется аккаунт соискателя).
 3. Дождитесь рассмотрения.
 4. Найдите ключ: "Информация о приложении" → "Secret key".
-5. Укажите его в свойстве `VITE_SUPERJOB_API_APP_KEY` в файле `.env`.
+5. Укажите его в свойстве `VITE_SUPERJOB_API_APP_KEY` в файле `.env`
 
-## Roadmap
+## Планы по улучшению
 
 - **Интеграция новых источников**: найти и добавить другие источники вакансий с открытыми API и возможностью осуществлять поиск (например, Rabota.ru).
 - **UX**: добавить облако актуальных профессий, историю поиска с возможностью повтора, возможность поделиться результатами поиска и списком избранного — через короткие URL и кнопки соцсетей (Telegram, VK, WhatsApp).
