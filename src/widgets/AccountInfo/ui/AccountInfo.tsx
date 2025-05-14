@@ -1,62 +1,98 @@
-import { Box, CardContent, CardHeader, Table, TableBody, TableCell, tableCellClasses, TableContainer, TableRow, useMediaQuery, useTheme } from '@mui/material';
-import { useContext } from 'react';
-import { FavoritesContext } from '@features/Favorites';
-import { AuthContext } from '@features/Auth';
-import { observer } from 'mobx-react-lite';
-import { accountPageElementsIds, CardHeaderTitle, StatusIndicator } from '@shared/ui';
-import { AccountTableCellHeader } from './AccountTableCellHeader';
+import {
+  Box,
+  CardContent,
+  CardHeader,
+  Table,
+  TableBody,
+  TableCell,
+  tableCellClasses,
+  TableContainer,
+  TableRow,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { useContext } from "react";
+import { FavoritesContext } from "@features/Favorites";
+import { AuthContext } from "@features/Auth";
+import { observer } from "mobx-react-lite";
+import {
+  accountPageElementsIds,
+  CardHeaderTitle,
+  StatusIndicator,
+} from "@shared/ui";
+import { AccountTableCellHeader } from "./AccountTableCellHeader";
 
 export const AccountInfo: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
   const { favoritesStore } = useContext(FavoritesContext);
   const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
-    <Box component='section' flexGrow={2} role='region' aria-labelledby={accountPageElementsIds.infoSectionTitle} >
-      <CardHeader 
+    <Box
+      component="section"
+      flexGrow={2}
+      role="region"
+      aria-labelledby={accountPageElementsIds.infoSectionTitle}
+    >
+      <CardHeader
         title={
-          <CardHeaderTitle id={accountPageElementsIds.infoSectionTitle} title='Общая информация' />
+          <CardHeaderTitle
+            id={accountPageElementsIds.infoSectionTitle}
+            title="Общая информация"
+          />
         }
-        sx={{pb: {xs: 1, sm: 2}}}
+        sx={{ pb: { xs: 1, sm: 2 } }}
       />
-      <CardContent sx={{'&:last-child': {pb: 2}}} >
+      <CardContent sx={{ "&:last-child": { pb: 2 } }}>
         <TableContainer>
-          <Table 
+          <Table
             sx={{
-              [`& .${tableCellClasses.root}`]: {borderBottom: 'none', py: 0.5},
+              [`& .${tableCellClasses.root}`]: {
+                borderBottom: "none",
+                py: 0.5,
+              },
             }}
           >
             <TableBody>
               <TableRow>
                 <AccountTableCellHeader>E-mail:</AccountTableCellHeader>
-                <TableCell 
+                <TableCell
                   sx={(theme) => ({
                     px: 0,
                     fontSize: {
-                      xs: '0.8rem',
-                      sm: theme.typography.body1.fontSize
-                    }
+                      xs: "0.8rem",
+                      sm: theme.typography.body1.fontSize,
+                    },
                   })}
-                >{authStore.user.email}</TableCell>
-              </TableRow>
-              <TableRow>
-                <AccountTableCellHeader>Статус синхронизации:</AccountTableCellHeader>
-                <TableCell sx={{px:0}} >
-                  <StatusIndicator success={authStore.user.isActivated} size={isSmUp ? 1 : 0.9} />
+                >
+                  {authStore.user.email}
                 </TableCell>
               </TableRow>
               <TableRow>
-                <AccountTableCellHeader>Кол-во сохранённых вакансий:</AccountTableCellHeader>
+                <AccountTableCellHeader>
+                  Статус синхронизации:
+                </AccountTableCellHeader>
+                <TableCell sx={{ px: 0 }}>
+                  <StatusIndicator
+                    success={authStore.user.isActivated}
+                    size={isSmUp ? 1 : 0.9}
+                  />
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <AccountTableCellHeader>
+                  Кол-во сохранённых вакансий:
+                </AccountTableCellHeader>
                 <TableCell
                   sx={(theme) => ({
-                    color: theme.palette.info.main, 
-                    fontWeight: 'bold',
+                    color: theme.palette.info.main,
+                    fontWeight: "bold",
                     px: 0,
                     fontSize: {
-                      xs: '0.8rem',
-                      sm: theme.typography.body1.fontSize
-                    }
+                      xs: "0.8rem",
+                      sm: theme.typography.body1.fontSize,
+                    },
                   })}
                 >
                   {authStore.user.isActivated ? favoritesStore.ids.length : 0}

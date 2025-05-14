@@ -15,7 +15,7 @@ export const isEqual = <T>(a: T, b: T): boolean => {
 
   if (Array.isArray(a) || Array.isArray(b)) return false;
 
-  if (typeof a === 'object' && typeof b === 'object') {
+  if (typeof a === "object" && typeof b === "object") {
     const aObj = a as Record<string, unknown>;
     const bObj = b as Record<string, unknown>;
     const keysA: string[] = Object.keys(aObj);
@@ -31,4 +31,4 @@ export const isEqual = <T>(a: T, b: T): boolean => {
   }
 
   return false;
-}
+};

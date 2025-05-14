@@ -10,9 +10,9 @@ export interface SourcesMapping {
 }
 
 export const sourcesIdsMapping = {
-  superjob: 'sj',
-  hh: 'hh',
-  trudvsem: 'tv',
+  superjob: "sj",
+  hh: "hh",
+  trudvsem: "tv",
 } as const;
 
 export type Sources = keyof SourcesMapping;

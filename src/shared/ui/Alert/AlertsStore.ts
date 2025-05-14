@@ -1,5 +1,5 @@
-import { makeAutoObservable } from 'mobx';
-import { Alert } from './Alert';
+import { makeAutoObservable } from "mobx";
+import { Alert } from "./Alert";
 
 export class AlertsStore {
   private alerts: Alert[] = [];
@@ -10,7 +10,13 @@ export class AlertsStore {
   }
 
   addAlert(alert: Alert) {
-    if (alert.dismissedKey && JSON.parse(localStorage.getItem('dismissedAlerts') || '[]').includes(alert.dismissedKey)) return;
+    if (
+      alert.dismissedKey &&
+      JSON.parse(localStorage.getItem("dismissedAlerts") || "[]").includes(
+        alert.dismissedKey,
+      )
+    )
+      return;
 
     this.alerts.push(alert);
 
@@ -31,7 +37,7 @@ export class AlertsStore {
   }
 
   removeAlertsByTag(tag: string) {
-    this.alerts = this.alerts.filter(alert => alert.tag !== tag);
+    this.alerts = this.alerts.filter((alert) => alert.tag !== tag);
 
     if (this.currentAlert && this.currentAlert.tag === tag) {
       this.closeAlert();

@@ -1,5 +1,5 @@
-import { createContext } from 'react';
-import { AlertsStore } from '@shared/ui';
+import { createContext } from "react";
+import { AlertsStore } from "@shared/ui";
 
 interface State {
   alertsStore: AlertsStore;

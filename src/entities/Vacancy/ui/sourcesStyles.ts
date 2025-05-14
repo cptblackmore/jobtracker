@@ -1,20 +1,20 @@
-import { hhIcon, superjobIcon, trudvsemIcon } from '@shared/ui';
-import { SourceStyles } from '../model/SourceStyles';
+import { hhIcon, superjobIcon, trudvsemIcon } from "@shared/ui";
+import { SourceStyles } from "../model/SourceStyles";
 
 export const superjobStyles: SourceStyles = {
-  name: 'SuperJob',
+  name: "SuperJob",
   color: `#00AA87`,
-  icon: superjobIcon
-}
+  icon: superjobIcon,
+};
 
 export const hhStyles: SourceStyles = {
-  name: 'HeadHunter',
+  name: "HeadHunter",
   color: `#D6001C`,
-  icon: hhIcon
-}
+  icon: hhIcon,
+};
 
 export const trudvsemStyles: SourceStyles = {
-  name: 'Работа России',
+  name: "Работа России",
   color: `#004A97`,
-  icon: trudvsemIcon
-}
+  icon: trudvsemIcon,
+};

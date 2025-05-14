@@ -1,8 +1,19 @@
-import { Vacancy } from '@entities/Vacancy';
-import { sourcesRegistry } from '@entities/Vacancy';
+import { Vacancy } from "@entities/Vacancy";
+import { sourcesRegistry } from "@entities/Vacancy";
 
-export const getDetailsLabel = (vacancy: Vacancy, howLongAgo: string): string => {
-  const { profession, firmName, town, paymentFrom, paymentTo, currency, source } = vacancy;
+export const getDetailsLabel = (
+  vacancy: Vacancy,
+  howLongAgo: string,
+): string => {
+  const {
+    profession,
+    firmName,
+    town,
+    paymentFrom,
+    paymentTo,
+    currency,
+    source,
+  } = vacancy;
 
   const salaryLabel = (() => {
     if (paymentFrom && paymentTo) {
@@ -20,4 +31,4 @@ export const getDetailsLabel = (vacancy: Vacancy, howLongAgo: string): string =>
   const sourceLabel = sourcesRegistry[source].styles.name;
 
   return `Вакансия ${profession} в ${firmName} в городе ${town}, ${salaryLabel}, опубликовано ${howLongAgo} на ${sourceLabel}`;
-}
+};

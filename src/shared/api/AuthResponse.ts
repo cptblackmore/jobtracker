@@ -1,7 +1,7 @@
-import { UserData } from '../../features/Auth/model/types/UserData';
+import { UserData } from "../../features/Auth/model/types/UserData";
 
 export interface AuthResponse {
-  accessToken: string,
-  refreshToken: string,
-  userDto: UserData
+  accessToken: string;
+  refreshToken: string;
+  userDto: UserData;
 }

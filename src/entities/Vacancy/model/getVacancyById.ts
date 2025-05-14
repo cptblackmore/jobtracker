@@ -1,20 +1,23 @@
-import { sourcesRegistry, Vacancy } from '@entities/Vacancy';
-import { VacancyService } from '../api/VacancyService';
-import { SourceId } from '../model/Sources';
-import { AxiosError } from 'axios';
-import { createVacancyNotFoundError } from '../api/createVacancyNotFoundError';
+import { sourcesRegistry, Vacancy } from "@entities/Vacancy";
+import { VacancyService } from "../api/VacancyService";
+import { SourceId } from "../model/Sources";
+import { AxiosError } from "axios";
+import { createVacancyNotFoundError } from "../api/createVacancyNotFoundError";
 
-export const getVacancyById = async (id: string, source: SourceId, signal: AbortSignal): Promise<Vacancy> => {
+export const getVacancyById = async (
+  id: string,
+  source: SourceId,
+  signal: AbortSignal,
+): Promise<Vacancy> => {
   const adapterSuperjob = sourcesRegistry.superjob.adapter;
   const adapterHH = sourcesRegistry.hh.adapter;
   const adapterTrudvsem = sourcesRegistry.trudvsem.adapter;
 
   switch (source) {
-    case 'sj': {
+    case "sj": {
       try {
         const response = await VacancyService.getSuperjobById(id, signal);
         return adapterSuperjob.adaptVacancy(response.data);
-        
       } catch (e) {
         if (e instanceof AxiosError && e.status === 404) {
           throw createVacancyNotFoundError(e, id);
@@ -23,7 +26,7 @@ export const getVacancyById = async (id: string, source: SourceId, signal: Abort
         }
       }
     }
-    case 'hh': {
+    case "hh": {
       try {
         const response = await VacancyService.getHHById(id, signal);
         return adapterHH.adaptVacancy(response.data);
@@ -33,7 +36,7 @@ export const getVacancyById = async (id: string, source: SourceId, signal: Abort
             throw createVacancyNotFoundError(e, id);
           }
           if (e.status === 403) {
-            throw new AxiosError(e.message, 'FAVORITES_NOT_AVAILABLE');
+            throw new AxiosError(e.message, "FAVORITES_NOT_AVAILABLE");
           }
           throw e;
         } else {
@@ -41,18 +44,24 @@ export const getVacancyById = async (id: string, source: SourceId, signal: Abort
         }
       }
     }
-    case 'tv': {
-      const [companyId, vacancyId] = id.split('_');
+    case "tv": {
+      const [companyId, vacancyId] = id.split("_");
       try {
-        const response = await VacancyService.getTrudvsemById(companyId, vacancyId, signal);
+        const response = await VacancyService.getTrudvsemById(
+          companyId,
+          vacancyId,
+          signal,
+        );
         if (!response.data.results.vacancies) {
           throw createVacancyNotFoundError(response, id);
         }
-        return adapterTrudvsem.adaptVacancy(response.data.results.vacancies[0].vacancy);
+        return adapterTrudvsem.adaptVacancy(
+          response.data.results.vacancies[0].vacancy,
+        );
       } catch (e) {
         if (e instanceof AxiosError) {
           if (e.status === 502) {
-            throw new AxiosError(e.message, 'SOURCE_UNAVAILABLE');
+            throw new AxiosError(e.message, "SOURCE_UNAVAILABLE");
           }
           throw e;
         } else {

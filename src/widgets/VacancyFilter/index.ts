@@ -1,2 +1,2 @@
-export { VacancyFilter } from './ui/VacancyFilter';
-export { parseUrlSearch } from './model/parseUrlSearch';
+export { VacancyFilter } from "./ui/VacancyFilter";
+export { parseUrlSearch } from "./model/parseUrlSearch";

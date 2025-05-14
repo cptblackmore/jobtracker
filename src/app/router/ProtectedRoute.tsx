@@ -1,5 +1,5 @@
-import { LoadingPage } from '@pages/loading';
-import { Navigate, Outlet } from 'react-router';
+import { LoadingPage } from "@pages/loading";
+import { Navigate, Outlet } from "react-router";
 
 interface Props {
   isReady: boolean;

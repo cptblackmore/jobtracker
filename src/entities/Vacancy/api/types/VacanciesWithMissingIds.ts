@@ -1,4 +1,4 @@
-import { Vacancy } from '@entities/Vacancy/model/Vacancy';
+import { Vacancy } from "@entities/Vacancy/model/Vacancy";
 
 export interface VacanciesWithMissingIds {
   vacancies: Vacancy[];

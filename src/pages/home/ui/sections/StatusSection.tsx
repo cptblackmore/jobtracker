@@ -1,24 +1,27 @@
-import { Box, Container, SxProps } from '@mui/material';
-import { SectionTitle } from './SectionTitle';
-import { SourcesStatusTable } from '@widgets/SourcesStatusTable';
-import { homePageElementsIds } from '@shared/ui';
+import { Box, Container, SxProps } from "@mui/material";
+import { SectionTitle } from "./SectionTitle";
+import { SourcesStatusTable } from "@widgets/SourcesStatusTable";
+import { homePageElementsIds } from "@shared/ui";
 
 interface Props {
-  sectionStyle: SxProps
+  sectionStyle: SxProps;
 }
 
 export const StatusSection: React.FC<Props> = ({ sectionStyle }) => {
   return (
-    <Box 
-      component='section' 
+    <Box
+      component="section"
       sx={sectionStyle}
-      role='region'
+      role="region"
       aria-labelledby={homePageElementsIds.sourcesStatusHeading}
     >
-      <Container maxWidth='sm' >
-        <SectionTitle id={homePageElementsIds.sourcesStatusHeading} title='Статус источников вакансий' />
+      <Container maxWidth="sm">
+        <SectionTitle
+          id={homePageElementsIds.sourcesStatusHeading}
+          title="Статус источников вакансий"
+        />
         <SourcesStatusTable />
       </Container>
     </Box>
   );
-}
+};

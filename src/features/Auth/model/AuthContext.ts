@@ -1,6 +1,6 @@
-import { createContext } from 'react';
-import { AuthStore } from '@features/Auth';
-import { alertsStore } from '@shared/ui';
+import { createContext } from "react";
+import { AuthStore } from "@features/Auth";
+import { alertsStore } from "@shared/ui";
 
 interface State {
   authStore: AuthStore;

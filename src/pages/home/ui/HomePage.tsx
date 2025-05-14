@@ -1,30 +1,30 @@
-import React, { useContext } from 'react';
-import { HeroSection } from './sections/HeroSection';
-import { FeaturesSection } from './sections/FeaturesSection';
-import { StatusSection } from './sections/StatusSection';
-import { DemoSection } from './sections/DemoSection';
-import { RevealOnScroll } from '@shared/ui';
-import { RegistrationSection } from './sections/RegistrationSection';
-import { AuthContext } from '@features/Auth';
-import { observer } from 'mobx-react-lite';
-import { LoadingSection } from './sections/LoadingSection';
-import { SxProps } from '@mui/material';
+import React, { useContext } from "react";
+import { HeroSection } from "./sections/HeroSection";
+import { FeaturesSection } from "./sections/FeaturesSection";
+import { StatusSection } from "./sections/StatusSection";
+import { DemoSection } from "./sections/DemoSection";
+import { RevealOnScroll } from "@shared/ui";
+import { RegistrationSection } from "./sections/RegistrationSection";
+import { AuthContext } from "@features/Auth";
+import { observer } from "mobx-react-lite";
+import { LoadingSection } from "./sections/LoadingSection";
+import { SxProps } from "@mui/material";
 
 export const HomePage: React.FC = observer(() => {
   const { authStore } = useContext(AuthContext);
-  const infoSectionStyle: SxProps = {py: {xs: 4, md: 8}};
+  const infoSectionStyle: SxProps = { py: { xs: 4, md: 8 } };
   const ctaSectionStyle: SxProps = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    px: {xs: 2, md: 0}
-  }
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    px: { xs: 2, md: 0 },
+  };
 
   return (
     <>
       <HeroSection sectionStyle={ctaSectionStyle} />
-      <RevealOnScroll >
+      <RevealOnScroll>
         <FeaturesSection sectionStyle={infoSectionStyle} />
       </RevealOnScroll>
       {authStore.isInit ? (
@@ -36,14 +36,12 @@ export const HomePage: React.FC = observer(() => {
       ) : (
         <LoadingSection />
       )}
-      <RevealOnScroll threshold={0.1} >
+      <RevealOnScroll threshold={0.1}>
         <DemoSection sectionStyle={infoSectionStyle} />
       </RevealOnScroll>
-      {authStore.isInit ? (
-        !authStore.isAuth && (
-          <StatusSection sectionStyle={infoSectionStyle} />
-        )
-      ) : null}
+      {authStore.isInit
+        ? !authStore.isAuth && <StatusSection sectionStyle={infoSectionStyle} />
+        : null}
     </>
   );
 });

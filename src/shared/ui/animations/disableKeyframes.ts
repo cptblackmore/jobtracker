@@ -1,4 +1,4 @@
-import { keyframes } from '@emotion/react';
+import { keyframes } from "@emotion/react";
 
 export const disableKeyframes = keyframes`
   0% { transform: scale(1)}

@@ -1,4 +1,4 @@
-import { Typography as T } from '@mui/material';
+import { Typography as T } from "@mui/material";
 
 interface Props {
   title: string;
@@ -7,20 +7,20 @@ interface Props {
 
 export const SectionTitle: React.FC<Props> = ({ title, id }) => {
   return (
-    <T 
+    <T
       id={id}
-      component='h2' 
-      variant='h4' 
-      align='center' 
-      mb={{xs: 2, sm: 4}} 
+      component="h2"
+      variant="h4"
+      align="center"
+      mb={{ xs: 2, sm: 4 }}
       sx={(theme) => ({
         fontSize: {
-          xs: '1.8rem',
-          sm: {fontSize: theme.typography.h4.fontSize}
-        }
+          xs: "1.8rem",
+          sm: { fontSize: theme.typography.h4.fontSize },
+        },
       })}
     >
       {title}
     </T>
   );
-}
+};

@@ -1,1 +1,1 @@
-export { AccountActivation } from './ui/AccountActivation';
+export { AccountActivation } from "./ui/AccountActivation";

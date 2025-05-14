@@ -1,16 +1,20 @@
-import { css } from '@emotion/react'
+import { css } from "@emotion/react";
 
 export const getWrapperStyle = (size: number, wrapperSize?: number) => css`
   position: relative;
   cursor: pointer;
-  height: ${wrapperSize ?? (size * 1.5)}em;
-  width: ${wrapperSize ?? (size * 1.5)}em;
-`
+  height: ${wrapperSize ?? size * 1.5}em;
+  width: ${wrapperSize ?? size * 1.5}em;
+`;
 
-export const getIconStyle = (duration: number, size: number, isToggled: boolean) => css`
+export const getIconStyle = (
+  duration: number,
+  size: number,
+  isToggled: boolean,
+) => css`
   transition: opacity ${duration}ms ease-in-out;
   opacity: 0;
-  position: ${isToggled ? 'absolute' : 'relative'};
+  position: ${isToggled ? "absolute" : "relative"};
   height: ${size}em;
   width: ${size}em;
 
@@ -18,11 +22,11 @@ export const getIconStyle = (duration: number, size: number, isToggled: boolean)
     height: ${size}em;
     width: ${size}em;
   }
-`
+`;
 
 export const transitionStyles = {
   entering: css`
-    opacity: 1; 
+    opacity: 1;
   `,
   entered: css`
     opacity: 1;
@@ -35,5 +39,5 @@ export const transitionStyles = {
   `,
   unmounted: css`
     opacity: 0;
-  `
-}
+  `,
+};

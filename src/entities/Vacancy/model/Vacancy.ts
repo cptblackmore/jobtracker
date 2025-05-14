@@ -1,10 +1,10 @@
-import { Sources } from './Sources';
+import { Sources } from "./Sources";
 
 export type Vacancy = {
   id: string;
   profession: string;
   firmName: string;
-  town: string
+  town: string;
   description: string;
   source: Sources;
   paymentFrom?: number | null | undefined;
@@ -13,4 +13,4 @@ export type Vacancy = {
   link: string;
   datePublished: number;
   isFavorite: boolean;
-}
+};

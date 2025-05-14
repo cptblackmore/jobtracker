@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface ShortcutOptions {
   action: () => void;
@@ -15,7 +15,7 @@ export function useShortcut({
   altKey = false,
   shiftKey = false,
   ctrlKey = false,
-  preventDefault = true
+  preventDefault = true,
 }: ShortcutOptions) {
   useEffect(() => {
     const handleKeydown = (e: KeyboardEvent) => {
@@ -32,7 +32,7 @@ export function useShortcut({
       }
     };
 
-    window.addEventListener('keydown', handleKeydown);
-    return () => window.removeEventListener('keydown', handleKeydown);
+    window.addEventListener("keydown", handleKeydown);
+    return () => window.removeEventListener("keydown", handleKeydown);
   }, [action, key, altKey, shiftKey, ctrlKey, preventDefault]);
 }

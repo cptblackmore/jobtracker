@@ -1,4 +1,7 @@
-export const waitForCondition = (condition: () => boolean, ms = 100): Promise<void> => {
+export const waitForCondition = (
+  condition: () => boolean,
+  ms = 100,
+): Promise<void> => {
   return new Promise((resolve) => {
     const interval = setInterval(() => {
       if (condition()) {
@@ -7,4 +10,4 @@ export const waitForCondition = (condition: () => boolean, ms = 100): Promise<vo
       }
     }, ms);
   });
-}
+};

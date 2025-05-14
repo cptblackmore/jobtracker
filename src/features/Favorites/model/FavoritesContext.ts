@@ -1,7 +1,7 @@
-import { createContext } from 'react';
-import { FavoritesStore } from '@features/Favorites';
-import { authStore } from '@features/Auth';
-import { alertsStore } from '@shared/ui';
+import { createContext } from "react";
+import { FavoritesStore } from "@features/Favorites";
+import { authStore } from "@features/Auth";
+import { alertsStore } from "@shared/ui";
 
 interface State {
   favoritesStore: FavoritesStore;

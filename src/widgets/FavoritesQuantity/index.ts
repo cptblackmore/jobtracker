@@ -1,1 +1,1 @@
-export { FavoritesQuantity } from './ui/FavoritesQuantity';
+export { FavoritesQuantity } from "./ui/FavoritesQuantity";

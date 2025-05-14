@@ -1,13 +1,13 @@
-import { useRef } from 'react';
-import { Transition } from 'react-transition-group';
-import { Fade, IconButton, Tooltip } from '@mui/material';
-import { getIconStyle, transitionStyles, getWrapperStyle } from './styles';
-import { ToggleIconButtonProps } from '@shared/ui/ToggleIconButton/ToggledIconButtonProps';
+import { useRef } from "react";
+import { Transition } from "react-transition-group";
+import { Fade, IconButton, Tooltip } from "@mui/material";
+import { getIconStyle, transitionStyles, getWrapperStyle } from "./styles";
+import { ToggleIconButtonProps } from "@shared/ui/ToggleIconButton/ToggledIconButtonProps";
 
-export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({ 
-  isToggled, 
-  onToggle, 
-  defaultIcon, 
+export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({
+  isToggled,
+  onToggle,
+  defaultIcon,
   toggledIcon,
   defaultTooltip,
   toggledTooltip,
@@ -20,8 +20,8 @@ export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({
     ariaLabel,
     ariaPressable = false,
     tabIndex,
-    ariaHidden
-  } = {}
+    ariaHidden,
+  } = {},
 }) => {
   const firstIconRef = useRef(null);
   const secondIconRef = useRef(null);
@@ -34,24 +34,42 @@ export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({
       leaveDelay={tooltipLeaveDelay}
       arrow
     >
-      <IconButton 
+      <IconButton
         tabIndex={tabIndex}
-        css={getWrapperStyle(size, wrapperSize)} 
-        onClick={() => onToggle()} 
-        aria-label={ariaLabel ? `${ariaLabel}: ${isToggled ? toggledTooltip : defaultTooltip}` : (isToggled ? toggledTooltip : defaultTooltip)}
-        aria-pressed={ariaPressable ? isToggled : undefined} 
+        css={getWrapperStyle(size, wrapperSize)}
+        onClick={() => onToggle()}
+        aria-label={
+          ariaLabel
+            ? `${ariaLabel}: ${isToggled ? toggledTooltip : defaultTooltip}`
+            : isToggled
+              ? toggledTooltip
+              : defaultTooltip
+        }
+        aria-pressed={ariaPressable ? isToggled : undefined}
         aria-hidden={ariaHidden}
       >
-        <Transition nodeRef={firstIconRef} in={!isToggled} timeout={duration} >
-          {state => (
-            <div ref={firstIconRef} css={[getIconStyle(duration, size, !isToggled), transitionStyles[state]]} >
+        <Transition nodeRef={firstIconRef} in={!isToggled} timeout={duration}>
+          {(state) => (
+            <div
+              ref={firstIconRef}
+              css={[
+                getIconStyle(duration, size, !isToggled),
+                transitionStyles[state],
+              ]}
+            >
               {defaultIcon}
             </div>
           )}
         </Transition>
-        <Transition nodeRef={secondIconRef} in={isToggled} timeout={duration} >
-          {state => (
-            <div ref={secondIconRef} css={[getIconStyle(duration, size, isToggled), transitionStyles[state]]} >
+        <Transition nodeRef={secondIconRef} in={isToggled} timeout={duration}>
+          {(state) => (
+            <div
+              ref={secondIconRef}
+              css={[
+                getIconStyle(duration, size, isToggled),
+                transitionStyles[state],
+              ]}
+            >
               {toggledIcon}
             </div>
           )}
@@ -59,4 +77,4 @@ export const ToggleIconButton: React.FC<ToggleIconButtonProps> = ({
       </IconButton>
     </Tooltip>
   );
-}
+};

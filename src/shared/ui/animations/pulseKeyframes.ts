@@ -1,4 +1,4 @@
-import { keyframes } from '@emotion/react';
+import { keyframes } from "@emotion/react";
 
 export const pulseKeyframes = keyframes`
   0% {filter: brightness(0.8)}

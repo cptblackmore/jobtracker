@@ -1,10 +1,10 @@
-import { toRightCurrencyCode } from '@shared/lib';
-import { Vacancy } from '../model/Vacancy';
+import { toRightCurrencyCode } from "@shared/lib";
+import { Vacancy } from "../model/Vacancy";
 
 export const vacanciesToCsv = (vacancies: Vacancy[]) => {
-  const divider = ';';
+  const divider = ";";
   const rows = [
-    `Профессия${divider}Компания${divider}Место${divider}ЗП от${divider}ЗП до${divider}Валюта${divider}Ссылка`
+    `Профессия${divider}Компания${divider}Место${divider}ЗП от${divider}ЗП до${divider}Валюта${divider}Ссылка`,
   ];
   for (const vacancy of vacancies) {
     const paymentFrom = vacancy.paymentFrom;
@@ -13,13 +13,13 @@ export const vacanciesToCsv = (vacancies: Vacancy[]) => {
       vacancy.profession,
       vacancy.firmName,
       vacancy.town,
-      paymentFrom || '',
-      paymentTo || '',
+      paymentFrom || "",
+      paymentTo || "",
       toRightCurrencyCode(vacancy.currency),
-      vacancy.link
+      vacancy.link,
     ].join(divider);
     rows.push(row);
   }
-  
-  return rows.join('\n');
-}
+
+  return rows.join("\n");
+};

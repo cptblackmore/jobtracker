@@ -4,7 +4,7 @@ export const broadcastRequestWithFallback = async (
   responseType: string,
   responseAction: () => void,
   fallbackAction: () => void,
-  timeout = 2000
+  timeout = 2000,
 ) => {
   return new Promise((resolve, reject) => {
     let answered = false;
@@ -12,7 +12,7 @@ export const broadcastRequestWithFallback = async (
     const handleResponse = async (event: MessageEvent) => {
       if (event.data.type === responseType) {
         try {
-          channel.removeEventListener('message', handleResponse);
+          channel.removeEventListener("message", handleResponse);
           answered = true;
           const result = await responseAction();
           resolve(result);
@@ -22,20 +22,20 @@ export const broadcastRequestWithFallback = async (
       }
     };
 
-    channel.addEventListener('message', handleResponse);
+    channel.addEventListener("message", handleResponse);
     channel.postMessage({ type: requestType });
 
     setTimeout(async () => {
       if (!answered) {
         try {
-          channel.removeEventListener('message', handleResponse);
+          channel.removeEventListener("message", handleResponse);
           answered = true;
           const result = await fallbackAction();
           resolve(result);
         } catch (e) {
-          reject(e)
+          reject(e);
         }
       }
     }, timeout);
   });
-}
+};

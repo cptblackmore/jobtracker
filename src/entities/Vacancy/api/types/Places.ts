@@ -3,7 +3,7 @@ import { SourceId } from "@entities/Vacancy/model/Sources";
 interface PlaceBase {
   id: string;
   name: string;
-  type: 'city' | 'region';
+  type: "city" | "region";
   isMeta?: boolean;
 }
 

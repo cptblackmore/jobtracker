@@ -1,10 +1,17 @@
-import { makeAutoObservable, reaction } from 'mobx';
-import { FavoritesService, FavoritesResponse, getFavoritesLS, deleteFavoritesLS, addFavoritesLS, setFavoritesLS } from '@features/Favorites';
-import { AuthStore } from '@features/Auth';
-import { createAlert, AlertsStore } from '@shared/ui';
+import { makeAutoObservable, reaction } from "mobx";
+import {
+  FavoritesService,
+  FavoritesResponse,
+  getFavoritesLS,
+  deleteFavoritesLS,
+  addFavoritesLS,
+  setFavoritesLS,
+} from "@features/Favorites";
+import { AuthStore } from "@features/Auth";
+import { createAlert, AlertsStore } from "@shared/ui";
 
 export class FavoritesStore {
-  ids: string[] = JSON.parse(window.localStorage.getItem('favorites') || '[]');
+  ids: string[] = JSON.parse(window.localStorage.getItem("favorites") || "[]");
   isSynced = false;
   private alertsStore: AlertsStore;
   private authStore: AuthStore;
@@ -13,16 +20,22 @@ export class FavoritesStore {
     this.alertsStore = alertsStore;
     this.authStore = authStore;
     makeAutoObservable(this);
-    
+
     reaction(
-      () => ({isAuth: authStore.isAuth, isActivated: authStore.user?.isActivated}),
+      () => ({
+        isAuth: authStore.isAuth,
+        isActivated: authStore.user?.isActivated,
+      }),
       ({ isAuth, isActivated }) => {
         if (isAuth) {
           if (!isActivated) {
             this.alertsStore.addAlert(
               createAlert(
-                'Избранное не сохраняется на вашем аккаунте, так как он не активирован!', 'warning', 3000, 'activation-required'
-              )
+                "Избранное не сохраняется на вашем аккаунте, так как он не активирован!",
+                "warning",
+                3000,
+                "activation-required",
+              ),
             );
             return;
           }
@@ -34,10 +47,9 @@ export class FavoritesStore {
       },
       {
         equals: (prev, next) =>
-          prev.isAuth === next.isAuth &&
-          prev.isActivated === next.isActivated
-      }
-    )
+          prev.isAuth === next.isAuth && prev.isActivated === next.isActivated,
+      },
+    );
   }
 
   get isAuth() {
@@ -75,16 +87,19 @@ export class FavoritesStore {
   clearFavorites() {
     this.setIds([]);
     setFavoritesLS([]);
-    if (this.isSynced) this.updateFavorites([]); 
+    if (this.isSynced) this.updateFavorites([]);
   }
 
-  async synchronizeFavorites(favorites: FavoritesResponse['favorites']) {
+  async synchronizeFavorites(favorites: FavoritesResponse["favorites"]) {
     if (!this.isAuth) return;
     if (!this.isActivated) {
       this.alertsStore.addAlert(
         createAlert(
-          'Избранное не сохраняется на вашем аккаунте, т.к. он не активирован!', 'warning', 2000, 'activation-required'
-        )
+          "Избранное не сохраняется на вашем аккаунте, т.к. он не активирован!",
+          "warning",
+          2000,
+          "activation-required",
+        ),
       );
       return;
     }
@@ -93,21 +108,23 @@ export class FavoritesStore {
       setFavoritesLS(response.data.favorites || []);
       this.setIds(response.data.favorites || []);
       this.setSynced(true);
-      this.alertsStore.addAlert(createAlert('Избранные вакансии синхронизированы', 'success', 2000));
+      this.alertsStore.addAlert(
+        createAlert("Избранные вакансии синхронизированы", "success", 2000),
+      );
     } catch (e) {
       if (e instanceof Error) {
-        this.alertsStore.addAlert(createAlert(e.message, 'error'));
-      }    
+        this.alertsStore.addAlert(createAlert(e.message, "error"));
+      }
     }
   }
 
-  async updateFavorites(favorites: FavoritesResponse['favorites']) {
+  async updateFavorites(favorites: FavoritesResponse["favorites"]) {
     if (!this.isSynced) return;
     try {
       await FavoritesService.updateFavorites(favorites);
     } catch (e) {
       if (e instanceof Error) {
-        this.alertsStore.addAlert(createAlert(e.message, 'error'));
+        this.alertsStore.addAlert(createAlert(e.message, "error"));
       }
     }
   }

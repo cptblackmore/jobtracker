@@ -35,7 +35,7 @@ JobTracker предлагает возможность авторизации и
 
 ### Поиск вакансий
 
-Быстро находим актуальные вакансии с разных источников. 
+Быстро находим актуальные вакансии с разных источников.
 
 В одном списке — предложения с HH, Superjob и Работа России, адаптированные под единый формат.
 
@@ -45,7 +45,7 @@ JobTracker предлагает возможность авторизации и
 
 ### Фильтрация
 
-Фильтрация вакансий по зарплате, опыту, местоположению и типу занятости.  
+Фильтрация вакансий по зарплате, опыту, местоположению и типу занятости.
 
 Без нерелевантных результатов. Источники, не поддерживающие включенный фильтр, автоматически исключаются.
 
@@ -55,7 +55,7 @@ JobTracker предлагает возможность авторизации и
 
 ### Избранное
 
-Добавляем вакансии в избранное одним кликом.  
+Добавляем вакансии в избранное одним кликом.
 
 Можно скачать список в TXT, CSV или экспортировать в JSON — чтобы сохранить себе или с кем-то поделиться.
 
@@ -103,12 +103,12 @@ JobTracker предлагает возможность авторизации и
 
 Проект организован на основе методологии Feature-Sliced Design (FSD), что упрощает масштабирование, ускоряет добавление новых фич и поддерживает высокую читаемость кода на протяжении всего цикла разработки.
 
-Весь код строго разделён на слои (`app`, `pages`, `widgets`, `features`, `entities`, `shared`), а внутри них — на слайсы и сегменты, что облегчает навигацию для разработчиков, знакомых с FSD.  
+Весь код строго разделён на слои (`app`, `pages`, `widgets`, `features`, `entities`, `shared`), а внутри них — на слайсы и сегменты, что облегчает навигацию для разработчиков, знакомых с FSD.
 
 Подробнее о принципах методологии можно прочитать в [официальной документации](https://feature-sliced.github.io/documentation/ru/docs/get-started/overview).
 
-  **Структура src**:
-  
+**Структура src**:
+
 ```
 ├── app
 |  ├── App.tsx
@@ -159,24 +159,22 @@ JobTracker предлагает возможность авторизации и
 - **Локальное состояние (страница поиска):**
   Для управления параметрами фильтрации и списком вакансий используется `useReducer`.  
   Это решение позволяет избежать лишних перерендеров и гарантирует, что данные всегда "освежаются" при возвращении на страницу.
-  
-    ```ts
-    export const vacancyListReducer = (state: State, action: Action): State => {
-      switch (action.type) {
-        case 'SET_PAGE':
-          return {...state, params: {...state.params, page: action.page}};
-        case 'SET_FILTERS':
-          return {...state, params: {...state.params, filters: action.filters}};
-        case 'SET_VACANCIES':
-          return {...state, vacancies: action.vacancies};
-        case 'ADD_VACANCIES':
-          return {...state, vacancies: [...state.vacancies, ...action.vacancies]};
-        default:
-          return state;
-      }
+  ```ts
+  export const vacancyListReducer = (state: State, action: Action): State => {
+    switch (action.type) {
+      case "SET_PAGE":
+        return { ...state, params: { ...state.params, page: action.page } };
+      case "SET_FILTERS":
+        return { ...state, params: { ...state.params, filters: action.filters } };
+      case "SET_VACANCIES":
+        return { ...state, vacancies: action.vacancies };
+      case "ADD_VACANCIES":
+        return { ...state, vacancies: [...state.vacancies, ...action.vacancies] };
+      default:
+        return state;
     }
-    ```
-
+  };
+  ```
 - **Глобальные состояния (MobX)**:
   - `AuthStore` — авторизация, данные пользователя, токены, модалка, синхронизация между вкладками.
   - `FavoritesStore` — управление избранным, синхронизация с сервером.
@@ -187,9 +185,9 @@ JobTracker предлагает возможность авторизации и
 
 ### Интегрированные API вакансий
 
-  - [SuperJob API](https://api.superjob.ru/) — требуется "Secret key" (см. [инструкцию](#регистрация-приложения-в-api-superjob)).
-  - [HeadHunter API](https://dev.hh.ru/) — открытое API, работает без ключа.
-  - [«Работа России» API](https://trudvsem.ru/opendata/api) — государственный источник; не поддерживает большинство фильтров (тип занятости, зарплата, период).
+- [SuperJob API](https://api.superjob.ru/) — требуется "Secret key" (см. [инструкцию](#регистрация-приложения-в-api-superjob)).
+- [HeadHunter API](https://dev.hh.ru/) — открытое API, работает без ключа.
+- [«Работа России» API](https://trudvsem.ru/opendata/api) — государственный источник; не поддерживает большинство фильтров (тип занятости, зарплата, период).
 
 ### Работа с API
 
@@ -203,11 +201,10 @@ JobTracker предлагает возможность авторизации и
 - **Авторизация и избранное**:  
   Для запросов используются все остальные эндпоинты (`/login`, `/registration`, `/refresh`, `/favorites` и т.д.).
   Взаимодействие идёт через сервисный слой (`AuthService`, `FavoritesService`), использующий экземпляр Axios (`$api`) с интерцепторами для подстановки токенов и обработки ошибок.
-
   ```ts
-  $api.interceptors.request.use(config => {
-    if (config.url?.split('/')[1] !== '/refresh') {
-      config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+  $api.interceptors.request.use((config) => {
+    if (config.url?.split("/")[1] !== "/refresh") {
+      config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
     }
     return config;
   });
@@ -220,41 +217,41 @@ JobTracker предлагает возможность авторизации и
 - Все страницы имеют собственный маршрут (`/home`, `/search`, `/favorites`, `/account`, `/activation`) в `Router.tsx` и вложены в универсальный лэйаут страницы.
 - Страницы, которым важна инициализация данных или авторизация пользователя (`/favorites`, `/activation`, `/account`) обёрнуты в компонент `<ProtectedRoute>`:
   ```ts
-    export const ProtectedRoute: React.FC<Props> = ({ isReady, isAllowed }) => {
-      if (!isReady) {
-        return <LoadingPage />;
-      }
+  export const ProtectedRoute: React.FC<Props> = ({ isReady, isAllowed }) => {
+    if (!isReady) {
+      return <LoadingPage />;
+    }
 
-      return isAllowed ? <Outlet /> : <Navigate to="/" replace />;
-    };
+    return isAllowed ? <Outlet /> : <Navigate to="/" replace />;
+  };
   ```
-- Навигация между страницами происходит через `<Link>` или `useNavigate`.
+- Навигация между страницами происходит через `<Link>` или `useNavigate`
 - Параметры фильтров поисковой страницы синхронизируются с URL и сохраняются в `History API`, что обеспечивает корректную работу истории браузера.
 
 ### **Авторизация и безопасность**
 
 Авторизация реализована через JWT-токены:
 
-- `accessToken` хранится в `localStorage`.
+- `accessToken` хранится в `localStorage`
 - `refreshToken` хранится в `httpOnly` cookie и добавляется только сервером.
 - Успешное обновление токенов подтверждается клиентом по роуту `/refresh/ack`, после чего они обновляются уже и в БД. Это позволяет избежать потери токенов из-за нестабильного соединения или несвоевременного закрытия вкладки.
 - Обновление токенов (`refresh`) инициируется только **лидирующей вкладкой** для оптимизации сетевой активности и избежания гонки.
   - Лидер вкладки определяется алгоритмом на основе `BroadcastChannel` + heartbeat-механизма (`localStorage` ключ с обновляющимся timestamp).
   - Если вкладка теряет лидерство — инициируется автоматическое переизбрание.
 - Данные пользователя автоматически синхронизируются между вкладками с помощью сообщений в `BroadcastChannel` (`authChannel`).
-
   ```ts
   ...
-  if (type === 'request_auth') {
+  if (type === "request_auth") {
     await waitForCondition(() => authStore.isInit);
     if (authStore.isLeader) {
-      authChannel.postMessage(
-        {type: 'response_auth', payload: toJS(authStore.user)}
-      ); 
+      authChannel.postMessage({
+        type: "response_auth",
+        payload: toJS(authStore.user),
+      });
     }
   }
 
-  if (type === 'response_auth' || type === 'login') {
+  if (type === "response_auth" || type === "login") {
     authStore.setUser(event.data.payload);
     authStore.setInit(true);
   }
@@ -277,17 +274,17 @@ JobTracker предлагает возможность авторизации и
 ## Установка и запуск
 
 0. Перед началом убедитесь, что у вас есть:
-    - Node.js версии **18 и выше** — [скачать с nodejs.org](https://nodejs.org/)
-    - Git — [скачать с git-scm.com](https://git-scm.com/)
+   - Node.js версии **18 и выше** — [скачать с nodejs.org](https://nodejs.org/)
+   - Git — [скачать с git-scm.com](https://git-scm.com/)
 1. Клонируйте репозиторий: `git clone https://github.com/cptblackmore/jobtracker`
 2. Перейдите в него: `cd jobtracker`
 3. Установите зависимости: `npm install`
 4. Создайте файл с переменными окружения: `cp .env.example .env`
 5. Откройте `.env` и заполните поля:
-  - `VITE_API_URL` — адрес API jobtracker-server. Если не хостили свой, используйте демо: `https://jobtracker-server.onrender.com/api` (указан по умолчанию).
-  - `VITE_SUPERJOB_API_APP_KEY` — ключ для API Superjob. Требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.
-  - `VITE_MODE` — если собираетесь разрабатывать и тестировать хуки/компоненты, укажите `development`
-  - **Пример готового `.env`:**
+    - `VITE_API_URL` — адрес API jobtracker-server. Если не хостили свой, используйте демо: `https://jobtracker-server.onrender.com/api` (указан по умолчанию).
+    - `VITE_SUPERJOB_API_APP_KEY` — ключ для API Superjob. Требует регистрации приложения (см. главу ниже). Вы можете не указывать это свойство, но тогда данный источник работать не будет.
+    - `VITE_MODE` — если собираетесь разрабатывать и тестировать хуки/компоненты, укажите `development`
+    - **Пример готового `.env`:**
       ```dotenv
       VITE_API_URL=https://jobtracker-server.onrender.com/api
       VITE_SUPERJOB_API_APP_KEY=v3.r.123820349.b68cc10ac962d5436d1f0f980e84fc6c604d5dsd.c1c4d5a9f2ba2dc80ce328f4802fbe72d97346dd
@@ -295,12 +292,12 @@ JobTracker предлагает возможность авторизации и
       ```
 6. Запустите: `npm run dev -- --host`
 7. После запуска Vite в терминале появятся адреса для доступа к проекту:
-    - `http://localhost:5173` — для текущего устройства
-    - `http://<Network-IP>:5173` — для других устройств в вашей локальной сети (например, для проверки с телефона)
+   - `http://localhost:5173` — для текущего устройства
+   - `http://<Network-IP>:5173` — для других устройств в вашей локальной сети (например, для проверки с телефона)
 
 ### Регистрация приложения в API Superjob
 
- > ⚠️ Это необязательно! Если вы не хотите использовать SuperJob, просто оставьте переменную `VITE_SUPERJOB_API_APP_KEY` пустой. Всё остальное будет работать.
+> ⚠️ Это необязательно! Если вы не хотите использовать SuperJob, просто оставьте переменную `VITE_SUPERJOB_API_APP_KEY` пустой. Всё остальное будет работать.
 
 1. Перейдите на [страницу API](https://api.superjob.ru/).
 2. Зарегистрируйте приложение (потребуется аккаунт соискателя).
@@ -318,7 +315,8 @@ JobTracker предлагает возможность авторизации и
 
 ## Author
 
-**Victor** *aka* **captain_blackmore**
+**Victor** _aka_ **captain_blackmore**
+
 - [Telegram](https://t.me/captain_blackmore)
 - [Github](https://github.com/cptblackmore)
 

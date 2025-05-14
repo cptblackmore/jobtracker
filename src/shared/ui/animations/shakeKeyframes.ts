@@ -1,4 +1,4 @@
-import { keyframes } from '@emotion/react';
+import { keyframes } from "@emotion/react";
 
 export const shakeKeyframes = keyframes`
   0% { transform: translateX(0) }

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
 export interface ToggleIconButtonProps {
   isToggled: boolean;
@@ -17,5 +17,5 @@ export interface ToggleIconButtonProps {
     ariaPressable?: boolean;
     tabIndex?: number;
     ariaHidden?: boolean;
-  }
+  };
 }

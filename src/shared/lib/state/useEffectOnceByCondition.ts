@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-export const useEffectOnceByCondition  = (
-  callback: () => void, 
-  dependency: React.DependencyList, 
-  condition: boolean
+export const useEffectOnceByCondition = (
+  callback: () => void,
+  dependency: React.DependencyList,
+  condition: boolean,
 ) => {
   const hasExecuted = useRef(false);
 
@@ -13,4 +13,4 @@ export const useEffectOnceByCondition  = (
       hasExecuted.current = true;
     }
   }, [dependency]);
-}
+};

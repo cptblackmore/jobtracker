@@ -1,1 +1,1 @@
-export { ActivationMessage } from './ui/ActivationMessage';
+export { ActivationMessage } from "./ui/ActivationMessage";

@@ -1,8 +1,11 @@
-import { AuthStore } from '@features/Auth';
-import { electLeader } from './electLeader';
-import { isLeaderAlive } from './isLeaderAlive';
+import { AuthStore } from "@features/Auth";
+import { electLeader } from "./electLeader";
+import { isLeaderAlive } from "./isLeaderAlive";
 
-export const startHeartbeatCheck = (authStore: AuthStore, authChannel: BroadcastChannel) => {
+export const startHeartbeatCheck = (
+  authStore: AuthStore,
+  authChannel: BroadcastChannel,
+) => {
   const heartbeatCheck = setInterval(() => {
     if (authStore.isLeader) {
       clearInterval(heartbeatCheck);
@@ -13,4 +16,4 @@ export const startHeartbeatCheck = (authStore: AuthStore, authChannel: Broadcast
       clearInterval(heartbeatCheck);
     }
   }, authStore.LEADER_TIMEOUT);
-}
+};

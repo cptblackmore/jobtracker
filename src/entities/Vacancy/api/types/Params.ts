@@ -18,7 +18,7 @@ export interface HHParams {
   salary: number | null;
   only_with_salary: boolean;
   period: 99 | 1 | 3 | 7;
-  schedule: 'fullDay' | 'shift' | 'flyInFlyOut' | null;
+  schedule: "fullDay" | "shift" | "flyInFlyOut" | null;
   area: string | null;
 }
 

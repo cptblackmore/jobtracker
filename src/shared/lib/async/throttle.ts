@@ -1,4 +1,8 @@
-export const throttle = <T extends (...args: unknown[]) => unknown>(callback: T, delay: number, debounce=0) => {
+export const throttle = <T extends (...args: unknown[]) => unknown>(
+  callback: T,
+  delay: number,
+  debounce = 0,
+) => {
   let wait = false;
   let timeout: ReturnType<typeof setTimeout> | undefined;
   return function () {
@@ -15,5 +19,5 @@ export const throttle = <T extends (...args: unknown[]) => unknown>(callback: T,
         callback();
       }, debounce);
     }
-  }
-}
+  };
+};

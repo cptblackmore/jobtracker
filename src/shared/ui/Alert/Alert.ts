@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
 
 interface BaseAlert {
   id: string;
@@ -9,29 +9,29 @@ interface BaseAlert {
 }
 
 export interface Success extends BaseAlert {
-  severity: 'success';
+  severity: "success";
 }
 
 export interface Info extends BaseAlert {
-  severity: 'info';
+  severity: "info";
 }
 
 export interface Warning extends BaseAlert {
-  severity: 'warning';
+  severity: "warning";
 }
 
 export interface Error extends BaseAlert {
-  severity: 'error';
+  severity: "error";
 }
 
 export type Alert = Success | Info | Warning | Error;
 
 export const createAlert = (
-  message: string, 
-  severity: Alert['severity'], 
-  duration?: number, 
+  message: string,
+  severity: Alert["severity"],
+  duration?: number,
   tag?: string,
-  dismissedKey?: string
+  dismissedKey?: string,
 ): Alert =>
   ({
     id: nanoid(),
@@ -39,5 +39,5 @@ export const createAlert = (
     severity,
     duration,
     tag,
-    dismissedKey
-  } as Alert);
+    dismissedKey,
+  }) as Alert;

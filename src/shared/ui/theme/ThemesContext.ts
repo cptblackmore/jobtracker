@@ -1,17 +1,17 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 interface ThemesState {
-  themeMode: 'light' | 'dark',
-  toggleThemeMode: () => void,
+  themeMode: "light" | "dark";
+  toggleThemeMode: () => void;
   config: {
-    muiPaperOverlay: {bgcolor: string, opacity: number}
-  }
+    muiPaperOverlay: { bgcolor: string; opacity: number };
+  };
 }
 
 export const ThemesContext = createContext<ThemesState>({
-  themeMode: 'light',
+  themeMode: "light",
   toggleThemeMode: () => {},
   config: {
-    muiPaperOverlay: {bgcolor: '#fff', opacity: 0.051}
-  }
+    muiPaperOverlay: { bgcolor: "#fff", opacity: 0.051 },
+  },
 });

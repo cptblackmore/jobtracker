@@ -5,7 +5,7 @@ export class PassthroughError extends Error {
 
   constructor(message: string, code: string, status: number) {
     super(message);
-    this.name = 'PassthroughError';
+    this.name = "PassthroughError";
     this.code = code;
     this.status = status;
   }

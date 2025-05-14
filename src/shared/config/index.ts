@@ -1,5 +1,5 @@
-export type { Page, Pages, PagesState } from './PagesContext';
-export { PagesContext, pages } from './PagesContext';
+export type { Page, Pages, PagesState } from "./PagesContext";
+export { PagesContext, pages } from "./PagesContext";
 
 export const VACANCIES_COUNT_PER_SOURCE = 5;
 export const SALARY_MIN = 0;

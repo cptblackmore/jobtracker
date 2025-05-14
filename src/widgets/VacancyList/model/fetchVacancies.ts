@@ -1,17 +1,24 @@
-import { getVacancies, sourcesRegistry, Vacancy, VacancyParams } from '@entities/Vacancy';
-import { AlertsStore } from '@shared/ui';
-import axios, { AxiosError } from 'axios';
-import { handleErrors } from '../../FavoritesList/model/handleErrors';
-import { typedKeys } from '@shared/lib';
+import {
+  getVacancies,
+  sourcesRegistry,
+  Vacancy,
+  VacancyParams,
+} from "@entities/Vacancy";
+import { AlertsStore } from "@shared/ui";
+import axios, { AxiosError } from "axios";
+import { handleErrors } from "../../FavoritesList/model/handleErrors";
+import { typedKeys } from "@shared/lib";
 
 export const fetchVacancies = async (
   params: VacancyParams,
   signal: AbortSignal,
-  alertsStore: AlertsStore
+  alertsStore: AlertsStore,
 ): Promise<Vacancy[]> => {
   const errors = new Set<string>();
 
-  const sources = typedKeys(sourcesRegistry).filter(source => !params.filters.excludedSources?.includes(source));
+  const sources = typedKeys(sourcesRegistry).filter(
+    (source) => !params.filters.excludedSources?.includes(source),
+  );
 
   const results = await Promise.allSettled(
     sources.map(async (source) => {
@@ -20,14 +27,15 @@ export const fetchVacancies = async (
       } catch (e) {
         return Promise.reject(e);
       }
-    })
-  )
+    }),
+  );
 
-  results.forEach(result => {
-    if (result.status === 'rejected') {
+  results.forEach((result) => {
+    if (result.status === "rejected") {
       if (axios.isCancel(result.reason)) throw result.reason;
       if (result.reason instanceof AxiosError) {
-        const code = result.reason.response?.data?.code ?? result.reason.code ?? null;
+        const code =
+          result.reason.response?.data?.code ?? result.reason.code ?? null;
         if (code) errors.add(code);
       }
     }
@@ -38,7 +46,10 @@ export const fetchVacancies = async (
   }
 
   return results
-  .filter((result): result is PromiseFulfilledResult<Vacancy[]> => result.status === 'fulfilled')
-  .map(result => result.value)
-  .flat();
-}
+    .filter(
+      (result): result is PromiseFulfilledResult<Vacancy[]> =>
+        result.status === "fulfilled",
+    )
+    .map((result) => result.value)
+    .flat();
+};

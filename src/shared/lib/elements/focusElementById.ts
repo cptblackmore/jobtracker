@@ -4,4 +4,4 @@ export const focusElementById = (id: string) => {
   if (element instanceof HTMLElement) {
     element.focus();
   }
-}
+};

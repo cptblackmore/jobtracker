@@ -1,3 +1,3 @@
 export const globalElementsIds = {
-  ariaInformer: 'global-aria-informer'
-}
+  ariaInformer: "global-aria-informer",
+};

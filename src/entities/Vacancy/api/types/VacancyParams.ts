@@ -2,9 +2,9 @@ import { Sources } from "@entities/Vacancy/model/Sources";
 
 export type VacancyPeriod = 0 | 1 | 3 | 7;
 
-export type VacancyType = 'full' | 'shift' | 'fifo';
+export type VacancyType = "full" | "shift" | "fifo";
 
-export type SwitchableVacancyType = 'none' | VacancyType;
+export type SwitchableVacancyType = "none" | VacancyType;
 
 export interface VacancySalary {
   from?: number;
@@ -25,5 +25,5 @@ export interface VacancyParams {
     type?: VacancyType;
     place?: string;
     excludedSources?: Sources[];
-  }
+  };
 }

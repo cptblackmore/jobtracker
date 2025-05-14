@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export const useMenu = () => {
   const [anchorElMenu, setAnchorElMenu] = useState<null | HTMLElement>(null);
@@ -12,4 +12,4 @@ export const useMenu = () => {
   };
 
   return { anchorElMenu, handleOpenMenu, handleCloseMenu };
-} 
+};
