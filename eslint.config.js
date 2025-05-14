@@ -11,7 +11,6 @@ export default tseslint.config(
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
-      prettierConfig,
     ],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
@@ -28,6 +27,7 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
+      ...prettierConfig.rules,
     },
   },
 );
