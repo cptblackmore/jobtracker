@@ -18,13 +18,14 @@ import {
 import { VacancyFilterAdditional } from "./VacancyFilterAdditional";
 import { useVacancyFilter } from "../model/useVacancyFilter";
 import { filterLabelsMap } from "../model/filterLabelsMap";
+import { memo } from "react";
 
 interface Props {
   filters: VacancyParams["filters"];
   setFilters: (filters: VacancyParams["filters"]) => void;
 }
 
-export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
+export const VacancyFilter: React.FC<Props> = memo(({ filters, setFilters }) => {
   const { showAdditional, setShowAdditional, text, setText, handleSubmit } =
     useVacancyFilter(filters, setFilters);
   const theme = useTheme();
@@ -105,4 +106,4 @@ export const VacancyFilter: React.FC<Props> = ({ filters, setFilters }) => {
       </Collapse>
     </Paper>
   );
-};
+});

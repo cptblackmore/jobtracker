@@ -12,12 +12,13 @@ import { VacancyFeatures } from "./VacancyFeatures";
 import { VacancyDetails } from "./VacancyDetails";
 import { VacancyAdditional } from "./VacancyAdditional";
 import { ExternalLinkButton } from "@shared/ui";
+import { memo } from "react";
 
 interface Props {
   vacancy: Vacancy;
 }
 
-export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
+export const VacancyCard: React.FC<Props> = memo(({ vacancy }) => {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -54,4 +55,4 @@ export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
       </Card>
     </Fade>
   );
-};
+});
