@@ -21,20 +21,14 @@ export const EmptyFavoritesListMessage: React.FC = () => {
       </T>
       <T variant={isSmUp ? "body1" : "body2"} color="text.secondary">
         Чтобы добавить вакансию в избранные, нажмите на иконку
-        <Box
-          component="span"
-          sx={{
-            display: "inline-flex",
-            alignItems: "center",
+        <FavoriteBorder
+          fontSize="small"
+          sx={{ 
+            fontSize: { xs: "1.1rem", sm: "1.3rem" },
             verticalAlign: "middle",
-            mx: 0.5,
+            margin: "0 0.3em",
           }}
-        >
-          <FavoriteBorder
-            fontSize="small"
-            sx={{ fontSize: { xs: "1.1rem", sm: "1.3rem" } }}
-          />
-        </Box>
+        />
         в карточке вакансии
       </T>
       <T variant={isSmUp ? "body1" : "body2"} color="text.secondary">
