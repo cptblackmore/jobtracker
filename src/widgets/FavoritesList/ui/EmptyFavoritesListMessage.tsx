@@ -20,9 +20,10 @@ export const EmptyFavoritesListMessage: React.FC = () => {
         У вас пока нет избранных вакансий.
       </T>
       <T variant={isSmUp ? "body1" : "body2"} color="text.secondary">
-        Чтобы добавить вакансию в избранные, нажмите на иконку
+        Чтобы добавить вакансию в избранные, нажмите на иконку пустого сердца
         <FavoriteBorder
           fontSize="small"
+          aria-hidden="true"
           sx={{ 
             fontSize: { xs: "1.1rem", sm: "1.3rem" },
             verticalAlign: "middle",
