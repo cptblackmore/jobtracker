@@ -113,9 +113,7 @@ export const useVacancyFilterAdditional = (
     setPlace(
       (filters?.place && parseFormattedPlace(filters?.place).name) ?? "",
     );
-    setFormattedPlace(
-      (filters?.place && parseFormattedPlace(filters?.place).name) ?? "",
-    );
+    setFormattedPlace(filters?.place ?? "");
     setSalaryFilter({
       enabled: !!(
         (filters?.salary?.from ?? null) ||

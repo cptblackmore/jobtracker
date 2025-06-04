@@ -1,4 +1,4 @@
-import { formatPlace, Place, Places, PlacesService } from "@entities/Vacancy";
+import { formatPlace, parseFormattedPlace, Place, Places, PlacesService } from "@entities/Vacancy";
 import { debounce } from "@mui/material";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 
@@ -35,10 +35,28 @@ export const usePlaceFilter = () => {
     setSuggestedPlaces(suggestedPlaces.filter((place) => !place.isMeta));
   }
 
+  const matchAndSetFormattedPlace = useCallback(
+    (newPlace: string | Place) => {
+    if (typeof newPlace === "string") {
+      const matched = suggestedPlaces.find(
+        (place) => place.name.toLowerCase() === newPlace.toLowerCase(),
+      );
+      if (matched) {
+        setFormattedPlace(formatPlace(matched));
+      } else if (newPlace !== parseFormattedPlace(formattedPlace).name) {
+        setFormattedPlace(newPlace);
+      }
+    } else {
+      setFormattedPlace(formatPlace(newPlace));
+    }
+  },
+  [formattedPlace, suggestedPlaces],
+  );
+
   const handlePlaceInputChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newPlace = e.target.value;
-      setFormattedPlace(newPlace);
+      matchAndSetFormattedPlace(newPlace);
       setPlace(newPlace);
       if (newPlace.length >= 3) {
         debouncedPlacesRequest(newPlace);
@@ -47,26 +65,15 @@ export const usePlaceFilter = () => {
         debouncedPlacesRequest.clear();
       }
     },
-    [debouncedPlacesRequest],
+    [debouncedPlacesRequest, matchAndSetFormattedPlace],
   );
 
   const handlePlaceChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newPlace = e.target.value as string | Place;
-      if (typeof newPlace === "string") {
-        const matched = suggestedPlaces.find(
-          (place) => place.name.toLowerCase() === newPlace.toLowerCase(),
-        );
-        if (matched) {
-          setFormattedPlace(formatPlace(matched));
-        } else {
-          setFormattedPlace(newPlace);
-        }
-      } else {
-        setFormattedPlace(formatPlace(newPlace));
-      }
+      matchAndSetFormattedPlace(newPlace);
     },
-    [suggestedPlaces],
+    [matchAndSetFormattedPlace],
   );
 
   function resetPlace() {
