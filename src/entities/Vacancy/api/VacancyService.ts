@@ -10,7 +10,7 @@ import { sourcesRegistry } from "../model/sourcesRegistry";
 import { sourcesIdsMapping } from "../model/Sources";
 
 export class VacancyService {
-  private static baseURL = import.meta.env.VITE_API_URL + "/vacanciesProxy";
+  private static baseURL = import.meta.env.VITE_API_URL + "/vacancies";
   private static SUPERJOB_API_APP_KEY = import.meta.env
     .VITE_SUPERJOB_API_APP_KEY;
 

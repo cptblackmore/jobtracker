@@ -9,7 +9,7 @@ export const $api = axios.create({
 });
 
 $api.interceptors.request.use((config) => {
-  if (config.url?.split("/")[1] !== "/refresh") {
+  if (!config.url?.match("/auth/token/refresh")) {
     config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
   }
   return config;
@@ -37,13 +37,13 @@ $api.interceptors.response.use(
       if (originalRequest && !originalRequest._isRetry) {
         originalRequest._isRetry = true;
         try {
-          const response = await axios.get<AuthResponse>(
-            `${import.meta.env.VITE_API_URL}/refresh`,
+          const response = await axios.post<AuthResponse>(
+            `${import.meta.env.VITE_API_URL}/auth/token/refresh`,
             { withCredentials: true },
           );
           localStorage.setItem("token", response.data.accessToken);
-          await axios.post(
-            `${import.meta.env.VITE_API_URL}/refresh/ack`,
+          await axios.patch(
+            `${import.meta.env.VITE_API_URL}/auth/token/acknowledge`,
             {},
             { withCredentials: true },
           );

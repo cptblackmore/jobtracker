@@ -6,12 +6,12 @@ export class FavoritesService {
   static async updateFavorites(
     favorites: FavoritesResponse["favorites"],
   ): Promise<AxiosResponse<FavoritesResponse>> {
-    return $api.put<FavoritesResponse>("/favorites", { favorites });
+    return $api.put<FavoritesResponse>("/favorites/me", { favorites });
   }
 
   static async synchronizeFavorites(
     favorites: FavoritesResponse["favorites"],
   ): Promise<AxiosResponse<FavoritesResponse>> {
-    return $api.post<FavoritesResponse>("/favorites", { favorites });
+    return $api.patch<FavoritesResponse>("/favorites/me/sync", { favorites });
   }
 }

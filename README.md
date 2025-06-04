@@ -194,16 +194,16 @@ JobTracker предлагает возможность авторизации и
 Приложение использует две независимые модели взаимодействия с API:
 
 - **Вакансии**:  
-  Запросы к внешним источникам (hh, superjob, trudvsem) проходят через единый проксирующий эндпоинт на бэкенде (`/vacanciesProxy`).  
+  Запросы к внешним источникам (hh, superjob, trudvsem) проходят через единый проксирующий эндпоинт на бэкенде (`/vacancies`).  
   Клиент использует паттерн `Strategy`: каждый источник имеет собственные адаптеры (`adaptParams`, `adaptVacancies`, `adaptVacancy`).  
   Все адаптеры описаны в реестре `sourcesRegistry`, где у каждого источника хранятся также стили, адреса и список несовместимых фильтров.
 
 - **Авторизация и избранное**:  
-  Для запросов используются все остальные эндпоинты (`/login`, `/registration`, `/refresh`, `/favorites` и т.д.).
-  Взаимодействие идёт через сервисный слой (`AuthService`, `FavoritesService`), использующий экземпляр Axios (`$api`) с интерцепторами для подстановки токенов и обработки ошибок.
+  Для запросов к серверному функционалу используются все остальные маршруты (`POST /users`, `POST /auth/token`, `PUT /favorites/me` и т.д.).
+  Взаимодействие происходит через сервисный слой (`AuthService`, `FavoritesService` и т.д.), использующий экземпляр Axios (`$api`) с интерцепторами для подстановки токенов и обработки ошибок.
   ```ts
   $api.interceptors.request.use((config) => {
-    if (config.url?.split("/")[1] !== "/refresh") {
+    if (!config.url?.match("/auth/token/refresh")) {
       config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
     }
     return config;
