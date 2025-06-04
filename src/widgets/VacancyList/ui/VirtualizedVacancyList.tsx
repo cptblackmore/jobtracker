@@ -34,8 +34,8 @@ export const VirtualizedVacancyList: React.FC<Props> = ({
         increaseViewportBy={1200}
         data={vacancies}
         itemContent={(_, vacancy) => (
-          <div style={{ paddingBottom: "0.5em" }}>
-            <VacancyCard key={vacancy.id} vacancy={vacancy} />
+          <div key={vacancy.id} style={{ paddingBottom: "0.5em" }}>
+            <VacancyCard  vacancy={vacancy} />
           </div>
         )}
         endReached={() => toNextPage()}
