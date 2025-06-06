@@ -7,3 +7,5 @@ export { setFavoritesLS } from "./model/setFavoritesLS";
 export type { FavoritesResponse } from "./model/types/FavoritesResponse";
 export { FavoritesService } from "./api/FavoritesService";
 export { FavoritesContext, favoritesStore } from "./model/FavoritesContext";
+export { favoritesReducer } from "./model/favoritesSlice";
+export { favoritesApi, useSynchronizeMutation } from "./api/favoritesApi";
